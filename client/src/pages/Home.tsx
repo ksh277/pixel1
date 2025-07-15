@@ -657,18 +657,18 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile 2x2 Grid Layout for Instagram Feed */}
+          {/* Instagram Feed Grid Layout */}
           <div className="px-4 md:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-between gap-3 mb-4 md:grid md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
-              {instagramFeed.map((post) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {instagramFeed.slice(0, isMobile ? 4 : 3).map((post) => (
                 <motion.div
                   key={post.id}
                   variants={itemVariants}
-                  className="w-[48%] mb-4 md:w-full md:mb-0"
+                  className="w-full"
                 >
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 h-full flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg shadow p-3 h-full flex flex-col">
                     {/* Image Area */}
-                    <div className="relative h-28 mb-3 bg-gray-100 dark:bg-gray-700 rounded-md overflow-hidden">
+                    <div className="relative h-28 mb-3 bg-gray-100 dark:bg-[#1F2D4A] rounded-md overflow-hidden">
                       <img
                         src={post.image}
                         alt={`Instagram post ${post.id}`}
