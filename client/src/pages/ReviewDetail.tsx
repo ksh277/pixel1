@@ -96,16 +96,16 @@ export default function ReviewDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0F1114]">
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
+      <div className="bg-white dark:bg-[#1F1F1F] border-b dark:border-gray-700">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 py-4 text-sm">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">홈</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <Link href="/community" className="text-gray-500 hover:text-gray-700">커뮤니티</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-900 font-medium">후기 상세</span>
+            <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">홈</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+            <Link href="/community" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">커뮤니티</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+            <span className="text-gray-900 dark:text-white font-medium">후기 상세</span>
           </div>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function ReviewDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Card className="bg-white shadow-sm">
+              <Card className="bg-white dark:bg-[#1F1F1F] shadow-sm border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">
@@ -130,11 +130,11 @@ export default function ReviewDetail() {
                       </Button>
                     </Link>
                     <div className="flex items-center space-x-2">
-                      <Badge className="bg-blue-100 text-blue-600 px-3 py-1">
+                      <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-100 px-3 py-1">
                         {mockReview.category}
                       </Badge>
                       {mockReview.verified && (
-                        <Badge className="bg-green-100 text-green-600 px-3 py-1">
+                        <Badge className="bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-100 px-3 py-1">
                           인증된 구매
                         </Badge>
                       )}
@@ -143,10 +143,10 @@ export default function ReviewDetail() {
 
                   {/* Title and Rating */}
                   <div className="mb-6">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-3">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                       {mockReview.title}
                     </h1>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                       <div className="flex items-center space-x-1">
                         <User className="w-4 h-4" />
                         <span>{mockReview.author}</span>
@@ -161,7 +161,7 @@ export default function ReviewDetail() {
                             className={`w-4 h-4 ${
                               i < mockReview.rating
                                 ? "text-yellow-400 fill-current"
-                                : "text-gray-300"
+                                : "text-gray-300 dark:text-gray-600"
                             }`}
                           />
                         ))}

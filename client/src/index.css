@@ -98,6 +98,14 @@ html {
 body {
   overflow-x: hidden;
   max-width: 100vw;
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s ease;
+}
+
+body.dark {
+  background-color: #333D4D;
+  color: #FFFFFF;
 }
 
 /* Unified Grid Layout - PIXELGOODS Style */
@@ -135,7 +143,7 @@ body {
 }
 
 .dark .product-card {
-  background: #1f2937;
+  background: #3F4C5F;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -153,7 +161,7 @@ body {
 }
 
 .dark .product-card-image {
-  background: #374151;
+  background: #3F4C5F;
 }
 
 .product-card-image img {
@@ -235,34 +243,34 @@ body {
 }
 
 .dark body {
-  background-color: #0f0f0f;
-  color: #f2f2f2;
+  background-color: #333D4D;
+  color: #F0F4FA;
 }
 
 /* 다크모드 카드 및 컴포넌트 스타일 */
 .dark .card, .dark .box, .dark .section {
-  background-color: #1c1c1c;
-  color: #fff;
-  border-color: #333;
+  background-color: #3F4C5F;
+  color: #F0F4FA;
+  border-color: #44556A;
 }
 
 .dark .coupon-box, .dark .coupon-card {
-  background-color: #1c1c1c !important;
-  color: #fff !important;
+  background-color: #3F4C5F !important;
+  color: #F0F4FA !important;
 }
 
 .dark .event-container, .dark .login-panel {
-  background-color: #1c1c1c;
-  color: #fff;
+  background-color: #3F4C5F;
+  color: #F0F4FA;
 }
 
 .dark .btn {
-  background-color: #333;
-  color: #fff;
+  background-color: #44556A;
+  color: #F0F4FA;
 }
 
 .dark .btn:hover {
-  background-color: #444;
+  background-color: #4A5A6F;
 }
 
 /* 다크모드 버튼 및 상호작용 요소 */

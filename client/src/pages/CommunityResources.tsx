@@ -234,7 +234,7 @@ export default function CommunityResources() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <motion.div
           variants={containerVariants}

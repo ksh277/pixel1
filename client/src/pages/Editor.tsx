@@ -363,7 +363,7 @@ export default function Editor() {
 
   if (showProductSelector) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#333D4D] dark:to-[#2A3441] p-4">
         <div className="max-w-6xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
@@ -391,7 +391,7 @@ export default function Editor() {
               <div
                 key={product.id}
                 className={cn(
-                  "bg-white dark:bg-[#2C2C2C] rounded-xl shadow-md p-3 relative cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+                  "bg-white dark:bg-[#3F4C5F] rounded-xl shadow-md p-3 relative cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
                   "flex flex-col justify-between min-h-[420px] max-h-[420px] overflow-hidden",
                   product.available
                     ? "hover:border-blue-200 border border-gray-200 dark:border-gray-700"
@@ -630,12 +630,12 @@ export default function Editor() {
           </div>
 
           {/* Help Section */}
-          <Card className="bg-white shadow-lg border-2 border-blue-100">
+          <Card className="bg-white dark:bg-[#3F4C5F] shadow-lg border-2 border-blue-100 dark:border-blue-800">
             <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <HelpCircle className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 mx-auto bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-4">
+                <HelpCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {t({
                   ko: "처음 제작시 필독",
                   en: "First Time Production Guide",
@@ -643,7 +643,7 @@ export default function Editor() {
                   zh: "首次制作必读",
                 })}
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 {t({
                   ko: "고품질 제작을 위한 필수 정보를 확인해보세요",
                   en: "Check essential information for high-quality production",
@@ -655,7 +655,7 @@ export default function Editor() {
                 variant="outline"
                 size="lg"
                 onClick={() => setShowHelp(true)}
-                className="bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700"
+                className="bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300"
               >
                 <HelpCircle className="h-5 w-5 mr-2" />
                 {t({
@@ -763,9 +763,9 @@ export default function Editor() {
   }
 
   return (
-    <div className="editor-wrapper min-h-screen bg-gray-100 flex flex-col overflow-x-hidden max-w-full">
+    <div className="editor-wrapper min-h-screen bg-gray-100 dark:bg-[#333D4D] flex flex-col overflow-x-hidden max-w-full">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b px-2 sm:px-4 py-2 sm:py-3">
+      <header className="bg-white dark:bg-[#3F4C5F] shadow-sm border-b dark:border-gray-700 px-2 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <Button

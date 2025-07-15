@@ -171,7 +171,7 @@ export default function CommunityQA() {
   const totalPosts = filteredPosts.length;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1A1A1A]">
+    <div className="min-h-screen bg-white dark:bg-[#333D4D]">
       {/* Top Banner */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 py-8 px-4">
         <div className="max-w-4xl mx-auto">

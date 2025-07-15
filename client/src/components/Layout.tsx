@@ -82,7 +82,7 @@ function CommunityTopNav() {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div className="sticky top-0 z-50 bg-white dark:bg-[#3F4C5F] border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Desktop Navigation */}
@@ -171,7 +171,7 @@ export function Layout({ children, showCommunityNav = false }: LayoutProps) {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark:bg-[#333D4D]">
       {showCommunityNav && <CommunityTopNav />}
       <div className={cn(showCommunityNav ? "pt-0" : "")}>
         {children}

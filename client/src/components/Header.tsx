@@ -239,7 +239,7 @@ export function Header() {
       </div>
 
       {/* Main header */}
-      <header className="bg-white dark:bg-gray-900 sticky top-0 z-50 shadow-sm">
+      <header className="bg-white dark:bg-[#3F4C5F] sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -492,7 +492,7 @@ export function Header() {
       </header>
 
       {/* Category Navigation Bar */}
-      <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-20 z-40">
+      <nav className="bg-white dark:bg-[#3F4C5F] border-b border-gray-200 dark:border-gray-800 sticky top-20 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center">
             <div className="hidden md:flex items-center space-x-8 py-3 overflow-x-auto">

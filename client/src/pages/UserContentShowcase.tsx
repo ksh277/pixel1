@@ -28,9 +28,9 @@ export default function UserContentShowcase() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D]">
       {/* Page Header */}
-      <div className="bg-white dark:bg-[#1A1A1A] shadow-sm">
+      <div className="bg-white dark:bg-[#3F4C5F] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">

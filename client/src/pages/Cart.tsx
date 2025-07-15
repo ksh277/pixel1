@@ -110,7 +110,7 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
             <div className="mb-8">
@@ -136,7 +136,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -150,10 +150,10 @@ export default function Cart() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <Card>
+            <Card className="bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center">
+                  <CardTitle className="flex items-center dark:text-white">
                     <Checkbox
                       checked={selectedItems.length === cartItems.length}
                       onCheckedChange={toggleSelectAll}
@@ -188,8 +188,8 @@ export default function Cart() {
                     />
                     
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{item.nameKo}</h3>
-                      <p className="text-sm text-gray-600">{item.name}</p>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{item.nameKo}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{item.name}</p>
                       <div className="flex items-center space-x-2 mt-1">
                         {Object.entries(item.options).map(([key, value]) => (
                           <Badge key={key} variant="secondary" className="text-xs">
@@ -208,7 +208,7 @@ export default function Cart() {
                       >
                         <Minus className="w-4 h-4" />
                       </Button>
-                      <span className="w-8 text-center">{item.quantity}</span>
+                      <span className="w-8 text-center dark:text-white">{item.quantity}</span>
                       <Button
                         variant="outline"
                         size="sm"
@@ -219,10 +219,10 @@ export default function Cart() {
                     </div>
                     
                     <div className="text-right">
-                      <p className="font-semibold text-gray-900">
+                      <p className="font-semibold text-gray-900 dark:text-white">
                         ₩{(item.price * item.quantity).toLocaleString()}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         ₩{item.price.toLocaleString()} × {item.quantity}
                       </p>
                     </div>
@@ -243,27 +243,27 @@ export default function Cart() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8">
+            <Card className="sticky top-8 bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
               <CardHeader>
-                <CardTitle>
+                <CardTitle className="dark:text-white">
                   {t({ ko: "주문 요약", en: "Order Summary" })}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">
+                  <span className="text-gray-600 dark:text-gray-300">
                     {t({ ko: "상품 금액", en: "Subtotal" })}
                   </span>
-                  <span className="font-semibold">₩{subtotal.toLocaleString()}</span>
+                  <span className="font-semibold dark:text-white">₩{subtotal.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between">
-                  <span className="text-gray-600">
+                  <span className="text-gray-600 dark:text-gray-300">
                     {t({ ko: "배송비", en: "Shipping" })}
                   </span>
-                  <span className="font-semibold">
+                  <span className="font-semibold dark:text-white">
                     {shippingFee === 0 ? (
-                      <span className="text-green-600">
+                      <span className="text-green-600 dark:text-green-400">
                         {t({ ko: "무료", en: "Free" })}
                       </span>
                     ) : (
@@ -273,7 +273,7 @@ export default function Cart() {
                 </div>
                 
                 {subtotal < 50000 && (
-                  <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded">
+                  <div className="text-sm text-gray-600 dark:text-gray-300 bg-blue-50 dark:bg-blue-900/20 p-3 rounded">
                     {t({ 
                       ko: `₩${(50000 - subtotal).toLocaleString()} 더 구매하시면 무료배송!`, 
                       en: `₩${(50000 - subtotal).toLocaleString()} more for free shipping!` 
@@ -284,8 +284,8 @@ export default function Cart() {
                 <Separator />
                 
                 <div className="flex justify-between text-lg font-bold">
-                  <span>{t({ ko: "총 결제 금액", en: "Total" })}</span>
-                  <span className="text-blue-600">₩{total.toLocaleString()}</span>
+                  <span className="dark:text-white">{t({ ko: "총 결제 금액", en: "Total" })}</span>
+                  <span className="text-blue-600 dark:text-blue-400">₩{total.toLocaleString()}</span>
                 </div>
                 
                 <Link href="/checkout">

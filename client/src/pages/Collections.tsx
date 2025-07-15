@@ -107,9 +107,9 @@ export default function Collections() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0F1114]">
       {/* Header Section */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-[#1F1F1F] border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -131,7 +131,7 @@ export default function Collections() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {collections.map((collection) => (
-            <Card key={collection.id} className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+            <Card key={collection.id} className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-white dark:bg-[#1C1C1C] border-gray-200 dark:border-gray-700">
               <div className="relative">
                 <img 
                   src={collection.imageUrl} 
@@ -146,7 +146,7 @@ export default function Collections() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-3 right-3 bg-white/80 hover:bg-white text-gray-700 hover:text-red-500 transition-colors"
+                  className="absolute top-3 right-3 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-red-500 transition-colors"
                   onClick={() => handleLike(collection.id)}
                 >
                   <Heart 
@@ -162,7 +162,7 @@ export default function Collections() {
               </CardHeader>
               
               <CardContent className="pt-0">
-                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4">
+                <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-4">
                   {t(collection.subtitle)}
                 </p>
                 
