@@ -391,8 +391,8 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {creatorReviews.slice(0, isMobile ? 4 : 3).map((review) => (
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {creatorReviews.slice(0, isMobile ? 4 : 4).map((review) => (
               <motion.div
                 key={review.id}
                 variants={itemVariants}
@@ -488,8 +488,8 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {communityShowcase.slice(0, isMobile ? 4 : 3).map((item) => (
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {communityShowcase.slice(0, isMobile ? 4 : 4).map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
@@ -577,8 +577,8 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {materialRecommendations.slice(0, isMobile ? 4 : 3).map((item) => (
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {materialRecommendations.slice(0, isMobile ? 4 : 4).map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
@@ -659,8 +659,8 @@ export default function Home() {
 
           {/* Instagram Feed Grid Layout */}
           <div className="px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {instagramFeed.slice(0, isMobile ? 4 : 3).map((post) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {instagramFeed.slice(0, isMobile ? 4 : 4).map((post) => (
                 <motion.div
                   key={post.id}
                   variants={itemVariants}
