@@ -391,7 +391,7 @@ export default function Editor() {
               <div
                 key={product.id}
                 className={cn(
-                  "bg-white dark:bg-[#3F4C5F] rounded-xl shadow-md p-3 relative cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+                  "bg-white dark:bg-[#1F2D4A] rounded-xl shadow-md p-3 relative cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
                   "flex flex-col justify-between min-h-[420px] max-h-[420px] overflow-hidden",
                   product.available
                     ? "hover:border-blue-200 border border-gray-200 dark:border-gray-700"
@@ -630,7 +630,7 @@ export default function Editor() {
           </div>
 
           {/* Help Section */}
-          <Card className="bg-white dark:bg-[#3F4C5F] shadow-lg border-2 border-blue-100 dark:border-blue-800">
+          <Card className="bg-white dark:bg-[#1F2D4A] shadow-lg border-2 border-blue-100 dark:border-blue-800">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 mx-auto bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-4">
                 <HelpCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />
@@ -763,9 +763,9 @@ export default function Editor() {
   }
 
   return (
-    <div className="editor-wrapper min-h-screen bg-gray-100 dark:bg-[#3F4C5F] flex flex-col overflow-x-hidden max-w-full">
+    <div className="editor-wrapper min-h-screen bg-gray-100 dark:bg-[#1F2D4A] flex flex-col overflow-x-hidden max-w-full">
       {/* Header */}
-      <header className="bg-white dark:bg-[#3F4C5F] shadow-sm border-b dark:border-gray-700 px-2 sm:px-4 py-2 sm:py-3">
+      <header className="bg-white dark:bg-[#1F2D4A] shadow-sm border-b dark:border-gray-700 px-2 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <Button

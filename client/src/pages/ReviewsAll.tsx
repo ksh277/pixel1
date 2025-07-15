@@ -217,9 +217,9 @@ export default function ReviewsAll() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
       {/* Header */}
-      <div className="bg-white dark:bg-[#3F4C5F] shadow-sm sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#1F2D4A] shadow-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -329,7 +329,7 @@ export default function ReviewsAll() {
         >
           {filteredAndSortedReviews.map((review) => (
             <motion.div key={review.id} variants={itemVariants}>
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer dark:bg-[#3F4C5F] dark:border-gray-700">
+              <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer dark:bg-[#1F2D4A] dark:border-gray-700">
                 <Link href={`/reviews/${review.id}`}>
                   <CardContent className="p-0">
                     {/* Product Image */}

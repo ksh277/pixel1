@@ -104,7 +104,7 @@ body {
 }
 
 body.dark {
-  background-color: #333D4D;
+  background-color: #1F2D4A;
   color: #FFFFFF;
 }
 
@@ -143,7 +143,7 @@ body.dark {
 }
 
 .dark .product-card {
-  background: #3F4C5F;
+  background: #1F2D4A;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -161,7 +161,7 @@ body.dark {
 }
 
 .dark .product-card-image {
-  background: #3F4C5F;
+  background: #1F2D4A;
 }
 
 .product-card-image img {
@@ -243,34 +243,34 @@ body.dark {
 }
 
 .dark body {
-  background-color: #333D4D;
+  background-color: #1F2D4A;
   color: #F0F4FA;
 }
 
 /* 다크모드 카드 및 컴포넌트 스타일 */
 .dark .card, .dark .box, .dark .section {
-  background-color: #3F4C5F;
+  background-color: #1F2D4A;
   color: #F0F4FA;
-  border-color: #44556A;
+  border-color: #1F2D4A;
 }
 
 .dark .coupon-box, .dark .coupon-card {
-  background-color: #3F4C5F !important;
+  background-color: #1F2D4A !important;
   color: #F0F4FA !important;
 }
 
 .dark .event-container, .dark .login-panel {
-  background-color: #3F4C5F;
+  background-color: #1F2D4A;
   color: #F0F4FA;
 }
 
 .dark .btn {
-  background-color: #44556A;
+  background-color: #1F2D4A;
   color: #F0F4FA;
 }
 
 .dark .btn:hover {
-  background-color: #4A5A6F;
+  background-color: #1F2D4A;
 }
 
 /* 다크모드 버튼 및 상호작용 요소 */
@@ -429,25 +429,25 @@ body.dark {
 }
 
 .dark {
-  --background: 210 15% 20%;
+  --background: 210 38% 21%;
   --foreground: 210 40% 98%;
-  --muted: 210 15% 25%;
+  --muted: 210 38% 21%;
   --muted-foreground: 210 20% 65%;
-  --popover: 210 15% 25%;
+  --popover: 210 38% 21%;
   --popover-foreground: 210 40% 98%;
-  --card: 210 15% 25%;
+  --card: 210 38% 21%;
   --card-foreground: 210 40% 98%;
-  --border: 210 15% 27%;
-  --input: 210 15% 27%;
+  --border: 210 38% 21%;
+  --input: 210 38% 21%;
   --primary: 207 90% 54%;
   --primary-foreground: 211 100% 99%;
-  --secondary: 210 15% 25%;
+  --secondary: 210 38% 21%;
   --secondary-foreground: 210 40% 98%;
   --accent: 0 73% 66%;
   --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
-  --ring: 210 15% 50%;
+  --ring: 210 38% 21%;
   --radius: 0.5rem;
 }
 
@@ -475,7 +475,7 @@ body.dark {
   }
 
   .dark .hero-gradient {
-    background: linear-gradient(135deg, hsl(210, 15%, 20%) 0%, hsl(210, 15%, 25%) 100%);
+    background: linear-gradient(135deg, hsl(210, 38%, 21%) 0%, hsl(210, 38%, 21%) 100%);
   }
 
   .card-hover {

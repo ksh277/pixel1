@@ -96,9 +96,9 @@ export default function ReviewDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
       {/* Breadcrumb */}
-      <div className="bg-white dark:bg-[#3F4C5F] border-b dark:border-gray-700">
+      <div className="bg-white dark:bg-[#1F2D4A] border-b dark:border-gray-700">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 py-4 text-sm">
             <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">홈</Link>
@@ -119,7 +119,7 @@ export default function ReviewDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Card className="bg-white dark:bg-[#3F4C5F] shadow-sm border-gray-200 dark:border-gray-700">
+              <Card className="bg-white dark:bg-[#1F2D4A] shadow-sm border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">

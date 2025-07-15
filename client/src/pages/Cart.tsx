@@ -110,7 +110,7 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
             <div className="mb-8">
@@ -136,7 +136,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -150,7 +150,7 @@ export default function Cart() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <Card className="bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center dark:text-white">
@@ -243,7 +243,7 @@ export default function Cart() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8 bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
+            <Card className="sticky top-8 bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="dark:text-white">
                   {t({ ko: "주문 요약", en: "Order Summary" })}
