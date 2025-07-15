@@ -154,8 +154,39 @@ export default function ProductDetail() {
     const basePrice = mockProduct.basePrice
       ? parseInt(mockProduct.basePrice)
       : 0;
-    const sizePrice =
-      mockProduct.sizes.find((s) => s.name === selectedSize)?.price || 0;
+    
+    // Define all size options with prices
+    const allSizes = [
+      // 일반 사이즈
+      { name: "일반 20x20", price: 3500 },
+      { name: "일반 30x15", price: 4000 },
+      { name: "일반 30x30", price: 4500 },
+      { name: "일반 40x40", price: 5500 },
+      { name: "일반 50x30", price: 6000 },
+      { name: "일반 50x50", price: 6500 },
+      { name: "일반 60x30", price: 7000 },
+      { name: "일반 60x60", price: 7500 },
+      { name: "일반 70x35", price: 8000 },
+      { name: "일반 70x50", price: 8500 },
+      { name: "일반 70x70", price: 9000 },
+      { name: "일반 80x20", price: 8500 },
+      // 라미 사이즈
+      { name: "라미 20x20", price: 4000 },
+      { name: "라미 30x30", price: 5000 },
+      { name: "라미 40x40", price: 6000 },
+      { name: "라미 50x50", price: 7000 },
+      { name: "라미 60x60", price: 8000 },
+      { name: "라미 70x70", price: 9000 },
+      { name: "라미 80x80", price: 10000 },
+      { name: "라미 100x100", price: 12000 },
+      // 대형 사이즈
+      { name: "대형 100x200", price: 15000 },
+      { name: "대형 120x200", price: 18000 },
+      { name: "대형 150x200", price: 22000 },
+      { name: "대형 200x200", price: 25000 },
+    ];
+    
+    const sizePrice = allSizes.find((s) => s.name === selectedSize)?.price || 0;
     const baseTypePrice =
       mockProduct.bases.find((b) => b.name === selectedBase)?.price || 0;
     const packagingPrice =
@@ -414,31 +445,107 @@ export default function ProductDetail() {
 
             {/* Product Options */}
             <div className="space-y-4">
-              {/* Size Selection */}
+              {/* Size Selection - Table Format */}
               <div>
                 <Label className="text-base font-medium mb-3 block">
                   ✅ 스탠드 사이즈
                 </Label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {mockProduct.sizes.map((size) => (
-                    <button
-                      key={size.name}
-                      onClick={() => setSelectedSize(size.name)}
-                      className={`p-3 rounded-lg border text-left transition-all ${
-                        selectedSize === size.name
-                          ? "border-blue-500 bg-blue-50 text-blue-700"
-                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                      }`}
-                    >
-                      <div className="font-medium">{size.name}</div>
-                      <div className="text-sm text-gray-500">
-                        {size.description}
-                      </div>
-                      <div className="text-sm font-medium text-blue-600">
-                        {size.price.toLocaleString()}원
-                      </div>
-                    </button>
-                  ))}
+                <div className="space-y-4">
+                  {/* 일반 사이즈 */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 mb-2">일반 사이즈</h4>
+                    <div className="grid grid-cols-4 gap-2">
+                      {[
+                        { name: "일반 20x20", price: 3500 },
+                        { name: "일반 30x15", price: 4000 },
+                        { name: "일반 30x30", price: 4500 },
+                        { name: "일반 40x40", price: 5500 },
+                        { name: "일반 50x30", price: 6000 },
+                        { name: "일반 50x50", price: 6500 },
+                        { name: "일반 60x30", price: 7000 },
+                        { name: "일반 60x60", price: 7500 },
+                        { name: "일반 70x35", price: 8000 },
+                        { name: "일반 70x50", price: 8500 },
+                        { name: "일반 70x70", price: 9000 },
+                        { name: "일반 80x20", price: 8500 },
+                      ].map((size) => (
+                        <button
+                          key={size.name}
+                          onClick={() => setSelectedSize(size.name)}
+                          className={`p-2 rounded border text-center text-sm transition-all ${
+                            selectedSize === size.name
+                              ? "border-blue-500 bg-blue-50 text-blue-700"
+                              : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                          }`}
+                        >
+                          <div className="font-medium">{size.name}</div>
+                          <div className="text-xs text-blue-600">
+                            {size.price.toLocaleString()}원
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 라미 사이즈 */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 mb-2">라미 사이즈</h4>
+                    <div className="grid grid-cols-4 gap-2">
+                      {[
+                        { name: "라미 20x20", price: 4000 },
+                        { name: "라미 30x30", price: 5000 },
+                        { name: "라미 40x40", price: 6000 },
+                        { name: "라미 50x50", price: 7000 },
+                        { name: "라미 60x60", price: 8000 },
+                        { name: "라미 70x70", price: 9000 },
+                        { name: "라미 80x80", price: 10000 },
+                        { name: "라미 100x100", price: 12000 },
+                      ].map((size) => (
+                        <button
+                          key={size.name}
+                          onClick={() => setSelectedSize(size.name)}
+                          className={`p-2 rounded border text-center text-sm transition-all ${
+                            selectedSize === size.name
+                              ? "border-blue-500 bg-blue-50 text-blue-700"
+                              : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                          }`}
+                        >
+                          <div className="font-medium">{size.name}</div>
+                          <div className="text-xs text-blue-600">
+                            {size.price.toLocaleString()}원
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 대형 사이즈 */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 mb-2">대형 사이즈</h4>
+                    <div className="grid grid-cols-4 gap-2">
+                      {[
+                        { name: "대형 100x200", price: 15000 },
+                        { name: "대형 120x200", price: 18000 },
+                        { name: "대형 150x200", price: 22000 },
+                        { name: "대형 200x200", price: 25000 },
+                      ].map((size) => (
+                        <button
+                          key={size.name}
+                          onClick={() => setSelectedSize(size.name)}
+                          className={`p-2 rounded border text-center text-sm transition-all ${
+                            selectedSize === size.name
+                              ? "border-blue-500 bg-blue-50 text-blue-700"
+                              : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                          }`}
+                        >
+                          <div className="font-medium">{size.name}</div>
+                          <div className="text-xs text-blue-600">
+                            {size.price.toLocaleString()}원
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 

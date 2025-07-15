@@ -270,40 +270,115 @@ export default function Home() {
               gridClassName="grid grid-cols-1 md:grid-cols-3 gap-6"
             />
           ) : (
-            <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Left Box - Hot Products */}
-              <motion.div variants={itemVariants}>
-                <PopularBox
-                  title={t({ ko: "1개부터 제작 가능해요!", en: "Order from just 1 piece!" })}
-                  description={t({ ko: "로고만 넣어도 완벽한 우리 매장 굿즈", en: "Perfect store merchandise with just your logo" })}
-                  image={products?.[0]?.imageUrl || "/api/placeholder/400/300"}
-                  products={products?.filter(p => p.isFeatured).slice(0, 3) || []}
-                  bgColor="bg-purple-50"
-                />
+            <div className="space-y-8">
+              {/* Top 3 Popular Products - Large Cards */}
+              <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {products?.slice(0, 3).map((product: Product, index: number) => (
+                  <motion.div
+                    key={product.id}
+                    variants={itemVariants}
+                    className="w-full"
+                  >
+                    <Link href={`/product/${product.id}`}>
+                      <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                        {/* Large Product Image */}
+                        <div className="relative">
+                          <img
+                            src={product.imageUrl || "/api/placeholder/600/600"}
+                            alt={language === "ko" ? product.nameKo : product.name}
+                            className="w-full h-80 object-cover"
+                            loading="lazy"
+                            onError={(e) => {
+                              e.currentTarget.src = "/api/placeholder/600/600";
+                            }}
+                          />
+                          
+                          {/* HOT Badge */}
+                          {product.isFeatured && (
+                            <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
+                              HOT
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="p-6">
+                          <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+                            {language === "ko" ? product.nameKo : product.name}
+                          </h3>
+                          
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-2xl font-bold text-blue-600">
+                              ₩{parseInt(product.basePrice).toLocaleString()}
+                            </span>
+                          </div>
+                          
+                          <div className="text-sm text-gray-600 space-y-1">
+                            <div>리뷰 {product.reviewCount?.toLocaleString() || "1,234"}</div>
+                            <div>LIKE {product.likeCount || 45}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
               </motion.div>
 
-              {/* Center Box - Category Products */}
-              <motion.div variants={itemVariants}>
-                <PopularBox
-                  title={t({ ko: "굿즈 행사 단체 키트", en: "Group Event Merchandise Kit" })}
-                  description={t({ ko: "15년의 노하우가 담긴 단체 굿즈 소개", en: "15 years of expertise in group merchandise" })}
-                  image={products?.[1]?.imageUrl || "/api/placeholder/400/300"}
-                  products={products?.filter(p => p.categoryId === 1).slice(0, 3) || []}
-                  bgColor="bg-green-50"
-                />
-              </motion.div>
-
-              {/* Right Box - Best Sellers */}
-              <motion.div variants={itemVariants}>
-                <PopularBox
-                  title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-Shirts" })}
-                  description={t({ ko: "마플이 추천하는 단체티 제작", en: "Recommended group t-shirt production" })}
-                  image={products?.[2]?.imageUrl || "/api/placeholder/400/300"}
-                  products={products?.slice(0, 3) || []}
-                  bgColor="bg-blue-50"
-                />
-              </motion.div>
-            </motion.div>
+              {/* More Popular Products - List Format */}
+              {products && products.length > 3 && (
+                <motion.div className="space-y-4">
+                  <div className="border-t pt-6">
+                    <h3 className="text-lg font-semibold mb-4 text-foreground">
+                      {t({ ko: "더 많은 인기상품", en: "More Popular Items" })}
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {products.slice(3).map((product: Product) => (
+                      <motion.div
+                        key={product.id}
+                        variants={itemVariants}
+                        className="w-full"
+                      >
+                        <Link href={`/product/${product.id}`}>
+                          <div className="flex items-center justify-between p-4 bg-white border rounded-lg hover:shadow-md transition-shadow">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <img
+                                  src={product.imageUrl || "/api/placeholder/60/60"}
+                                  alt={product.name}
+                                  className="w-14 h-14 object-cover rounded"
+                                  onError={(e) => {
+                                    e.currentTarget.src = "/api/placeholder/60/60";
+                                  }}
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-semibold text-gray-900 truncate">
+                                  {language === "ko" ? product.nameKo : product.name}
+                                </h4>
+                                <p className="text-sm text-gray-600 mt-1">
+                                  리뷰 {product.reviewCount?.toLocaleString() || "123"} / LIKE {product.likeCount || 15}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-4">
+                              <div className="text-xl font-bold text-blue-600">
+                                ₩{parseInt(product.basePrice).toLocaleString()}
+                              </div>
+                              {product.isFeatured && (
+                                <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                                  HOT
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
           )}
         </motion.section>
 
@@ -342,40 +417,61 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="unified-mobile-grid">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {creatorReviews.map((review) => (
               <motion.div
                 key={review.id}
                 variants={itemVariants}
-                className="w-full h-full"
+                className="w-full max-w-[360px] mx-auto"
               >
                 <Link href={`/product/${review.id}`}>
-                  <div className="product-card">
-                    <div className="product-card-image">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[420px] flex flex-col">
+                    {/* Large Review Image - 70% of card height */}
+                    <div className="relative flex-[0_0_70%]">
                       <img
                         src={review.productImage}
                         alt={review.productName}
-                        className="w-full h-28 object-contain mx-auto"
+                        className="w-full h-full object-cover"
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = "/api/placeholder/360/280";
+                        }}
                       />
 
-                      <div className="product-card-badge">HOT</div>
-                      <div className="product-card-like">
+                      {/* HOT Badge */}
+                      <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                        HOT
+                      </div>
+                      
+                      {/* LIKE Button */}
+                      <div className="absolute top-3 right-3 bg-white/80 text-gray-700 px-2 py-1 rounded text-xs font-medium">
                         LIKE {review.rating * 40 + 120}
                       </div>
                     </div>
 
-                    <div className="product-card-content">
-                      <h3 className="product-card-title">
-                        {review.productName}
-                      </h3>
-                      <p className="product-card-price">
-                        ₩ {(review.rating * 1200 + 3500).toLocaleString()}
-                      </p>
-                      <p className="product-card-stats">
-                        리뷰 {review.rating * 25 + 45} / LIKE{" "}
-                        {review.rating * 40 + 120}
-                      </p>
+                    {/* Review Content - 30% of card height */}
+                    <div className="flex-[0_0_30%] p-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <h3 className="text-base font-semibold text-gray-900 line-clamp-1">
+                          {review.productName}
+                        </h3>
+                        
+                        <p className="text-lg font-bold text-blue-600">
+                          ₩{(review.rating * 1200 + 3500).toLocaleString()}
+                        </p>
+                        
+                        {/* Review Summary Text */}
+                        <p className="text-sm text-gray-600 line-clamp-2">
+                          {review.rating >= 4 
+                            ? "정말 만족스러운 품질이에요! 디자인도 예쁘고 제작도 깔끔하게 잘 나왔어요. 다음에도 또 주문하고 싶어요."
+                            : "좋은 품질로 잘 만들어졌네요. 배송도 빨랐고 포장도 깔끔했어요. 추천합니다!"
+                          }
+                        </p>
+                      </div>
+                      
+                      <div className="text-sm text-gray-500 pt-2 border-t border-gray-100">
+                        리뷰 {review.rating * 25 + 45} / LIKE {review.rating * 40 + 120}
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -418,35 +514,53 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="unified-mobile-grid">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {communityShowcase.map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
-                className="w-full h-full"
+                className="w-full max-w-[360px] mx-auto"
               >
                 <Link href={`/community/${item.id}`}>
-                  <div className="product-card">
-                    <div className="product-card-image">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
+                    {/* Large Community Image - 70% of card height */}
+                    <div className="relative flex-[0_0_70%]">
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-28 object-contain mx-auto"
+                        className="w-full h-full object-cover"
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = "/api/placeholder/360/280";
+                        }}
                       />
 
-                      <div className="product-card-badge">인기</div>
-                      <div className="product-card-like">LIKE {item.likes}</div>
+                      {/* 인기 Badge */}
+                      <div className="absolute top-3 left-3 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
+                        인기
+                      </div>
+                      
+                      {/* LIKE Button */}
+                      <div className="absolute top-3 right-3 bg-white/80 text-gray-700 px-2 py-1 rounded text-xs font-medium">
+                        LIKE {item.likes}
+                      </div>
                     </div>
 
-                    <div className="product-card-content">
-                      <h3 className="product-card-title">{item.title}</h3>
-                      <p className="text-sm text-gray-500 mb-1 truncate">
-                        @{item.author}
-                      </p>
-                      <p className="product-card-stats">
+                    {/* Community Content - 30% of card height */}
+                    <div className="flex-[0_0_30%] p-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <h3 className="text-base font-semibold text-gray-900 line-clamp-1">
+                          {item.title}
+                        </h3>
+                        
+                        <p className="text-sm text-gray-500 truncate">
+                          @{item.author}
+                        </p>
+                      </div>
+                      
+                      <div className="text-sm text-gray-500 pt-2 border-t border-gray-100">
                         리뷰 {item.comments} / LIKE {item.likes}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -489,38 +603,53 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="unified-mobile-grid">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {materialRecommendations.map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
-                className="w-full h-full"
+                className="w-full max-w-[360px] mx-auto"
               >
                 <Link href={`/product/${item.id}`}>
-                  <div className="product-card">
-                    <div className="product-card-image">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
+                    {/* Large Material Image - 70% of card height */}
+                    <div className="relative flex-[0_0_70%]">
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-28 object-contain mx-auto"
+                        className="w-full h-full object-cover"
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = "/api/placeholder/360/280";
+                        }}
                       />
 
-                      <div className="product-card-badge">{item.badge}</div>
-                      <div className="product-card-like">
+                      {/* Material Badge */}
+                      <div className="absolute top-3 left-3 bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">
+                        {item.badge}
+                      </div>
+                      
+                      {/* LIKE Button */}
+                      <div className="absolute top-3 right-3 bg-white/80 text-gray-700 px-2 py-1 rounded text-xs font-medium">
                         LIKE {Math.floor(item.reviewCount * 0.6)}
                       </div>
                     </div>
 
-                    <div className="product-card-content">
-                      <h3 className="product-card-title">{item.title}</h3>
-                      <p className="product-card-price">
-                        ₩{item.price.toLocaleString()}
-                      </p>
-                      <p className="product-card-stats">
-                        리뷰 {item.reviewCount} / LIKE{" "}
-                        {Math.floor(item.reviewCount * 0.6)}
-                      </p>
+                    {/* Material Content - 30% of card height */}
+                    <div className="flex-[0_0_30%] p-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <h3 className="text-base font-semibold text-gray-900 line-clamp-1">
+                          {item.title}
+                        </h3>
+                        
+                        <p className="text-lg font-bold text-blue-600">
+                          ₩{item.price.toLocaleString()}
+                        </p>
+                      </div>
+                      
+                      <div className="text-sm text-gray-500 pt-2 border-t border-gray-100">
+                        리뷰 {item.reviewCount} / LIKE {Math.floor(item.reviewCount * 0.6)}
+                      </div>
                     </div>
                   </div>
                 </Link>
