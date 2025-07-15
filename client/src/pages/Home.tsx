@@ -391,7 +391,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
             {creatorReviews.slice(0, isMobile ? 4 : 3).map((review) => (
               <motion.div
                 key={review.id}
@@ -488,7 +488,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
             {communityShowcase.slice(0, isMobile ? 4 : 3).map((item) => (
               <motion.div
                 key={item.id}
@@ -577,7 +577,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
             {materialRecommendations.slice(0, isMobile ? 4 : 3).map((item) => (
               <motion.div
                 key={item.id}
@@ -659,7 +659,7 @@ export default function Home() {
 
           {/* Instagram Feed Grid Layout */}
           <div className="px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
               {instagramFeed.slice(0, isMobile ? 4 : 3).map((post) => (
                 <motion.div
                   key={post.id}
