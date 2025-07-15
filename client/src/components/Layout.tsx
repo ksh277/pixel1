@@ -98,8 +98,8 @@ function CommunityTopNav() {
                     className={cn(
                       "relative h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors",
                       isActive 
-                        ? "text-blue-600 bg-blue-50 border-b-2 border-blue-600" 
-                        : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                        ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400 border-b-2 border-blue-600" 
+                        : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700/50"
                     )}
                   >
                     <Icon className="h-4 w-4 mr-2" />
@@ -137,8 +137,8 @@ function CommunityTopNav() {
                     className={cn(
                       "relative flex-shrink-0 h-8 px-2 text-xs font-medium rounded-md transition-colors",
                       isActive 
-                        ? "text-blue-600 bg-blue-50 border-b-2 border-blue-600" 
-                        : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                        ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400 border-b-2 border-blue-600" 
+                        : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700/50"
                     )}
                   >
                     <Icon className="h-3 w-3 mr-1" />
