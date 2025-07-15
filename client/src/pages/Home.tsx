@@ -391,15 +391,15 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {creatorReviews.map((review) => (
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {creatorReviews.slice(0, isMobile ? 4 : 3).map((review) => (
               <motion.div
                 key={review.id}
                 variants={itemVariants}
-                className="w-full max-w-[360px] mx-auto"
+                className="w-full"
               >
                 <Link href={`/product/${review.id}`}>
-                  <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[420px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[420px] flex flex-col">
                     {/* Large Review Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -488,15 +488,15 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {communityShowcase.map((item) => (
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {communityShowcase.slice(0, isMobile ? 4 : 3).map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
-                className="w-full max-w-[360px] mx-auto"
+                className="w-full"
               >
                 <Link href={`/community/${item.id}`}>
-                  <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
                     {/* Large Community Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -577,15 +577,15 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {materialRecommendations.map((item) => (
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {materialRecommendations.slice(0, isMobile ? 4 : 3).map((item) => (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
-                className="w-full max-w-[360px] mx-auto"
+                className="w-full"
               >
                 <Link href={`/product/${item.id}`}>
-                  <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
                     {/* Large Material Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
