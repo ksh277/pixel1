@@ -178,7 +178,7 @@ export function Header() {
   return (
     <>
       {/* Top utility bar */}
-      <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-2 px-4">
+      <div className="bg-gray-50 dark:bg-[#3F4C5F] border-b border-gray-200 dark:border-gray-800 py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-end text-sm">
           <div className="flex items-center space-x-4">
             {user ? (

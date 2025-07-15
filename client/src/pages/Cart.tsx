@@ -110,7 +110,7 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
             <div className="mb-8">
@@ -136,7 +136,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">

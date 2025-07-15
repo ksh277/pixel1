@@ -234,7 +234,7 @@ export default function CommunityResources() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#333D4D]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#3F4C5F]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <motion.div
           variants={containerVariants}
@@ -253,7 +253,7 @@ export default function CommunityResources() {
           </motion.div>
 
           {/* Search and Filters */}
-          <motion.div variants={itemVariants} className="bg-white dark:bg-[#2C2C2C] rounded-lg shadow-sm p-6 border-gray-200 dark:border-gray-700">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-[#3F4C5F] rounded-lg shadow-sm p-6 border-gray-200 dark:border-gray-700">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
               <div className="flex-1 max-w-md">
                 <div className="relative">

@@ -226,7 +226,7 @@ export function BestReviewsSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="rounded-xl bg-white dark:bg-[#2C2C2C] shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+              <Card className="rounded-xl bg-white dark:bg-[#3F4C5F] shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
                 {/* Best Review Ribbon */}
                 <div className="absolute top-0 right-0 z-10">
                   <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 text-xs font-bold transform rotate-12 translate-x-2 -translate-y-1 shadow-lg">

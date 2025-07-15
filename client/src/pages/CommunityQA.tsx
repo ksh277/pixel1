@@ -171,7 +171,7 @@ export default function CommunityQA() {
   const totalPosts = filteredPosts.length;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#333D4D]">
+    <div className="min-h-screen bg-white dark:bg-[#3F4C5F]">
       {/* Top Banner */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 py-8 px-4">
         <div className="max-w-4xl mx-auto">
@@ -179,7 +179,7 @@ export default function CommunityQA() {
             <div className="flex items-center space-x-4">
               <div className="text-6xl">🤔</div>
               <div className="relative">
-                <div className="bg-white dark:bg-[#2C2C2C] rounded-2xl px-4 py-2 shadow-sm border border-blue-200 dark:border-gray-700">
+                <div className="bg-white dark:bg-[#3F4C5F] rounded-2xl px-4 py-2 shadow-sm border border-blue-200 dark:border-gray-700">
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     "이거 어떻게 하지? 물어봐야겠다~"
                   </p>
@@ -217,7 +217,7 @@ export default function CommunityQA() {
                 className={cn(
                   "px-4 py-2 rounded-md font-medium transition-colors text-sm mobile-tab-item",
                   activeTab === tab
-                    ? "bg-white dark:bg-[#2C2C2C] text-blue-600 dark:text-blue-400 shadow-sm"
+                    ? "bg-white dark:bg-[#3F4C5F] text-blue-600 dark:text-blue-400 shadow-sm"
                     : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 )}
               >
@@ -273,7 +273,7 @@ export default function CommunityQA() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="hover:shadow-md transition-shadow cursor-pointer bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">

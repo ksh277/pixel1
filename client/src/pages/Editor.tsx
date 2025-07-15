@@ -763,7 +763,7 @@ export default function Editor() {
   }
 
   return (
-    <div className="editor-wrapper min-h-screen bg-gray-100 dark:bg-[#333D4D] flex flex-col overflow-x-hidden max-w-full">
+    <div className="editor-wrapper min-h-screen bg-gray-100 dark:bg-[#3F4C5F] flex flex-col overflow-x-hidden max-w-full">
       {/* Header */}
       <header className="bg-white dark:bg-[#3F4C5F] shadow-sm border-b dark:border-gray-700 px-2 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
