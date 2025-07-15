@@ -180,7 +180,7 @@ body.dark {
 .product-card-title {
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: #1F2937;
   margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
@@ -194,7 +194,7 @@ body.dark {
 .product-card-price {
   font-size: 14px;
   font-weight: 700;
-  color: #111827;
+  color: #1F2937;
   margin-bottom: 4px;
 }
 
@@ -429,25 +429,25 @@ body.dark {
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(0, 73%, 66%);
-  --accent-foreground: hsl(210, 40%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
+  --background: 210 15% 20%;
+  --foreground: 210 40% 98%;
+  --muted: 210 15% 25%;
+  --muted-foreground: 210 20% 65%;
+  --popover: 210 15% 25%;
+  --popover-foreground: 210 40% 98%;
+  --card: 210 15% 25%;
+  --card-foreground: 210 40% 98%;
+  --border: 210 15% 27%;
+  --input: 210 15% 27%;
+  --primary: 207 90% 54%;
+  --primary-foreground: 211 100% 99%;
+  --secondary: 210 15% 25%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 0 73% 66%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 210 15% 50%;
   --radius: 0.5rem;
 }
 
@@ -475,7 +475,7 @@ body.dark {
   }
 
   .dark .hero-gradient {
-    background: linear-gradient(135deg, hsl(240, 10%, 8%) 0%, hsl(240, 10%, 15%) 100%);
+    background: linear-gradient(135deg, hsl(210, 15%, 20%) 0%, hsl(210, 15%, 25%) 100%);
   }
 
   .card-hover {

@@ -826,3 +826,22 @@ Preferred communication style: Simple, everyday language.
 - **Mobile Considerations**: Maintained proper spacing, single-line filters, and Korean text handling
 - **Complete Coverage**: All pages across the entire e-commerce platform now support dark mode
 - **User Experience**: Enhanced contrast ratios and readability in dark mode across all components
+
+### 2025-01-15: Unified Dark Mode Color Scheme - #333D4D Implementation
+- **Complete Color Unification**: Replaced all inconsistent dark mode colors with unified #333D4D warmer navy tone
+- **Color Specifications Applied**:
+  - Primary background: #333D4D (warmer navy)
+  - Header/Navigation: #3F4C5F (hover state)
+  - Card/Component backgrounds: #3F4C5F
+  - Button/Emphasis backgrounds: #44556A
+  - Secondary emphasis: #4A5A6F
+  - Text colors: #F0F4FA (primary), #FFFFFF (high contrast)
+- **Files Updated**:
+  - Header.tsx: Main header and category navigation bars
+  - Layout.tsx: Global layout background
+  - index.css: All dark mode styling unified with #333D4D scheme
+  - Community.tsx, SearchResults.tsx, Resources.tsx, Rewards.tsx: Page backgrounds
+  - CommunityQA.tsx, CommunityEvents.tsx: Component backgrounds
+- **CSS Variables Updated**: Updated shadcn/ui dark mode CSS variables to use unified HSL color scheme
+- **Complete Consistency**: All pages now use the same warmer navy tone instead of mixed black/gray colors
+- **Smooth Transitions**: Added background-color 0.3s ease transitions throughout

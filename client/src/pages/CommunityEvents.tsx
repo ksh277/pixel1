@@ -228,7 +228,7 @@ export default function CommunityEvents() {
                     )}
                   </div>
                   <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-white/90 dark:bg-gray-800/90 dark:text-white">
+                    <Badge variant="secondary" className="bg-white/90 dark:bg-[#3F4C5F]/90 dark:text-white">
                       {event.category}
                     </Badge>
                   </div>

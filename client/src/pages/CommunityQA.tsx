@@ -209,7 +209,7 @@ export default function CommunityQA() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Tab Navigation */}
         <div className="flex flex-col space-y-4 mb-6 md:flex-row md:items-center md:justify-between md:space-y-0">
-          <div className="flex space-x-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1 mobile-tabs">
+          <div className="flex space-x-1 bg-gray-100 dark:bg-[#3F4C5F] rounded-lg p-1 mobile-tabs">
             {tabs.map((tab) => (
               <button
                 key={tab}
