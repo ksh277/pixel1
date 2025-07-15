@@ -167,19 +167,19 @@ export default function AdditionalServices() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-gray-500 mb-4">
-            <Link href="/" className="hover:text-gray-700">홈</Link>
+          <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-300">홈</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-900 font-medium">추가결제 서비스</span>
+            <span className="text-gray-900 dark:text-white font-medium">추가결제 서비스</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t({ ko: "추가결제 서비스", en: "Additional Services", ja: "追加決済サービス", zh: "附加付费服务" })}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             {t({ ko: "더 빠르고 완성도 높은 서비스를 원하시나요?", en: "Want faster and higher quality service?", ja: "より速く、より完成度の高いサービスをお望みですか？", zh: "想要更快、更高质量的服务吗？" })}
           </p>
         </div>
@@ -209,7 +209,7 @@ export default function AdditionalServices() {
         {/* Services Grid - Korean E-commerce Card Style */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredServices.map((service) => (
-            <Card key={service.id} className="hover:shadow-lg transition-shadow group bg-white border border-gray-200">
+            <Card key={service.id} className="hover:shadow-lg transition-shadow group bg-white dark:bg-[#2A3A52] border border-gray-200 dark:border-gray-700">
               {/* Status Badges - Top Left */}
               <div className="absolute top-3 left-3 flex gap-2 z-10">
                 {service.isPopular && (
@@ -226,8 +226,8 @@ export default function AdditionalServices() {
               
               {/* Heart Icon - Top Right */}
               <div className="absolute top-3 right-3 z-10">
-                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full bg-white/80 hover:bg-white">
-                  <Heart className="w-4 h-4 text-gray-600" />
+                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700">
+                  <Heart className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                 </Button>
               </div>
 
@@ -239,10 +239,10 @@ export default function AdditionalServices() {
                     style={{ backgroundColor: service.thumbnail }}
                   >
                     <div className="text-center">
-                      <div className="text-sm font-bold text-gray-800 mb-1">
+                      <div className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-1">
                         {service.category === "design" ? "도안작업" : "퀵비"}
                       </div>
-                      <div className="text-lg font-black text-gray-900">
+                      <div className="text-lg font-black text-gray-900 dark:text-white">
                         {service.price.toLocaleString()}원
                       </div>
                     </div>
@@ -252,11 +252,11 @@ export default function AdditionalServices() {
               
               <CardContent className="p-4 pt-0">
                 <div className="text-center mb-3">
-                  <h3 className="font-bold text-sm text-gray-900 mb-1">{service.nameKo}</h3>
-                  <div className="text-sm font-bold text-gray-900 mb-1">
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-1">{service.nameKo}</h3>
+                  <div className="text-sm font-bold text-gray-900 dark:text-white mb-1">
                     {service.price.toLocaleString()} won
                   </div>
-                  <div className="text-xs text-gray-500 flex items-center justify-center">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center">
                     <Star className="w-3 h-3 mr-1 fill-yellow-400 text-yellow-400" />
                     <span>리뷰 {Math.floor(Math.random() * 200 + 50)}개</span>
                   </div>
@@ -276,12 +276,12 @@ export default function AdditionalServices() {
 
         {/* Call to Action */}
         <div className="mt-12 text-center">
-          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                 맞춤형 서비스가 필요하신가요?
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 특별한 요구사항이나 대량 주문을 위한 맞춤형 서비스를 제공합니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
