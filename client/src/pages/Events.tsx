@@ -125,21 +125,21 @@ export default function Events() {
   const totalCount = filteredEvents.length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-gray-500 mb-4">
-            <Link href="/" className="hover:text-gray-700">홈</Link>
+          <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-300">홈</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/community" className="hover:text-gray-700">커뮤니티</Link>
+            <Link href="/community" className="hover:text-gray-700 dark:hover:text-gray-300">커뮤니티</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-900 font-medium">행사/공모전</span>
+            <span className="text-gray-900 dark:text-white font-medium">행사/공모전</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t({ ko: "행사/공모전", en: "Events & Contests", ja: "イベント・コンテスト", zh: "活动与比赛" })}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             {t({ ko: "다양한 행사 및 공모전 정보를 확인하세요", en: "Check out various events and contest information", ja: "様々なイベントやコンテストの情報をご確認ください", zh: "查看各种活动和比赛信息" })}
           </p>
         </div>
@@ -147,25 +147,25 @@ export default function Events() {
         {/* Banner Events */}
         <div className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="bg-blue-50 border-blue-200">
+            <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Badge className="bg-blue-100 text-blue-800 text-xs mb-2">이벤트 행사</Badge>
-                    <h3 className="font-bold text-blue-900 text-sm">코믹월드 SUMMER 2025+문구전 23회 일산</h3>
-                    <p className="text-xs text-blue-700 mt-1">(25.07.19~07.20)</p>
+                    <Badge className="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs mb-2">이벤트 행사</Badge>
+                    <h3 className="font-bold text-blue-900 dark:text-blue-100 text-sm">코믹월드 SUMMER 2025+문구전 23회 일산</h3>
+                    <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">(25.07.19~07.20)</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-green-50 border-green-200">
+            <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Badge className="bg-green-100 text-green-800 text-xs mb-2">이벤트 행사</Badge>
-                    <h3 className="font-bold text-green-900 text-sm">서울 일러스트레이션 페어 V.19</h3>
-                    <p className="text-xs text-green-700 mt-1">(25.07.24~07.27)</p>
+                    <Badge className="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 text-xs mb-2">이벤트 행사</Badge>
+                    <h3 className="font-bold text-green-900 dark:text-green-100 text-sm">서울 일러스트레이션 페어 V.19</h3>
+                    <p className="text-xs text-green-700 dark:text-green-300 mt-1">(25.07.24~07.27)</p>
                   </div>
                 </div>
               </CardContent>

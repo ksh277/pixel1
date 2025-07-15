@@ -217,9 +217,9 @@ export default function ReviewsAll() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
       {/* Header */}
-      <div className="bg-white shadow-sm sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#2C2C2C] shadow-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -229,17 +229,17 @@ export default function ReviewsAll() {
                   {t({ ko: "홈으로", en: "Back to Home", ja: "ホームへ", zh: "回到首页" })}
                 </Button>
               </Link>
-              <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
-                <Link href="/" className="hover:text-gray-700">
+              <div className="hidden md:flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-300">
                   {t({ ko: "홈", en: "Home", ja: "ホーム", zh: "首页" })}
                 </Link>
                 <span>›</span>
-                <span className="text-gray-900">
+                <span className="text-gray-900 dark:text-white">
                   {t({ ko: "전체 후기", en: "All Reviews", ja: "全てのレビュー", zh: "所有评价" })}
                 </span>
               </div>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 dark:text-gray-400">
               {t({ ko: "총", en: "Total", ja: "合計", zh: "总计" })} {filteredAndSortedReviews.length}
               {t({ ko: "개의 후기", en: " reviews", ja: "件のレビュー", zh: "条评价" })}
             </div>
@@ -253,7 +253,7 @@ export default function ReviewsAll() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 {t({
                   ko: "전체 창작자 후기",
                   en: "All Creator Reviews",
@@ -261,7 +261,7 @@ export default function ReviewsAll() {
                   zh: "所有创作者评价"
                 })}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 {t({
                   ko: "우리 서비스를 이용한 창작자들의 솔직한 후기를 모두 확인해보세요",
                   en: "Check out all honest reviews from creators who used our service",
@@ -329,11 +329,11 @@ export default function ReviewsAll() {
         >
           {filteredAndSortedReviews.map((review) => (
             <motion.div key={review.id} variants={itemVariants}>
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+              <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer dark:bg-[#2C2C2C] dark:border-gray-700">
                 <Link href={`/reviews/${review.id}`}>
                   <CardContent className="p-0">
                     {/* Product Image */}
-                    <div className="relative aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
+                    <div className="relative aspect-square bg-gray-100 dark:bg-gray-700 rounded-t-lg overflow-hidden">
                       <img
                         src={review.productImage}
                         alt={language === 'ko' ? review.productNameKo : review.productName}
@@ -363,25 +363,25 @@ export default function ReviewsAll() {
                     {/* Review Content */}
                     <div className="p-4 space-y-3">
                       {/* Product Name */}
-                      <h3 className="font-bold text-sm text-gray-900">
+                      <h3 className="font-bold text-sm text-gray-900 dark:text-white">
                         {language === 'ko' ? review.productNameKo : review.productName}
                       </h3>
 
                       {/* Rating */}
                       <div className="flex items-center gap-1">
                         {renderStars(review.rating)}
-                        <span className="text-sm text-gray-600 ml-1">
+                        <span className="text-sm text-gray-600 dark:text-gray-300 ml-1">
                           {review.rating}.0
                         </span>
                       </div>
 
                       {/* Full Review Text */}
-                      <p className="text-sm text-gray-700 leading-relaxed">
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                         {review.reviewText}
                       </p>
 
                       {/* Reviewer Info */}
-                      <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t">
+                      <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-2 border-t dark:border-gray-600">
                         <div className="flex items-center gap-1">
                           <User className="h-3 w-3" />
                           <span>{review.reviewerNickname}</span>
@@ -402,10 +402,10 @@ export default function ReviewsAll() {
         {/* No Results */}
         {filteredAndSortedReviews.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-gray-400 text-lg mb-2">
+            <div className="text-gray-400 dark:text-gray-500 text-lg mb-2">
               {t({ ko: "검색 결과가 없습니다", en: "No reviews found", ja: "レビューが見つかりません", zh: "未找到评价" })}
             </div>
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               {t({ ko: "다른 검색어나 필터를 시도해보세요", en: "Try different search terms or filters", ja: "異なる検索語やフィルターを試してください", zh: "请尝试其他搜索词或筛选条件" })}
             </p>
           </div>

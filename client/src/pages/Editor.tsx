@@ -363,11 +363,11 @@ export default function Editor() {
 
   if (showProductSelector) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4">
         <div className="max-w-6xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {t({
                 ko: "제작할 제품을 선택해주세요",
                 en: "Select Product to Create",
@@ -375,7 +375,7 @@ export default function Editor() {
                 zh: "请选择要制作的产品",
               })}
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               {t({
                 ko: "원하는 굿즈를 클릭하여 전문 에디터를 시작하세요",
                 en: "Click your desired goods to start the professional editor",
@@ -391,11 +391,11 @@ export default function Editor() {
               <div
                 key={product.id}
                 className={cn(
-                  "bg-white rounded-xl shadow-md p-3 relative cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+                  "bg-white dark:bg-[#2C2C2C] rounded-xl shadow-md p-3 relative cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
                   "flex flex-col justify-between min-h-[420px] max-h-[420px] overflow-hidden",
                   product.available
-                    ? "hover:border-blue-200 border border-gray-200"
-                    : "opacity-60 cursor-not-allowed border border-gray-200",
+                    ? "hover:border-blue-200 border border-gray-200 dark:border-gray-700"
+                    : "opacity-60 cursor-not-allowed border border-gray-200 dark:border-gray-700",
                 )}
                 onClick={() => handleProductSelect(product)}
               >
@@ -418,10 +418,10 @@ export default function Editor() {
                 </div>
 
                 {/* Product Image Placeholder - Fixed Height */}
-                <div className="product-thumbnail w-full h-36 bg-gray-100 rounded-lg mb-3 flex items-center justify-center border border-gray-200 flex-shrink-0">
+                <div className="product-thumbnail w-full h-36 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3 flex items-center justify-center border border-gray-200 dark:border-gray-600 flex-shrink-0">
                   <div className="text-center">
-                    <ImageIcon className="w-8 h-8 text-gray-400 mx-auto mb-1" />
-                    <span className="text-xs text-gray-500">
+                    <ImageIcon className="w-8 h-8 text-gray-400 dark:text-gray-500 mx-auto mb-1" />
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {t({
                         ko: "이미지 준비중",
                         en: "Image Ready",
@@ -436,7 +436,7 @@ export default function Editor() {
                 <div className="flex-grow flex flex-col">
                   {/* Product Tags */}
                   <div className="mb-2">
-                    <span className="inline-block border border-gray-300 text-xs text-gray-600 px-2 py-0.5 rounded-full">
+                    <span className="inline-block border border-gray-300 dark:border-gray-600 text-xs text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">
                       {product.id === "keyring" &&
                         t({
                           ko: "타공포함",
@@ -497,7 +497,7 @@ export default function Editor() {
                   </div>
 
                   {/* Product Name */}
-                  <div className="font-semibold text-sm mb-1 text-gray-900 line-clamp-2">
+                  <div className="font-semibold text-sm mb-1 text-gray-900 dark:text-white line-clamp-2">
                     {t(product.name)} ({product.defaultSize.width}×
                     {product.defaultSize.height}mm)
                   </div>
@@ -507,7 +507,7 @@ export default function Editor() {
                 <div className="mt-auto space-y-2">
                   {/* Price */}
                   <div>
-                    <div className="text-sm font-bold text-black">
+                    <div className="text-sm font-bold text-black dark:text-white">
                       {product.id === "keyring" && "1,500원"}
                       {product.id === "stand" && "2,500원"}
                       {product.id === "corot" && "1,800원"}
@@ -517,7 +517,7 @@ export default function Editor() {
                       {product.id === "magnet" && "1,800원"}
                       {product.id === "carabiner" && "3,200원"}
                     </div>
-                    <div className="text-xs line-through text-gray-400">
+                    <div className="text-xs line-through text-gray-400 dark:text-gray-500">
                       {product.id === "keyring" && "2,000원"}
                       {product.id === "stand" && "3,000원"}
                       {product.id === "corot" && "2,200원"}
@@ -530,7 +530,7 @@ export default function Editor() {
                   </div>
 
                   {/* Reviews */}
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
                     {product.available ? (
                       <>
                         {product.id === "keyring" &&

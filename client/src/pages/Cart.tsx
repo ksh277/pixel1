@@ -110,16 +110,16 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
             <div className="mb-8">
               <BelugaMascot variant="empty-cart" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "장바구니가 비어 있습니다", en: "Your cart is empty" })}
             </h2>
-            <p className="text-gray-600 mb-8">
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
               {t({ ko: "원하는 상품을 장바구니에 담아보세요", en: "Add items to your cart to get started" })}
             </p>
             <div className="flex items-center justify-center space-x-4">
@@ -136,13 +136,13 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             {t({ ko: "장바구니", en: "Shopping Cart" })}
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
             {t({ ko: `총 ${cartItems.length}개의 상품이 있습니다`, en: `${cartItems.length} items in your cart` })}
           </p>
         </div>
