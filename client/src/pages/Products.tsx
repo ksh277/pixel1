@@ -388,18 +388,23 @@ export default function Products() {
             ) : (
               <>
                 <h2 className="text-xl font-bold mb-4">🔥 인기상품</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {popularProducts.slice(0, 3).map((product) => (
                     <div
                       key={product.id}
                       className="rounded-xl overflow-hidden shadow-md bg-white h-[270px]"
                     >
                       <img
-                        src={product.imageUrl}
+                        src={product.imageUrl || "/placeholder.png"}
                         alt={language === "ko" ? product.nameKo : product.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
+                  ))}
+                </div>
+                <div className="space-y-4 mt-8">
+                  {popularProducts.slice(3).map((product) => (
+                    <ProductListItem key={product.id} product={product} />
                   ))}
                 </div>
                 <h2 className="text-xl font-bold mb-4">📦 전체 상품</h2>

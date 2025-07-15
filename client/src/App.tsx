@@ -36,7 +36,7 @@ import UserContentShowcase from "@/pages/UserContentShowcase";
 import CommunityQA from "@/pages/CommunityQA";
 import MyPage from "@/pages/MyPage";
 import Wishlist from "@/pages/Wishlist";
-import AdminDashboard from "@/pages/admin";
+import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminLogin from "@/pages/admin/Login";
 import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
@@ -133,6 +133,7 @@ function Router() {
 
         {/* Admin routes */}
         <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/dashboard" component={AdminDashboard} />
 
         {/* Category and section routes */}
