@@ -391,7 +391,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {creatorReviews.slice(0, isMobile ? 4 : 3).map((review) => (
               <motion.div
                 key={review.id}
@@ -399,7 +399,7 @@ export default function Home() {
                 className="w-full"
               >
                 <Link href={`/product/${review.id}`}>
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[420px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[320px] md:min-h-[420px] flex flex-col">
                     {/* Large Review Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -488,7 +488,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {communityShowcase.slice(0, isMobile ? 4 : 3).map((item) => (
               <motion.div
                 key={item.id}
@@ -496,7 +496,7 @@ export default function Home() {
                 className="w-full"
               >
                 <Link href={`/community/${item.id}`}>
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[320px] md:min-h-[400px] flex flex-col">
                     {/* Large Community Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -577,7 +577,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {materialRecommendations.slice(0, isMobile ? 4 : 3).map((item) => (
               <motion.div
                 key={item.id}
@@ -585,7 +585,7 @@ export default function Home() {
                 className="w-full"
               >
                 <Link href={`/product/${item.id}`}>
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[400px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[320px] md:min-h-[400px] flex flex-col">
                     {/* Large Material Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -659,7 +659,7 @@ export default function Home() {
 
           {/* Instagram Feed Grid Layout */}
           <div className="px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {instagramFeed.slice(0, isMobile ? 4 : 3).map((post) => (
                 <motion.div
                   key={post.id}
