@@ -171,20 +171,20 @@ export default function CommunityQA() {
   const totalPosts = filteredPosts.length;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-[#1A1A1A]">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 py-8 px-4">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 py-8 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="text-6xl">🤔</div>
               <div className="relative">
-                <div className="bg-white rounded-2xl px-4 py-2 shadow-sm border border-blue-200">
-                  <p className="text-sm font-medium text-gray-700">
+                <div className="bg-white dark:bg-[#2C2C2C] rounded-2xl px-4 py-2 shadow-sm border border-blue-200 dark:border-gray-700">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     "이거 어떻게 하지? 물어봐야겠다~"
                   </p>
                 </div>
-                <div className="absolute -bottom-2 left-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white"></div>
+                <div className="absolute -bottom-2 left-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white dark:border-t-[#2C2C2C]"></div>
               </div>
             </div>
             <Button 
@@ -209,7 +209,7 @@ export default function CommunityQA() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Tab Navigation */}
         <div className="flex flex-col space-y-4 mb-6 md:flex-row md:items-center md:justify-between md:space-y-0">
-          <div className="flex space-x-1 bg-gray-100 rounded-lg p-1 mobile-tabs">
+          <div className="flex space-x-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1 mobile-tabs">
             {tabs.map((tab) => (
               <button
                 key={tab}
@@ -217,13 +217,13 @@ export default function CommunityQA() {
                 className={cn(
                   "px-4 py-2 rounded-md font-medium transition-colors text-sm mobile-tab-item",
                   activeTab === tab
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-white dark:bg-[#2C2C2C] text-blue-600 dark:text-blue-400 shadow-sm"
+                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 )}
               >
                 {tab}
                 {tab === "전체" && (
-                  <span className="ml-1 text-xs text-gray-500">
+                  <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">
                     ({totalPosts})
                   </span>
                 )}
@@ -273,7 +273,7 @@ export default function CommunityQA() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -282,24 +282,24 @@ export default function CommunityQA() {
                           variant={post.category === "굿즈지식인" ? "default" : "secondary"}
                           className={cn(
                             "text-xs",
-                            post.category === "굿즈지식인" ? "bg-blue-100 text-blue-700" : "bg-green-100 text-green-700"
+                            post.category === "굿즈지식인" ? "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300" : "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300"
                           )}
                         >
                           {post.category}
                         </Badge>
                         {post.isUnanswered && (
-                          <Badge variant="outline" className="text-xs text-orange-600 border-orange-600">
+                          <Badge variant="outline" className="text-xs text-orange-600 dark:text-orange-400 border-orange-600 dark:border-orange-400">
                             답변대기
                           </Badge>
                         )}
                         {post.isExpertAnswer && (
-                          <Badge variant="default" className="text-xs bg-purple-100 text-purple-700">
+                          <Badge variant="default" className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300">
                             올댓지식인 답변
                           </Badge>
                         )}
                       </div>
 
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
                         {post.title}
                         {post.isNew && (
                           <span className="ml-2 text-red-500 text-sm font-bold">🔴 N</span>

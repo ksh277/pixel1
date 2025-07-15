@@ -234,7 +234,7 @@ export default function CommunityResources() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <motion.div
           variants={containerVariants}
@@ -244,16 +244,16 @@ export default function CommunityResources() {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "자료실", en: "Resources", ja: "資料室", zh: "资料室" })}
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               {t({ ko: "굿즈 제작에 필요한 자료를 다운로드하세요", en: "Download resources needed for goods production", ja: "グッズ制作に必要な資料をダウンロードしてください", zh: "下载制作商品所需的资料" })}
             </p>
           </motion.div>
 
           {/* Search and Filters */}
-          <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-sm p-6">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-[#2C2C2C] rounded-lg shadow-sm p-6 border-gray-200 dark:border-gray-700">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
               <div className="flex-1 max-w-md">
                 <div className="relative">

@@ -227,16 +227,16 @@ export function CommunityShowcaseSection() {
       >
         {/* Section Header */}
         <motion.div variants={itemVariants} className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t({ ko: "내가만든굿즈자랑", en: "My Goods Showcase", ja: "私が作ったグッズ自慢", zh: "我制作的商品展示" })}
           </h2>
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
             {t({ ko: "다른 창작자들이 만든 굿즈를 구경해보세요!", en: "Check out what other creators are making!", ja: "他のクリエイターが作ったグッズを見てみましょう！", zh: "看看其他创作者制作的商品！" })}
           </p>
         </motion.div>
 
         {/* Search and Filters */}
-        <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-sm p-6">
+        <motion.div variants={itemVariants} className="bg-white dark:bg-[#2C2C2C] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="flex-1 max-w-md">
               <div className="relative">
@@ -298,7 +298,7 @@ export function CommunityShowcaseSection() {
         </motion.div>
 
         {/* Posts Grid */}
-        <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-sm p-6">
+        <motion.div variants={itemVariants} className="bg-white dark:bg-[#2C2C2C] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="unified-mobile-grid">
             {sortedPosts.map((post) => (
               <div key={post.id} className="unified-mobile-card">
@@ -335,15 +335,15 @@ export function CommunityShowcaseSection() {
                 </div>
 
                 <div className="unified-mobile-content">
-                  <h3 className="text-sm font-bold mt-2 truncate">
+                  <h3 className="text-sm font-bold mt-2 truncate dark:text-white">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-400 dark:text-gray-300 mt-1">
                     ❤️ {post.likes} &nbsp; 💬 {post.comments}
                   </p>
                   <div className="flex gap-1 mt-1">
                     {post.tags.slice(0, 2).map((tag, index) => (
-                      <span key={index} className="text-xs bg-gray-200 rounded px-1">
+                      <span key={index} className="text-xs bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded px-1">
                         #{tag}
                       </span>
                     ))}

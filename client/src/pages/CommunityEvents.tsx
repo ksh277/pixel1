@@ -159,7 +159,7 @@ export default function CommunityEvents() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <motion.div
           variants={containerVariants}
@@ -172,39 +172,39 @@ export default function CommunityEvents() {
             <div className="mb-6">
               <BelugaMascot variant="event" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "이벤트", en: "Events", ja: "イベント", zh: "活动" })}
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               {t({ ko: "다양한 혜택과 재미있는 이벤트에 참여하세요", en: "Join various benefits and exciting events", ja: "様々な特典と楽しいイベントに参加しましょう", zh: "参加各种福利和有趣的活动" })}
             </p>
           </motion.div>
 
           {/* Event Statistics */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="text-center">
+            <Card className="text-center bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <Trophy className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-gray-900">3</div>
-                <div className="text-sm text-gray-600">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">3</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   {t({ ko: "진행중인 이벤트", en: "Active Events", ja: "進行中のイベント", zh: "进行中的活动" })}
                 </div>
               </CardContent>
             </Card>
-            <Card className="text-center">
+            <Card className="text-center bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <Users className="h-8 w-8 text-blue-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-gray-900">4,703</div>
-                <div className="text-sm text-gray-600">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">4,703</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   {t({ ko: "총 참여자", en: "Total Participants", ja: "総参加者", zh: "总参与者" })}
                 </div>
               </CardContent>
             </Card>
-            <Card className="text-center">
+            <Card className="text-center bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <Gift className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-gray-900">₩950,000</div>
-                <div className="text-sm text-gray-600">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">₩950,000</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   {t({ ko: "총 상금", en: "Total Prizes", ja: "総賞金", zh: "总奖金" })}
                 </div>
               </CardContent>
@@ -214,7 +214,7 @@ export default function CommunityEvents() {
           {/* Event Cards */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {mockEvents.map((event) => (
-              <Card key={event.id} className="group hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+              <Card key={event.id} className="group hover:shadow-xl transition-shadow duration-300 overflow-hidden bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
                 <div className="relative">
                   <img
                     src={event.image}
@@ -228,17 +228,17 @@ export default function CommunityEvents() {
                     )}
                   </div>
                   <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-white/90">
+                    <Badge variant="secondary" className="bg-white/90 dark:bg-gray-800/90 dark:text-white">
                       {event.category}
                     </Badge>
                   </div>
                 </div>
 
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors dark:text-white">
                     {event.titleKo}
                   </CardTitle>
-                  <p className="text-sm text-gray-600 line-clamp-2">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
                     {event.descriptionKo}
                   </p>
                 </CardHeader>
@@ -246,8 +246,8 @@ export default function CommunityEvents() {
                 <CardContent className="space-y-4">
                   {/* Deadline */}
                   <div className="flex items-center gap-2 text-sm">
-                    <Clock className="h-4 w-4 text-gray-500" />
-                    <span className="text-gray-600">
+                    <Clock className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                    <span className="text-gray-600 dark:text-gray-300">
                       {t({ ko: "마감", en: "Deadline", ja: "締切", zh: "截止日期" })}: {event.deadline}
                     </span>
                     <span className="text-red-500 font-medium">
@@ -259,10 +259,10 @@ export default function CommunityEvents() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4 text-gray-500" />
-                        <span>{t({ ko: "참여자", en: "Participants", ja: "参加者", zh: "参与者" })}</span>
+                        <Users className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                        <span className="dark:text-gray-300">{t({ ko: "참여자", en: "Participants", ja: "参加者", zh: "参与者" })}</span>
                       </div>
-                      <span className="font-medium">
+                      <span className="font-medium dark:text-gray-200">
                         {event.participantCount.toLocaleString()}
                         {event.maxParticipants && ` / ${event.maxParticipants.toLocaleString()}`}
                       </span>
@@ -274,17 +274,17 @@ export default function CommunityEvents() {
 
                   {/* Prize */}
                   <div className="flex items-start gap-2 text-sm">
-                    <Gift className="h-4 w-4 text-gray-500 mt-0.5" />
+                    <Gift className="h-4 w-4 text-gray-500 dark:text-gray-400 mt-0.5" />
                     <div>
-                      <span className="text-gray-600">{t({ ko: "상금", en: "Prize", ja: "賞金", zh: "奖金" })}: </span>
-                      <span className="font-medium text-blue-600">{event.prizeKo}</span>
+                      <span className="text-gray-600 dark:text-gray-300">{t({ ko: "상금", en: "Prize", ja: "賞金", zh: "奖金" })}: </span>
+                      <span className="font-medium text-blue-600 dark:text-blue-400">{event.prizeKo}</span>
                     </div>
                   </div>
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1">
                     {event.tags.map((tag, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
+                      <Badge key={index} variant="outline" className="text-xs dark:border-gray-600 dark:text-gray-300">
                         #{tag}
                       </Badge>
                     ))}

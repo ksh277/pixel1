@@ -165,10 +165,10 @@ export function BestReviewsSection() {
       >
         {/* Section Header */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Best Review 💌
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-gray-300">
             {t({
               ko: "올댓프린팅이 직접 선별한 베스트 리뷰",
               en: "Selected directly by AllThatPrinting",
@@ -226,7 +226,7 @@ export function BestReviewsSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="rounded-xl bg-white shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-lg transition-shadow">
+              <Card className="rounded-xl bg-white dark:bg-[#2C2C2C] shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
                 {/* Best Review Ribbon */}
                 <div className="absolute top-0 right-0 z-10">
                   <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 text-xs font-bold transform rotate-12 translate-x-2 -translate-y-1 shadow-lg">
@@ -244,7 +244,7 @@ export function BestReviewsSection() {
 
                     {/* Product Badge */}
                     <div className="absolute bottom-2 left-2">
-                      <Badge className="bg-white/90 text-gray-800 text-xs">
+                      <Badge className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white text-xs">
                         {review.productNameKo}
                       </Badge>
                     </div>
@@ -254,25 +254,25 @@ export function BestReviewsSection() {
                     {/* Star Rating */}
                     <div className="flex items-center gap-1">
                       {renderStars(review.rating)}
-                      <span className="text-sm text-gray-600 ml-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-300 ml-1">
                         ({review.rating}.0)
                       </span>
                     </div>
 
                     {/* Review Text */}
-                    <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2 leading-relaxed">
                       {review.reviewText}
                     </p>
 
                     {/* User Info */}
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                       <span>{review.userNickname}</span>
                       <span>{review.reviewDate}</span>
                     </div>
 
                     {/* Interaction Stats */}
-                    <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                      <div className="flex items-center gap-3 text-sm text-gray-600">
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+                      <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
                         <div className="flex items-center gap-1">
                           <Heart className="h-4 w-4" />
                           <span>{review.likes}</span>
@@ -284,7 +284,7 @@ export function BestReviewsSection() {
                       </div>
 
                       <Link href={`/reviews/${review.id}`}>
-                        <Button size="sm" variant="outline" className="text-xs">
+                        <Button size="sm" variant="outline" className="text-xs dark:border-gray-600 dark:text-gray-200">
                           {t({
                             ko: "자세히",
                             en: "Details",

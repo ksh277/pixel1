@@ -89,10 +89,10 @@ export function ReviewRewardsSection() {
       >
         {/* Section Header */}
         <motion.div variants={itemVariants} className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t({ ko: "후기를 부탁해~", en: "Please Leave a Review~", ja: "レビューをお願いします~", zh: "请留下评论~" })}
           </h2>
-          <p className="text-lg text-gray-600 mb-4">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
             {t({ ko: "소중한 후기를 남겨주시면 포인트를 드려요!", en: "Leave a precious review and get points!", ja: "貴重なレビューを残していただくとポイントを差し上げます！", zh: "留下宝贵的评论即可获得积分！" })}
           </p>
           <div className="flex justify-center">
@@ -107,17 +107,17 @@ export function ReviewRewardsSection() {
           {rewardTiers.map((tier, index) => {
             const IconComponent = tier.icon;
             return (
-              <Card key={tier.id} className="relative group hover:shadow-lg transition-shadow duration-300">
+              <Card key={tier.id} className="relative group hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
                 <CardHeader className="text-center pb-3">
-                  <div className={`w-16 h-16 mx-auto rounded-full ${tier.bgColor} flex items-center justify-center mb-4`}>
+                  <div className={`w-16 h-16 mx-auto rounded-full ${tier.bgColor} dark:bg-opacity-20 flex items-center justify-center mb-4`}>
                     <IconComponent className={`h-8 w-8 ${tier.color}`} />
                   </div>
-                  <CardTitle className="text-lg font-bold text-gray-900">
+                  <CardTitle className="text-lg font-bold text-gray-900 dark:text-white">
                     {t({ ko: tier.titleKo, en: tier.title, ja: tier.titleKo, zh: tier.titleKo })}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     {t({ ko: tier.descriptionKo, en: tier.description, ja: tier.descriptionKo, zh: tier.descriptionKo })}
                   </p>
                   
@@ -125,7 +125,7 @@ export function ReviewRewardsSection() {
                     <div className={`text-2xl font-bold ${tier.color} mb-1`}>
                       {tier.rewardKo}
                     </div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
                       {t({ ko: "포인트 적립", en: "Points Earned", ja: "ポイント獲得", zh: "积分奖励" })}
                     </div>
                   </div>
@@ -133,7 +133,7 @@ export function ReviewRewardsSection() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="w-full group-hover:bg-gray-50"
+                    className="w-full group-hover:bg-gray-50 dark:group-hover:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                   >
                     {t({ ko: "리뷰 작성하기", en: "Write Review", ja: "レビューを書く", zh: "写评论" })}
                   </Button>
@@ -153,14 +153,14 @@ export function ReviewRewardsSection() {
         </motion.div>
 
         {/* Important Notice */}
-        <motion.div variants={itemVariants} className="bg-gray-50 rounded-lg p-6">
+        <motion.div variants={itemVariants} className="bg-gray-50 dark:bg-[#2C2C2C] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
             <div className="space-y-2">
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-gray-900 dark:text-white">
                 {t({ ko: "리뷰 적립 안내", en: "Review Rewards Notice", ja: "レビュー積立案内", zh: "评论奖励须知" })}
               </h3>
-              <ul className="text-sm text-gray-600 space-y-1">
+              <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                 <li>• {t({ ko: "주문번호당 1회만 적립됩니다 (여러 리뷰 작성시에도 1회만)", en: "Rewards only given once per order number even if multiple reviews are submitted", ja: "注文番号あたり1回のみ積立されます（複数レビュー作成時も1回のみ）", zh: "每个订单号只能获得一次奖励（即使提交多个评论）" })}</li>
                 <li>• {t({ ko: "베스트 리뷰는 운영진이 매주 선정합니다", en: "Best reviews are selected by our team weekly", ja: "ベストレビューは運営陣が毎週選定します", zh: "最佳评论由我们的团队每周选出" })}</li>
                 <li>• {t({ ko: "포인트는 리뷰 승인 후 3일 이내에 적립됩니다", en: "Points are credited within 3 days after review approval", ja: "ポイントはレビュー承認後3日以内に積立されます", zh: "积分将在评论通过后3天内发放" })}</li>
@@ -174,25 +174,25 @@ export function ReviewRewardsSection() {
         <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">12,547</div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "총 리뷰", en: "Total Reviews", ja: "総レビュー", zh: "总评论" })}
             </div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">8,321</div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "포토 리뷰", en: "Photo Reviews", ja: "フォトレビュー", zh: "照片评论" })}
             </div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-yellow-600">156</div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "베스트 리뷰", en: "Best Reviews", ja: "ベストレビュー", zh: "最佳评论" })}
             </div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">₩4.9M</div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "지급된 포인트", en: "Points Distributed", ja: "支給されたポイント", zh: "已发放积分" })}
             </div>
           </div>

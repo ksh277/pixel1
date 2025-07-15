@@ -28,15 +28,15 @@ export default function UserContentShowcase() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1A1A1A]">
       {/* Page Header */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-white dark:bg-[#1A1A1A] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "고객 후기 & 커뮤니티", en: "Customer Reviews & Community", ja: "顧客レビュー・コミュニティ", zh: "客户评论与社区" })}
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               {t({ ko: "실제 고객들의 생생한 후기와 창작자들의 작품을 만나보세요", en: "Discover authentic customer reviews and creators' amazing works", ja: "実際のお客様の生の声とクリエイターの作品をご覧ください", zh: "发现真实客户评论和创作者的精彩作品" })}
             </p>
           </div>
@@ -44,19 +44,19 @@ export default function UserContentShowcase() {
       </div>
 
       {/* Navigation Menu */}
-      <div className="bg-white border-b sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#1A1A1A] border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex space-x-8 overflow-x-auto py-4">
-            <a href="#best-reviews" className="text-sm font-medium text-gray-700 hover:text-blue-600 whitespace-nowrap">
+            <a href="#best-reviews" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 whitespace-nowrap">
               💌 {t({ ko: "베스트 리뷰", en: "Best Reviews", ja: "ベストレビュー", zh: "最佳评论" })}
             </a>
-            <a href="#review-rewards" className="text-sm font-medium text-gray-700 hover:text-blue-600 whitespace-nowrap">
+            <a href="#review-rewards" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 whitespace-nowrap">
               🎁 {t({ ko: "리뷰 혜택", en: "Review Rewards", ja: "レビュー特典", zh: "评论奖励" })}
             </a>
-            <a href="#community-showcase" className="text-sm font-medium text-gray-700 hover:text-blue-600 whitespace-nowrap">
+            <a href="#community-showcase" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 whitespace-nowrap">
               🎨 {t({ ko: "굿즈 자랑", en: "Goods Showcase", ja: "グッズ自慢", zh: "商品展示" })}
             </a>
-            <a href="#all-reviews" className="text-sm font-medium text-gray-700 hover:text-blue-600 whitespace-nowrap">
+            <a href="#all-reviews" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 whitespace-nowrap">
               📊 {t({ ko: "전체 후기", en: "All Reviews", ja: "全レビュー", zh: "所有评论" })}
             </a>
           </nav>
@@ -71,22 +71,22 @@ export default function UserContentShowcase() {
         className="space-y-16"
       >
         {/* Section 1: Best Reviews */}
-        <motion.section id="best-reviews" variants={itemVariants} className="bg-white">
+        <motion.section id="best-reviews" variants={itemVariants} className="bg-white dark:bg-[#1A1A1A]">
           <BestReviewsSection />
         </motion.section>
 
         {/* Section 2: Review Rewards */}
-        <motion.section id="review-rewards" variants={itemVariants} className="bg-gradient-to-br from-blue-50 to-purple-50">
+        <motion.section id="review-rewards" variants={itemVariants} className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
           <ReviewRewardsSection />
         </motion.section>
 
         {/* Section 3: Community Showcase */}
-        <motion.section id="community-showcase" variants={itemVariants} className="bg-white">
+        <motion.section id="community-showcase" variants={itemVariants} className="bg-white dark:bg-[#1A1A1A]">
           <CommunityShowcaseSection />
         </motion.section>
 
         {/* Section 4: All Reviews List */}
-        <motion.section id="all-reviews" variants={itemVariants} className="bg-gray-50">
+        <motion.section id="all-reviews" variants={itemVariants} className="bg-gray-50 dark:bg-[#1A1A1A]">
           <AllReviewsListSection />
         </motion.section>
       </motion.div>

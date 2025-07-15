@@ -223,10 +223,10 @@ export function AllReviewsListSection() {
       >
         {/* Section Header */}
         <motion.div variants={itemVariants} className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {t({ ko: "사용 후기 모음", en: "Product Reviews Collection", ja: "使用レビュー集", zh: "产品评论合集" })}
           </h2>
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
             {t({ ko: "실제 구매고객들의 생생한 후기를 확인해보세요", en: "Check out authentic reviews from real customers", ja: "実際の購入者の生の声をご確認ください", zh: "查看真实客户的真实评价" })}
           </p>
         </motion.div>
@@ -267,7 +267,7 @@ export function AllReviewsListSection() {
         </div>
 
         {/* Reviews List */}
-        <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-sm p-6">
+        <motion.div variants={itemVariants} className="bg-white dark:bg-[#2C2C2C] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex gap-6 overflow-x-auto pb-4">
             {visibleReviews.map((review, index) => (
               <motion.div
@@ -276,7 +276,7 @@ export function AllReviewsListSection() {
                 className="flex-shrink-0 w-64"
               >
                 <Link href={`/product/${review.productId}`}>
-                  <Card className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                  <Card className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-white dark:bg-[#2C2C2C] border-gray-200 dark:border-gray-700">
                     <CardContent className="p-4">
                       <div className="relative mb-4">
                         <img
@@ -303,14 +303,14 @@ export function AllReviewsListSection() {
 
                         {/* Category Badge */}
                         <div className="absolute top-2 right-2">
-                          <Badge variant="secondary" className="bg-white/90 text-xs">
+                          <Badge variant="secondary" className="bg-white/90 dark:bg-gray-800/90 text-xs dark:text-white">
                             {review.category}
                           </Badge>
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1">
                           {review.productNameKo}
                         </h3>
 
@@ -319,13 +319,13 @@ export function AllReviewsListSection() {
                           <div className="flex items-center gap-1">
                             {renderStars(review.averageRating)}
                           </div>
-                          <span className="text-sm font-medium text-gray-900">
+                          <span className="text-sm font-medium text-gray-900 dark:text-white">
                             {review.averageRating}
                           </span>
                         </div>
 
                         {/* Review Count */}
-                        <div className="flex items-center justify-between text-sm text-gray-600">
+                        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
                           <span>
                             {t({ ko: "리뷰", en: "Reviews", ja: "レビュー", zh: "评论" })} {review.reviewCount.toLocaleString()}개
                           </span>
@@ -335,14 +335,14 @@ export function AllReviewsListSection() {
                         </div>
 
                         {/* Review Preview */}
-                        <div className="bg-gray-50 rounded-lg p-3">
+                        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
                           <div className="flex items-center gap-2 mb-2">
                             <Sparkles className="h-4 w-4 text-yellow-500" />
-                            <span className="text-xs font-medium text-gray-700">
+                            <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                               {t({ ko: "최근 리뷰", en: "Recent Review", ja: "最近のレビュー", zh: "最新评论" })}
                             </span>
                           </div>
-                          <p className="text-xs text-gray-600 line-clamp-2">
+                          <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
                             {review.averageRating >= 4.8 ? 
                               t({ ko: "품질이 정말 좋아요! 색감도 선명하고 만족스럽습니다.", en: "Quality is really good! Colors are vivid and satisfying.", ja: "品質が本当に良いです！色も鮮明で満足です。", zh: "质量真的很好！颜色鲜艳，很满意。" }) :
                               t({ ko: "생각보다 좋네요. 배송도 빠르고 포장도 깔끔했어요.", en: "Better than expected. Fast shipping and neat packaging.", ja: "思ったより良いです。配送も速く、包装も綺麗でした。", zh: "比预期的好。发货快，包装整洁。" })
@@ -351,7 +351,7 @@ export function AllReviewsListSection() {
                         </div>
 
                         {/* Action Button */}
-                        <Button size="sm" variant="outline" className="w-full text-xs">
+                        <Button size="sm" variant="outline" className="w-full text-xs dark:border-gray-600 dark:text-gray-200">
                           {t({ ko: "후기 전체보기", en: "View All Reviews", ja: "全レビューを見る", zh: "查看所有评论" })}
                         </Button>
                       </div>
@@ -369,7 +369,7 @@ export function AllReviewsListSection() {
             <div className="text-2xl font-bold text-blue-600">
               {mockProductReviews.reduce((sum, review) => sum + review.reviewCount, 0).toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "총 후기", en: "Total Reviews", ja: "総レビュー", zh: "总评论" })}
             </div>
           </div>
@@ -377,7 +377,7 @@ export function AllReviewsListSection() {
             <div className="text-2xl font-bold text-green-600">
               {mockProductReviews.reduce((sum, review) => sum + review.totalOrders, 0).toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "총 주문", en: "Total Orders", ja: "総注文", zh: "总订单" })}
             </div>
           </div>
@@ -385,7 +385,7 @@ export function AllReviewsListSection() {
             <div className="text-2xl font-bold text-yellow-600">
               {(mockProductReviews.reduce((sum, review) => sum + review.averageRating, 0) / mockProductReviews.length).toFixed(1)}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "평균 평점", en: "Average Rating", ja: "平均評価", zh: "平均评分" })}
             </div>
           </div>
@@ -393,7 +393,7 @@ export function AllReviewsListSection() {
             <div className="text-2xl font-bold text-purple-600">
               {mockProductReviews.filter(review => review.averageRating >= 4.5).length}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {t({ ko: "4.5점 이상", en: "4.5+ Rating", ja: "4.5点以上", zh: "4.5分以上" })}
             </div>
           </div>
