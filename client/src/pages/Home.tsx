@@ -25,6 +25,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import type { Product } from "@shared/schema";
 
 export default function Home() {
@@ -270,29 +275,84 @@ export default function Home() {
               gridClassName="grid grid-cols-1 md:grid-cols-3 gap-6"
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <PopularBox
-                title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!" })}
-                description={t({ ko: "소량 제작도 부담 없이", en: "Small quantity orders welcome" })}
-                image="/api/placeholder/400/300"
-                products={products?.slice(0, 3) || []}
-                bgColor="bg-purple-50"
-              />
-              <PopularBox
-                title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit" })}
-                description={t({ ko: "단체 주문 특가 혜택", en: "Special group order benefits" })}
-                image="/api/placeholder/400/300"
-                products={products?.slice(3, 6) || []}
-                bgColor="bg-green-50"
-              />
-              <PopularBox
-                title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts" })}
-                description={t({ ko: "인기 단체복 추천", en: "Popular group clothing recommendations" })}
-                image="/api/placeholder/400/300"
-                products={products?.slice(6, 9) || []}
-                bgColor="bg-blue-50"
-              />
-            </div>
+            <>
+              {/* Desktop View - 3 Column Grid */}
+              <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
+                <PopularBox
+                  title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!" })}
+                  description={t({ ko: "소량 제작도 부담 없이", en: "Small quantity orders welcome" })}
+                  image="/api/placeholder/400/300"
+                  products={products?.slice(0, 3) || []}
+                  bgColor="bg-purple-50"
+                />
+                <PopularBox
+                  title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit" })}
+                  description={t({ ko: "단체 주문 특가 혜택", en: "Special group order benefits" })}
+                  image="/api/placeholder/400/300"
+                  products={products?.slice(3, 6) || []}
+                  bgColor="bg-green-50"
+                />
+                <PopularBox
+                  title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts" })}
+                  description={t({ ko: "인기 단체복 추천", en: "Popular group clothing recommendations" })}
+                  image="/api/placeholder/400/300"
+                  products={products?.slice(6, 9) || []}
+                  bgColor="bg-blue-50"
+                />
+              </div>
+
+              {/* Mobile View - Swiper Carousel */}
+              <div className="md:hidden">
+                <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={16}
+                  slidesPerView={1}
+                  navigation={{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                  }}
+                  pagination={{
+                    clickable: true,
+                    bulletClass: 'swiper-pagination-bullet',
+                    bulletActiveClass: 'swiper-pagination-bullet-active',
+                  }}
+                  autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: false,
+                  }}
+                  loop={true}
+                  className="popular-products-swiper"
+                >
+                  <SwiperSlide>
+                    <PopularBox
+                      title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!" })}
+                      description={t({ ko: "소량 제작도 부담 없이", en: "Small quantity orders welcome" })}
+                      image="/api/placeholder/400/300"
+                      products={products?.slice(0, 3) || []}
+                      bgColor="bg-purple-50"
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <PopularBox
+                      title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit" })}
+                      description={t({ ko: "단체 주문 특가 혜택", en: "Special group order benefits" })}
+                      image="/api/placeholder/400/300"
+                      products={products?.slice(3, 6) || []}
+                      bgColor="bg-green-50"
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <PopularBox
+                      title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts" })}
+                      description={t({ ko: "인기 단체복 추천", en: "Popular group clothing recommendations" })}
+                      image="/api/placeholder/400/300"
+                      products={products?.slice(6, 9) || []}
+                      bgColor="bg-blue-50"
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+            </>
           )}
         </motion.section>
 
