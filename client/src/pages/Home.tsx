@@ -268,71 +268,86 @@ export default function Home() {
               gridClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
             />
           ) : (
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {products?.slice(0, 4).map((product: Product, index: number) => (
-                <motion.div
-                  key={product.id}
-                  variants={itemVariants}
-                  style={{ opacity: 1 }}
-                  className="w-full h-full"
-                >
-                  <Link href={`/product/${product.id}`}>
-                    <div className="product-card">
-                      <div className="product-card-image">
-                        {product.imageUrl ? (
-                          <img
-                            src={product.imageUrl}
-                            alt={product.name}
-                            className="w-full h-28 object-contain mx-auto"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400">
-                            <svg
-                              className="w-8 h-8"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                              />
-                            </svg>
+            <div className="space-y-6">
+              {/* Top 3 Popular Products - Image Only Cards */}
+              <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {products?.slice(0, 3).map((product: Product, index: number) => (
+                  <motion.div
+                    key={product.id}
+                    variants={itemVariants}
+                    style={{ opacity: 1 }}
+                    className="w-full"
+                  >
+                    <Link href={`/product/${product.id}`}>
+                      <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white relative">
+                        <img
+                          src={product.imageUrl || "/api/placeholder/300/200"}
+                          alt={language === "ko" ? product.nameKo : product.name}
+                          className="w-full h-48 object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = "/api/placeholder/300/200";
+                          }}
+                        />
+                        
+                        {/* HOT Badge - Only for featured products */}
+                        {product.isFeatured && (
+                          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            HOT
                           </div>
                         )}
-
-                        {/* HOT Badge */}
-                        {product.isFeatured && (
-                          <div className="product-card-badge">HOT</div>
-                        )}
-
-                        {/* LIKE Badge */}
-                        <div className="product-card-like">
-                          LIKE {product.likeCount || 15}
-                        </div>
                       </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
 
-                      <div className="product-card-content">
-                        <h3 className="product-card-title">
-                          {language === "ko" ? product.nameKo : product.name}
-                        </h3>
-                        <p className="product-card-price">
-                          ₩ {parseInt(product.basePrice).toLocaleString()}
-                        </p>
-                        <p className="product-card-stats">
-                          리뷰{" "}
-                          {product.reviewCount?.toLocaleString() || "11,390"} /
-                          LIKE {product.likeCount || 15}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
+              {/* Remaining Products - List Format */}
+              {products && products.length > 3 && (
+                <motion.div className="space-y-4">
+                  <div className="border-t pt-4">
+                    <h3 className="text-lg font-semibold mb-4 text-foreground">
+                      {t({ ko: "더 많은 인기상품", en: "More Popular Items" })}
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    {products.slice(3).map((product: Product) => (
+                      <motion.div
+                        key={product.id}
+                        variants={itemVariants}
+                        className="w-full"
+                      >
+                        <Link href={`/product/${product.id}`}>
+                          <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1">
+                                <h3 className="font-semibold text-foreground mb-1">
+                                  {language === "ko" ? product.nameKo : product.name}
+                                </h3>
+                                <p className="text-lg font-bold text-foreground mb-2">
+                                  ₩ {parseInt(product.basePrice).toLocaleString()}
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                  리뷰 {product.reviewCount?.toLocaleString() || "11,390"} / 
+                                  LIKE {product.likeCount || 15}
+                                </p>
+                              </div>
+                              
+                              {/* HOT Badge for featured products */}
+                              {product.isFeatured && (
+                                <Badge variant="destructive" className="ml-4">
+                                  HOT
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
-              ))}
-            </motion.div>
+              )}
+            </div>
           )}
         </motion.section>
 
