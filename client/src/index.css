@@ -492,12 +492,12 @@ body.dark {
 
   /* 섹션 간격 */
   .section-spacing {
-    margin-top: 48px;
+    margin-top: 24px;
   }
 
   .section-header {
-    padding-bottom: 12px;
-    margin-bottom: 12px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
   }
 
   /* AllThatPrinting 상품 카드 - 다크모드 대응 */
