@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Filter, Grid3X3, List, Search, SlidersHorizontal } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
-import { ProductListItem } from "@/components/ProductListItem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -136,8 +135,6 @@ export default function Products() {
         return 0;
     }
   });
-  const popularProducts = (sortedProducts ?? []).filter((p) => p.isFeatured);
-  const otherProducts = (sortedProducts ?? []).filter((p) => !p.isFeatured);
 
   return (
     <div className="min-h-screen bg-background">
@@ -386,34 +383,18 @@ export default function Products() {
                 </Button>
               </div>
             ) : (
-              <>
-                <h2 className="text-xl font-bold mb-4">🔥 인기상품</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {popularProducts.slice(0, 3).map((product) => (
-                    <div
-                      key={product.id}
-                      className="rounded-xl overflow-hidden shadow-md bg-white h-[270px]"
-                    >
-                      <img
-                        src={product.imageUrl || "/placeholder.png"}
-                        alt={language === "ko" ? product.nameKo : product.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="space-y-4 mt-8">
-                  {popularProducts.slice(3).map((product) => (
-                    <ProductListItem key={product.id} product={product} />
-                  ))}
-                </div>
-                <h2 className="text-xl font-bold mb-4">📦 전체 상품</h2>
-                <div className="space-y-4">
-                  {otherProducts.map((product) => (
-                    <ProductListItem key={product.id} product={product} />
-                  ))}
-                </div>
-              </>
+              <div
+                className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}
+              >
+                {sortedProducts?.map((product: Product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onAddToCart={handleAddToCart}
+                    onToggleFavorite={handleToggleFavorite}
+                  />
+                ))}
+              </div>
             )}
           </div>
         </div>

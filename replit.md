@@ -786,3 +786,15 @@ Preferred communication style: Simple, everyday language.
 - **CSS Cleanup**: Removed creator-review-card specific styles, eliminating code duplication
 - **Visual Consistency**: Perfect alignment between all homepage product/review sections with identical card dimensions
 - **Standardized Components**: All sections use allprint-card, allprint-card-image, allprint-card-content, allprint-card-title, allprint-card-price, allprint-card-stats classes
+
+### 2025-01-15: Popular Products Section Restructure - 3-Column Category Layout
+- **New Component Architecture**: Created `PopularBox` component for category-based product grouping
+- **3-Column Layout Implementation**: Replaced single product grid with themed category boxes:
+  - 🟦 Left Box: "1개부터 제작 가능해요!" (Featured products with purple background)
+  - 🟩 Center Box: "굿즈 행사 단체 키트" (Category 1 products with green background)  
+  - 🟥 Right Box: "베스트 단체 티셔츠" (Best sellers with blue background)
+- **Enhanced Product Display**: Each box contains large hero image, title, description, and 3 product mini-listings
+- **Responsive Design**: Desktop 3-column, mobile 1-column stacked layout
+- **Component Separation**: Maintained `HotProductPreview` for potential future use, `ProductCard` unchanged for product pages
+- **Multi-language Support**: Complete Korean/English localization for all new content
+- **Visual Hierarchy**: Color-coded backgrounds and structured layout matching Korean e-commerce patterns

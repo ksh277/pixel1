@@ -20,6 +20,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 import { ProductCard } from "@/components/ProductCard";
 import { HotProductPreview } from "@/components/HotProductPreview";
+import { PopularBox } from "@/components/PopularBox";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -265,60 +266,44 @@ export default function Home() {
 
           {isLoading ? (
             <ProductCardSkeleton
-              count={4}
-              gridClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              count={3}
+              gridClassName="grid grid-cols-1 md:grid-cols-3 gap-6"
             />
           ) : (
-            <div className="space-y-6">
-              {/* Top 3 Popular Products - Image Only Cards */}
-              <HotProductPreview products={products || []} />
+            <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Left Box - Hot Products */}
+              <motion.div variants={itemVariants}>
+                <PopularBox
+                  title={t({ ko: "1개부터 제작 가능해요!", en: "Order from just 1 piece!" })}
+                  description={t({ ko: "로고만 넣어도 완벽한 우리 매장 굿즈", en: "Perfect store merchandise with just your logo" })}
+                  image={products?.[0]?.imageUrl || "/api/placeholder/400/300"}
+                  products={products?.filter(p => p.isFeatured).slice(0, 3) || []}
+                  bgColor="bg-purple-50"
+                />
+              </motion.div>
 
-              {/* Remaining Products - List Format */}
-              {products && products.length > 3 && (
-                <motion.div className="space-y-4">
-                  <div className="border-t pt-4">
-                    <h3 className="text-lg font-semibold mb-4 text-foreground">
-                      {t({ ko: "더 많은 인기상품", en: "More Popular Items" })}
-                    </h3>
-                  </div>
-                  <div className="grid grid-cols-1 gap-4">
-                    {products.slice(3).map((product: Product) => (
-                      <motion.div
-                        key={product.id}
-                        variants={itemVariants}
-                        className="w-full"
-                      >
-                        <Link href={`/product/${product.id}`}>
-                          <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
-                            <div className="flex justify-between items-start">
-                              <div className="flex-1">
-                                <h3 className="font-semibold text-foreground mb-1">
-                                  {language === "ko" ? product.nameKo : product.name}
-                                </h3>
-                                <p className="text-lg font-bold text-foreground mb-2">
-                                  ₩ {parseInt(product.basePrice).toLocaleString()}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  리뷰 {product.reviewCount?.toLocaleString() || "11,390"} / 
-                                  LIKE {product.likeCount || 15}
-                                </p>
-                              </div>
-                              
-                              {/* HOT Badge for featured products */}
-                              {product.isFeatured && (
-                                <Badge variant="destructive" className="ml-4">
-                                  HOT
-                                </Badge>
-                              )}
-                            </div>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </div>
+              {/* Center Box - Category Products */}
+              <motion.div variants={itemVariants}>
+                <PopularBox
+                  title={t({ ko: "굿즈 행사 단체 키트", en: "Group Event Merchandise Kit" })}
+                  description={t({ ko: "15년의 노하우가 담긴 단체 굿즈 소개", en: "15 years of expertise in group merchandise" })}
+                  image={products?.[1]?.imageUrl || "/api/placeholder/400/300"}
+                  products={products?.filter(p => p.categoryId === 1).slice(0, 3) || []}
+                  bgColor="bg-green-50"
+                />
+              </motion.div>
+
+              {/* Right Box - Best Sellers */}
+              <motion.div variants={itemVariants}>
+                <PopularBox
+                  title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-Shirts" })}
+                  description={t({ ko: "마플이 추천하는 단체티 제작", en: "Recommended group t-shirt production" })}
+                  image={products?.[2]?.imageUrl || "/api/placeholder/400/300"}
+                  products={products?.slice(0, 3) || []}
+                  bgColor="bg-blue-50"
+                />
+              </motion.div>
+            </motion.div>
           )}
         </motion.section>
 

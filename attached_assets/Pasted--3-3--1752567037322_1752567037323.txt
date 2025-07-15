@@ -1,0 +1,83 @@
+# ✅ 작업 요청: 메인페이지 인기상품 섹션 레이아웃을 3단 구조로 변경
+
+## 📌 현재 문제
+- 메인페이지 인기상품이 현재 "상단 카드 3개 + 하단 리스트"로 나뉘어 있음
+- 이는 3번째 이미지처럼 하나의 섹션에 3개의 상품 그룹(카테고리)으로 나열되어야 함
+- 마치 '단체 굿즈 제작' / '굿즈 행사 키트' / '베스트 티셔츠'처럼 **가로 3단 구조**
+
+---
+
+## ✅ 목표 UI 구조
+
+| 위치 | 설명 |
+|------|------|
+| 🟦 왼쪽 박스 | HOT 인기상품 대표 아이템 + 설명 + 썸네일 + 리스트 (리뷰/가격 등 포함) |
+| 🟩 가운데 박스 | HOT 상품 중 특정 태그나 카테고리 기반의 추천 상품 그룹 |
+| 🟥 오른쪽 박스 | 조회수나 좋아요 기준의 상품 그룹 |
+
+### 💡 각 박스 구성 요소
+- 상단 대표 이미지 (400x300 또는 상품 썸네일)
+- 카테고리 제목 (예: “HOT 인기상품”)
+- 간단한 설명 (예: “지금 가장 많이 사랑받고 있어요!”)
+- 하단 리스트형 상품 미리보기: 2~3개 정도, 가격, 좋아요, 리뷰 포함
+
+---
+
+## ✅ 구현 방식 제안
+
+```tsx
+<section className="py-10 bg-white">
+  <h2 className="text-xl font-bold mb-4">🔥 인기상품</h2>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {/* Left Box */}
+    <PopularBox
+      title="1개부터 제작 가능해요!"
+      description="로고만 넣어도 완벽한 우리 매장 굿즈"
+      image="/images/popular1.png"
+      products={hotProductsGroup1}
+    />
+
+    {/* Center Box */}
+    <PopularBox
+      title="굿즈 행사 단체 키트"
+      description="15년의 노하우가 담긴 단체 굿즈 소개"
+      image="/images/popular2.png"
+      products={hotProductsGroup2}
+    />
+
+    {/* Right Box */}
+    <PopularBox
+      title="베스트 단체 티셔츠"
+      description="마플이 추천하는 단체티 제작"
+      image="/images/popular3.png"
+      products={hotProductsGroup3}
+    />
+  </div>
+</section>
+✅ PopularBox 컴포넌트 구성
+tsx
+복사
+편집
+function PopularBox({ title, description, image, products }) {
+  return (
+    <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+      <img src={image} alt={title} className="rounded-md mb-4" />
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <p className="text-sm text-gray-500 mb-2">{description}</p>
+      <ul className="space-y-2 text-sm">
+        {products.map((p) => (
+          <li className="flex justify-between">
+            <span>{p.name}</span>
+            <span className="text-gray-500">₩{p.price.toLocaleString()}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+✅ 데이터 조건
+각 박스당 products는 2~3개까지 출력
+
+hotProductsGroup1, 2, 3는 백엔드 혹은 목 데이터로 그룹화 가능
+
+이미지 경로는 /images/popular1.png 등 또는 상품 첫 번째 이미지 활용 가능
