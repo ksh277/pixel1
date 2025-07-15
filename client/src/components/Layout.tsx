@@ -179,7 +179,7 @@ export function Layout({ children, showCommunityNav = false }: LayoutProps) {
       
       {/* Global Fixed Floating Buttons */}
       {/* Beluga Mascot Inquiry Button (Bottom-Right) */}
-      <Link href="/inquiry">
+      <Link href="/inquiry" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <BelugaMascot variant="inquiry" />
       </Link>
 
