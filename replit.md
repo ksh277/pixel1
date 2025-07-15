@@ -798,3 +798,15 @@ Preferred communication style: Simple, everyday language.
 - **Component Separation**: Maintained `HotProductPreview` for potential future use, `ProductCard` unchanged for product pages
 - **Multi-language Support**: Complete Korean/English localization for all new content
 - **Visual Hierarchy**: Color-coded backgrounds and structured layout matching Korean e-commerce patterns
+
+### 2025-01-15: Homepage UI/UX Enhancement - Creator Reviews & Product Options
+- **Creator Reviews Section Enhancement**: Updated with 70% image coverage and review summary text for better visual impact
+- **Community Showcase & Material Recommendations**: Applied unified larger card layout with professional styling
+- **Product Detail Page Table Format**: Implemented comprehensive size selection with 12 categories:
+  - 일반 사이즈: 12 options (20x20 to 80x20) 
+  - 라미 사이즈: 8 options (20x20 to 100x100)
+  - 대형 사이즈: 4 options (100x200 to 200x200)
+- **4-Column Grid Layout**: Clear pricing display in table format with hover effects
+- **Price Calculation Integration**: Updated calculateTotalPrice function for all new size options
+- **PopularBox Restoration**: Restored original 3-column PopularBox component per user request
+- **Responsive Design**: Maintained mobile-first approach with proper breakpoints

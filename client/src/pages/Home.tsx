@@ -270,114 +270,28 @@ export default function Home() {
               gridClassName="grid grid-cols-1 md:grid-cols-3 gap-6"
             />
           ) : (
-            <div className="space-y-8">
-              {/* Top 3 Popular Products - Large Cards */}
-              <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {products?.slice(0, 3).map((product: Product, index: number) => (
-                  <motion.div
-                    key={product.id}
-                    variants={itemVariants}
-                    className="w-full"
-                  >
-                    <Link href={`/product/${product.id}`}>
-                      <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                        {/* Large Product Image */}
-                        <div className="relative">
-                          <img
-                            src={product.imageUrl || "/api/placeholder/600/600"}
-                            alt={language === "ko" ? product.nameKo : product.name}
-                            className="w-full h-80 object-cover"
-                            loading="lazy"
-                            onError={(e) => {
-                              e.currentTarget.src = "/api/placeholder/600/600";
-                            }}
-                          />
-                          
-                          {/* HOT Badge */}
-                          {product.isFeatured && (
-                            <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
-                              HOT
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Product Details */}
-                        <div className="p-6">
-                          <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-                            {language === "ko" ? product.nameKo : product.name}
-                          </h3>
-                          
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-2xl font-bold text-blue-600">
-                              ₩{parseInt(product.basePrice).toLocaleString()}
-                            </span>
-                          </div>
-                          
-                          <div className="text-sm text-gray-600 space-y-1">
-                            <div>리뷰 {product.reviewCount?.toLocaleString() || "1,234"}</div>
-                            <div>LIKE {product.likeCount || 45}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* More Popular Products - List Format */}
-              {products && products.length > 3 && (
-                <motion.div className="space-y-4">
-                  <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold mb-4 text-foreground">
-                      {t({ ko: "더 많은 인기상품", en: "More Popular Items" })}
-                    </h3>
-                  </div>
-                  <div className="grid grid-cols-1 gap-3">
-                    {products.slice(3).map((product: Product) => (
-                      <motion.div
-                        key={product.id}
-                        variants={itemVariants}
-                        className="w-full"
-                      >
-                        <Link href={`/product/${product.id}`}>
-                          <div className="flex items-center justify-between p-4 bg-white border rounded-lg hover:shadow-md transition-shadow">
-                            <div className="flex items-center space-x-4">
-                              <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <img
-                                  src={product.imageUrl || "/api/placeholder/60/60"}
-                                  alt={product.name}
-                                  className="w-14 h-14 object-cover rounded"
-                                  onError={(e) => {
-                                    e.currentTarget.src = "/api/placeholder/60/60";
-                                  }}
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h4 className="font-semibold text-gray-900 truncate">
-                                  {language === "ko" ? product.nameKo : product.name}
-                                </h4>
-                                <p className="text-sm text-gray-600 mt-1">
-                                  리뷰 {product.reviewCount?.toLocaleString() || "123"} / LIKE {product.likeCount || 15}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                              <div className="text-xl font-bold text-blue-600">
-                                ₩{parseInt(product.basePrice).toLocaleString()}
-                              </div>
-                              {product.isFeatured && (
-                                <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-                                  HOT
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <PopularBox
+                title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!" })}
+                description={t({ ko: "소량 제작도 부담 없이", en: "Small quantity orders welcome" })}
+                image="/api/placeholder/400/300"
+                products={products?.slice(0, 3) || []}
+                bgColor="bg-purple-50"
+              />
+              <PopularBox
+                title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit" })}
+                description={t({ ko: "단체 주문 특가 혜택", en: "Special group order benefits" })}
+                image="/api/placeholder/400/300"
+                products={products?.slice(3, 6) || []}
+                bgColor="bg-green-50"
+              />
+              <PopularBox
+                title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts" })}
+                description={t({ ko: "인기 단체복 추천", en: "Popular group clothing recommendations" })}
+                image="/api/placeholder/400/300"
+                products={products?.slice(6, 9) || []}
+                bgColor="bg-blue-50"
+              />
             </div>
           )}
         </motion.section>
