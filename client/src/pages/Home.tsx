@@ -19,6 +19,7 @@ import { CategoryNav } from "@/components/CategoryNav";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 import { ProductCard } from "@/components/ProductCard";
+import { HotProductPreview } from "@/components/HotProductPreview";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -270,37 +271,7 @@ export default function Home() {
           ) : (
             <div className="space-y-6">
               {/* Top 3 Popular Products - Image Only Cards */}
-              <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {products?.slice(0, 3).map((product: Product, index: number) => (
-                  <motion.div
-                    key={product.id}
-                    variants={itemVariants}
-                    style={{ opacity: 1 }}
-                    className="w-full"
-                  >
-                    <Link href={`/product/${product.id}`}>
-                      <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white relative">
-                        <img
-                          src={product.imageUrl || "/api/placeholder/300/200"}
-                          alt={language === "ko" ? product.nameKo : product.name}
-                          className="w-full h-48 object-cover"
-                          loading="lazy"
-                          onError={(e) => {
-                            e.currentTarget.src = "/api/placeholder/300/200";
-                          }}
-                        />
-                        
-                        {/* HOT Badge - Only for featured products */}
-                        {product.isFeatured && (
-                          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-                            HOT
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
+              <HotProductPreview products={products || []} />
 
               {/* Remaining Products - List Format */}
               {products && products.length > 3 && (
