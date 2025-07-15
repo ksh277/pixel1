@@ -3,13 +3,21 @@ import { Card, CardContent } from "@/components/ui/card";
 interface ProductCardSkeletonProps {
   count?: number;
   className?: string;
+  gridClassName?: string;
 }
 
-export function ProductCardSkeleton({ count = 4, className = "" }: ProductCardSkeletonProps) {
+export function ProductCardSkeleton({
+  count = 4,
+  className = "",
+  gridClassName = "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4",
+}: ProductCardSkeletonProps) {
   return (
-    <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 ${className}`}>
+    <div className={`${gridClassName} ${className}`}>
       {Array.from({ length: count }).map((_, index) => (
-        <Card key={index} className="bg-white shadow-sm overflow-hidden border border-gray-100 animate-pulse">
+        <Card
+          key={index}
+          className="bg-white shadow-sm overflow-hidden border border-gray-100 animate-pulse"
+        >
           <CardContent className="p-0">
             <div className="relative aspect-square">
               <div className="absolute top-2 left-2 z-10">

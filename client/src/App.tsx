@@ -36,7 +36,8 @@ import UserContentShowcase from "@/pages/UserContentShowcase";
 import CommunityQA from "@/pages/CommunityQA";
 import MyPage from "@/pages/MyPage";
 import Wishlist from "@/pages/Wishlist";
-import AdminDashboard from "@/pages/AdminDashboard";
+import AdminDashboard from "@/pages/admin";
+import AdminLogin from "@/pages/admin/Login";
 import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -44,16 +45,17 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 function Router() {
   const [location] = useLocation();
-  
+
   // Determine if we should show community navigation
-  const showCommunityNav = location.startsWith('/community') || 
-                           location === '/resources' || 
-                           location === '/events' || 
-                           location === '/showcase' ||
-                           location === '/doan' ||
-                           location === '/event' ||
-                           location.startsWith('/community/qna') ||
-                           location.startsWith('/community/question');
+  const showCommunityNav =
+    location.startsWith("/community") ||
+    location === "/resources" ||
+    location === "/events" ||
+    location === "/showcase" ||
+    location === "/doan" ||
+    location === "/event" ||
+    location.startsWith("/community/qna") ||
+    location.startsWith("/community/question");
 
   return (
     <Layout showCommunityNav={showCommunityNav}>
@@ -62,11 +64,14 @@ function Router() {
         <Route path="/products" component={Products} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/search" component={SearchResults} />
-        
+
         {/* Category routes */}
-        <Route path="/category/:category/:subcategory" component={CategoryPage} />
+        <Route
+          path="/category/:category/:subcategory"
+          component={CategoryPage}
+        />
         <Route path="/category/:category" component={CategoryPage} />
-        
+
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/cart" component={Cart} />
@@ -106,12 +111,15 @@ function Router() {
         <Route path="/collections" component={Collections} />
         <Route path="/community/share" component={CommunityShare} />
         <Route path="/community/question" component={CommunityQuestion} />
-        <Route path="/community/design-share" component={CommunityDesignShare} />
+        <Route
+          path="/community/design-share"
+          component={CommunityDesignShare}
+        />
         <Route path="/community/events" component={Events} />
         <Route path="/community/resources" component={CommunityResources} />
         <Route path="/community/qna" component={CommunityQA} />
         <Route path="/showcase" component={UserContentShowcase} />
-        
+
         {/* Shortcut routes */}
         <Route path="/doan" component={CommunityDesignShare} />
         <Route path="/event" component={Events} />
@@ -122,10 +130,11 @@ function Router() {
         <Route path="/reviews/all" component={ReviewsAll} />
         <Route path="/design-service" component={DesignServiceProduct} />
         <Route path="/additional-services" component={AdditionalServices} />
-        
-        {/* Admin route */}
-        <Route path="/admin" component={AdminDashboard} />
-        
+
+        {/* Admin routes */}
+        <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin/dashboard" component={AdminDashboard} />
+
         {/* Category and section routes */}
         <Route path="/popular" component={Products} />
         <Route path="/new" component={Products} />
@@ -136,7 +145,7 @@ function Router() {
         <Route path="/picks" component={Products} />
         <Route path="/brand" component={Products} />
         <Route path="/benefits" component={Products} />
-        
+
         {/* Fallback to 404 */}
         <Route component={NotFound} />
       </Switch>

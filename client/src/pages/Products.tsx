@@ -3,11 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Filter, Grid3X3, List, Search, SlidersHorizontal } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductListItem } from "@/components/ProductListItem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -28,20 +35,28 @@ export default function Products() {
   const [priceFilters, setPriceFilters] = useState({
     under10k: false,
     between10k20k: false,
-    over20k: false
+    over20k: false,
   });
-  
+
   // Get page title based on current route
   const getPageTitle = () => {
     switch (location) {
-      case "/popular": return { ko: "인기상품", en: "Popular Items" };
-      case "/new": return { ko: "신상품", en: "New Arrivals" };
-      case "/trending": return { ko: "인기급상승", en: "Trending Now" };
-      case "/picks": return { ko: "올댓추천", en: "Staff Picks" };
-      case "/material": return { ko: "자재별 추천", en: "Material Recommendations" };
-      case "/brand": return { ko: "브랜드 굿즈", en: "Brand Custom Goods" };
-      case "/benefits": return { ko: "고객 혜택", en: "Customer Benefits" };
-      default: return { ko: "전체 상품", en: "All Products" };
+      case "/popular":
+        return { ko: "인기상품", en: "Popular Items" };
+      case "/new":
+        return { ko: "신상품", en: "New Arrivals" };
+      case "/trending":
+        return { ko: "인기급상승", en: "Trending Now" };
+      case "/picks":
+        return { ko: "올댓추천", en: "Staff Picks" };
+      case "/material":
+        return { ko: "자재별 추천", en: "Material Recommendations" };
+      case "/brand":
+        return { ko: "브랜드 굿즈", en: "Brand Custom Goods" };
+      case "/benefits":
+        return { ko: "고객 혜택", en: "Customer Benefits" };
+      default:
+        return { ko: "전체 상품", en: "All Products" };
     }
   };
 
@@ -54,7 +69,10 @@ export default function Products() {
 
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ["/api/products", selectedCategory],
-    queryFn: () => api.getProducts(selectedCategory ? { category: parseInt(selectedCategory) } : {}),
+    queryFn: () =>
+      api.getProducts(
+        selectedCategory ? { category: parseInt(selectedCategory) } : {},
+      ),
   });
 
   const handleAddToCart = (product: Product) => {
@@ -72,30 +90,35 @@ export default function Products() {
   };
 
   const handlePriceFilterChange = (filterType: string, checked: boolean) => {
-    setPriceFilters(prev => ({
+    setPriceFilters((prev) => ({
       ...prev,
-      [filterType]: checked
+      [filterType]: checked,
     }));
   };
 
   const filteredProducts = products?.filter((product: Product) => {
-    const matchesSearch = product.nameKo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    
+    const matchesSearch =
+      product.nameKo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.name.toLowerCase().includes(searchQuery.toLowerCase());
+
     // 가격 필터 적용
     const price = parseInt(product.basePrice);
     let matchesPrice = true;
-    
+
     // 어떤 가격 필터도 선택되지 않았으면 모든 상품 표시
-    const hasAnyPriceFilter = priceFilters.under10k || priceFilters.between10k20k || priceFilters.over20k;
-    
+    const hasAnyPriceFilter =
+      priceFilters.under10k ||
+      priceFilters.between10k20k ||
+      priceFilters.over20k;
+
     if (hasAnyPriceFilter) {
       matchesPrice = false;
       if (priceFilters.under10k && price < 10000) matchesPrice = true;
-      if (priceFilters.between10k20k && price >= 10000 && price <= 20000) matchesPrice = true;
+      if (priceFilters.between10k20k && price >= 10000 && price <= 20000)
+        matchesPrice = true;
       if (priceFilters.over20k && price > 20000) matchesPrice = true;
     }
-    
+
     return matchesSearch && matchesPrice;
   });
 
@@ -106,11 +129,15 @@ export default function Products() {
       case "price-high":
         return parseInt(b.basePrice) - parseInt(a.basePrice);
       case "newest":
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       default:
         return 0;
     }
   });
+  const popularProducts = (sortedProducts ?? []).filter((p) => p.isFeatured);
+  const otherProducts = (sortedProducts ?? []).filter((p) => !p.isFeatured);
 
   return (
     <div className="min-h-screen bg-background">
@@ -121,7 +148,10 @@ export default function Products() {
             {t(pageTitle)}
           </h1>
           <p className="text-lg text-muted-foreground">
-            {t({ ko: "나만의 디자인으로 특별한 굿즈를 만들어보세요", en: "Create special custom goods with your own design" })}
+            {t({
+              ko: "나만의 디자인으로 특별한 굿즈를 만들어보세요",
+              en: "Create special custom goods with your own design",
+            })}
           </p>
         </div>
       </div>
@@ -139,7 +169,10 @@ export default function Products() {
 
                 {/* Search */}
                 <div className="mb-6">
-                  <Label htmlFor="search" className="text-sm font-medium text-foreground mb-2 block">
+                  <Label
+                    htmlFor="search"
+                    className="text-sm font-medium text-foreground mb-2 block"
+                  >
                     검색
                   </Label>
                   <div className="relative">
@@ -163,7 +196,7 @@ export default function Products() {
                   </Label>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
+                      <Checkbox
                         id="all-categories"
                         checked={selectedCategory === ""}
                         onCheckedChange={() => setSelectedCategory("")}
@@ -175,18 +208,31 @@ export default function Products() {
                     {categoriesLoading ? (
                       <div className="space-y-2">
                         {[...Array(5)].map((_, i) => (
-                          <div key={i} className="h-6 bg-muted rounded animate-pulse" />
+                          <div
+                            key={i}
+                            className="h-6 bg-muted rounded animate-pulse"
+                          />
                         ))}
                       </div>
                     ) : (
                       categories?.map((category: Category) => (
-                        <div key={category.id} className="flex items-center space-x-2">
+                        <div
+                          key={category.id}
+                          className="flex items-center space-x-2"
+                        >
                           <Checkbox
                             id={`category-${category.id}`}
-                            checked={selectedCategory === category.id.toString()}
-                            onCheckedChange={() => setSelectedCategory(category.id.toString())}
+                            checked={
+                              selectedCategory === category.id.toString()
+                            }
+                            onCheckedChange={() =>
+                              setSelectedCategory(category.id.toString())
+                            }
                           />
-                          <Label htmlFor={`category-${category.id}`} className="text-sm">
+                          <Label
+                            htmlFor={`category-${category.id}`}
+                            className="text-sm"
+                          >
                             {category.nameKo}
                           </Label>
                         </div>
@@ -204,30 +250,42 @@ export default function Products() {
                   </Label>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="price-under-10k" 
+                      <Checkbox
+                        id="price-under-10k"
                         checked={priceFilters.under10k}
-                        onCheckedChange={(checked) => handlePriceFilterChange('under10k', checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          handlePriceFilterChange(
+                            "under10k",
+                            checked as boolean,
+                          )
+                        }
                       />
                       <Label htmlFor="price-under-10k" className="text-sm">
                         10,000원 미만
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="price-10k-20k" 
+                      <Checkbox
+                        id="price-10k-20k"
                         checked={priceFilters.between10k20k}
-                        onCheckedChange={(checked) => handlePriceFilterChange('between10k20k', checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          handlePriceFilterChange(
+                            "between10k20k",
+                            checked as boolean,
+                          )
+                        }
                       />
                       <Label htmlFor="price-10k-20k" className="text-sm">
                         10,000원 - 20,000원
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="price-over-20k" 
+                      <Checkbox
+                        id="price-over-20k"
                         checked={priceFilters.over20k}
-                        onCheckedChange={(checked) => handlePriceFilterChange('over20k', checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          handlePriceFilterChange("over20k", checked as boolean)
+                        }
                       />
                       <Label htmlFor="price-over-20k" className="text-sm">
                         20,000원 이상
@@ -249,7 +307,11 @@ export default function Products() {
                 </span>
                 {selectedCategory && (
                   <Badge variant="secondary">
-                    {categories?.find((c: Category) => c.id.toString() === selectedCategory)?.nameKo}
+                    {
+                      categories?.find(
+                        (c: Category) => c.id.toString() === selectedCategory,
+                      )?.nameKo
+                    }
                   </Badge>
                 )}
               </div>
@@ -292,7 +354,9 @@ export default function Products() {
 
             {/* Products Grid */}
             {productsLoading ? (
-              <div className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}>
+              <div
+                className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}
+              >
                 {[...Array(9)].map((_, i) => (
                   <Card key={i} className="overflow-hidden animate-pulse">
                     <div className="h-64 bg-muted"></div>
@@ -311,24 +375,40 @@ export default function Products() {
                   <p className="text-lg">검색 결과가 없습니다</p>
                   <p className="text-sm">다른 키워드나 필터를 사용해보세요</p>
                 </div>
-                <Button variant="outline" onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("");
-                }}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("");
+                  }}
+                >
                   필터 초기화
                 </Button>
               </div>
             ) : (
-              <div className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}>
-                {sortedProducts?.map((product: Product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onAddToCart={handleAddToCart}
-                    onToggleFavorite={handleToggleFavorite}
-                  />
-                ))}
-              </div>
+              <>
+                <h2 className="text-xl font-bold mb-4">🔥 인기상품</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                  {popularProducts.slice(0, 3).map((product) => (
+                    <div
+                      key={product.id}
+                      className="rounded-xl overflow-hidden shadow-md bg-white h-[270px]"
+                    >
+                      <img
+                        src={product.imageUrl}
+                        alt={language === "ko" ? product.nameKo : product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <h2 className="text-xl font-bold mb-4">📦 전체 상품</h2>
+                <div className="space-y-4">
+                  {otherProducts.map((product) => (
+                    <ProductListItem key={product.id} product={product} />
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>

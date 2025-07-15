@@ -156,45 +156,43 @@ export function BestReviewsSection() {
   );
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="space-y-8"
-        >
-          {/* Section Header */}
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Best Review 💌
-            </h2>
-            <p className="text-lg text-gray-600">
-              {t({
-                ko: "올댓프린팅이 직접 선별한 베스트 리뷰",
-                en: "Selected directly by AllThatPrinting",
-                ja: "オールザットプリンティングが直接選んだベストレビュー",
-                zh: "AllThatPrinting直接精选的最佳评论",
-              })}
-            </p>
-          </div>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="space-y-8"
+      >
+        {/* Section Header */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            Best Review 💌
+          </h2>
+          <p className="text-lg text-gray-600">
+            {t({
+              ko: "올댓프린팅이 직접 선별한 베스트 리뷰",
+              en: "Selected directly by AllThatPrinting",
+              ja: "オールザットプリンティングが直接選んだベストレビュー",
+              zh: "AllThatPrinting直接精选的最佳评论",
+            })}
+          </p>
+        </div>
 
-          {/* Navigation Controls */}
-          <div className="flex justify-between items-center">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={prevSlide}
-              disabled={currentIndex === 0}
-            >
-              <ChevronLeft className="h-4 w-4 mr-1" />
-              {t({ ko: "이전", en: "Previous", ja: "前へ", zh: "上一个" })}
-            </Button>
+        {/* Navigation Controls */}
+        <div className="flex justify-between items-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={prevSlide}
+            disabled={currentIndex === 0}
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            {t({ ko: "이전", en: "Previous", ja: "前へ", zh: "上一个" })}
+          </Button>
 
-            <div className="flex space-x-2">
-              {Array.from({
-                length: Math.ceil(mockBestReviews.length / 3),
-              }).map((_, index) => (
+          <div className="flex space-x-2">
+            {Array.from({ length: Math.ceil(mockBestReviews.length / 3) }).map(
+              (_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
@@ -202,104 +200,91 @@ export function BestReviewsSection() {
                     index === currentIndex ? "bg-blue-600" : "bg-gray-300"
                   }`}
                 />
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={nextSlide}
-              disabled={
-                currentIndex === Math.ceil(mockBestReviews.length / 3) - 1
-              }
-            >
-              {t({ ko: "다음", en: "Next", ja: "次へ", zh: "下一个" })}
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
+              ),
+            )}
           </div>
 
-          {/* Reviews Grid */}
-          <div className="unified-mobile-grid md:grid-cols-2 lg:grid-cols-3 md:gap-6">
-            {visibleReviews.map((review, index) => (
-              <motion.div
-                key={review.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Link href={`/reviews/${review.id}`}>
-                  <div className="unified-mobile-card relative">
-                    {/* Best Review Ribbon */}
-                    <div className="absolute top-2 right-2 z-10">
-                      <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 text-xs font-bold rounded shadow-lg">
-                        BEST
-                      </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={nextSlide}
+            disabled={
+              currentIndex === Math.ceil(mockBestReviews.length / 3) - 1
+            }
+          >
+            {t({ ko: "다음", en: "Next", ja: "次へ", zh: "下一个" })}
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
+        </div>
+
+        {/* Reviews Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visibleReviews.map((review, index) => (
+            <motion.div
+              key={review.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="rounded-xl bg-white shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-lg transition-shadow">
+                {/* Best Review Ribbon */}
+                <div className="absolute top-0 right-0 z-10">
+                  <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 text-xs font-bold transform rotate-12 translate-x-2 -translate-y-1 shadow-lg">
+                    BEST
+                  </div>
+                </div>
+
+                <CardContent className="p-0">
+                  <div className="relative">
+                    <img
+                      src={review.reviewImage}
+                      alt={review.productNameKo}
+                      className="w-full h-48 object-cover"
+                    />
+
+                    {/* Product Badge */}
+                    <div className="absolute bottom-2 left-2">
+                      <Badge className="bg-white/90 text-gray-800 text-xs">
+                        {review.productNameKo}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div className="p-4 space-y-3">
+                    {/* Star Rating */}
+                    <div className="flex items-center gap-1">
+                      {renderStars(review.rating)}
+                      <span className="text-sm text-gray-600 ml-1">
+                        ({review.rating}.0)
+                      </span>
                     </div>
 
-                    {/* Product Image */}
-                    <div className="relative">
-                      <img
-                        src={review.reviewImage}
-                        alt={review.productNameKo}
-                        className="unified-mobile-image"
-                        loading="lazy"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            "/api/placeholder/300/300";
-                        }}
-                      />
+                    {/* Review Text */}
+                    <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed">
+                      {review.reviewText}
+                    </p>
 
-                      {/* Product Badge */}
-                      <div className="absolute bottom-2 left-2">
-                        <Badge className="bg-white/90 text-gray-800 text-xs">
-                          {review.productNameKo}
-                        </Badge>
-                      </div>
+                    {/* User Info */}
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>{review.userNickname}</span>
+                      <span>{review.reviewDate}</span>
                     </div>
 
-                    {/* Content - Flexible grow area */}
-                    <div className="unified-mobile-content">
-                      {/* Star Rating */}
-                      <div className="flex items-center gap-1 mb-2">
-                        {renderStars(review.rating)}
-                        <span className="text-sm text-gray-600 ml-1">
-                          ({review.rating}.0)
-                        </span>
-                      </div>
-
-                      {/* Review Text */}
-                      <p className="text-sm text-gray-700 leading-relaxed mb-2 flex-grow">
-                        {review.reviewText}
-                      </p>
-                    </div>
-
-                    {/* Bottom Section - Always at bottom */}
-                    <div className="unified-mobile-footer space-y-2">
-                      {/* User Info */}
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">
-                          {review.userNickname}
-                        </span>
-                        <span>{review.reviewDate}</span>
-                      </div>
-
-                      {/* Interaction Stats */}
-                      <div className="flex items-center justify-between pt-1 border-t border-gray-100">
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <div className="flex items-center gap-1">
-                            <Heart className="h-3 w-3" />
-                            <span>{review.likes}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MessageCircle className="h-3 w-3" />
-                            <span>{review.comments}</span>
-                          </div>
+                    {/* Interaction Stats */}
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                      <div className="flex items-center gap-3 text-sm text-gray-600">
+                        <div className="flex items-center gap-1">
+                          <Heart className="h-4 w-4" />
+                          <span>{review.likes}</span>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-xs py-1 px-2"
-                        >
+                        <div className="flex items-center gap-1">
+                          <MessageCircle className="h-4 w-4" />
+                          <span>{review.comments}</span>
+                        </div>
+                      </div>
+
+                      <Link href={`/reviews/${review.id}`}>
+                        <Button size="sm" variant="outline" className="text-xs">
                           {t({
                             ko: "자세히",
                             en: "Details",
@@ -307,29 +292,29 @@ export function BestReviewsSection() {
                             zh: "详情",
                           })}
                         </Button>
-                      </div>
+                      </Link>
                     </div>
                   </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
 
-          {/* View All Button */}
-          <div className="text-center">
-            <Link href="/reviews/all">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                {t({
-                  ko: "모든 베스트 리뷰 보기",
-                  en: "View All Best Reviews",
-                  ja: "全てのベストレビューを見る",
-                  zh: "查看所有最佳评论",
-                })}
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
-      </div>
+        {/* View All Button */}
+        <div className="text-center">
+          <Link href="/reviews/all">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+              {t({
+                ko: "모든 베스트 리뷰 보기",
+                en: "View All Best Reviews",
+                ja: "全てのベストレビューを見る",
+                zh: "查看所有最佳评论",
+              })}
+            </Button>
+          </Link>
+        </div>
+      </motion.div>
     </div>
   );
 }
