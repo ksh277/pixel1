@@ -125,8 +125,8 @@ export default function Register() {
   const renderStep1 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">약관 동의</h2>
-        <p className="text-gray-600">서비스 이용을 위한 약관에 동의해주세요</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">약관 동의</h2>
+        <p className="text-gray-600 dark:text-gray-300">서비스 이용을 위한 약관에 동의해주세요</p>
       </div>
 
       {error && (
@@ -137,13 +137,13 @@ export default function Register() {
       )}
 
       <div className="space-y-4">
-        <div className="flex items-center space-x-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
+        <div className="flex items-center space-x-3 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
           <Checkbox
             id="all-agree"
             checked={agreements.allAgreed}
             onCheckedChange={handleAllAgreementChange}
           />
-          <label htmlFor="all-agree" className="text-sm font-medium text-blue-900 cursor-pointer">
+          <label htmlFor="all-agree" className="text-sm font-medium text-blue-900 dark:text-blue-300 cursor-pointer">
             전체 동의
           </label>
         </div>
@@ -156,11 +156,11 @@ export default function Register() {
                 checked={agreements.serviceTerms}
                 onCheckedChange={(checked) => handleAgreementChange("serviceTerms", checked as boolean)}
               />
-              <label htmlFor="service-terms" className="text-sm cursor-pointer">
+              <label htmlFor="service-terms" className="text-sm cursor-pointer text-gray-900 dark:text-white">
                 [필수] 이용약관 동의
               </label>
             </div>
-            <Button variant="ghost" size="sm" className="text-blue-600">
+            <Button variant="ghost" size="sm" className="text-blue-600 dark:text-blue-400">
               보기
             </Button>
           </div>
@@ -172,11 +172,11 @@ export default function Register() {
                 checked={agreements.privacyPolicy}
                 onCheckedChange={(checked) => handleAgreementChange("privacyPolicy", checked as boolean)}
               />
-              <label htmlFor="privacy-policy" className="text-sm cursor-pointer">
+              <label htmlFor="privacy-policy" className="text-sm cursor-pointer text-gray-900 dark:text-white">
                 [필수] 개인정보 수집 및 이용 동의
               </label>
             </div>
-            <Button variant="ghost" size="sm" className="text-blue-600">
+            <Button variant="ghost" size="sm" className="text-blue-600 dark:text-blue-400">
               보기
             </Button>
           </div>
@@ -188,11 +188,11 @@ export default function Register() {
                 checked={agreements.shoppingInfo}
                 onCheckedChange={(checked) => handleAgreementChange("shoppingInfo", checked as boolean)}
               />
-              <label htmlFor="shopping-info" className="text-sm cursor-pointer">
+              <label htmlFor="shopping-info" className="text-sm cursor-pointer text-gray-900 dark:text-white">
                 [선택] 쇼핑정보 수신 동의
               </label>
             </div>
-            <Button variant="ghost" size="sm" className="text-blue-600">
+            <Button variant="ghost" size="sm" className="text-blue-600 dark:text-blue-400">
               보기
             </Button>
           </div>
@@ -223,7 +223,7 @@ export default function Register() {
 
       <Button 
         onClick={handleStep1Next}
-        className="w-full h-12 bg-black text-white hover:bg-gray-800"
+        className="w-full h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700"
         disabled={!canProceedFromStep1}
       >
         다음 단계
@@ -235,8 +235,8 @@ export default function Register() {
   const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">정보 입력</h2>
-        <p className="text-gray-600">회원가입을 위한 정보를 입력해주세요</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">정보 입력</h2>
+        <p className="text-gray-600 dark:text-gray-300">회원가입을 위한 정보를 입력해주세요</p>
       </div>
 
       {error && (
@@ -248,19 +248,19 @@ export default function Register() {
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="username">아이디</Label>
+          <Label htmlFor="username" className="text-gray-900 dark:text-white">아이디</Label>
           <Input
             id="username"
             type="text"
             placeholder="아이디를 입력하세요"
             value={userData.username}
             onChange={(e) => setUserData({ ...userData, username: e.target.value })}
-            className="mt-1"
+            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
         <div>
-          <Label htmlFor="password">비밀번호</Label>
+          <Label htmlFor="password" className="text-gray-900 dark:text-white">비밀번호</Label>
           <div className="relative mt-1">
             <Input
               id="password"
@@ -268,21 +268,21 @@ export default function Register() {
               placeholder="비밀번호를 입력하세요"
               value={userData.password}
               onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-              className="pr-10"
+              className="pr-10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
-          <p className="text-sm text-gray-500 mt-1">영문 대소문자, 숫자, 특수문자 포함 8~16자</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">영문 대소문자, 숫자, 특수문자 포함 8~16자</p>
         </div>
 
         <div>
-          <Label htmlFor="confirmPassword">비밀번호 확인</Label>
+          <Label htmlFor="confirmPassword" className="text-gray-900 dark:text-white">비밀번호 확인</Label>
           <div className="relative mt-1">
             <Input
               id="confirmPassword"
@@ -290,12 +290,12 @@ export default function Register() {
               placeholder="비밀번호를 다시 입력하세요"
               value={userData.confirmPassword}
               onChange={(e) => setUserData({ ...userData, confirmPassword: e.target.value })}
-              className="pr-10"
+              className="pr-10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             >
               {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
@@ -303,43 +303,43 @@ export default function Register() {
         </div>
 
         <div>
-          <Label htmlFor="name">이름</Label>
+          <Label htmlFor="name" className="text-gray-900 dark:text-white">이름</Label>
           <Input
             id="name"
             type="text"
             placeholder="이름을 입력하세요"
             value={userData.name}
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-            className="mt-1"
+            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
         <div>
-          <Label htmlFor="phone">휴대전화</Label>
+          <Label htmlFor="phone" className="text-gray-900 dark:text-white">휴대전화</Label>
           <Input
             id="phone"
             type="tel"
             placeholder="휴대전화 번호를 입력하세요"
             value={userData.phone}
             onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-            className="mt-1"
+            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
         <div>
-          <Label htmlFor="email">이메일 (선택)</Label>
+          <Label htmlFor="email" className="text-gray-900 dark:text-white">이메일 (선택)</Label>
           <Input
             id="email"
             type="email"
             placeholder="이메일을 입력하세요"
             value={userData.email}
             onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-            className="mt-1"
+            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
         <div>
-          <Label>회원유형</Label>
+          <Label className="text-gray-900 dark:text-white">회원유형</Label>
           <RadioGroup 
             value={userData.memberType} 
             onValueChange={(value) => setUserData({ ...userData, memberType: value as "lifetime" | "guest" })}
@@ -347,11 +347,11 @@ export default function Register() {
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="lifetime" id="lifetime" />
-              <Label htmlFor="lifetime">평생회원 (탈퇴 시까지)</Label>
+              <Label htmlFor="lifetime" className="text-gray-900 dark:text-white">평생회원 (탈퇴 시까지)</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="guest" id="guest" />
-              <Label htmlFor="guest">비회원</Label>
+              <Label htmlFor="guest" className="text-gray-900 dark:text-white">비회원</Label>
             </div>
           </RadioGroup>
         </div>
@@ -361,13 +361,13 @@ export default function Register() {
         <Button 
           onClick={() => setCurrentStep(1)}
           variant="outline"
-          className="flex-1 h-12"
+          className="flex-1 h-12 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
         >
           이전 단계
         </Button>
         <Button 
           onClick={handleStep2Next}
-          className="flex-1 h-12 bg-black text-white hover:bg-gray-800"
+          className="flex-1 h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700"
           disabled={!canProceedFromStep2}
         >
           다음 단계
@@ -381,36 +381,36 @@ export default function Register() {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <BelugaMascot variant="login" className="mb-4" />
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">🎉 회원가입이 완료되었습니다!</h2>
-        <p className="text-gray-600">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">🎉 회원가입이 완료되었습니다!</h2>
+        <p className="text-gray-600 dark:text-gray-300">
           벨루가 굿즈의 다양한 혜택을 지금 바로 만나보세요.
         </p>
       </div>
 
-      <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-        <h3 className="font-semibold text-blue-900 mb-4">가입 정보</h3>
+      <div className="bg-blue-50 dark:bg-blue-900/30 p-6 rounded-lg border border-blue-200 dark:border-blue-700">
+        <h3 className="font-semibold text-blue-900 dark:text-blue-300 mb-4">가입 정보</h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-600">아이디:</span>
-            <span className="font-medium">{userData.username}</span>
+            <span className="text-gray-600 dark:text-gray-300">아이디:</span>
+            <span className="font-medium text-gray-900 dark:text-white">{userData.username}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">이름:</span>
-            <span className="font-medium">{userData.name}</span>
+            <span className="text-gray-600 dark:text-gray-300">이름:</span>
+            <span className="font-medium text-gray-900 dark:text-white">{userData.name}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">휴대전화:</span>
-            <span className="font-medium">{userData.phone}</span>
+            <span className="text-gray-600 dark:text-gray-300">휴대전화:</span>
+            <span className="font-medium text-gray-900 dark:text-white">{userData.phone}</span>
           </div>
           {userData.email && (
             <div className="flex justify-between">
-              <span className="text-gray-600">이메일:</span>
-              <span className="font-medium">{userData.email}</span>
+              <span className="text-gray-600 dark:text-gray-300">이메일:</span>
+              <span className="font-medium text-gray-900 dark:text-white">{userData.email}</span>
             </div>
           )}
           <div className="flex justify-between">
-            <span className="text-gray-600">회원유형:</span>
-            <span className="font-medium">{userData.memberType === "lifetime" ? "평생회원" : "비회원"}</span>
+            <span className="text-gray-600 dark:text-gray-300">회원유형:</span>
+            <span className="font-medium text-gray-900 dark:text-white">{userData.memberType === "lifetime" ? "평생회원" : "비회원"}</span>
           </div>
         </div>
       </div>
@@ -418,13 +418,13 @@ export default function Register() {
       <div className="space-y-3">
         <Button 
           onClick={handleComplete}
-          className="w-full h-12 bg-black text-white hover:bg-gray-800"
+          className="w-full h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700"
         >
           로그인 하러 가기
         </Button>
         
         <div className="text-center">
-          <Link href="/" className="text-blue-600 hover:text-blue-800 text-sm">
+          <Link href="/" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 text-sm">
             홈페이지로 돌아가기
           </Link>
         </div>
@@ -433,9 +433,9 @@ export default function Register() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
-        <Card className="shadow-lg">
+        <Card className="shadow-lg bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
             <div className="flex items-center justify-center mb-4">
               <div className="flex items-center space-x-2">
@@ -444,20 +444,20 @@ export default function Register() {
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                       step <= currentStep 
                         ? 'bg-blue-600 text-white' 
-                        : 'bg-gray-200 text-gray-600'
+                        : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
                     }`}>
                       {step < currentStep ? <Check className="w-4 h-4" /> : step}
                     </div>
                     {step < 3 && (
                       <div className={`w-8 h-0.5 mx-2 ${
-                        step < currentStep ? 'bg-blue-600' : 'bg-gray-200'
+                        step < currentStep ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'
                       }`} />
                     )}
                   </div>
                 ))}
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-gray-900">
+            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
               {t({ ko: "회원가입", en: "Sign Up" })}
             </CardTitle>
           </CardHeader>
@@ -469,9 +469,9 @@ export default function Register() {
             
             {currentStep < 3 && (
               <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   이미 계정이 있으신가요?{" "}
-                  <Link href="/login" className="text-blue-600 hover:text-blue-800">
+                  <Link href="/login" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
                     로그인
                   </Link>
                 </p>
