@@ -357,20 +357,20 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
+      <div className="bg-white dark:bg-[#1e2b3c] border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex items-center text-sm text-gray-500">
-            <Link href="/" className="hover:text-gray-700">
+          <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+            <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-300">
               홈
             </Link>
             <ChevronRight className="w-4 h-4 mx-2" />
-            <Link href="/products" className="hover:text-gray-700">
+            <Link href="/products" className="hover:text-gray-700 dark:hover:text-gray-300">
               제품
             </Link>
             <ChevronRight className="w-4 h-4 mx-2" />
-            <span className="text-gray-900">{mockProduct.nameKo}</span>
+            <span className="text-gray-900 dark:text-white">{mockProduct.nameKo}</span>
           </nav>
         </div>
       </div>
@@ -381,7 +381,7 @@ export default function ProductDetail() {
           {/* Left Column - Product Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="aspect-square bg-white rounded-lg overflow-hidden shadow-sm border">
+            <div className="aspect-square bg-white dark:bg-[#1e2b3c] rounded-lg overflow-hidden shadow-sm border dark:border-gray-700">
               <img
                 src={mockProduct.images[currentImageIndex]}
                 alt={mockProduct.nameKo}
@@ -415,7 +415,7 @@ export default function ProductDetail() {
           <div className="space-y-6">
             {/* Product Title & Rating */}
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 {mockProduct.nameKo}
               </h1>
               <div className="flex items-center gap-4 mb-4">
@@ -423,7 +423,7 @@ export default function ProductDetail() {
                   <div className="flex mr-2">
                     {generateStars(Math.round(mockProduct.rating))}
                   </div>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
                     {mockProduct.rating} ({mockProduct.reviewCount} 리뷰)
                   </span>
                 </div>
@@ -434,11 +434,11 @@ export default function ProductDetail() {
             </div>
 
             {/* Price Display */}
-            <div className="bg-blue-50 rounded-lg p-4">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4">
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-300 mb-2">
                 {calculateTotalPrice().toLocaleString()} 원
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-600 dark:text-gray-400">
                 기본 가격부터 시작 (옵션에 따라 변동)
               </div>
             </div>
@@ -447,13 +447,13 @@ export default function ProductDetail() {
             <div className="space-y-4">
               {/* Size Selection - Table Format */}
               <div>
-                <Label className="text-base font-medium mb-3 block">
+                <Label className="text-base font-medium mb-3 block text-gray-900 dark:text-white">
                   ✅ 스탠드 사이즈
                 </Label>
                 <div className="space-y-4">
                   {/* 일반 사이즈 */}
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">일반 사이즈</h4>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">일반 사이즈</h4>
                     <div className="grid grid-cols-4 gap-2">
                       {[
                         { name: "일반 20x20", price: 3500 },
@@ -474,12 +474,12 @@ export default function ProductDetail() {
                           onClick={() => setSelectedSize(size.name)}
                           className={`p-2 rounded border text-center text-sm transition-all ${
                             selectedSize === size.name
-                              ? "border-blue-500 bg-blue-50 text-blue-700"
-                              : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                              ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                              : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50 text-gray-900 dark:text-gray-100"
                           }`}
                         >
                           <div className="font-medium">{size.name}</div>
-                          <div className="text-xs text-blue-600">
+                          <div className="text-xs text-blue-600 dark:text-blue-400">
                             {size.price.toLocaleString()}원
                           </div>
                         </button>
@@ -489,7 +489,7 @@ export default function ProductDetail() {
 
                   {/* 라미 사이즈 */}
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">라미 사이즈</h4>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">라미 사이즈</h4>
                     <div className="grid grid-cols-4 gap-2">
                       {[
                         { name: "라미 20x20", price: 4000 },
@@ -521,7 +521,7 @@ export default function ProductDetail() {
 
                   {/* 대형 사이즈 */}
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">대형 사이즈</h4>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">대형 사이즈</h4>
                     <div className="grid grid-cols-4 gap-2">
                       {[
                         { name: "대형 100x200", price: 15000 },
@@ -551,7 +551,7 @@ export default function ProductDetail() {
 
               {/* Base Selection */}
               <div>
-                <Label className="text-base font-medium mb-3 block">
+                <Label className="text-base font-medium mb-3 block text-gray-900 dark:text-white">
                   ✅ 받침 선택
                 </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -561,15 +561,15 @@ export default function ProductDetail() {
                       onClick={() => setSelectedBase(base.name)}
                       className={`p-3 rounded-lg border text-center transition-all ${
                         selectedBase === base.name
-                          ? "border-blue-500 bg-blue-50 text-blue-700"
-                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                          : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50 text-gray-900 dark:text-gray-100"
                       }`}
                     >
                       <div className="font-medium">{base.name}</div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
                         {base.description}
                       </div>
-                      <div className="text-sm font-medium text-blue-600">
+                      <div className="text-sm font-medium text-blue-600 dark:text-blue-400">
                         {base.price > 0
                           ? `+${base.price.toLocaleString()}원`
                           : "무료"}
@@ -581,33 +581,33 @@ export default function ProductDetail() {
 
               {/* Quantity Selection */}
               <div>
-                <Label className="text-base font-medium mb-3 block">
+                <Label className="text-base font-medium mb-3 block text-gray-900 dark:text-white">
                   ✅ 수량 선택
                 </Label>
                 <div className="flex items-center gap-4 mb-3">
-                  <div className="flex items-center border rounded-lg">
+                  <div className="flex items-center border dark:border-gray-700 rounded-lg">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-2 hover:bg-gray-100 rounded-l-lg"
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-l-lg text-gray-900 dark:text-gray-100"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="px-4 py-2 border-x min-w-[60px] text-center">
+                    <span className="px-4 py-2 border-x dark:border-gray-700 min-w-[60px] text-center text-gray-900 dark:text-gray-100">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-2 hover:bg-gray-100 rounded-r-lg"
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-r-lg text-gray-900 dark:text-gray-100"
                     >
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
-                <div className="bg-gray-50 rounded-lg p-3">
-                  <div className="text-sm text-gray-600">
+                <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                  <div className="text-sm text-gray-600 dark:text-gray-300">
                     <strong>수량별 할인 안내:</strong>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1 space-y-1">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 space-y-1">
                     {mockProduct.quantityRanges.map((range) => (
                       <div key={range.range} className="flex justify-between">
                         <span>
@@ -626,7 +626,7 @@ export default function ProductDetail() {
 
               {/* Packaging Selection */}
               <div>
-                <Label className="text-base font-medium mb-3 block">
+                <Label className="text-base font-medium mb-3 block text-gray-900 dark:text-white">
                   ✅ 포장 방식
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
@@ -636,15 +636,15 @@ export default function ProductDetail() {
                       onClick={() => setSelectedPackaging(pkg.name)}
                       className={`p-3 rounded-lg border text-left transition-all ${
                         selectedPackaging === pkg.name
-                          ? "border-blue-500 bg-blue-50 text-blue-700"
-                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                          : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50 text-gray-900 dark:text-gray-100"
                       }`}
                     >
                       <div className="font-medium">{pkg.name}</div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
                         {pkg.description}
                       </div>
-                      <div className="text-sm font-medium text-blue-600">
+                      <div className="text-sm font-medium text-blue-600 dark:text-blue-400">
                         {pkg.price > 0
                           ? `+${pkg.price.toLocaleString()}원`
                           : "무료"}
@@ -656,7 +656,7 @@ export default function ProductDetail() {
 
               {/* File Upload Section */}
               <div>
-                <Label className="text-base font-medium mb-3 block">
+                <Label className="text-base font-medium mb-3 block text-gray-900 dark:text-white">
                   ✅ 파일 업로드
                 </Label>
                 <Tabs
@@ -674,10 +674,10 @@ export default function ProductDetail() {
                     <div
                       className={`border-2 border-dashed rounded-lg p-6 text-center transition-all ${
                         isDragOver
-                          ? "border-blue-400 bg-blue-50"
+                          ? "border-blue-400 bg-blue-50 dark:bg-blue-900/30"
                           : uploadedFile
-                            ? "border-green-400 bg-green-50"
-                            : "border-gray-300 hover:border-gray-400"
+                            ? "border-green-400 bg-green-50 dark:bg-green-900/30"
+                            : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600"
                       }`}
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
@@ -691,23 +691,23 @@ export default function ProductDetail() {
                         id="pdf-upload"
                       />
                       <label htmlFor="pdf-upload" className="cursor-pointer">
-                        <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                        <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400 dark:text-gray-600" />
                         {uploadedFile ? (
                           <div>
-                            <p className="text-green-600 font-medium mb-2">
+                            <p className="text-green-600 dark:text-green-400 font-medium mb-2">
                               ✅ {uploadedFile.name}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                               파일이 업로드되었습니다. 다른 파일을 선택하려면
                               클릭하세요.
                             </p>
                           </div>
                         ) : (
                           <div>
-                            <p className="text-gray-600 font-medium mb-2">
+                            <p className="text-gray-600 dark:text-gray-300 font-medium mb-2">
                               PDF 파일을 드래그하거나 클릭하여 업로드
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                               최대 50MB, PDF 파일만 업로드 가능합니다.
                             </p>
                           </div>
@@ -717,14 +717,14 @@ export default function ProductDetail() {
                   </TabsContent>
 
                   <TabsContent value="design" className="mt-4">
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                       <div className="flex items-center mb-3">
-                        <Palette className="w-5 h-5 text-yellow-600 mr-2" />
-                        <h3 className="font-medium text-yellow-800">
+                        <Palette className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-2" />
+                        <h3 className="font-medium text-yellow-800 dark:text-yellow-300">
                           도안 작업 의뢰
                         </h3>
                       </div>
-                      <p className="text-sm text-yellow-700 mb-3">
+                      <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-3">
                         전문 디자이너가 고객님의 요청에 따라 도안을
                         제작해드립니다.
                       </p>
@@ -735,7 +735,7 @@ export default function ProductDetail() {
                         className="mb-3"
                         rows={4}
                       />
-                      <div className="text-xs text-yellow-600">
+                      <div className="text-xs text-yellow-600 dark:text-yellow-400">
                         * 도안 작업비: 별도 견적 (복잡도에 따라
                         5,000원~20,000원)
                       </div>
@@ -743,14 +743,14 @@ export default function ProductDetail() {
                   </TabsContent>
 
                   <TabsContent value="editor" className="mt-4">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                       <div className="flex items-center mb-3">
-                        <Puzzle className="w-5 h-5 text-blue-600 mr-2" />
-                        <h3 className="font-medium text-blue-800">
+                        <Puzzle className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+                        <h3 className="font-medium text-blue-800 dark:text-blue-300">
                           굿즈에디터
                         </h3>
                       </div>
-                      <p className="text-sm text-blue-700 mb-4">
+                      <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
                         브라우저에서 바로 디자인을 만들어보세요! 간단한 조작으로
                         전문적인 굿즈를 제작할 수 있습니다.
                       </p>
@@ -785,28 +785,28 @@ export default function ProductDetail() {
                   className={`w-5 h-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"}`}
                 />
               </Button>
-              <Button variant="outline" className="p-3">
-                <Share2 className="w-5 h-5 text-gray-400" />
+              <Button variant="outline" className="p-3 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800">
+                <Share2 className="w-5 h-5" />
               </Button>
             </div>
           </div>
         </div>
 
         {/* Sample File Guide */}
-        <div className="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+        <div className="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-lg p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Download className="w-6 h-6 text-blue-600 mr-3" />
+              <Download className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3" />
               <div>
-                <h3 className="font-bold text-lg text-gray-900">
+                <h3 className="font-bold text-lg text-gray-900 dark:text-white">
                   샘플파일 안내
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   올바른 파일 제작을 위한 템플릿과 가이드를 확인하세요
                 </p>
               </div>
             </div>
-            <Button variant="outline" className="bg-white">
+            <Button variant="outline" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
               <Download className="w-4 h-4 mr-2" />
               다운로드
             </Button>
@@ -827,8 +827,8 @@ export default function ProductDetail() {
             <TabsContent value="description" className="mt-8">
               <div className="space-y-8">
                 {/* Product Detail Images */}
-                <div className="bg-white rounded-lg p-6">
-                  <h3 className="text-xl font-bold mb-6">상품 상세 정보</h3>
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+                  <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">상품 상세 정보</h3>
                   <div className="space-y-6">
                     <img
                       src="/api/placeholder/800/600"
@@ -836,18 +836,18 @@ export default function ProductDetail() {
                       className="w-full rounded-lg"
                     />
                     <div className="prose max-w-none">
-                      <h4 className="text-lg font-semibold mb-3">제품 특징</h4>
-                      <ul className="space-y-2 text-gray-700">
+                      <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">제품 특징</h4>
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                         <li>• 고품질 아크릴 소재 사용으로 선명한 인쇄 품질</li>
                         <li>• 다양한 사이즈 옵션으로 원하는 크기 제작 가능</li>
                         <li>• 튼튼한 받침으로 안정적인 전시 효과</li>
                         <li>• 개인 맞춤형 디자인 제작 서비스</li>
                       </ul>
 
-                      <h4 className="text-lg font-semibold mb-3 mt-6">
+                      <h4 className="text-lg font-semibold mb-3 mt-6 text-gray-900 dark:text-white">
                         주의사항
                       </h4>
-                      <ul className="space-y-2 text-gray-700">
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                         <li>
                           • 해상도 300dpi 이상의 고해상도 이미지를 사용해주세요
                         </li>
@@ -868,19 +868,19 @@ export default function ProductDetail() {
             <TabsContent value="reviews" className="mt-8">
               <div className="space-y-6">
                 {/* Review Summary */}
-                <div className="bg-white rounded-lg p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold">상품 후기</h3>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">상품 후기</h3>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center">
                         <div className="flex mr-2">
                           {generateStars(Math.round(mockProduct.rating))}
                         </div>
-                        <span className="text-lg font-semibold">
+                        <span className="text-lg font-semibold text-gray-900 dark:text-white">
                           {mockProduct.rating}
                         </span>
                       </div>
-                      <span className="text-gray-500">
+                      <span className="text-gray-500 dark:text-gray-400">
                         ({mockProduct.reviewCount}개 리뷰)
                       </span>
                     </div>
@@ -891,15 +891,15 @@ export default function ProductDetail() {
                     {mockReviews.map((review) => (
                       <div
                         key={review.id}
-                        className="border-b pb-6 last:border-b-0 space-y-3"
+                        className="border-b dark:border-gray-700 pb-6 last:border-b-0 space-y-3"
                       >
-                        <div className="space-y-1 text-sm text-gray-800">
+                        <div className="space-y-1 text-sm text-gray-800 dark:text-gray-200">
                           <div className="flex items-center gap-1 text-yellow-500 text-sm">
                             {generateStars(review.rating)}
                           </div>
-                          <h4 className="font-medium">{review.title}</h4>
-                          <p className="text-gray-700">{review.content}</p>
-                          <div className="text-xs text-gray-500">
+                          <h4 className="font-medium text-gray-900 dark:text-white">{review.title}</h4>
+                          <p className="text-gray-700 dark:text-gray-300">{review.content}</p>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">
                             by {review.userName} ・{" "}
                             {review.createdAt.toLocaleDateString()}
                           </div>
@@ -924,12 +924,12 @@ export default function ProductDetail() {
             </TabsContent>
 
             <TabsContent value="qna" className="mt-8">
-              <div className="bg-white rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-6">상품 문의</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+                <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">상품 문의</h3>
                 <div className="text-center py-12">
-                  <HelpCircle className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                  <p className="text-gray-500 mb-4">아직 문의가 없습니다.</p>
-                  <Button variant="outline">
+                  <HelpCircle className="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
+                  <p className="text-gray-500 dark:text-gray-400 mb-4">아직 문의가 없습니다.</p>
+                  <Button variant="outline" className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">
                     <MessageCircle className="w-4 h-4 mr-2" />
                     문의하기
                   </Button>
@@ -942,9 +942,9 @@ export default function ProductDetail() {
 
       {/* Product Overview Section */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {t({
                 ko: "상품목록 한눈에 보기",
                 en: "Product Overview at a Glance",
@@ -952,22 +952,22 @@ export default function ProductDetail() {
                 zh: "产品列表一目了然",
               })}
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               {t({
                 ko: "다양한 맞춤형 굿즈를 확인하고 원하는 상품을 찾아보세요",
                 en: "Explore various custom goods and find what you're looking for",
                 ja: "様々なカスタムグッズを確認し、お探しの商品を見つけてください",
-                zh: "查看各种定制商品，找到您想要的产品",
+                zh: "查看各种定制商品，找到您想要的产품",
               })}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 [&_a>div]:text-gray-700 [&_a>div]:dark:text-gray-300 [&_a>div:hover]:text-blue-600 [&_a>div:hover]:dark:text-blue-400 [&_a>div:hover]:bg-blue-50 [&_a>div:hover]:dark:bg-blue-900/30">
             {/* Acrylic Keyrings */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">🧷</span>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {t({
                     ko: "아크릴 키링",
                     en: "Acrylic Keyrings",
@@ -1079,7 +1079,7 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">🧷</span>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {t({
                     ko: "코롯토",
                     en: "Corot",
@@ -1125,7 +1125,7 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">📱</span>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {t({
                     ko: "스마트톡",
                     en: "Smart Tok",
@@ -1195,7 +1195,7 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">🎯</span>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {t({
                     ko: "스탠드",
                     en: "Stands",
@@ -1253,7 +1253,7 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">🖼️</span>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {t({ ko: "홀더", en: "Holders", ja: "ホルダー", zh: "支架" })}
                 </h3>
               </div>
@@ -1300,7 +1300,7 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">🎨</span>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {t({
                     ko: "기타 굿즈",
                     en: "Other Goods",
@@ -1366,7 +1366,7 @@ export default function ProductDetail() {
               <Button
                 variant="outline"
                 size="lg"
-                className="bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200"
+                className="bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700"
               >
                 <Eye className="w-4 h-4 mr-2" />
                 {t({
@@ -1388,21 +1388,21 @@ export default function ProductDetail() {
           <Button
             variant="outline"
             size="lg"
-            className="bg-white hover:bg-gray-50 text-gray-700 shadow-lg border border-gray-200 rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
+            className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 shadow-lg border border-gray-200 dark:border-gray-700 rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
           >
-            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
+            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500 dark:text-blue-400" />
             <div className="text-left">
               <div className="font-medium text-xs sm:text-sm">문의하기</div>
-              <div className="text-xs text-gray-500 hidden sm:block">
+              <div className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
                 평일 9시~6시
               </div>
             </div>
           </Button>
 
           {/* Speech bubble */}
-          <div className="absolute bottom-full right-0 mb-2 bg-gray-800 text-white text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          <div className="absolute bottom-full right-0 mb-2 bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
             평일 9시~6시 (점심 12~1시)
-            <div className="absolute top-full right-4 w-2 h-2 bg-gray-800 transform rotate-45"></div>
+            <div className="absolute top-full right-4 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform rotate-45"></div>
           </div>
         </div>
 
@@ -1410,7 +1410,7 @@ export default function ProductDetail() {
         <Link href="/editor">
           <Button
             size="lg"
-            className="bg-black hover:bg-gray-800 text-white shadow-lg rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
+            className="bg-black dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white shadow-lg rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
           >
             <Puzzle className="h-4 w-4 sm:h-5 sm:w-5" />
             <span className="font-medium text-xs sm:text-sm">
