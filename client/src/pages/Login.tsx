@@ -51,16 +51,16 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
-        <Card className="shadow-lg">
+        <Card className="shadow-lg bg-white dark:bg-[#1a2332] border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-bold text-gray-900">
+            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
               {t({ ko: "로그인", en: "Login" })}
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 bg-white dark:bg-[#1a2332]">
             {error && (
               <Alert variant="destructive" className="animate-shake">
                 <AlertCircle className="h-4 w-4" />
@@ -69,15 +69,15 @@ export default function Login() {
             )}
             
             {/* Demo credentials info */}
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <p className="text-sm font-medium text-blue-900 mb-2 flex items-center">
+            <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-700">
+              <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
                 <Shield className="w-4 h-4 mr-1" />
                 {t({ ko: "테스트 계정", en: "Demo Account", ja: "テストアカウント", zh: "测试账号" })}
               </p>
-              <div className="text-sm text-blue-800 space-y-1">
-                <p>• {t({ ko: "관리자", en: "Admin", ja: "管理者", zh: "管理员" })}: <span className="font-mono bg-blue-100 px-2 py-1 rounded">admin</span> / <span className="font-mono bg-blue-100 px-2 py-1 rounded">12345</span></p>
-                <p>• {t({ ko: "사용자", en: "User", ja: "ユーザー", zh: "用户" })}: <span className="font-mono bg-blue-100 px-2 py-1 rounded">user1</span> / <span className="font-mono bg-blue-100 px-2 py-1 rounded">12345</span></p>
-                <p className="text-xs text-red-600 mt-2">
+              <div className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+                <p>• {t({ ko: "관리자", en: "Admin", ja: "管理者", zh: "管理员" })}: <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">admin</span> / <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">12345</span></p>
+                <p>• {t({ ko: "사용자", en: "User", ja: "ユーザー", zh: "用户" })}: <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">user1</span> / <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">12345</span></p>
+                <p className="text-xs text-red-600 dark:text-red-400 mt-2">
                   ⚠️ {t({ ko: "실제 배포 시 이 안내는 제거됩니다.", en: "This guide will be removed in production.", ja: "本番環境では削除されます。", zh: "正式部署时将删除此指南。" })}
                 </p>
               </div>
@@ -112,7 +112,7 @@ export default function Login() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                     disabled={isLoading}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -126,7 +126,7 @@ export default function Login() {
                       checked={secureLogin}
                       onCheckedChange={(checked) => setSecureLogin(checked as boolean)}
                     />
-                    <label htmlFor="secure-login" className="text-sm text-gray-600 cursor-pointer flex items-center">
+                    <label htmlFor="secure-login" className="text-sm text-gray-600 dark:text-gray-300 cursor-pointer flex items-center">
                       <Shield className="w-4 h-4 mr-1" />
                       보안접속
                     </label>
@@ -136,7 +136,7 @@ export default function Login() {
               
               <Button 
                 type="submit" 
-                className="w-full h-12 bg-black text-white hover:bg-gray-800 text-base font-medium"
+                className="w-full h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700 text-base font-medium"
                 disabled={isLoading}
               >
                 {isLoading ? "로그인 중..." : "로그인"}
@@ -145,11 +145,11 @@ export default function Login() {
             
             {/* Find ID/Password Links */}
             <div className="flex justify-center space-x-4 text-sm">
-              <Link href="/find-id" className="text-gray-600 hover:text-gray-900">
+              <Link href="/find-id" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 아이디 찾기
               </Link>
-              <span className="text-gray-400">|</span>
-              <Link href="/find-password" className="text-gray-600 hover:text-gray-900">
+              <span className="text-gray-400 dark:text-gray-500">|</span>
+              <Link href="/find-password" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                 비밀번호 찾기
               </Link>
             </div>

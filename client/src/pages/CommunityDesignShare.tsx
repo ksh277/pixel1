@@ -191,7 +191,7 @@ export default function CommunityDesignShare() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <motion.div
           variants={containerVariants}
@@ -201,20 +201,20 @@ export default function CommunityDesignShare() {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
               {t({ ko: "도안공유", en: "Design Sharing", ja: "デザイン共有", zh: "设计分享" })}
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
               {t({ ko: "창작자들의 아름다운 디자인을 공유하고 다운로드하세요", en: "Share and download beautiful designs from creators", ja: "クリエイターの美しいデザインを共有・ダウンロード", zh: "分享和下载创作者的美丽设计" })}
             </p>
           </motion.div>
 
           {/* Search and Filters */}
-          <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-sm p-6">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 border-0 dark:border dark:border-gray-700">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
               <div className="flex-1 max-w-md">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 h-4 w-4" />
                   <Input
                     placeholder={t({ ko: "디자인 검색...", en: "Search designs...", ja: "デザイン検索...", zh: "搜索设计..." })}
                     value={searchTerm}
@@ -277,14 +277,14 @@ export default function CommunityDesignShare() {
           </motion.div>
 
           {/* Design Grid */}
-          <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-sm p-6">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 border-0 dark:border dark:border-gray-700">
             <div className={`grid gap-6 ${
               viewMode === "grid" 
                 ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
                 : "grid-cols-1"
             }`}>
               {sortedDesigns.map((design) => (
-                <Card key={design.id} className="group hover:shadow-lg transition-shadow duration-300">
+                <Card key={design.id} className="group hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-[#1a2332] border-gray-200 dark:border-gray-700">
                   <CardContent className="p-0">
                     <div className="relative">
                       <img
@@ -306,13 +306,13 @@ export default function CommunityDesignShare() {
                       {/* Like button */}
                       <button
                         onClick={() => handleLikeToggle(design.id)}
-                        className="absolute top-2 right-2 p-2 rounded-full bg-white/80 hover:bg-white transition-colors"
+                        className="absolute top-2 right-2 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 transition-colors"
                       >
                         <Heart
                           className={`h-4 w-4 ${
                             likedDesigns.includes(design.id)
                               ? "text-red-500 fill-current"
-                              : "text-gray-600"
+                              : "text-gray-600 dark:text-gray-300"
                           }`}
                         />
                       </button>
@@ -338,10 +338,10 @@ export default function CommunityDesignShare() {
                     </div>
 
                     <div className="p-4">
-                      <h3 className="font-semibold text-gray-900 mb-1 line-clamp-1">
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">
                         {design.titleKo}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-2">
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
                         {t({ ko: "작가", en: "by", ja: "作者", zh: "作者" })} {design.author}
                       </p>
                       
@@ -353,7 +353,7 @@ export default function CommunityDesignShare() {
                         ))}
                       </div>
 
-                      <div className="flex items-center justify-between text-sm text-gray-500">
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                         <span>{design.uploadDate}</span>
                         <span>{design.downloads} {t({ ko: "다운로드", en: "downloads", ja: "ダウンロード", zh: "下载" })}</span>
                       </div>
