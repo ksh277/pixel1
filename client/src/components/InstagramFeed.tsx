@@ -16,7 +16,7 @@ interface InstagramPost {
 const mockInstagramPosts: InstagramPost[] = [
   {
     id: 1,
-    image: "/api/placeholder/300/300",
+    image: "https://picsum.photos/300/300?random=1",
     likes: 127,
     comments: 8,
     caption: "투명 아크릴 키링 완성! 홀로그램 효과가 너무 예뻐요 ✨",
@@ -25,7 +25,7 @@ const mockInstagramPosts: InstagramPost[] = [
   },
   {
     id: 2,
-    image: "/api/placeholder/300/300",
+    image: "https://picsum.photos/300/300?random=2",
     likes: 89,
     comments: 12,
     caption: "우드 스탠드 제작 완료! 나무 질감이 정말 고급스러워요 🌟",
@@ -34,7 +34,7 @@ const mockInstagramPosts: InstagramPost[] = [
   },
   {
     id: 3,
-    image: "/api/placeholder/300/300",
+    image: "https://picsum.photos/300/300?random=3",
     likes: 203,
     comments: 15,
     caption: "반투명 스마트톡 대박! 접착력도 좋고 회전도 부드러워요 💫",
@@ -43,7 +43,7 @@ const mockInstagramPosts: InstagramPost[] = [
   },
   {
     id: 4,
-    image: "/api/placeholder/300/300",
+    image: "https://picsum.photos/300/300?random=4",
     likes: 156,
     comments: 6,
     caption: "단체 키링 주문 완료! 팀원들 모두 만족해요 🎉",
@@ -52,7 +52,7 @@ const mockInstagramPosts: InstagramPost[] = [
   },
   {
     id: 5,
-    image: "/api/placeholder/300/300",
+    image: "https://picsum.photos/300/300?random=5",
     likes: 178,
     comments: 9,
     caption: "홀로그램 스티커 반짝반짝! 노트북에 붙였는데 너무 이뻐요 ✨",
@@ -61,7 +61,7 @@ const mockInstagramPosts: InstagramPost[] = [
   },
   {
     id: 6,
-    image: "/api/placeholder/300/300",
+    image: "https://picsum.photos/300/300?random=6",
     likes: 245,
     comments: 18,
     caption: "나만의 캐릭터 굿즈 완성! 퀄리티가 정말 좋아요 🔥",
@@ -128,7 +128,7 @@ export function InstagramFeed() {
         </div>
       </div>
 
-      {/* Instagram Grid - No background cards */}
+      {/* Instagram Grid - Pure image grid without any background cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {mockInstagramPosts.map((post) => (
           <motion.div
@@ -139,13 +139,13 @@ export function InstagramFeed() {
             onMouseEnter={() => setHoveredPost(post.id)}
             onMouseLeave={() => setHoveredPost(null)}
           >
-            {/* Post Image - No background */}
+            {/* Post Image - Pure image without any background container */}
             <img
               src={post.image}
               alt={post.caption}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 bg-transparent"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 rounded-lg"
               onError={(e) => {
-                e.currentTarget.src = "/api/placeholder/300/300";
+                e.currentTarget.src = "https://picsum.photos/300/300?random=99";
               }}
             />
             
