@@ -209,7 +209,7 @@ export default function AdditionalServices() {
         {/* Services Grid - Korean E-commerce Card Style */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredServices.map((service) => (
-            <Card key={service.id} className="hover:shadow-lg transition-shadow group bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
+            <Card key={service.id} className="hover:shadow-lg transition-shadow group bg-white dark:bg-black border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
               {/* Status Badges - Top Left */}
               <div className="absolute top-3 left-3 flex gap-2 z-10">
                 {service.isPopular && (
@@ -235,14 +235,14 @@ export default function AdditionalServices() {
               <div className="p-4 pb-2">
                 <div className="relative mx-auto mb-3" style={{ width: '120px', height: '120px' }}>
                   <div 
-                    className="w-full h-full rounded-full flex items-center justify-center text-center"
+                    className="w-full h-full rounded-full flex items-center justify-center text-center hover:scale-105 transition-transform duration-300"
                     style={{ backgroundColor: service.thumbnail }}
                   >
                     <div className="text-center">
-                      <div className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-1">
+                      <div className="text-sm font-bold text-gray-800 mb-1">
                         {service.category === "design" ? "도안작업" : "퀵비"}
                       </div>
-                      <div className="text-lg font-black text-gray-900 dark:text-white">
+                      <div className="text-lg font-black text-gray-900">
                         {service.price.toLocaleString()}원
                       </div>
                     </div>
