@@ -517,7 +517,7 @@ body.dark {
 
   /* 다크모드 대응 */
   .dark .allprint-card {
-    background-color: #1a1a1a;
+    background-color: #000000;
     border: 1px solid #333;
   }
 
@@ -540,7 +540,7 @@ body.dark {
 
   .dark .allprint-card-image {
     border-bottom: 1px solid #333;
-    background-color: #2a2a2a;
+    background-color: #000000;
   }
 
   .allprint-card-image img {
@@ -562,7 +562,7 @@ body.dark {
   }
 
   .dark .allprint-card-image-placeholder {
-    background-color: #2a2a2a;
+    background-color: #000000;
     color: #666;
   }
 
@@ -603,7 +603,7 @@ body.dark {
   }
 
   .dark .allprint-card-like-badge {
-    color: #bbb;
+    color: #ffffff;
   }
 
   /* 하단 텍스트 영역 - 고정 높이 */
@@ -617,7 +617,7 @@ body.dark {
   }
 
   .dark .allprint-card-content {
-    background-color: #1a1a1a;
+    background-color: #000000;
   }
 
   /* 상품명 */
@@ -631,7 +631,7 @@ body.dark {
   }
 
   .dark .allprint-card-title {
-    color: #fff;
+    color: #ffffff;
   }
 
   /* 가격 */
@@ -642,7 +642,7 @@ body.dark {
   }
 
   .dark .allprint-card-price {
-    color: #fff;
+    color: #ffffff;
   }
 
   /* 리뷰/좋아요 정보 */
@@ -652,7 +652,7 @@ body.dark {
   }
 
   .dark .allprint-card-stats {
-    color: #888;
+    color: #cccccc;
   }
 
   /* AllThatPrinting 그리드 - 2/3/4 열 반응형 */
