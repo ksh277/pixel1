@@ -182,7 +182,7 @@ export default function CommunityEvents() {
 
           {/* Event Statistics */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="text-center bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+            <Card className="text-center bg-white dark:bg-black border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <Trophy className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-900 dark:text-white">3</div>
@@ -191,7 +191,7 @@ export default function CommunityEvents() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="text-center bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+            <Card className="text-center bg-white dark:bg-black border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <Users className="h-8 w-8 text-blue-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-900 dark:text-white">4,703</div>
@@ -200,7 +200,7 @@ export default function CommunityEvents() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="text-center bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+            <Card className="text-center bg-white dark:bg-black border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <Gift className="h-8 w-8 text-green-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-900 dark:text-white">₩950,000</div>
@@ -214,7 +214,7 @@ export default function CommunityEvents() {
           {/* Event Cards */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {mockEvents.map((event) => (
-              <Card key={event.id} className="group hover:shadow-xl transition-shadow duration-300 overflow-hidden bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+              <Card key={event.id} className="group hover:shadow-xl transition-shadow duration-300 overflow-hidden bg-white dark:bg-black border-gray-200 dark:border-gray-700">
                 <div className="relative">
                   <img
                     src={event.image}
