@@ -97,7 +97,7 @@ export function InstagramFeed() {
 
   return (
     <motion.section
-      className="section-spacing bg-gray-50 dark:bg-[#0d1b2a] py-16"
+      className="section-spacing py-16"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -129,13 +129,13 @@ export function InstagramFeed() {
       </div>
 
       {/* Instagram Grid - Pure image grid without any background cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
         {mockInstagramPosts.map((post) => (
           <motion.div
             key={post.id}
             variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            className="relative group aspect-square overflow-hidden rounded-lg cursor-pointer transition-all duration-300"
+            whileHover={{ scale: 1.02 }}
+            className="relative group aspect-square overflow-hidden cursor-pointer transition-all duration-200"
             onMouseEnter={() => setHoveredPost(post.id)}
             onMouseLeave={() => setHoveredPost(null)}
           >
@@ -143,7 +143,7 @@ export function InstagramFeed() {
             <img
               src={post.image}
               alt={post.caption}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 rounded-lg"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               onError={(e) => {
                 e.currentTarget.src = "https://picsum.photos/300/300?random=99";
               }}
@@ -195,7 +195,7 @@ export function InstagramFeed() {
 
       {/* View More Button */}
       <div className="text-center mt-8">
-        <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg transition-colors duration-200 font-medium text-sm">
+        <button className="px-6 py-2 bg-transparent border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg transition-colors duration-200 font-medium text-sm">
           {t({
             ko: "더 많은 피드 보기",
             en: "View More Feed",
