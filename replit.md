@@ -1070,6 +1070,19 @@ Preferred communication style: Simple, everyday language.
 - **Complete Visibility**: All text elements now properly visible in dark mode with optimal contrast
 - **User Experience**: Resolved all text visibility issues preventing users from reading login page content
 
+### 2025-01-17: Hero Section & Category Navigation Text Visibility Fix
+- **Hero Section Button Fix**: Fixed "디자인 시작하기" button text visibility in Hero.tsx
+  - Primary button: Added `dark:text-indigo-600` for proper contrast on white background
+  - Secondary button: Added `dark:text-white` for outline button visibility
+- **Category Navigation Complete Fix**: Updated CategoryNav.tsx with comprehensive dark mode support
+  - Background: Applied `dark:bg-[#1F2D4A]` for consistent navy background
+  - Main category links: Added `dark:text-white` for all category names
+  - Hover states: Added `dark:hover:text-gray-200` for interactive feedback
+  - Sub-menu items: Added `dark:text-white` for dropdown category items
+  - Dividers: Added `dark:bg-gray-600` for proper visual separation
+- **Complete Navigation Visibility**: All category navigation text now properly visible in dark mode
+- **User Experience**: Resolved repeated user requests for white text in navigation elements
+
 ### 2025-01-17: Editor Page Text Visibility Enhancement
 - **Complete Text Color Fix**: Updated all text elements in Editor.tsx to use white text in dark mode
 - **Product Selector Screen**: Fixed subtitle, product tags, product names, prices, and review counts with `dark:text-white`

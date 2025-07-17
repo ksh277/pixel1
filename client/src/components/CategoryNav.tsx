@@ -63,7 +63,7 @@ export function CategoryNav({ className }: CategoryNavProps) {
   const hoveredCategory = categories.find(cat => cat.id === hoveredTab);
 
   return (
-    <div className={cn("bg-white border-b border-gray-200 relative", className)}>
+    <div className={cn("bg-white dark:bg-[#1F2D4A] border-b border-gray-200 dark:border-gray-600 relative", className)}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Tab Navigation */}
         <div className="flex justify-center">
@@ -79,10 +79,10 @@ export function CategoryNav({ className }: CategoryNavProps) {
                   href={`/category/${category.id}`}
                   className={cn(
                     "relative py-4 px-2 text-sm font-medium whitespace-nowrap transition-colors block",
-                    "hover:text-gray-700 focus:outline-none focus:text-gray-700",
+                    "hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:text-gray-700",
                     hoveredTab === category.id
-                      ? "text-gray-900 border-b-2 border-black"
-                      : "text-gray-500 hover:text-gray-700"
+                      ? "text-gray-900 dark:text-white border-b-2 border-black"
+                      : "text-gray-500 dark:text-white hover:text-gray-700 dark:hover:text-gray-200"
                   )}
                 >
                   {t(category.name)}
@@ -95,7 +95,7 @@ export function CategoryNav({ className }: CategoryNavProps) {
         {/* Hover Sub Menu */}
         {hoveredTab && hoveredCategory && (
           <div
-            className="absolute left-0 right-0 bg-white border-b border-gray-200 shadow-lg z-50 animate-in fade-in-0 duration-200"
+            className="absolute left-0 right-0 bg-white dark:bg-[#1F2D4A] border-b border-gray-200 dark:border-gray-600 shadow-lg z-50 animate-in fade-in-0 duration-200"
             onMouseEnter={() => setHoveredTab(hoveredTab)}
             onMouseLeave={() => setHoveredTab(null)}
           >
@@ -105,12 +105,12 @@ export function CategoryNav({ className }: CategoryNavProps) {
                   <div key={index} className="flex items-center">
                     <Link 
                       href={`/category/${hoveredCategory.id}/${item.slug}`}
-                      className="text-sm text-gray-600 hover:text-gray-900 transition-colors px-2 py-1 whitespace-nowrap"
+                      className="text-sm text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors px-2 py-1 whitespace-nowrap"
                     >
                       {t(item.name)}
                     </Link>
                     {index < hoveredCategory.items.length - 1 && (
-                      <div className="w-px h-4 bg-gray-300 mx-3" />
+                      <div className="w-px h-4 bg-gray-300 dark:bg-gray-600 mx-3" />
                     )}
                   </div>
                 ))}

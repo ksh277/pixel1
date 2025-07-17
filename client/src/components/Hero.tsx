@@ -64,7 +64,7 @@ export function Hero() {
           <div className="mt-6 space-y-3 max-w-sm mx-auto">
             <Link href="/editor">
               <Button className="w-full py-3 bg-white text-indigo-600 font-semibold rounded shadow hover:bg-gray-100 transition-colors">
-                <span className="text-indigo-600 font-semibold">
+                <span className="text-indigo-600 dark:text-indigo-600 font-semibold">
                   {t({ ko: "디자인 시작하기", en: "Start Designing" })}
                 </span>
               </Button>
@@ -75,7 +75,7 @@ export function Hero() {
                 className="w-full py-3 border border-white rounded text-white hover:bg-white hover:text-indigo-600 transition-colors bg-transparent"
                 style={{ borderColor: 'white', color: 'white' }}
               >
-                <span className="font-semibold">
+                <span className="text-white dark:text-white font-semibold">
                   {t({ ko: "도안작업 서비스", en: "Design Service" })}
                 </span>
               </Button>
