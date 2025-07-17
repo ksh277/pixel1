@@ -667,7 +667,7 @@ body.dark {
   }
 
   .dark .allprint-card-title {
-    color: #ffffff;
+    color: #ffffff !important;
   }
 
   /* 가격 */
@@ -679,7 +679,7 @@ body.dark {
   }
 
   .dark .allprint-card-price {
-    color: #ffffff;
+    color: #ffffff !important;
   }
 
   /* 리뷰/좋아요 정보 */
@@ -690,7 +690,7 @@ body.dark {
   }
 
   .dark .allprint-card-stats {
-    color: #d1d5db;
+    color: #d1d5db !important;
   }
   
   /* 다크모드 텍스트 밝기 개선 */

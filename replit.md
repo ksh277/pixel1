@@ -1107,6 +1107,17 @@ Preferred communication style: Simple, everyday language.
 - **Button Styling**: All buttons updated with `dark:bg-blue-600` and `dark:hover:bg-blue-700`
 - **Complete User Experience**: All registration form elements now fully functional in dark mode
 
+### 2025-01-17: Category Page Product Card Text Visibility Fix
+- **Product Card Text Enhancement**: Fixed product names not visible in dark mode on category pages
+- **AllThatPrinting Card System**: Enhanced `allprint-card-title`, `allprint-card-price`, and `allprint-card-stats` classes with `!important` specificity
+- **Text Color Specifications**: 
+  - Product names: `color: #ffffff !important` in dark mode
+  - Prices: `color: #ffffff !important` in dark mode  
+  - Stats (reviews/likes): `color: #d1d5db !important` in dark mode
+- **CSS Specificity Resolution**: Added `!important` declarations to override any conflicting styles
+- **Category Page Compatibility**: Fixed text visibility issues on `/category/acrylic` and all other category pages
+- **User Experience**: Resolved product card text visibility problems that were preventing users from reading product information in dark mode
+
 ### 2025-01-17: Editor Page Text Visibility Enhancement
 - **Complete Text Color Fix**: Updated all text elements in Editor.tsx to use white text in dark mode
 - **Product Selector Screen**: Fixed subtitle, product tags, product names, prices, and review counts with `dark:text-white`
