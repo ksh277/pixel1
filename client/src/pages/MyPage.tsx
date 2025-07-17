@@ -198,22 +198,22 @@ export default function MyPage() {
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
                   {user.name}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 mb-2">{user.email}</p>
+                <p className="text-gray-600 dark:text-white mb-2">{user.email}</p>
                 <div className="flex items-center space-x-4">
                   <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                     {t({ ko: "일반 회원", en: "Regular Member" })}
                   </Badge>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-gray-500 dark:text-white">
                     {t({ ko: "회원 가입일", en: "Member since" })}: {formatDate(user.joinDate || "2025-01-01")}
                   </span>
                 </div>
               </div>
               <div className="flex space-x-2">
-                <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                   <Edit3 className="h-4 w-4 mr-1" />
                   {t({ ko: "프로필 수정", en: "Edit Profile" })}
                 </Button>
-                <Button variant="outline" size="sm" onClick={logout} className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                <Button variant="outline" size="sm" onClick={logout} className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                   <LogOut className="h-4 w-4 mr-1" />
                   {t({ ko: "로그아웃", en: "Logout" })}
                 </Button>
@@ -228,7 +228,7 @@ export default function MyPage() {
             <CardContent className="p-6 text-center">
               <Package className="h-8 w-8 mx-auto mb-2 text-blue-600 dark:text-blue-400" />
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{orders.length}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600 dark:text-white">
                 {t({ ko: "총 주문", en: "Total Orders" })}
               </p>
             </CardContent>
@@ -237,7 +237,7 @@ export default function MyPage() {
             <CardContent className="p-6 text-center">
               <Heart className="h-8 w-8 mx-auto mb-2 text-red-500 dark:text-red-400" />
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{favorites.length}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600 dark:text-white">
                 {t({ ko: "찜한 상품", en: "Favorites" })}
               </p>
             </CardContent>
@@ -248,7 +248,7 @@ export default function MyPage() {
                 <BelugaMascot variant="mypage" className="h-8 w-8 mx-auto" />
               </div>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600 dark:text-white">
                 {t({ ko: "적립 포인트", en: "Points" })}
               </p>
             </CardContent>
@@ -259,7 +259,7 @@ export default function MyPage() {
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 ₩{orders.reduce((sum, order) => sum + order.total, 0).toLocaleString()}
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600 dark:text-white">
                 {t({ ko: "총 구매액", en: "Total Spent" })}
               </p>
             </CardContent>
@@ -269,19 +269,19 @@ export default function MyPage() {
         {/* Main Content Tabs */}
         <Tabs defaultValue="orders" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
-            <TabsTrigger value="orders" className="flex items-center text-gray-700 dark:text-gray-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger value="orders" className="flex items-center text-gray-700 dark:text-white data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <Package className="h-4 w-4 mr-2" />
               {t({ ko: "주문내역", en: "Orders" })}
             </TabsTrigger>
-            <TabsTrigger value="favorites" className="flex items-center text-gray-700 dark:text-gray-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger value="favorites" className="flex items-center text-gray-700 dark:text-white data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <Heart className="h-4 w-4 mr-2" />
               {t({ ko: "찜한상품", en: "Favorites" })}
             </TabsTrigger>
-            <TabsTrigger value="reviews" className="flex items-center text-gray-700 dark:text-gray-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger value="reviews" className="flex items-center text-gray-700 dark:text-white data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <Star className="h-4 w-4 mr-2" />
               {t({ ko: "리뷰관리", en: "Reviews" })}
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center text-gray-700 dark:text-gray-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger value="settings" className="flex items-center text-gray-700 dark:text-white data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <Settings className="h-4 w-4 mr-2" />
               {t({ ko: "설정", en: "Settings" })}
             </TabsTrigger>
@@ -303,7 +303,7 @@ export default function MyPage() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                       {t({ ko: "주문 내역이 없습니다", en: "No Orders Yet" })}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-600 dark:text-white mb-6">
                       {t({ ko: "첫 번째 주문을 해보세요!", en: "Place your first order!" })}
                     </p>
                     <Link href="/products">
@@ -322,7 +322,7 @@ export default function MyPage() {
                               <p className="font-semibold text-gray-900 dark:text-white">
                                 {t({ ko: "주문번호", en: "Order" })} #{order.id}
                               </p>
-                              <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                              <p className="text-sm text-gray-600 dark:text-white flex items-center">
                                 <Calendar className="h-4 w-4 mr-1" />
                                 {formatDate(order.orderDate)}
                               </p>
@@ -346,7 +346,7 @@ export default function MyPage() {
                               />
                               <div className="flex-1">
                                 <p className="font-medium text-gray-900 dark:text-white">{item.nameKo}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-300">
+                                <p className="text-sm text-gray-600 dark:text-white">
                                   ₩{item.price.toLocaleString()} × {item.quantity}
                                 </p>
                               </div>
@@ -356,7 +356,7 @@ export default function MyPage() {
 
                         {order.trackingNumber && (
                           <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                            <p className="text-sm text-gray-600 dark:text-white flex items-center">
                               <MapPin className="h-4 w-4 mr-1" />
                               {t({ ko: "송장번호", en: "Tracking Number" })}: {order.trackingNumber}
                             </p>
@@ -364,18 +364,18 @@ export default function MyPage() {
                         )}
 
                         <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex space-x-2">
-                          <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                          <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                             <Eye className="h-4 w-4 mr-1" />
                             {t({ ko: "주문 상세", en: "View Details" })}
                           </Button>
                           {order.status === "delivered" && (
-                            <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                            <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                               <Star className="h-4 w-4 mr-1" />
                               {t({ ko: "리뷰 작성", en: "Write Review" })}
                             </Button>
                           )}
                           {(order.status === "processing" || order.status === "shipping") && (
-                            <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                            <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                               <MapPin className="h-4 w-4 mr-1" />
                               {t({ ko: "배송 조회", en: "Track Order" })}
                             </Button>
@@ -405,7 +405,7 @@ export default function MyPage() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                       {t({ ko: "찜한 상품이 없습니다", en: "No Favorites Yet" })}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-600 dark:text-white mb-6">
                       {t({ ko: "마음에 드는 상품을 찜해보세요!", en: "Save products you love!" })}
                     </p>
                     <Link href="/products">
@@ -431,7 +431,7 @@ export default function MyPage() {
                           <Button size="sm" className="flex-1">
                             {t({ ko: "장바구니", en: "Add to Cart" })}
                           </Button>
-                          <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                          <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                             <Heart className="h-4 w-4" />
                           </Button>
                         </div>
@@ -458,7 +458,7 @@ export default function MyPage() {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     {t({ ko: "작성한 리뷰가 없습니다", en: "No Reviews Yet" })}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+                  <p className="text-gray-600 dark:text-white mb-6">
                     {t({ ko: "구매한 상품에 대한 리뷰를 작성해보세요!", en: "Write reviews for your purchased products!" })}
                   </p>
                 </div>
@@ -486,9 +486,9 @@ export default function MyPage() {
                         <p className="font-medium text-gray-900 dark:text-white">
                           {t({ ko: "이름", en: "Name" })}
                         </p>
-                        <p className="text-gray-600 dark:text-gray-300">{user.name}</p>
+                        <p className="text-gray-600 dark:text-white">{user.name}</p>
                       </div>
-                      <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                      <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                         {t({ ko: "수정", en: "Edit" })}
                       </Button>
                     </div>
@@ -497,9 +497,9 @@ export default function MyPage() {
                         <p className="font-medium text-gray-900 dark:text-white">
                           {t({ ko: "이메일", en: "Email" })}
                         </p>
-                        <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
+                        <p className="text-gray-600 dark:text-white">{user.email}</p>
                       </div>
-                      <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                      <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                         {t({ ko: "수정", en: "Edit" })}
                       </Button>
                     </div>
@@ -508,9 +508,9 @@ export default function MyPage() {
                         <p className="font-medium text-gray-900 dark:text-white">
                           {t({ ko: "비밀번호", en: "Password" })}
                         </p>
-                        <p className="text-gray-600 dark:text-gray-300">••••••••</p>
+                        <p className="text-gray-600 dark:text-white">••••••••</p>
                       </div>
-                      <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                      <Button variant="outline" size="sm" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white">
                         {t({ ko: "변경", en: "Change" })}
                       </Button>
                     </div>

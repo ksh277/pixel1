@@ -183,27 +183,27 @@ export function Header() {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <Link href="/mypage" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/mypage" className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
                   {t({ ko: "마이페이지", en: "My Page", ja: "マイページ", zh: "我的页面" })}
                 </Link>
                 {user.isAdmin && (
-                  <Link href="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/admin" className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
                     {t({ ko: "관리자 모드", en: "Admin Mode", ja: "管理者モード", zh: "管理员模式" })}
                   </Link>
                 )}
                 <button 
                   onClick={logout}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                 >
                   {t({ ko: "로그아웃", en: "Logout", ja: "ログアウト", zh: "登出" })}
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/login" className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
                   {t({ ko: "로그인", en: "Login", ja: "ログイン", zh: "登录" })}
                 </Link>
-                <Link href="/register" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/register" className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
                   {t({ ko: "회원가입", en: "Sign Up", ja: "会員登録", zh: "注册" })}
                 </Link>
               </>
@@ -215,7 +215,7 @@ export function Header() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                 >
                   <Globe className="h-4 w-4 mr-1" />
                   <ChevronDown className="h-3 w-3" />
@@ -244,20 +244,20 @@ export function Header() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <span className="text-3xl font-bold text-foreground">
+              <span className="text-3xl font-bold text-gray-900 dark:text-white">
                 PIXEL<span className="text-blue-600">GOODS</span>
               </span>
             </Link>
 
             {/* Main Navigation Links */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link href="/products" className="text-foreground hover:text-muted-foreground transition-colors font-medium">
+              <Link href="/products" className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 transition-colors font-medium">
                 {t({ ko: "프린팅", en: "Printing", ja: "印刷", zh: "印刷" })}
               </Link>
-              <Link href="/community" className="text-foreground hover:text-muted-foreground transition-colors font-medium">
+              <Link href="/community" className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 transition-colors font-medium">
                 {t({ ko: "커뮤니티", en: "Community", ja: "コミュニティ", zh: "社区" })}
               </Link>
-              <Link href="/editor" className="text-foreground hover:text-muted-foreground transition-colors font-medium">
+              <Link href="/editor" className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 transition-colors font-medium">
                 {t({ ko: "굿즈 에디터", en: "Goods Editor", ja: "グッズエディタ", zh: "商品编辑器" })}
               </Link>
             </div>
