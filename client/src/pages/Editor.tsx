@@ -363,7 +363,7 @@ export default function Editor() {
 
   if (showProductSelector) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#333D4D] dark:to-[#2A3441] p-4">
+      <div className="min-h-screen bg-background dark:bg-[#1F2D4A] p-4">
         <div className="max-w-6xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
@@ -375,7 +375,7 @@ export default function Editor() {
                 zh: "请选择要制作的产品",
               })}
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-white max-w-2xl mx-auto">
               {t({
                 ko: "원하는 굿즈를 클릭하여 전문 에디터를 시작하세요",
                 en: "Click your desired goods to start the professional editor",
@@ -421,7 +421,7 @@ export default function Editor() {
                 <div className="product-thumbnail w-full h-36 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3 flex items-center justify-center border border-gray-200 dark:border-gray-600 flex-shrink-0">
                   <div className="text-center">
                     <ImageIcon className="w-8 h-8 text-gray-400 dark:text-gray-500 mx-auto mb-1" />
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-xs text-gray-500 dark:text-white">
                       {t({
                         ko: "이미지 준비중",
                         en: "Image Ready",
@@ -436,7 +436,7 @@ export default function Editor() {
                 <div className="flex-grow flex flex-col">
                   {/* Product Tags */}
                   <div className="mb-2">
-                    <span className="inline-block border border-gray-300 dark:border-gray-600 text-xs text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">
+                    <span className="inline-block border border-gray-300 dark:border-gray-600 text-xs text-gray-600 dark:text-white px-2 py-0.5 rounded-full">
                       {product.id === "keyring" &&
                         t({
                           ko: "타공포함",
@@ -530,7 +530,7 @@ export default function Editor() {
                   </div>
 
                   {/* Reviews */}
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-gray-500 dark:text-white">
                     {product.available ? (
                       <>
                         {product.id === "keyring" &&
@@ -763,9 +763,9 @@ export default function Editor() {
   }
 
   return (
-    <div className="editor-wrapper min-h-screen bg-gray-100 dark:bg-[#1F2D4A] flex flex-col overflow-x-hidden max-w-full">
+    <div className="editor-wrapper min-h-screen bg-background dark:bg-[#1F2D4A] flex flex-col overflow-x-hidden max-w-full">
       {/* Header */}
-      <header className="bg-white dark:bg-[#1F2D4A] shadow-sm border-b dark:border-gray-700 px-2 sm:px-4 py-2 sm:py-3">
+      <header className="bg-background dark:bg-[#1F2D4A] shadow-sm border-b dark:border-gray-700 px-2 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <Button
@@ -785,7 +785,7 @@ export default function Editor() {
                   })}
             </Button>
             {selectedProduct && (
-              <div className="text-xs sm:text-sm text-gray-600 hidden sm:block">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-white hidden sm:block">
                 <span>
                   {t(selectedProduct.name)} ({canvasSize.width}×
                   {canvasSize.height}mm)
@@ -844,7 +844,7 @@ export default function Editor() {
 
       {/* Mobile Toolbar Toggle */}
       {isMobile && (
-        <div className="bg-white border-b px-4 py-2">
+        <div className="bg-background dark:bg-[#1F2D4A] border-b px-4 py-2">
           <Button
             variant="ghost"
             size="sm"
@@ -871,11 +871,11 @@ export default function Editor() {
       <div className={cn("flex-1 flex", isMobile ? "flex-col" : "flex-row")}>
         {/* Mobile Collapsible Toolbar */}
         {isMobile && showMobileToolbar && (
-          <div className="bg-white border-b p-4 max-h-64 overflow-y-auto">
+          <div className="bg-background dark:bg-[#1F2D4A] border-b p-4 max-h-64 overflow-y-auto">
             <div className="space-y-4">
               {/* Size Controls */}
               <div>
-                <Label className="text-sm font-medium mb-2 block">
+                <Label className="text-sm font-medium mb-2 block text-gray-900 dark:text-white">
                   {t({
                     ko: "사이즈 (mm)",
                     en: "Size (mm)",
@@ -945,8 +945,8 @@ export default function Editor() {
 
               {/* Mobile Image Controls */}
               {selectedImage && (
-                <div className="space-y-3 p-3 border rounded-lg bg-gray-50">
-                  <Label className="text-sm font-medium block">
+                <div className="space-y-3 p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
+                  <Label className="text-sm font-medium block text-gray-900 dark:text-white">
                     {t({
                       ko: "이미지 제어",
                       en: "Image Controls",
@@ -988,7 +988,7 @@ export default function Editor() {
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <Label className="text-xs text-gray-500">
+                      <Label className="text-xs text-gray-500 dark:text-white">
                         {t({ ko: "가로", en: "Width", ja: "幅", zh: "宽" })}
                       </Label>
                       <Input
@@ -1016,7 +1016,7 @@ export default function Editor() {
                       />
                     </div>
                     <div>
-                      <Label className="text-xs text-gray-500">
+                      <Label className="text-xs text-gray-500 dark:text-white">
                         {t({ ko: "세로", en: "Height", ja: "高さ", zh: "高" })}
                       </Label>
                       <Input
@@ -1052,11 +1052,11 @@ export default function Editor() {
 
         {/* Desktop Sidebar */}
         {!isMobile && (
-          <div className="w-80 bg-white shadow-sm border-r p-4 overflow-y-auto">
+          <div className="w-80 bg-background dark:bg-[#1F2D4A] shadow-sm border-r p-4 overflow-y-auto">
             <div className="space-y-6">
               {/* Size Controls */}
               <div>
-                <Label className="text-sm font-medium mb-3 block">
+                <Label className="text-sm font-medium mb-3 block text-gray-900 dark:text-white">
                   {t({
                     ko: "사이즈 (mm)",
                     en: "Size (mm)",
@@ -1066,7 +1066,7 @@ export default function Editor() {
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <Label className="text-xs text-gray-500">
+                    <Label className="text-xs text-gray-500 dark:text-white">
                       {t({ ko: "가로", en: "Width", ja: "横", zh: "宽" })}
                     </Label>
                     <Input
@@ -1082,7 +1082,7 @@ export default function Editor() {
                     />
                   </div>
                   <div>
-                    <Label className="text-xs text-gray-500">
+                    <Label className="text-xs text-gray-500 dark:text-white">
                       {t({ ko: "세로", en: "Height", ja: "縦", zh: "高" })}
                     </Label>
                     <Input
@@ -1102,7 +1102,7 @@ export default function Editor() {
 
               {/* Image Upload */}
               <div>
-                <Label className="text-sm font-medium mb-3 block">
+                <Label className="text-sm font-medium mb-3 block text-gray-900 dark:text-white">
                   {t({
                     ko: "이미지 업로드",
                     en: "Image Upload",
@@ -1154,7 +1154,7 @@ export default function Editor() {
                     setDoubleSided(checked as boolean)
                   }
                 />
-                <Label htmlFor="double-sided" className="text-sm">
+                <Label htmlFor="double-sided" className="text-sm text-gray-900 dark:text-white">
                   {t({
                     ko: "앞뒤 다르게 그리기",
                     en: "Different Front/Back",
@@ -1187,8 +1187,8 @@ export default function Editor() {
 
               {/* Selected Image Controls */}
               {selectedImage && (
-                <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
-                  <Label className="text-sm font-medium block">
+                <div className="space-y-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
+                  <Label className="text-sm font-medium block text-gray-900 dark:text-white">
                     {t({
                       ko: "선택된 이미지 제어",
                       en: "Selected Image Controls",

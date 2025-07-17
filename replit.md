@@ -960,3 +960,24 @@ Preferred communication style: Simple, everyday language.
 - **Enhanced Visual Flow**: Instagram posts now display without card-style backgrounds, creating seamless grid layout
 - **Maintained Functionality**: Preserved hover effects, overlay interactions, and responsive grid system
 - **Clean Design**: Posts now appear as natural image grid without distracting background containers
+
+### 2025-01-17: Complete Dark Mode Text Visibility Enhancement
+- **Review Pages Text Fix**: Enhanced review text visibility in ReviewsAll.tsx with `dark:text-gray-100` for better readability
+- **Product Detail Page**: Updated product features and warnings text with `dark:text-gray-100` for improved contrast
+- **Product Reviews Section**: Enhanced review content text with `dark:text-gray-100` and metadata with `dark:text-gray-300`
+- **Global CSS Improvements**: Updated dark mode text colors in index.css:
+  - `dark:text-gray-700` → `#f3f4f6` for better contrast
+  - `dark:text-gray-600` → `#e5e7eb` for enhanced readability
+  - `dark:text-gray-500` → `#d1d5db` for improved visibility
+  - `allprint-card-stats` → `#d1d5db` for better stats visibility
+- **Login Page Background Fix**: Updated login page background from `dark:bg-[#333D4D]` to `dark:bg-[#1F2D4A]` to match main page background consistency
+- **Editor Page Background Consistency**: Updated editor page background throughout all components (product selector, editing interface, header, sidebar) to match main page background (`bg-background dark:bg-[#1F2D4A]`)
+
+### 2025-01-17: Editor Page Text Visibility Enhancement
+- **Complete Text Color Fix**: Updated all text elements in Editor.tsx to use white text in dark mode
+- **Product Selector Screen**: Fixed subtitle, product tags, product names, prices, and review counts with `dark:text-white`
+- **Editing Interface**: Updated header text, mobile toolbar labels, and all control labels
+- **Desktop Sidebar**: Fixed size control labels, image upload section, and all form labels
+- **Mobile Toolbar**: Updated all collapsible toolbar labels and image control sections
+- **Enhanced UI Elements**: Updated checkbox labels, image control containers with proper dark mode backgrounds
+- **Comprehensive Coverage**: All text elements now properly visible in dark mode while maintaining consistent background colors
