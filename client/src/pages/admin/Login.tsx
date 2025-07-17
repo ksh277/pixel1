@@ -64,14 +64,14 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-      <Card className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-        <CardHeader className="bg-white dark:bg-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0d1b2a] p-4">
+      <Card className="w-full max-w-md bg-white dark:bg-[#1e2b3c] shadow-lg border border-gray-200 dark:border-gray-700">
+        <CardHeader className="bg-white dark:bg-[#1e2b3c]">
           <CardTitle className="text-center text-2xl font-bold text-gray-900 dark:text-white">
             관리자 로그인
           </CardTitle>
         </CardHeader>
-        <CardContent className="bg-white dark:bg-gray-800 p-6">
+        <CardContent className="bg-white dark:bg-[#1e2b3c] p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="text-sm text-red-700 dark:text-red-400 text-center bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
@@ -120,7 +120,7 @@ export default function AdminLogin() {
             </Button>
           </form>
           
-          <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
             <p className="text-sm text-gray-600 dark:text-gray-300 text-center font-medium">
               테스트 계정
             </p>

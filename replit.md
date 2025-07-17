@@ -939,3 +939,17 @@ Preferred communication style: Simple, everyday language.
 - **Button and Icon Improvements**: Updated Heart button backgrounds and outline button styling for dark mode compatibility
 - **Call-to-Action Section**: Enhanced gradient backgrounds and button styling for proper dark mode appearance
 - **Complete Visual Consistency**: All text, icons, and interactive elements now properly support dark mode with unified color scheme
+
+### 2025-01-17: Login Pages Dark Mode Color Consistency Fix
+- **Login Page Background Consistency**: Updated card backgrounds from `dark:bg-[#1a2332]` to `dark:bg-[#1e2b3c]` for site-wide consistency
+- **Enhanced SNS Login Section**: Applied proper dark mode styling to social login buttons
+  - Kakao button: Added `dark:hover:bg-yellow-900/20` and `dark:border-yellow-500`
+  - Naver button: Added `dark:hover:bg-green-900/20` and `dark:border-green-500`
+  - Separator line: Updated to `dark:border-gray-600`
+  - Background text: Applied `dark:bg-[#1e2b3c]` for proper text visibility
+- **Sign-up Promotion Section**: Enhanced dark mode styling with `dark:bg-gray-700/50` background
+- **Admin Login Page**: Updated admin login page to use unified color scheme
+  - Background: `dark:bg-[#0d1b2a]` for consistency
+  - Card: `dark:bg-[#1e2b3c]` matching other pages
+  - Test account section: `dark:bg-gray-700/50` for proper contrast
+- **Visual Harmony**: All login-related pages now use consistent dark mode color palette matching the site-wide theme

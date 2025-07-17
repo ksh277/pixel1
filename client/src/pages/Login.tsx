@@ -53,14 +53,14 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
-        <Card className="shadow-lg bg-white dark:bg-[#1a2332] border-gray-200 dark:border-gray-700">
+        <Card className="shadow-lg bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
               {t({ ko: "로그인", en: "Login" })}
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="space-y-6 bg-white dark:bg-[#1a2332]">
+          <CardContent className="space-y-6 bg-white dark:bg-[#1e2b3c]">
             {error && (
               <Alert variant="destructive" className="animate-shake">
                 <AlertCircle className="h-4 w-4" />
@@ -158,10 +158,10 @@ export default function Login() {
             <div className="space-y-3">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">간편 로그인</span>
+                  <span className="px-2 bg-white dark:bg-[#1e2b3c] text-gray-500 dark:text-gray-400">간편 로그인</span>
                 </div>
               </div>
               
@@ -169,16 +169,16 @@ export default function Login() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="h-12 border-yellow-400 hover:bg-yellow-50"
+                  className="h-12 border-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 dark:border-yellow-500"
                   onClick={() => handleSnsLogin('kakao')}
                 >
-                  <MessageCircle className="w-5 h-5 mr-2 text-yellow-600" />
+                  <MessageCircle className="w-5 h-5 mr-2 text-yellow-600 dark:text-yellow-400" />
                   카카오
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
-                  className="h-12 border-green-500 hover:bg-green-50"
+                  className="h-12 border-green-500 hover:bg-green-50 dark:hover:bg-green-900/20 dark:border-green-500"
                   onClick={() => handleSnsLogin('naver')}
                 >
                   <span className="w-5 h-5 mr-2 bg-green-500 text-white rounded text-xs flex items-center justify-center font-bold">N</span>
@@ -188,15 +188,15 @@ export default function Login() {
             </div>
             
             {/* Sign up promotion */}
-            <div className="bg-gray-50 p-4 rounded-lg text-center">
-              <p className="text-sm text-gray-600 mb-3">
+            <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg text-center">
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
                 아직 회원이 아니신가요? 지금 회원가입을 하시면<br />
                 다양한 특별 혜택이 준비되어 있습니다.
               </p>
               <Link href="/register">
                 <Button 
                   variant="outline" 
-                  className="w-full h-10 border-gray-300 hover:bg-white"
+                  className="w-full h-10 border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                 >
                   회원가입
                 </Button>
