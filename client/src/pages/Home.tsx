@@ -422,7 +422,7 @@ export default function Home() {
                           {review.productName}
                         </h3>
                         
-                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                        <p className="text-lg font-bold text-blue-600 dark:text-white">
                           ₩{(review.rating * 1200 + 3500).toLocaleString()}
                         </p>
                         
@@ -617,7 +617,7 @@ export default function Home() {
                           {item.title}
                         </h3>
                         
-                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                        <p className="text-lg font-bold text-blue-600 dark:text-white">
                           ₩{item.price.toLocaleString()}
                         </p>
                         

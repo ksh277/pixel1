@@ -58,7 +58,7 @@ export function PopularBox({ title, description, image, products, bgColor = "bg-
                   </p>
                 </div>
               </div>
-              <div className="text-sm font-semibold text-blue-600">
+              <div className="text-sm font-semibold text-blue-600 dark:text-white">
                 ₩{parseInt(product.basePrice).toLocaleString()}
               </div>
             </div>
