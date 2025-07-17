@@ -159,15 +159,15 @@ export default function AdditionalServices() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "design": return "bg-blue-100 text-blue-800";
-      case "speed": return "bg-orange-100 text-orange-800";
-      case "special": return "bg-purple-100 text-purple-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "design": return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+      case "speed": return "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300";
+      case "special": return "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300";
+      default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -186,20 +186,20 @@ export default function AdditionalServices() {
 
         {/* Service Categories */}
         <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-4">
-            <TabsTrigger value="all" className="flex items-center gap-2">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-4 bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700">
+            <TabsTrigger value="all" className="flex items-center gap-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white dark:text-gray-300 dark:data-[state=active]:bg-blue-600">
               <FileText className="w-4 h-4" />
               전체
             </TabsTrigger>
-            <TabsTrigger value="design" className="flex items-center gap-2">
+            <TabsTrigger value="design" className="flex items-center gap-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white dark:text-gray-300 dark:data-[state=active]:bg-blue-600">
               <Palette className="w-4 h-4" />
               도안작업
             </TabsTrigger>
-            <TabsTrigger value="speed" className="flex items-center gap-2">
+            <TabsTrigger value="speed" className="flex items-center gap-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white dark:text-gray-300 dark:data-[state=active]:bg-blue-600">
               <Zap className="w-4 h-4" />
               급한작업
             </TabsTrigger>
-            <TabsTrigger value="special" className="flex items-center gap-2">
+            <TabsTrigger value="special" className="flex items-center gap-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white dark:text-gray-300 dark:data-[state=active]:bg-blue-600">
               <Star className="w-4 h-4" />
               특별서비스
             </TabsTrigger>
@@ -209,7 +209,7 @@ export default function AdditionalServices() {
         {/* Services Grid - Korean E-commerce Card Style */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredServices.map((service) => (
-            <Card key={service.id} className="hover:shadow-lg transition-shadow group bg-white dark:bg-[#2A3A52] border border-gray-200 dark:border-gray-700">
+            <Card key={service.id} className="hover:shadow-lg transition-shadow group bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
               {/* Status Badges - Top Left */}
               <div className="absolute top-3 left-3 flex gap-2 z-10">
                 {service.isPopular && (
@@ -292,7 +292,7 @@ export default function AdditionalServices() {
                   </Button>
                 </Link>
                 <Link href="/editor">
-                  <Button variant="outline" className="px-8">
+                  <Button variant="outline" className="px-8 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
                     <Palette className="w-4 h-4 mr-2" />
                     직접 제작하기
                   </Button>
