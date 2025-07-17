@@ -135,7 +135,7 @@ export function InstagramFeed() {
             key={post.id}
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
-            className="relative group aspect-square overflow-hidden rounded-lg bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 shadow-md cursor-pointer hover:shadow-xl transition-all duration-300"
+            className="relative group aspect-square overflow-hidden rounded-lg cursor-pointer transition-all duration-300"
             onMouseEnter={() => setHoveredPost(post.id)}
             onMouseLeave={() => setHoveredPost(null)}
           >

@@ -953,3 +953,10 @@ Preferred communication style: Simple, everyday language.
   - Card: `dark:bg-[#1e2b3c]` matching other pages
   - Test account section: `dark:bg-gray-700/50` for proper contrast
 - **Visual Harmony**: All login-related pages now use consistent dark mode color palette matching the site-wide theme
+
+### 2025-01-17: Instagram Feed Layout Cleanup
+- **Background Box Removal**: Eliminated background boxes from Instagram feed posts for cleaner, more natural appearance
+- **Simplified Card Design**: Removed `bg-white dark:bg-[#1e2b3c]`, `border`, and `shadow-md` classes from individual Instagram posts
+- **Enhanced Visual Flow**: Instagram posts now display without card-style backgrounds, creating seamless grid layout
+- **Maintained Functionality**: Preserved hover effects, overlay interactions, and responsive grid system
+- **Clean Design**: Posts now appear as natural image grid without distracting background containers
