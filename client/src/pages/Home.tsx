@@ -21,6 +21,7 @@ import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 import { ProductCard } from "@/components/ProductCard";
 import { HotProductPreview } from "@/components/HotProductPreview";
 import { PopularBox } from "@/components/PopularBox";
+import { InstagramFeed } from "@/components/InstagramFeed";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -180,16 +181,7 @@ export default function Home() {
     },
   ];
 
-  const instagramFeed = [
-    { id: 1, image: "/api/placeholder/300/300", likes: 125, comments: 8 },
-    { id: 2, image: "/api/placeholder/300/300", likes: 98, comments: 12 },
-    { id: 3, image: "/api/placeholder/300/300", likes: 156, comments: 15 },
-    { id: 4, image: "/api/placeholder/300/300", likes: 89, comments: 6 },
-    { id: 5, image: "/api/placeholder/300/300", likes: 234, comments: 18 },
-    { id: 6, image: "/api/placeholder/300/300", likes: 167, comments: 9 },
-    { id: 7, image: "/api/placeholder/300/300", likes: 145, comments: 11 },
-    { id: 8, image: "/api/placeholder/300/300", likes: 201, comments: 16 },
-  ];
+
 
   const handleAddToCart = (product: Product) => {
     toast({
@@ -632,79 +624,8 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
-        {/* User Reviews Section */}
-        {/* Instagram Feed */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl">📸</span>
-              <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground">
-                  {t({ ko: "인스타그램 피드", en: "Instagram Feed" })}
-                </h2>
-                <p className="text-sm text-muted-foreground hidden sm:block">
-                  {t({
-                    ko: "@allthatprinting_ 최신 소식을 확인해보세요",
-                    en: "Check out the latest from @allthatprinting_",
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Instagram Feed Grid Layout */}
-          <div className="px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {instagramFeed.slice(0, isMobile ? 4 : 4).map((post) => (
-                <motion.div
-                  key={post.id}
-                  variants={itemVariants}
-                  className="w-full"
-                >
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg shadow p-3 h-full flex flex-col">
-                    {/* Image Area */}
-                    <div className="relative h-28 mb-3 bg-gray-100 dark:bg-[#1F2D4A] rounded-md overflow-hidden">
-                      <img
-                        src={post.image}
-                        alt={`Instagram post ${post.id}`}
-                        className="w-full h-full object-contain"
-                        loading="lazy"
-                      />
-
-                      {/* HOT Badge */}
-                      <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded font-bold z-10">
-                        인기
-                      </div>
-
-                      {/* LIKE Badge */}
-                      <div className="absolute top-2 right-2 text-xs text-gray-500 dark:text-gray-400 z-10">
-                        LIKE {post.likes}
-                      </div>
-                    </div>
-
-                    {/* Text Content */}
-                    <div className="flex-1 flex flex-col justify-between">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1 truncate">
-                        Instagram Post #{post.id}
-                      </h3>
-                      <p className="text-gray-500 text-sm mb-1 truncate">
-                        @allthatprinting_
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        리뷰 {post.comments} / LIKE {post.likes}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
+        {/* Instagram Feed Section */}
+        <InstagramFeed />
       </div>
 
       {/* Bottom spacing to prevent floating button overlap */}
