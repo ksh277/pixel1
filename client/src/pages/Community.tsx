@@ -1,18 +1,20 @@
 import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Heart, MessageCircle, ChevronLeft, ChevronRight, User, Star, TrendingUp } from "lucide-react";
+import { Heart, MessageCircle, ChevronLeft, ChevronRight, User, Star, TrendingUp, PenTool } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
 import type { CommunityPost } from "@shared/schema";
 
 export default function Community() {
   const { toast } = useToast();
   const { language, t } = useLanguage();
+  const { user } = useAuth();
   const [currentSlide, setCurrentSlide] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -247,9 +249,19 @@ export default function Community() {
             <h2 className="text-2xl font-bold text-foreground">
               {t({ ko: "최근 게시물", en: "Recent Posts" })}
             </h2>
-            <Button variant="outline" size="sm">
-              {t({ ko: "더보기", en: "View More" })}
-            </Button>
+            <div className="flex items-center gap-3">
+              {user && (
+                <Link href="/community/write">
+                  <Button size="sm" className="flex items-center gap-2">
+                    <PenTool className="h-4 w-4" />
+                    {t({ ko: "글 작성하기", en: "Write Post", ja: "投稿作成", zh: "写帖子" })}
+                  </Button>
+                </Link>
+              )}
+              <Button variant="outline" size="sm">
+                {t({ ko: "더보기", en: "View More" })}
+              </Button>
+            </div>
           </div>
           
           {postsLoading ? (

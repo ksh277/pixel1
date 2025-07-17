@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, Star, Calendar, User, Filter, Search, ChevronDown } from "lucide-react";
+import { ArrowLeft, Star, Calendar, User, Filter, Search, ChevronDown, PenTool } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useAuth } from "@/contexts/AuthContext";
 import { BelugaMascot } from "@/components/BelugaMascot";
 
 interface ReviewData {
@@ -146,6 +147,7 @@ type FilterOption = "all" | "keyring" | "stand" | "smarttok" | "holder" | "badge
 
 export default function ReviewsAll() {
   const { language, t } = useLanguage();
+  const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("latest");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
@@ -253,14 +255,24 @@ export default function ReviewsAll() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                {t({
-                  ko: "전체 창작자 후기",
-                  en: "All Creator Reviews",
-                  ja: "全クリエイターレビュー",
-                  zh: "所有创作者评价"
-                })}
-              </h1>
+              <div className="flex items-center gap-4 mb-2">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                  {t({
+                    ko: "전체 창작자 후기",
+                    en: "All Creator Reviews",
+                    ja: "全クリエイターレビュー",
+                    zh: "所有创作者评价"
+                  })}
+                </h1>
+                {user && (
+                  <Link href="/reviews/write">
+                    <Button size="sm" className="flex items-center gap-2">
+                      <PenTool className="h-4 w-4" />
+                      {t({ ko: "후기 작성하기", en: "Write Review", ja: "レビュー作成", zh: "写评价" })}
+                    </Button>
+                  </Link>
+                )}
+              </div>
               <p className="text-gray-600 dark:text-gray-300">
                 {t({
                   ko: "우리 서비스를 이용한 창작자들의 솔직한 후기를 모두 확인해보세요",

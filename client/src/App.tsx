@@ -40,6 +40,8 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminLogin from "@/pages/admin/Login";
 import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
+import CommunityWrite from "@/pages/CommunityWrite";
+import ReviewWrite from "@/pages/ReviewWrite";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -105,7 +107,21 @@ function Router() {
           )}
         </Route>
         <Route path="/community" component={Community} />
+        <Route path="/community/write">
+          {() => (
+            <ProtectedRoute>
+              <CommunityWrite />
+            </ProtectedRoute>
+          )}
+        </Route>
         <Route path="/reviews/:id" component={ReviewDetail} />
+        <Route path="/reviews/write">
+          {() => (
+            <ProtectedRoute>
+              <ReviewWrite />
+            </ProtectedRoute>
+          )}
+        </Route>
         <Route path="/resources" component={Resources} />
         <Route path="/events" component={Events} />
         <Route path="/collections" component={Collections} />
