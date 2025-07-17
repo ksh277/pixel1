@@ -391,7 +391,7 @@ export default function Home() {
                 className="w-full"
               >
                 <Link href={`/product/${review.id}`}>
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[320px] md:min-h-[420px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 min-h-[320px] md:min-h-[420px] flex flex-col">
                     {/* Large Review Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -488,7 +488,7 @@ export default function Home() {
                 className="w-full"
               >
                 <Link href={`/community/${item.id}`}>
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[320px] md:min-h-[400px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 min-h-[320px] md:min-h-[400px] flex flex-col">
                     {/* Large Community Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img
@@ -586,7 +586,7 @@ export default function Home() {
                 className="w-full"
               >
                 <Link href={`/product/${item.id}`}>
-                  <div className="bg-white dark:bg-[#1F2D4A] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] min-h-[320px] md:min-h-[400px] flex flex-col">
+                  <div className="bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 min-h-[320px] md:min-h-[400px] flex flex-col">
                     {/* Large Material Image - 70% of card height */}
                     <div className="relative flex-[0_0_70%]">
                       <img

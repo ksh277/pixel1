@@ -120,7 +120,7 @@ export function UserReviewsSection() {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-50 dark:bg-[#0d1b2a]">
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           variants={containerVariants}
@@ -133,7 +133,7 @@ export function UserReviewsSection() {
             <div className="flex items-center gap-3">
               <span className="text-2xl">😊</span>
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
                   {t({
                     ko: "창작자들의 진짜 후기",
                     en: "Real Reviews from Our Creators",
@@ -141,7 +141,7 @@ export function UserReviewsSection() {
                     zh: "创作者们的真实评价",
                   })}
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-600 dark:text-gray-300 mt-1">
                   {t({
                     ko: "우리 서비스를 이용한 창작자들이 남긴 실제 후기를 확인해보세요",
                     en: "Check out real reviews left by creators who have used our service",
@@ -171,7 +171,7 @@ export function UserReviewsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayedReviews.map((review, index) => (
               <motion.div key={review.id} variants={itemVariants}>
-                <Card className="rounded-xl bg-white shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <Card className="rounded-xl bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700 shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
                   <Link href={`/reviews/${review.id}`}>
                     <CardContent className="p-0 flex flex-col justify-between h-full">
                       {/* Product Image */}
@@ -216,7 +216,7 @@ export function UserReviewsSection() {
                       {/* Review Content */}
                       <div className="p-4 space-y-3">
                         {/* Product Name */}
-                        <h3 className="font-bold text-sm text-gray-900">
+                        <h3 className="font-bold text-sm text-gray-900 dark:text-white">
                           {language === "ko"
                             ? review.productNameKo
                             : review.productName}
@@ -225,18 +225,18 @@ export function UserReviewsSection() {
                         {/* Rating */}
                         <div className="flex items-center gap-1">
                           {renderStars(review.rating)}
-                          <span className="text-sm text-gray-600 ml-1">
+                          <span className="text-sm text-gray-600 dark:text-gray-300 ml-1">
                             {review.rating}.0
                           </span>
                         </div>
 
                         {/* Review Text */}
-                        <p className="text-sm text-gray-700 leading-relaxed">
+                        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                           {truncateText(review.reviewText)}
                         </p>
 
                         {/* Reviewer Info */}
-                        <div className="flex items-center justify-between text-xs text-gray-500">
+                        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                           <div className="flex items-center gap-1">
                             <User className="h-3 w-3" />
                             <span>{review.reviewerNickname}</span>
