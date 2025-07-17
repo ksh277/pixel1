@@ -1,9 +1,12 @@
 import { 
-  users, categories, products, productReviews, productLikes, cartItems, orders, communityPosts, communityComments, belugaTemplates,
+  users, categories, products, productReviews, productLikes, cartItems, orders, orderItems, payments, coupons, adminLogs, communityPosts, communityComments, belugaTemplates,
   type User, type InsertUser, type Category, type InsertCategory, type Product, type InsertProduct,
   type ProductReview, type InsertProductReview, type ProductLike, type InsertProductLike,
   type CartItem, type InsertCartItem,
-  type Order, type InsertOrder, type CommunityPost, type InsertCommunityPost,
+  type Order, type InsertOrder, type OrderItem, type InsertOrderItem,
+  type Payment, type InsertPayment, type Coupon, type InsertCoupon,
+  type AdminLog, type InsertAdminLog,
+  type CommunityPost, type InsertCommunityPost,
   type CommunityComment, type InsertCommunityComment, type BelugaTemplate, type InsertBelugaTemplate
 } from "@shared/schema";
 import { db } from "./db";
@@ -54,6 +57,27 @@ export interface IStorage {
   createOrder(order: InsertOrder): Promise<Order>;
   updateOrderStatus(id: number, status: string): Promise<Order | undefined>;
   
+  // Order Item methods
+  getOrderItems(orderId: number): Promise<OrderItem[]>;
+  createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem>;
+  
+  // Payment methods
+  getPayments(orderId: number): Promise<Payment[]>;
+  createPayment(payment: InsertPayment): Promise<Payment>;
+  updatePaymentStatus(id: number, status: string): Promise<Payment | undefined>;
+  
+  // Coupon methods
+  getCoupons(): Promise<Coupon[]>;
+  getCoupon(id: number): Promise<Coupon | undefined>;
+  getCouponByCode(code: string): Promise<Coupon | undefined>;
+  createCoupon(coupon: InsertCoupon): Promise<Coupon>;
+  updateCoupon(id: number, updates: Partial<InsertCoupon>): Promise<Coupon | undefined>;
+  deleteCoupon(id: number): Promise<boolean>;
+  
+  // Admin Log methods
+  getAdminLogs(): Promise<AdminLog[]>;
+  createAdminLog(adminLog: InsertAdminLog): Promise<AdminLog>;
+  
   // Community methods
   getCommunityPosts(): Promise<CommunityPost[]>;
   getCommunityPost(id: number): Promise<CommunityPost | undefined>;
@@ -79,6 +103,10 @@ export class MemStorage implements IStorage {
   private productLikes: Map<number, ProductLike>;
   private cartItems: Map<number, CartItem>;
   private orders: Map<number, Order>;
+  private orderItems: Map<number, OrderItem>;
+  private payments: Map<number, Payment>;
+  private coupons: Map<number, Coupon>;
+  private adminLogs: Map<number, AdminLog>;
   private communityPosts: Map<number, CommunityPost>;
   private communityComments: Map<number, CommunityComment>;
   private belugaTemplates: Map<number, BelugaTemplate>;
@@ -92,6 +120,10 @@ export class MemStorage implements IStorage {
     this.productLikes = new Map();
     this.cartItems = new Map();
     this.orders = new Map();
+    this.orderItems = new Map();
+    this.payments = new Map();
+    this.coupons = new Map();
+    this.adminLogs = new Map();
     this.communityPosts = new Map();
     this.communityComments = new Map();
     this.belugaTemplates = new Map();
@@ -732,6 +764,71 @@ export class DatabaseStorage implements IStorage {
         .where(eq(belugaTemplates.id, templateIds[i]));
     }
     return true;
+  }
+
+  // Order Item methods
+  async getOrderItems(orderId: number): Promise<OrderItem[]> {
+    return await db.select().from(orderItems).where(eq(orderItems.orderId, orderId));
+  }
+
+  async createOrderItem(insertOrderItem: InsertOrderItem): Promise<OrderItem> {
+    const [orderItem] = await db.insert(orderItems).values(insertOrderItem).returning();
+    return orderItem;
+  }
+
+  // Payment methods
+  async getPayments(orderId: number): Promise<Payment[]> {
+    return await db.select().from(payments).where(eq(payments.orderId, orderId));
+  }
+
+  async createPayment(insertPayment: InsertPayment): Promise<Payment> {
+    const [payment] = await db.insert(payments).values(insertPayment).returning();
+    return payment;
+  }
+
+  async updatePaymentStatus(id: number, status: string): Promise<Payment | undefined> {
+    const [payment] = await db.update(payments).set({ status }).where(eq(payments.id, id)).returning();
+    return payment;
+  }
+
+  // Coupon methods
+  async getCoupons(): Promise<Coupon[]> {
+    return await db.select().from(coupons);
+  }
+
+  async getCoupon(id: number): Promise<Coupon | undefined> {
+    const [coupon] = await db.select().from(coupons).where(eq(coupons.id, id));
+    return coupon;
+  }
+
+  async getCouponByCode(code: string): Promise<Coupon | undefined> {
+    const [coupon] = await db.select().from(coupons).where(eq(coupons.code, code));
+    return coupon;
+  }
+
+  async createCoupon(insertCoupon: InsertCoupon): Promise<Coupon> {
+    const [coupon] = await db.insert(coupons).values(insertCoupon).returning();
+    return coupon;
+  }
+
+  async updateCoupon(id: number, updates: Partial<InsertCoupon>): Promise<Coupon | undefined> {
+    const [coupon] = await db.update(coupons).set(updates).where(eq(coupons.id, id)).returning();
+    return coupon;
+  }
+
+  async deleteCoupon(id: number): Promise<boolean> {
+    const result = await db.delete(coupons).where(eq(coupons.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  // Admin Log methods
+  async getAdminLogs(): Promise<AdminLog[]> {
+    return await db.select().from(adminLogs);
+  }
+
+  async createAdminLog(insertAdminLog: InsertAdminLog): Promise<AdminLog> {
+    const [adminLog] = await db.insert(adminLogs).values(insertAdminLog).returning();
+    return adminLog;
   }
 }
 

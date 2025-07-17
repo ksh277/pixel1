@@ -98,6 +98,44 @@ export const orders = mysqlTable("orders", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const orderItems = mysqlTable("order_items", {
+  id: serial("id").primaryKey(),
+  orderId: int("order_id").references(() => orders.id).notNull(),
+  productId: int("product_id").references(() => products.id).notNull(),
+  quantity: int("quantity").notNull(),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const payments = mysqlTable("payments", {
+  id: serial("id").primaryKey(),
+  orderId: int("order_id").references(() => orders.id).notNull(),
+  paymentMethod: text("payment_method").notNull(), // 카드, 계좌이체 등
+  status: text("status").notNull(), // pending, success, failed
+  transactionId: text("transaction_id"),
+  paidAt: timestamp("paid_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const coupons = mysqlTable("coupons", {
+  id: serial("id").primaryKey(),
+  code: text("code").notNull().unique(),
+  discountType: text("discount_type").notNull(), // percent, fixed
+  discountValue: decimal("discount_value", { precision: 10, scale: 2 }).notNull(),
+  expiresAt: timestamp("expires_at"),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const adminLogs = mysqlTable("admin_logs", {
+  id: serial("id").primaryKey(),
+  adminId: int("admin_id").references(() => users.id).notNull(),
+  action: text("action").notNull(), // 예: "상품 삭제"
+  targetTable: text("target_table").notNull(),
+  targetId: int("target_id"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const communityPosts = mysqlTable("community_posts", {
   id: serial("id").primaryKey(),
   userId: int("user_id")
@@ -179,6 +217,26 @@ export const insertOrderSchema = createInsertSchema(orders).omit({
   createdAt: true,
 });
 
+export const insertOrderItemSchema = createInsertSchema(orderItems).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPaymentSchema = createInsertSchema(payments).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCouponSchema = createInsertSchema(coupons).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertAdminLogSchema = createInsertSchema(adminLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
 export const insertCommunityPostSchema = createInsertSchema(
   communityPosts,
 ).omit({
@@ -217,6 +275,14 @@ export type CartItem = typeof cartItems.$inferSelect;
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type Order = typeof orders.$inferSelect;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type OrderItem = typeof orderItems.$inferSelect;
+export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
+export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = z.infer<typeof insertPaymentSchema>;
+export type Coupon = typeof coupons.$inferSelect;
+export type InsertCoupon = z.infer<typeof insertCouponSchema>;
+export type AdminLog = typeof adminLogs.$inferSelect;
+export type InsertAdminLog = z.infer<typeof insertAdminLogSchema>;
 export type CommunityPost = typeof communityPosts.$inferSelect;
 export type InsertCommunityPost = z.infer<typeof insertCommunityPostSchema>;
 export type CommunityComment = typeof communityComments.$inferSelect;

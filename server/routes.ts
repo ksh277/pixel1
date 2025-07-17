@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema } from "@shared/schema";
+import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Categories
@@ -502,6 +502,157 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success });
     } catch (error) {
       res.status(500).json({ message: "Failed to reorder templates" });
+    }
+  });
+
+  // Order Items
+  app.get("/api/orders/:orderId/items", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const orderItems = await storage.getOrderItems(orderId);
+      res.json(orderItems);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch order items" });
+    }
+  });
+
+  app.post("/api/orders/:orderId/items", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const orderItemData = insertOrderItemSchema.parse({ ...req.body, orderId });
+      const orderItem = await storage.createOrderItem(orderItemData);
+      res.status(201).json(orderItem);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid order item data" });
+    }
+  });
+
+  // Payments
+  app.get("/api/orders/:orderId/payments", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const payments = await storage.getPayments(orderId);
+      res.json(payments);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch payments" });
+    }
+  });
+
+  app.post("/api/orders/:orderId/payments", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const paymentData = insertPaymentSchema.parse({ ...req.body, orderId });
+      const payment = await storage.createPayment(paymentData);
+      res.status(201).json(payment);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid payment data" });
+    }
+  });
+
+  app.patch("/api/payments/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status } = req.body;
+      const payment = await storage.updatePaymentStatus(id, status);
+      if (!payment) {
+        return res.status(404).json({ message: "Payment not found" });
+      }
+      res.json(payment);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update payment" });
+    }
+  });
+
+  // Coupons
+  app.get("/api/coupons", async (req, res) => {
+    try {
+      const coupons = await storage.getCoupons();
+      res.json(coupons);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch coupons" });
+    }
+  });
+
+  app.get("/api/coupons/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const coupon = await storage.getCoupon(id);
+      if (!coupon) {
+        return res.status(404).json({ message: "Coupon not found" });
+      }
+      res.json(coupon);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch coupon" });
+    }
+  });
+
+  app.get("/api/coupons/code/:code", async (req, res) => {
+    try {
+      const code = req.params.code;
+      const coupon = await storage.getCouponByCode(code);
+      if (!coupon) {
+        return res.status(404).json({ message: "Coupon not found" });
+      }
+      res.json(coupon);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch coupon" });
+    }
+  });
+
+  app.post("/api/coupons", async (req, res) => {
+    try {
+      const couponData = insertCouponSchema.parse(req.body);
+      const coupon = await storage.createCoupon(couponData);
+      res.status(201).json(coupon);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid coupon data" });
+    }
+  });
+
+  app.patch("/api/coupons/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = insertCouponSchema.partial().parse(req.body);
+      const coupon = await storage.updateCoupon(id, updates);
+      if (!coupon) {
+        return res.status(404).json({ message: "Coupon not found" });
+      }
+      res.json(coupon);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid coupon data" });
+    }
+  });
+
+  app.delete("/api/coupons/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteCoupon(id);
+      if (!success) {
+        return res.status(404).json({ message: "Coupon not found" });
+      }
+      res.json({ message: "Coupon deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete coupon" });
+    }
+  });
+
+  // Admin Logs
+  app.get("/api/admin/logs", async (req, res) => {
+    try {
+      const logs = await storage.getAdminLogs();
+      res.json(logs);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch admin logs" });
+    }
+  });
+
+  app.post("/api/admin/logs", async (req, res) => {
+    try {
+      const logData = insertAdminLogSchema.parse(req.body);
+      const log = await storage.createAdminLog(logData);
+      res.status(201).json(log);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid admin log data" });
     }
   });
 
