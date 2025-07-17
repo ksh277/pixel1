@@ -51,16 +51,16 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1F2D4A] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
-        <Card className="shadow-lg bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="shadow-lg bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
               {t({ ko: "로그인", en: "Login" })}
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="space-y-6 bg-white dark:bg-[#1e2b3c]">
+          <CardContent className="space-y-6 bg-white dark:bg-gray-900">
             {error && (
               <Alert variant="destructive" className="animate-shake">
                 <AlertCircle className="h-4 w-4" />
@@ -136,7 +136,7 @@ export default function Login() {
               
               <Button 
                 type="submit" 
-                className="w-full h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700 text-base font-medium"
+                className="w-full h-12 bg-blue-600 text-white hover:bg-blue-700 text-base font-medium"
                 disabled={isLoading}
               >
                 {isLoading ? "로그인 중..." : "로그인"}
@@ -161,7 +161,7 @@ export default function Login() {
                   <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white dark:bg-[#1e2b3c] text-gray-500 dark:text-gray-400">간편 로그인</span>
+                  <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">간편 로그인</span>
                 </div>
               </div>
               
