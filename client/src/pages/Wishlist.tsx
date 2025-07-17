@@ -197,7 +197,7 @@ export default function Wishlist() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-background dark:bg-[#1F2D4A] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
@@ -209,7 +209,7 @@ export default function Wishlist() {
                     {t({ ko: "홈으로", en: "Home" })}
                   </Button>
                 </Link>
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                   {t({ ko: "찜 목록", en: "Wishlist" })}
                 </h1>
               </div>
@@ -225,7 +225,7 @@ export default function Wishlist() {
 
   if (wishlistItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-background dark:bg-[#1F2D4A] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
@@ -236,7 +236,7 @@ export default function Wishlist() {
                   {t({ ko: "홈으로", en: "Home" })}
                 </Button>
               </Link>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                 {t({ ko: "찜 목록", en: "Wishlist" })}
               </h1>
             </div>
@@ -247,10 +247,10 @@ export default function Wishlist() {
             <div className="mb-8">
               <BelugaMascot variant="empty-cart" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "찜한 상품이 없습니다", en: "No items in your wishlist" })}
             </h2>
-            <p className="text-gray-600 mb-8">
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
               {t({ ko: "마음에 드는 상품을 찜해보세요", en: "Add items to your wishlist to see them here" })}
             </p>
             <div className="flex items-center justify-center space-x-4">
@@ -267,7 +267,7 @@ export default function Wishlist() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background dark:bg-[#1F2D4A] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -279,14 +279,14 @@ export default function Wishlist() {
                   {t({ ko: "홈으로", en: "Home" })}
                 </Button>
               </Link>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                 {t({ ko: "찜 목록", en: "Wishlist" })}
               </h1>
             </div>
             
             {/* Sort Dropdown */}
             <div className="flex items-center space-x-2">
-              <SortAsc className="w-4 h-4 text-gray-500" />
+              <SortAsc className="w-4 h-4 text-gray-500 dark:text-gray-300" />
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="w-48">
                   <SelectValue />
@@ -312,7 +312,7 @@ export default function Wishlist() {
             </div>
           </div>
           
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             {t({ ko: `총 ${wishlistItems.length}개의 상품을 찜했습니다`, en: `${wishlistItems.length} items in your wishlist` })}
           </p>
         </div>
@@ -326,7 +326,7 @@ export default function Wishlist() {
         >
           {sortedItems.map((item) => (
             <motion.div key={item.id} variants={itemVariants}>
-              <Card className="group hover:shadow-md transition-shadow cursor-pointer overflow-hidden">
+              <Card className="group hover:shadow-md transition-shadow cursor-pointer overflow-hidden bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
                 <CardContent className="p-0">
                   <div className="relative">
                     <Link href={`/product/${item.id}`}>
@@ -350,7 +350,7 @@ export default function Wishlist() {
                     {/* Remove from wishlist button */}
                     <button
                       onClick={() => removeFromWishlist(item.id)}
-                      className="absolute top-2 right-2 p-2 bg-white/80 hover:bg-white rounded-full shadow-sm transition-colors"
+                      className="absolute top-2 right-2 p-2 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 rounded-full shadow-sm transition-colors"
                     >
                       <Heart className="w-4 h-4 fill-red-500 text-red-500" />
                     </button>
@@ -359,24 +359,24 @@ export default function Wishlist() {
                   <div className="p-4">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant="secondary" className="text-xs dark:bg-gray-700 dark:text-gray-300">
                           {item.categoryKo}
                         </Badge>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {new Date(item.dateAdded).toLocaleDateString()}
                         </span>
                       </div>
                       
-                      <h3 className="font-semibold text-sm leading-tight text-gray-900 line-clamp-2">
+                      <h3 className="font-semibold text-sm leading-tight text-gray-900 dark:text-white line-clamp-2">
                         {item.nameKo}
                       </h3>
                       
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm font-bold text-gray-900">
+                        <span className="text-sm font-bold text-gray-900 dark:text-white">
                           ₩{item.price.toLocaleString()}
                         </span>
                         {item.originalPrice && (
-                          <span className="text-xs text-gray-500 line-through">
+                          <span className="text-xs text-gray-500 dark:text-gray-400 line-through">
                             ₩{item.originalPrice.toLocaleString()}
                           </span>
                         )}
