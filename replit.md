@@ -856,3 +856,11 @@ Preferred communication style: Simple, everyday language.
   - 인스타그램 피드 (Instagram Feed): 2/3/4 column responsive layout
 - **Visual Consistency**: All sections maintain consistent spacing and proportions across screen sizes
 - **Enhanced UX**: Better utilization of desktop screen space while maintaining mobile-first approach
+
+### 2025-01-17: Review Card Text Readability Enhancement
+- **Instagram Feed Text Improvement**: Enhanced text readability in hover overlay with `text-white font-medium` for captions
+- **Creator Reviews Section**: Added dark mode support with `dark:text-white` for titles and `dark:text-gray-200` for descriptions
+- **Community Showcase**: Improved text contrast with `dark:text-white` for titles and `dark:text-gray-300` for author names
+- **Enhanced Font Weights**: Added `font-medium` to review descriptions for better readability
+- **Border Improvements**: Added `dark:border-gray-600` for better visual separation in dark mode
+- **Consistent Color Scheme**: Applied unified text color improvements across all review/content sections

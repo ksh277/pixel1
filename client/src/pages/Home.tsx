@@ -418,16 +418,16 @@ export default function Home() {
                     {/* Review Content - 30% of card height */}
                     <div className="flex-[0_0_30%] p-4 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <h3 className="text-base font-semibold text-gray-900 line-clamp-1">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-white line-clamp-1">
                           {review.productName}
                         </h3>
                         
-                        <p className="text-lg font-bold text-blue-600">
+                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
                           ₩{(review.rating * 1200 + 3500).toLocaleString()}
                         </p>
                         
                         {/* Review Summary Text */}
-                        <p className="text-sm text-gray-600 line-clamp-2">
+                        <p className="text-sm text-gray-600 dark:text-gray-200 line-clamp-2 font-medium">
                           {review.rating >= 4 
                             ? "정말 만족스러운 품질이에요! 디자인도 예쁘고 제작도 깔끔하게 잘 나왔어요. 다음에도 또 주문하고 싶어요."
                             : "좋은 품질로 잘 만들어졌네요. 배송도 빨랐고 포장도 깔끔했어요. 추천합니다!"
@@ -435,7 +435,7 @@ export default function Home() {
                         </p>
                       </div>
                       
-                      <div className="text-sm text-gray-500 pt-2 border-t border-gray-100">
+                      <div className="text-sm text-gray-500 dark:text-gray-300 pt-2 border-t border-gray-100 dark:border-gray-600">
                         리뷰 {review.rating * 25 + 45} / LIKE {review.rating * 40 + 120}
                       </div>
                     </div>
@@ -515,16 +515,16 @@ export default function Home() {
                     {/* Community Content - 30% of card height */}
                     <div className="flex-[0_0_30%] p-4 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <h3 className="text-base font-semibold text-gray-900 line-clamp-1">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-white line-clamp-1">
                           {item.title}
                         </h3>
                         
-                        <p className="text-sm text-gray-500 truncate">
+                        <p className="text-sm text-gray-500 dark:text-gray-300 truncate">
                           @{item.author}
                         </p>
                       </div>
                       
-                      <div className="text-sm text-gray-500 pt-2 border-t border-gray-100">
+                      <div className="text-sm text-gray-500 dark:text-gray-300 pt-2 border-t border-gray-100 dark:border-gray-600">
                         리뷰 {item.comments} / LIKE {item.likes}
                       </div>
                     </div>
