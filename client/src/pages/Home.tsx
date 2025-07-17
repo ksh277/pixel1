@@ -427,7 +427,7 @@ export default function Home() {
                         </p>
                         
                         {/* Review Summary Text */}
-                        <p className="text-sm text-gray-700 dark:text-gray-100 line-clamp-2 font-medium leading-snug mt-1">
+                        <p className="text-sm text-black dark:text-white line-clamp-2 font-medium leading-snug mt-1">
                           {review.rating >= 4 
                             ? "정말 만족스러운 품질이에요! 디자인도 예쁘고 제작도 깔끔하게 잘 나왔어요. 다음에도 또 주문하고 싶어요."
                             : "좋은 품질로 잘 만들어졌네요. 배송도 빨랐고 포장도 깔끔했어요. 추천합니다!"
@@ -524,7 +524,7 @@ export default function Home() {
                         </p>
                         
                         {/* Community Description */}
-                        <p className="text-sm text-gray-700 dark:text-gray-100 line-clamp-2 font-medium leading-snug mt-1">
+                        <p className="text-sm text-black dark:text-white line-clamp-2 font-medium leading-snug mt-1">
                           {item.id === 1 ? "홀로그램 효과가 너무 예뻐요! 빛에 따라 색이 바뀌는 게 정말 신기해요. 친구들한테도 추천했어요."
                             : item.id === 2 ? "투명 아크릴 질감이 정말 고급스러워요. 제작 퀄리티가 기대 이상이었습니다."
                             : item.id === 3 ? "우드 키링 질감이 부드럽고 각인도 선명해요. 선물용으로 완벽합니다."
@@ -622,7 +622,7 @@ export default function Home() {
                         </p>
                         
                         {/* Material Description */}
-                        <p className="text-sm text-gray-700 dark:text-gray-100 line-clamp-2 font-medium leading-snug mt-1">
+                        <p className="text-sm text-black dark:text-white line-clamp-2 font-medium leading-snug mt-1">
                           {item.material === "홀로그램" ? "무지개색 홀로그램 효과로 각도마다 다른 색감을 연출하는 프리미엄 키링입니다."
                             : item.material === "투명아크릴" ? "투명하고 깔끔한 아크릴 소재로 제작되어 세련된 느낌을 주는 스탠드입니다."
                             : item.material === "미러" ? "거울 효과가 있는 미러 아크릴로 빛 반사가 아름다운 키링입니다."
