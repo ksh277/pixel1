@@ -71,6 +71,13 @@
   }
 }
 
+/* Community page category text color override */
+.category-list a,
+.category-title,
+.category-text {
+  color: #ffffff !important;
+}
+
 /* Mobile touch optimization */
 * {
   -webkit-touch-callout: none;

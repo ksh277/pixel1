@@ -101,7 +101,7 @@ export default function Community() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-[#0f172a]">
       {/* Navigation is now handled globally in Layout component */}
 
       {/* Main Content */}
@@ -109,7 +109,7 @@ export default function Community() {
         {/* Best Content Section */}
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-6">
-            <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="text-2xl font-bold text-white">
               {t({ ko: "이번주 베스트 콘텐츠", en: "This Week's Best Content" })}
             </h2>
             <span className="text-2xl">👍</span>
@@ -133,7 +133,7 @@ export default function Community() {
                         .slice(slideIndex * itemsPerView, (slideIndex + 1) * itemsPerView)
                         .map((item) => (
                           <Link key={item.id} href={`/reviews/${item.id}`}>
-                            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer">
+                            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer bg-[#1e293b] border-[#334155]">
                               <div className="relative aspect-square">
                                 <img
                                   src={item.image}
@@ -148,14 +148,14 @@ export default function Community() {
                                 </div>
                               </div>
                               <CardContent className="p-4">
-                                <h3 className="font-semibold text-foreground mb-2 line-clamp-2">
+                                <h3 className="font-semibold text-white mb-2 line-clamp-2">
                                   {item.title}
                                 </h3>
-                                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                                <p className="text-sm text-slate-300 mb-3 line-clamp-2">
                                   {item.description}
                                 </p>
                                 <div className="flex items-center justify-between">
-                                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                  <div className="flex items-center space-x-2 text-sm text-slate-400">
                                     <User className="h-4 w-4" />
                                     <span>{item.author}</span>
                                   </div>
@@ -166,12 +166,12 @@ export default function Community() {
                                         e.stopPropagation();
                                         handleLike(item.id);
                                       }}
-                                      className="flex items-center space-x-1 text-muted-foreground hover:text-red-500 transition-colors"
+                                      className="flex items-center space-x-1 text-slate-400 hover:text-red-500 transition-colors"
                                     >
                                       <Heart className="h-4 w-4" />
                                       <span className="text-sm">{item.likes}</span>
                                     </button>
-                                    <div className="flex items-center space-x-1 text-muted-foreground">
+                                    <div className="flex items-center space-x-1 text-slate-400">
                                       <MessageCircle className="h-4 w-4" />
                                       <span className="text-sm">{item.comments}</span>
                                     </div>
@@ -190,16 +190,16 @@ export default function Community() {
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 rounded-full p-2 shadow-lg transition-colors z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-[#1e293b]/90 hover:bg-[#1e293b] rounded-full p-2 shadow-lg transition-colors z-10"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-5 w-5 text-white" />
             </button>
             
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 rounded-full p-2 shadow-lg transition-colors z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#1e293b]/90 hover:bg-[#1e293b] rounded-full p-2 shadow-lg transition-colors z-10"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-5 w-5 text-white" />
             </button>
           </div>
 
@@ -220,14 +220,14 @@ export default function Community() {
         </div>
 
         {/* Engagement Section */}
-        <div className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-2xl p-8 text-center mb-12">
+        <div className="bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl p-8 text-center mb-12 border border-[#334155]">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <TrendingUp className="h-6 w-6 text-orange-500" />
-            <h3 className="text-xl font-bold text-foreground">
+            <h3 className="text-xl font-bold text-white">
               {t({ ko: "참여하고 포인트 받아요!", en: "Participate and Get Points!" })}
             </h3>
           </div>
-          <p className="text-lg text-muted-foreground mb-4">
+          <p className="text-lg text-slate-300 mb-4">
             {t({ ko: "글만 써도 3,000원, 사진 올리면 5,000원 적립!", en: "Get 3,000 KRW for writing, 5,000 KRW for photos!" })}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -246,7 +246,7 @@ export default function Community() {
         {/* Recent Posts Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="text-2xl font-bold text-white">
               {t({ ko: "최근 게시물", en: "Recent Posts" })}
             </h2>
             <div className="flex items-center gap-3">
@@ -258,7 +258,7 @@ export default function Community() {
                   </Button>
                 </Link>
               )}
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-[#0f172a]">
                 {t({ ko: "더보기", en: "View More" })}
               </Button>
             </div>
@@ -267,14 +267,14 @@ export default function Community() {
           {postsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="overflow-hidden">
-                  <div className="aspect-square bg-muted animate-pulse" />
+                <Card key={i} className="overflow-hidden bg-[#1e293b] border-[#334155]">
+                  <div className="aspect-square bg-[#334155] animate-pulse" />
                   <CardContent className="p-4">
-                    <div className="h-4 bg-muted animate-pulse rounded mb-2" />
-                    <div className="h-3 bg-muted animate-pulse rounded mb-4" />
+                    <div className="h-4 bg-[#334155] animate-pulse rounded mb-2" />
+                    <div className="h-3 bg-[#334155] animate-pulse rounded mb-4" />
                     <div className="flex justify-between">
-                      <div className="h-3 bg-muted animate-pulse rounded w-16" />
-                      <div className="h-3 bg-muted animate-pulse rounded w-16" />
+                      <div className="h-3 bg-[#334155] animate-pulse rounded w-16" />
+                      <div className="h-3 bg-[#334155] animate-pulse rounded w-16" />
                     </div>
                   </CardContent>
                 </Card>
@@ -284,8 +284,8 @@ export default function Community() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {posts.slice(0, 4).map((post: CommunityPost) => (
                 <Link key={post.id} href={`/reviews/${post.id}`}>
-                  <Card className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer">
-                    <div className="aspect-square bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
+                  <Card className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer bg-[#1e293b] border-[#334155]">
+                    <div className="aspect-square bg-gradient-to-br from-blue-900/20 to-purple-900/20 flex items-center justify-center">
                       <img 
                         src="/api/placeholder/300/300" 
                         alt={post.title}
@@ -293,14 +293,14 @@ export default function Community() {
                       />
                     </div>
                     <CardContent className="p-4">
-                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2">
+                      <h3 className="font-semibold text-white mb-2 line-clamp-2">
                         {post.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      <p className="text-sm text-slate-300 mb-4 line-clamp-2">
                         {post.content}
                       </p>
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <div className="flex items-center space-x-2 text-sm text-slate-400">
                           <User className="h-4 w-4" />
                           <span>익명***</span>
                         </div>
@@ -311,12 +311,12 @@ export default function Community() {
                               e.stopPropagation();
                               handleLike(post.id);
                             }}
-                            className="flex items-center space-x-1 text-muted-foreground hover:text-red-500 transition-colors"
+                            className="flex items-center space-x-1 text-slate-400 hover:text-red-500 transition-colors"
                           >
                             <Heart className="h-4 w-4" />
                             <span className="text-sm">{post.likes}</span>
                           </button>
-                          <div className="flex items-center space-x-1 text-muted-foreground">
+                          <div className="flex items-center space-x-1 text-slate-400">
                             <MessageCircle className="h-4 w-4" />
                             <span className="text-sm">0</span>
                           </div>
@@ -329,13 +329,13 @@ export default function Community() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageCircle className="h-8 w-8 text-muted-foreground" />
+              <div className="w-16 h-16 bg-slate-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MessageCircle className="h-8 w-8 text-slate-400" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-xl font-semibold text-white mb-2">
                 {t({ ko: "아직 게시물이 없습니다", en: "No posts yet" })}
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-slate-300">
                 {t({ ko: "첫 번째 게시물을 작성해보세요!", en: "Be the first to create a post!" })}
               </p>
             </div>
