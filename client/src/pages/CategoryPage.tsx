@@ -160,28 +160,28 @@ export default function CategoryPage() {
 
   if (!currentCategory) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-background dark:bg-[#1F2D4A] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">카테고리를 찾을 수 없습니다</h2>
-          <Link href="/" className="text-blue-600 hover:underline">홈으로 돌아가기</Link>
+          <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">카테고리를 찾을 수 없습니다</h2>
+          <Link href="/" className="text-blue-600 dark:text-blue-400 hover:underline">홈으로 돌아가기</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background dark:bg-[#1F2D4A]">
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
+      <div className="bg-white dark:bg-[#1e2b3c] border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 py-4 text-sm">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">홈</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-900 font-medium">{t(currentCategory.name)}</span>
+            <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">홈</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+            <span className="text-gray-900 dark:text-white font-medium">{t(currentCategory.name)}</span>
             {subcategory && (
               <>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-900 font-medium">
+                <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                <span className="text-gray-900 dark:text-white font-medium">
                   {t(currentCategory.subcategories.find(sub => sub.slug === subcategory)?.name || { ko: '', en: '', ja: '', zh: '' })}
                 </span>
               </>
@@ -191,11 +191,11 @@ export default function CategoryPage() {
       </div>
 
       {/* Category Header */}
-      <div className="bg-white border-b">
+      <div className="bg-white dark:bg-[#1e2b3c] border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">{t(currentCategory.name)}</h1>
-            <p className="text-gray-600 mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{t(currentCategory.name)}</h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
               {subcategory 
                 ? `${t(currentCategory.subcategories.find(sub => sub.slug === subcategory)?.name || { ko: '', en: '', ja: '', zh: '' })} 상품을 확인해보세요`
                 : '다양한 맞춤 굿즈를 만나보세요'
@@ -206,7 +206,7 @@ export default function CategoryPage() {
       </div>
 
       {/* Subcategory Tabs */}
-      <div className="bg-white border-b sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#1e2b3c] border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto scrollbar-hide">
             <div className="flex space-x-0 min-w-max">
@@ -218,8 +218,8 @@ export default function CategoryPage() {
                 }}
                 className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                   !subcategory 
-                    ? 'border-blue-500 text-blue-600 bg-blue-50' 
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -235,13 +235,13 @@ export default function CategoryPage() {
                   onClick={() => handleTabClick(subcat)}
                   className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                     subcategory === subcat.slug
-                      ? 'border-blue-500 text-blue-600 bg-blue-50'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
                 >
                   <div className="flex items-center space-x-2">
                     <span>{t(subcat.name)}</span>
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                    <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full">
                       {subcat.count}
                     </span>
                   </div>
@@ -257,10 +257,10 @@ export default function CategoryPage() {
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg shadow-sm p-4 animate-pulse">
-                <div className="aspect-square bg-gray-200 rounded-lg mb-3"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+              <div key={i} className="bg-white dark:bg-[#1e2b3c] rounded-lg shadow-sm p-4 animate-pulse">
+                <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg mb-3"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
               </div>
             ))}
           </div>
@@ -280,14 +280,14 @@ export default function CategoryPage() {
           </motion.div>
         ) : (
           <div className="text-center py-12">
-            <div className="text-gray-500 mb-4">
+            <div className="text-gray-500 dark:text-gray-400 mb-4">
               <Grid className="w-12 h-12 mx-auto mb-2" />
               <p className="text-lg">해당 카테고리에 상품이 없습니다</p>
               <p className="text-sm">다른 카테고리를 확인해보세요</p>
             </div>
             <Link 
               href="/products"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
             >
               전체 상품 보기
             </Link>
