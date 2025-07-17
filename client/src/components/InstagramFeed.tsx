@@ -21,7 +21,7 @@ const mockInstagramPosts: InstagramPost[] = [
     comments: 8,
     caption: "투명 아크릴 키링 완성! 홀로그램 효과가 너무 예뻐요 ✨",
     author: "디자이너***",
-    tags: ["아크릴", "키링", "홀로그램"]
+    tags: ["아크릴", "키링", "홀로그램"],
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const mockInstagramPosts: InstagramPost[] = [
     comments: 12,
     caption: "우드 스탠드 제작 완료! 나무 질감이 정말 고급스러워요 🌟",
     author: "창작자***",
-    tags: ["우드", "스탠드", "고급"]
+    tags: ["우드", "스탠드", "고급"],
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const mockInstagramPosts: InstagramPost[] = [
     comments: 15,
     caption: "반투명 스마트톡 대박! 접착력도 좋고 회전도 부드러워요 💫",
     author: "사용자***",
-    tags: ["스마트톡", "반투명", "회전"]
+    tags: ["스마트톡", "반투명", "회전"],
   },
   {
     id: 4,
@@ -48,7 +48,7 @@ const mockInstagramPosts: InstagramPost[] = [
     comments: 6,
     caption: "단체 키링 주문 완료! 팀원들 모두 만족해요 🎉",
     author: "팀리더***",
-    tags: ["단체", "키링", "팀"]
+    tags: ["단체", "키링", "팀"],
   },
   {
     id: 5,
@@ -57,7 +57,7 @@ const mockInstagramPosts: InstagramPost[] = [
     comments: 9,
     caption: "홀로그램 스티커 반짝반짝! 노트북에 붙였는데 너무 이뻐요 ✨",
     author: "학생***",
-    tags: ["홀로그램", "스티커", "노트북"]
+    tags: ["홀로그램", "스티커", "노트북"],
   },
   {
     id: 6,
@@ -66,8 +66,8 @@ const mockInstagramPosts: InstagramPost[] = [
     comments: 18,
     caption: "나만의 캐릭터 굿즈 완성! 퀄리티가 정말 좋아요 🔥",
     author: "아티스트***",
-    tags: ["캐릭터", "굿즈", "퀄리티"]
-  }
+    tags: ["캐릭터", "굿즈", "퀄리티"],
+  },
 ];
 
 export function InstagramFeed() {
@@ -109,11 +109,11 @@ export function InstagramFeed() {
           <span className="text-2xl">📸</span>
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-foreground dark:text-white">
-              {t({ 
-                ko: "인스타그램 피드", 
-                en: "Instagram Feed", 
-                ja: "インスタグラムフィード", 
-                zh: "Instagram动态" 
+              {t({
+                ko: "인스타그램 피드",
+                en: "Instagram Feed",
+                ja: "インスタグラムフィード",
+                zh: "Instagram动态",
               })}
             </h2>
             <p className="text-sm text-muted-foreground dark:text-gray-300 hidden sm:block">
@@ -121,7 +121,7 @@ export function InstagramFeed() {
                 ko: "고객들이 직접 올린 굿즈 자랑 피드",
                 en: "Customer showcase feed",
                 ja: "お客様のグッズ自慢フィード",
-                zh: "客户展示动态"
+                zh: "客户展示动态",
               })}
             </p>
           </div>
@@ -148,11 +148,13 @@ export function InstagramFeed() {
                 e.currentTarget.src = "https://picsum.photos/300/300?random=99";
               }}
             />
-            
+
             {/* Hover Overlay */}
-            <div className={`absolute inset-0 bg-black bg-opacity-60 transition-opacity duration-300 flex flex-col justify-center items-center text-white p-2 ${
-              hoveredPost === post.id ? 'opacity-100' : 'opacity-0'
-            }`}>
+            <div
+              className={`absolute inset-0 bg-black bg-opacity-60 transition-opacity duration-300 flex flex-col justify-center items-center text-white p-2 ${
+                hoveredPost === post.id ? "opacity-100" : "opacity-0"
+              }`}
+            >
               {/* Interaction Stats */}
               <div className="flex gap-3 mb-2">
                 <div className="flex items-center space-x-1">
@@ -164,21 +166,24 @@ export function InstagramFeed() {
                   <span className="font-semibold text-sm">{post.comments}</span>
                 </div>
               </div>
-              
+
               {/* Caption */}
               <p className="text-center text-xs line-clamp-2 mb-1 text-white font-medium leading-snug">
                 {post.caption}
               </p>
-              
+
               {/* Author */}
               <p className="text-xs text-gray-100 leading-snug">
                 by {post.author}
               </p>
-              
+
               {/* Tags */}
               <div className="flex flex-wrap gap-1 mt-2">
                 {post.tags.map((tag, index) => (
-                  <span key={index} className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                  <span
+                    key={index}
+                    className="text-xs bg-white/20 px-2 py-1 rounded-full"
+                  >
                     #{tag}
                   </span>
                 ))}
@@ -187,15 +192,15 @@ export function InstagramFeed() {
           </motion.div>
         ))}
       </div>
-      
+
       {/* View More Button */}
       <div className="text-center mt-8">
         <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg transition-colors duration-200 font-medium text-sm">
-          {t({ 
-            ko: "더 많은 피드 보기", 
-            en: "View More Feed", 
-            ja: "もっと見る", 
-            zh: "查看更多动态" 
+          {t({
+            ko: "더 많은 피드 보기",
+            en: "View More Feed",
+            ja: "もっと見る",
+            zh: "查看更多动态",
           })}
         </button>
       </div>
