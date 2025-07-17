@@ -129,12 +129,13 @@ export function InstagramFeed() {
       </div>
 
       {/* Instagram Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {mockInstagramPosts.map((post) => (
           <motion.div
             key={post.id}
             variants={itemVariants}
-            className="relative group overflow-hidden rounded-lg shadow-md cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            className="relative group aspect-square overflow-hidden rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-all duration-300"
             onMouseEnter={() => setHoveredPost(post.id)}
             onMouseLeave={() => setHoveredPost(null)}
           >
@@ -142,30 +143,30 @@ export function InstagramFeed() {
             <img
               src={post.image}
               alt={post.caption}
-              className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               onError={(e) => {
                 e.currentTarget.src = "/api/placeholder/300/300";
               }}
             />
             
             {/* Hover Overlay */}
-            <div className={`absolute inset-0 bg-black bg-opacity-60 transition-opacity duration-300 flex flex-col justify-center items-center text-white p-4 ${
+            <div className={`absolute inset-0 bg-black bg-opacity-60 transition-opacity duration-300 flex flex-col justify-center items-center text-white p-2 ${
               hoveredPost === post.id ? 'opacity-100' : 'opacity-0'
             }`}>
               {/* Interaction Stats */}
-              <div className="flex gap-4 mb-3">
+              <div className="flex gap-3 mb-2">
                 <div className="flex items-center space-x-1">
-                  <Heart className="w-5 h-5 fill-red-500 text-red-500" />
-                  <span className="font-semibold">{post.likes}</span>
+                  <Heart className="w-4 h-4 fill-red-500 text-red-500" />
+                  <span className="font-semibold text-sm">{post.likes}</span>
                 </div>
                 <div className="flex items-center space-x-1">
-                  <MessageCircle className="w-5 h-5" />
-                  <span className="font-semibold">{post.comments}</span>
+                  <MessageCircle className="w-4 h-4" />
+                  <span className="font-semibold text-sm">{post.comments}</span>
                 </div>
               </div>
               
               {/* Caption */}
-              <p className="text-center text-sm line-clamp-2 mb-2 text-white font-medium leading-snug">
+              <p className="text-center text-xs line-clamp-2 mb-1 text-white font-medium leading-snug">
                 {post.caption}
               </p>
               
