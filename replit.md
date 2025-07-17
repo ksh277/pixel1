@@ -1048,6 +1048,16 @@ Preferred communication style: Simple, everyday language.
 - **Empty State Enhancement**: Applied dark mode styling to empty checkout state with proper icon and text colors
 - **Complete User Experience**: All checkout page elements now properly support dark mode with unified color scheme
 
+### 2025-01-17: Header Navigation Text Visibility Fix
+- **Logo Text Enhancement**: Updated main logo text to use white color in dark mode (`dark:text-white`)
+- **Category Navigation Bar**: Fixed category navigation background and text colors
+  - Background: Changed from `dark:bg-white` to `dark:bg-[#1F2D4A]` for consistency
+  - Text colors: Updated all category links to use `dark:text-white` for proper visibility
+  - Border colors: Updated to `dark:border-gray-600` for better contrast
+  - Hover states: Applied `dark:hover:text-gray-200` for better user experience
+- **Mobile & Desktop Consistency**: Applied changes to both desktop and mobile category navigation
+- **Visual Harmony**: All navigation elements now properly visible in dark mode with consistent navy background
+
 ### 2025-01-17: Editor Page Text Visibility Enhancement
 - **Complete Text Color Fix**: Updated all text elements in Editor.tsx to use white text in dark mode
 - **Product Selector Screen**: Fixed subtitle, product tags, product names, prices, and review counts with `dark:text-white`

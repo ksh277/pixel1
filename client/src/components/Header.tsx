@@ -245,7 +245,7 @@ export function Header() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                PIXEL<span className="text-blue-600">GOODS</span>
+                PIXEL<span className="text-blue-600 dark:text-white">GOODS</span>
               </span>
             </Link>
 
@@ -492,7 +492,7 @@ export function Header() {
       </header>
 
       {/* Category Navigation Bar */}
-      <nav className="bg-white dark:bg-white border-b border-gray-200 dark:border-gray-800 sticky top-20 z-40">
+      <nav className="bg-white dark:bg-[#1F2D4A] border-b border-gray-200 dark:border-gray-600 sticky top-20 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center">
             <div className="hidden md:flex items-center space-x-8 py-3 overflow-x-auto">
@@ -502,8 +502,8 @@ export function Header() {
                   href={item.href}
                   className={`whitespace-nowrap text-sm font-medium transition-colors ${
                     location === item.href
-                      ? 'text-gray-900 dark:text-gray-900 border-b-2 border-orange-500 pb-2'
-                      : 'text-gray-900 dark:text-gray-900 hover:text-gray-600 dark:hover:text-gray-600'
+                      ? 'text-gray-900 dark:text-white border-b-2 border-orange-500 pb-2'
+                      : 'text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-200'
                   }`}
                 >
                   {t(item.label)}
@@ -519,8 +519,8 @@ export function Header() {
                   href={item.href}
                   className={`whitespace-nowrap text-sm font-medium transition-colors ${
                     location === item.href
-                      ? 'text-gray-900 dark:text-gray-900 border-b-2 border-orange-500 pb-2'
-                      : 'text-gray-900 dark:text-gray-900 hover:text-gray-600 dark:hover:text-gray-600'
+                      ? 'text-gray-900 dark:text-white border-b-2 border-orange-500 pb-2'
+                      : 'text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-200'
                   }`}
                 >
                   {t(item.label)}
