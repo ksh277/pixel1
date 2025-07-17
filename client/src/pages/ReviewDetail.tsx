@@ -190,7 +190,7 @@ export default function ReviewDetail() {
 
                   {/* Content */}
                   <div className="mb-8">
-                    <div className="text-gray-700 whitespace-pre-line leading-relaxed">
+                    <div className="text-gray-700 dark:text-white whitespace-pre-line leading-relaxed">
                       {mockReview.content}
                     </div>
                   </div>

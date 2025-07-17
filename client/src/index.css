@@ -523,6 +523,25 @@ body.dark {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 
+  /* 다크모드 리뷰 카드 배경색 통일 */
+  .dark .bg-black {
+    background-color: #1f2937 !important;
+  }
+  
+  /* 다크모드 모든 카드 배경색 통일 */
+  .dark .bg-white {
+    background-color: #1f2937 !important;
+  }
+  
+  /* 다크모드 텍스트 가독성 향상 */
+  .dark .text-gray-700 {
+    color: #ffffff !important;
+  }
+  
+  .dark .text-gray-600 {
+    color: #d1d5db !important;
+  }
+
   .allprint-card:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
@@ -661,6 +680,15 @@ body.dark {
 
   .dark .allprint-card-stats {
     color: #9ca3af;
+  }
+  
+  /* 다크모드 텍스트 밝기 개선 */
+  .dark .text-gray-900 {
+    color: #ffffff !important;
+  }
+  
+  .dark .text-gray-800 {
+    color: #f3f4f6 !important;
   }
 
   /* AllThatPrinting 그리드 - 2/3/4 열 반응형 */
