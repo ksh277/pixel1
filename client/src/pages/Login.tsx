@@ -70,15 +70,15 @@ export default function Login() {
             
             {/* Demo credentials info */}
             <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-700">
-              <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
+              <p className="text-sm font-medium text-blue-900 dark:text-white mb-2 flex items-center">
                 <Shield className="w-4 h-4 mr-1" />
                 {t({ ko: "테스트 계정", en: "Demo Account", ja: "テストアカウント", zh: "测试账号" })}
               </p>
-              <div className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+              <div className="text-sm text-blue-800 dark:text-white space-y-1">
                 <p>• {t({ ko: "관리자", en: "Admin", ja: "管理者", zh: "管理员" })}: <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">admin</span> / <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">12345</span></p>
                 <p>• {t({ ko: "사용자", en: "User", ja: "ユーザー", zh: "用户" })}: <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">user1</span> / <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">12345</span></p>
                 <p className="text-xs text-red-600 dark:text-red-400 mt-2">
-                  ⚠️ {t({ ko: "실제 배포 시 이 안내는 제거됩니다.", en: "This guide will be removed in production.", ja: "本番環境では削除されます。", zh: "正式部署时将删除此指南。" })}
+                  ⚠️ {t({ ko: "실제 배포 시 이 안내는 제거됩니다.", en: "This guide will be removed in production.", ja: "本番環境では削除されます。", zh: "正式部署时将削除此指南。" })}
                 </p>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function Login() {
                       checked={secureLogin}
                       onCheckedChange={(checked) => setSecureLogin(checked as boolean)}
                     />
-                    <label htmlFor="secure-login" className="text-sm text-gray-600 dark:text-gray-300 cursor-pointer flex items-center">
+                    <label htmlFor="secure-login" className="text-sm text-gray-600 dark:text-white cursor-pointer flex items-center">
                       <Shield className="w-4 h-4 mr-1" />
                       보안접속
                     </label>
@@ -148,7 +148,7 @@ export default function Login() {
               <Link href="/find-id" className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-blue-300">
                 아이디 찾기
               </Link>
-              <span className="text-gray-400 dark:text-gray-300">|</span>
+              <span className="text-gray-400 dark:text-white">|</span>
               <Link href="/find-password" className="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-blue-300">
                 비밀번호 찾기
               </Link>
@@ -161,7 +161,7 @@ export default function Login() {
                   <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white dark:bg-[#3F4C5F] text-gray-500 dark:text-gray-400">간편 로그인</span>
+                  <span className="px-2 bg-white dark:bg-[#3F4C5F] text-gray-500 dark:text-white">간편 로그인</span>
                 </div>
               </div>
               
