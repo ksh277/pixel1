@@ -128,7 +128,7 @@ export function InstagramFeed() {
         </div>
       </div>
 
-      {/* Instagram Grid */}
+      {/* Instagram Grid - No background cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {mockInstagramPosts.map((post) => (
           <motion.div
@@ -139,11 +139,11 @@ export function InstagramFeed() {
             onMouseEnter={() => setHoveredPost(post.id)}
             onMouseLeave={() => setHoveredPost(null)}
           >
-            {/* Post Image */}
+            {/* Post Image - No background */}
             <img
               src={post.image}
               alt={post.caption}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 bg-transparent"
               onError={(e) => {
                 e.currentTarget.src = "/api/placeholder/300/300";
               }}
