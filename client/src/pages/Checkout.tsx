@@ -107,16 +107,16 @@ export default function Checkout() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-              <ShoppingBag className="w-12 h-12 text-gray-400" />
+            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 dark:bg-[#1e2b3c] rounded-full flex items-center justify-center">
+              <ShoppingBag className="w-12 h-12 text-gray-400 dark:text-gray-300" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "주문할 상품이 없습니다", en: "No items to checkout" })}
             </h2>
-            <p className="text-gray-600 mb-8">
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
               {t({ ko: "장바구니에 상품을 담고 주문해주세요", en: "Please add items to your cart first" })}
             </p>
             <Button onClick={() => setLocation('/cart')} className="px-8 py-3">
@@ -129,13 +129,13 @@ export default function Checkout() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             {t({ ko: "주문서 작성", en: "Checkout" })}
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
             {t({ ko: "배송 정보와 결제 방법을 입력해주세요", en: "Please enter your shipping information and payment method" })}
           </p>
         </div>
@@ -144,9 +144,9 @@ export default function Checkout() {
           {/* Order Form */}
           <div className="lg:col-span-2 space-y-6">
             {/* Customer Information */}
-            <Card>
+            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="flex items-center text-gray-900 dark:text-white">
                   <User className="h-5 w-5 mr-2" />
                   {t({ ko: "주문자 정보", en: "Customer Information" })}
                 </CardTitle>
@@ -154,7 +154,7 @@ export default function Checkout() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">
+                    <Label htmlFor="name" className="text-gray-900 dark:text-white">
                       {t({ ko: "이름", en: "Name" })} <span className="text-red-500">*</span>
                     </Label>
                     <Input
@@ -166,7 +166,7 @@ export default function Checkout() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email">
+                    <Label htmlFor="email" className="text-gray-900 dark:text-white">
                       {t({ ko: "이메일", en: "Email" })} <span className="text-red-500">*</span>
                     </Label>
                     <Input
@@ -180,7 +180,7 @@ export default function Checkout() {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="phone">
+                  <Label htmlFor="phone" className="text-gray-900 dark:text-white">
                     {t({ ko: "전화번호", en: "Phone Number" })} <span className="text-red-500">*</span>
                   </Label>
                   <Input
@@ -196,9 +196,9 @@ export default function Checkout() {
             </Card>
 
             {/* Shipping Address */}
-            <Card>
+            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="flex items-center text-gray-900 dark:text-white">
                   <MapPin className="h-5 w-5 mr-2" />
                   {t({ ko: "배송지 정보", en: "Shipping Address" })}
                 </CardTitle>
@@ -206,7 +206,7 @@ export default function Checkout() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="zipCode">
+                    <Label htmlFor="zipCode" className="text-gray-900 dark:text-white">
                       {t({ ko: "우편번호", en: "Zip Code" })} <span className="text-red-500">*</span>
                     </Label>
                     <div className="flex space-x-2">
@@ -224,7 +224,7 @@ export default function Checkout() {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="address">
+                  <Label htmlFor="address" className="text-gray-900 dark:text-white">
                     {t({ ko: "주소", en: "Address" })} <span className="text-red-500">*</span>
                   </Label>
                   <Input
@@ -236,7 +236,7 @@ export default function Checkout() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="addressDetail">
+                  <Label htmlFor="addressDetail" className="text-gray-900 dark:text-white">
                     {t({ ko: "상세주소", en: "Detailed Address" })}
                   </Label>
                   <Input
@@ -247,7 +247,7 @@ export default function Checkout() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="requests">
+                  <Label htmlFor="requests" className="text-gray-900 dark:text-white">
                     {t({ ko: "배송 요청사항", en: "Delivery Requests" })}
                   </Label>
                   <Textarea
@@ -262,9 +262,9 @@ export default function Checkout() {
             </Card>
 
             {/* Payment Method */}
-            <Card>
+            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="flex items-center text-gray-900 dark:text-white">
                   <CreditCard className="h-5 w-5 mr-2" />
                   {t({ ko: "결제 방법", en: "Payment Method" })}
                 </CardTitle>
@@ -276,14 +276,14 @@ export default function Checkout() {
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="card" id="card" />
-                    <Label htmlFor="card" className="flex items-center cursor-pointer">
+                    <Label htmlFor="card" className="flex items-center cursor-pointer text-gray-900 dark:text-white">
                       <CreditCard className="h-4 w-4 mr-2" />
                       {t({ ko: "신용카드", en: "Credit Card" })}
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="kakao" id="kakao" />
-                    <Label htmlFor="kakao" className="flex items-center cursor-pointer">
+                    <Label htmlFor="kakao" className="flex items-center cursor-pointer text-gray-900 dark:text-white">
                       <div className="w-4 h-4 bg-yellow-400 rounded mr-2 flex items-center justify-center text-xs font-bold text-black">
                         K
                       </div>
@@ -292,7 +292,7 @@ export default function Checkout() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="naver" id="naver" />
-                    <Label htmlFor="naver" className="flex items-center cursor-pointer">
+                    <Label htmlFor="naver" className="flex items-center cursor-pointer text-gray-900 dark:text-white">
                       <div className="w-4 h-4 bg-green-500 rounded mr-2 flex items-center justify-center text-xs font-bold text-white">
                         N
                       </div>
@@ -306,9 +306,9 @@ export default function Checkout() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8">
+            <Card className="sticky top-8 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
               <CardHeader>
-                <CardTitle>
+                <CardTitle className="text-gray-900 dark:text-white">
                   {t({ ko: "주문 요약", en: "Order Summary" })}
                 </CardTitle>
               </CardHeader>
@@ -323,7 +323,7 @@ export default function Checkout() {
                         className="w-12 h-12 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <p className="font-medium text-sm">{item.nameKo}</p>
+                        <p className="font-medium text-sm text-gray-900 dark:text-white">{item.nameKo}</p>
                         <div className="flex items-center space-x-1 mt-1">
                           {Object.entries(item.options).map(([key, value]) => (
                             <Badge key={key} variant="secondary" className="text-xs">
@@ -331,12 +331,12 @@ export default function Checkout() {
                             </Badge>
                           ))}
                         </div>
-                        <p className="text-xs text-gray-600">
+                        <p className="text-xs text-gray-600 dark:text-gray-300">
                           ₩{item.price.toLocaleString()} × {item.quantity}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium text-sm">
+                        <p className="font-medium text-sm text-gray-900 dark:text-white">
                           ₩{(item.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
@@ -349,19 +349,19 @@ export default function Checkout() {
                 {/* Price Summary */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">
+                    <span className="text-gray-600 dark:text-gray-300">
                       {t({ ko: "상품 금액", en: "Subtotal" })}
                     </span>
-                    <span className="font-semibold">₩{subtotal.toLocaleString()}</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">₩{subtotal.toLocaleString()}</span>
                   </div>
                   
                   <div className="flex justify-between">
-                    <span className="text-gray-600">
+                    <span className="text-gray-600 dark:text-gray-300">
                       {t({ ko: "배송비", en: "Shipping" })}
                     </span>
-                    <span className="font-semibold">
+                    <span className="font-semibold text-gray-900 dark:text-white">
                       {shippingFee === 0 ? (
-                        <span className="text-green-600">
+                        <span className="text-green-600 dark:text-green-400">
                           {t({ ko: "무료", en: "Free" })}
                         </span>
                       ) : (
@@ -373,8 +373,8 @@ export default function Checkout() {
                   <Separator />
                   
                   <div className="flex justify-between text-lg font-bold">
-                    <span>{t({ ko: "총 결제 금액", en: "Total" })}</span>
-                    <span className="text-blue-600">₩{total.toLocaleString()}</span>
+                    <span className="text-gray-900 dark:text-white">{t({ ko: "총 결제 금액", en: "Total" })}</span>
+                    <span className="text-blue-600 dark:text-blue-400">₩{total.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -398,7 +398,7 @@ export default function Checkout() {
                 </Button>
 
                 {/* Security Notice */}
-                <div className="text-xs text-gray-500 text-center">
+                <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
                   {t({ 
                     ko: "주문 정보는 안전하게 암호화되어 전송됩니다", 
                     en: "Your order information is securely encrypted" 
