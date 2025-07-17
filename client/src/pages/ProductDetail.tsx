@@ -837,7 +837,7 @@ export default function ProductDetail() {
                     />
                     <div className="prose max-w-none">
                       <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">제품 특징</h4>
-                      <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-100">
                         <li>• 고품질 아크릴 소재 사용으로 선명한 인쇄 품질</li>
                         <li>• 다양한 사이즈 옵션으로 원하는 크기 제작 가능</li>
                         <li>• 튼튼한 받침으로 안정적인 전시 효과</li>
@@ -847,7 +847,7 @@ export default function ProductDetail() {
                       <h4 className="text-lg font-semibold mb-3 mt-6 text-gray-900 dark:text-white">
                         주의사항
                       </h4>
-                      <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-100">
                         <li>
                           • 해상도 300dpi 이상의 고해상도 이미지를 사용해주세요
                         </li>
@@ -898,8 +898,8 @@ export default function ProductDetail() {
                             {generateStars(review.rating)}
                           </div>
                           <h4 className="font-medium text-gray-900 dark:text-white">{review.title}</h4>
-                          <p className="text-gray-700 dark:text-gray-300">{review.content}</p>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                          <p className="text-gray-700 dark:text-gray-100">{review.content}</p>
+                          <div className="text-xs text-gray-500 dark:text-gray-300">
                             by {review.userName} ・{" "}
                             {review.createdAt.toLocaleDateString()}
                           </div>

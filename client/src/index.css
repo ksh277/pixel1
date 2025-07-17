@@ -535,10 +535,14 @@ body.dark {
   
   /* 다크모드 텍스트 가독성 향상 */
   .dark .text-gray-700 {
-    color: #ffffff !important;
+    color: #f3f4f6 !important;
   }
   
   .dark .text-gray-600 {
+    color: #e5e7eb !important;
+  }
+  
+  .dark .text-gray-500 {
     color: #d1d5db !important;
   }
 
@@ -679,7 +683,7 @@ body.dark {
   }
 
   .dark .allprint-card-stats {
-    color: #9ca3af;
+    color: #d1d5db;
   }
   
   /* 다크모드 텍스트 밝기 개선 */

@@ -376,7 +376,7 @@ export default function ReviewsAll() {
                       </div>
 
                       {/* Full Review Text */}
-                      <p className="text-sm text-gray-700 dark:text-white leading-relaxed">
+                      <p className="text-sm text-gray-700 dark:text-gray-100 leading-relaxed">
                         {review.reviewText}
                       </p>
 
