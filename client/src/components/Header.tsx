@@ -500,10 +500,10 @@ export function Header() {
                 <Link
                   key={item.id}
                   href={item.href}
-                  className={`whitespace-nowrap text-sm font-medium transition-colors hover:text-foreground ${
+                  className={`whitespace-nowrap text-sm font-medium transition-colors hover:text-white ${
                     location === item.href
-                      ? 'text-foreground border-b-2 border-orange-500 pb-2'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'text-white border-b-2 border-orange-500 pb-2'
+                      : 'text-white hover:text-gray-200'
                   }`}
                 >
                   {t(item.label)}
@@ -519,8 +519,8 @@ export function Header() {
                   href={item.href}
                   className={`whitespace-nowrap text-sm font-medium transition-colors ${
                     location === item.href
-                      ? 'text-foreground border-b-2 border-orange-500 pb-2'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'text-white border-b-2 border-orange-500 pb-2'
+                      : 'text-white hover:text-gray-200'
                   }`}
                 >
                   {t(item.label)}

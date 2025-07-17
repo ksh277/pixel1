@@ -893,6 +893,24 @@ Preferred communication style: Simple, everyday language.
 - **Focus States**: Added `focus:border-blue-500 focus:ring-blue-500` for improved user interaction feedback
 - **Typography Enhancement**: Increased title to text-2xl and improved spacing for better hierarchy
 
+### 2025-01-17: Community & Review Write Button Implementation
+- **Write Button System**: Added authenticated write buttons to Community and ReviewsAll pages
+- **Authentication Integration**: Buttons only visible to logged-in users using AuthContext
+- **Complete Write Pages**: Created CommunityWrite.tsx and ReviewWrite.tsx with full functionality
+  - **CommunityWrite Features**: Category selection, tags, image upload (max 5), content editor, form validation
+  - **ReviewWrite Features**: Product selection, star ratings, image upload, review content, points system display
+- **Protected Routes**: Added `/community/write` and `/reviews/write` with ProtectedRoute wrapper
+- **UI Components**: Professional Korean-style forms with dark mode support
+- **Localization**: Complete Korean/English/Japanese/Chinese support for all new content
+- **Data Persistence**: LocalStorage integration for demo functionality
+- **User Experience**: Toast notifications, loading states, proper error handling
+
+### 2025-01-17: Category Navigation Text Color Fix
+- **Header Category Navigation**: Updated category text color from muted to white (`text-white`)
+- **Visual Consistency**: Applied to both desktop and mobile category navigation bars
+- **Enhanced Readability**: Improved contrast for category items (사용후기, 모음전, 자료실, 이벤트, etc.)
+- **Hover States**: Updated hover effects to use `text-gray-200` for better user experience
+
 ### 2025-01-17: Complete Dark Mode Implementation for Missing Pages
 - **Login Page Dark Mode**: Applied complete dark mode styling to `/login` page with `bg-gray-50 dark:bg-[#0d1b2a]` background
   - Card backgrounds: `bg-white dark:bg-[#1a2332]` with proper border styling
