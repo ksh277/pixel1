@@ -165,12 +165,12 @@ export function InstagramFeed() {
               </div>
               
               {/* Caption */}
-              <p className="text-center text-sm line-clamp-2 mb-2 text-white font-medium">
+              <p className="text-center text-sm line-clamp-2 mb-2 text-white font-medium leading-snug">
                 {post.caption}
               </p>
               
               {/* Author */}
-              <p className="text-xs text-gray-200">
+              <p className="text-xs text-gray-100 leading-snug">
                 by {post.author}
               </p>
               
