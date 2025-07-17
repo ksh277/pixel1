@@ -14,7 +14,7 @@ export function PopularBox({ title, description, image, products, bgColor = "bg-
   const { language } = useLanguage();
 
   return (
-    <div className={`${bgColor} dark:bg-[#2A3A52] p-6 rounded-lg shadow-sm border dark:border-gray-700`}>
+    <div className={`${bgColor} dark:bg-black p-6 rounded-lg shadow-sm border dark:border-gray-700`}>
       {/* Main Image */}
       <div className="mb-4">
         <img
@@ -37,7 +37,7 @@ export function PopularBox({ title, description, image, products, bgColor = "bg-
       <div className="space-y-3">
         {products.slice(0, 3).map((product) => (
           <Link key={product.id} href={`/product/${product.id}`}>
-            <div className="flex items-center justify-between p-3 bg-white dark:bg-[#3A4A62] rounded-md hover:shadow-md transition-shadow cursor-pointer border border-gray-100 dark:border-gray-600">
+            <div className="flex items-center justify-between p-3 bg-white dark:bg-black rounded-md hover:shadow-md transition-shadow cursor-pointer border border-gray-100 dark:border-gray-600">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-gray-100 rounded-md flex items-center justify-center">
                   <img
