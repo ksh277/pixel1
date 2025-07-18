@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { supabase } from "./lib/supabase";
-import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema, insertGoodsEditorDesignSchema, insertInquirySchema } from "@shared/schema";
+import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema, insertGoodsEditorDesignSchema, insertInquirySchema, insertNotificationSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
@@ -494,6 +494,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error in Q&A endpoint:', error);
       res.status(500).json({ message: "Failed to fetch Q&A posts" });
+    }
+  });
+
+  // Notifications routes
+  app.get("/api/notifications/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: notifications, error } = await supabase
+        .from('notifications')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching notifications:', error);
+        return res.status(500).json({ message: "Failed to fetch notifications" });
+      }
+      
+      res.json(notifications);
+    } catch (error) {
+      console.error('Error in notifications endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch notifications" });
+    }
+  });
+
+  app.post("/api/notifications", async (req, res) => {
+    try {
+      const validatedData = insertNotificationSchema.parse(req.body);
+      const { data: notification, error } = await supabase
+        .from('notifications')
+        .insert([validatedData])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error creating notification:', error);
+        return res.status(500).json({ message: "Failed to create notification" });
+      }
+      
+      res.json(notification);
+    } catch (error) {
+      console.error('Error in create notification endpoint:', error);
+      res.status(500).json({ message: "Failed to create notification" });
+    }
+  });
+
+  app.patch("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { data: notification, error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error marking notification as read:', error);
+        return res.status(500).json({ message: "Failed to mark notification as read" });
+      }
+      
+      res.json(notification);
+    } catch (error) {
+      console.error('Error in mark notification as read endpoint:', error);
+      res.status(500).json({ message: "Failed to mark notification as read" });
+    }
+  });
+
+  app.patch("/api/notifications/user/:userId/read-all", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: notifications, error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('user_id', userId)
+        .eq('is_read', false)
+        .select();
+      
+      if (error) {
+        console.error('Error marking all notifications as read:', error);
+        return res.status(500).json({ message: "Failed to mark all notifications as read" });
+      }
+      
+      res.json(notifications);
+    } catch (error) {
+      console.error('Error in mark all notifications as read endpoint:', error);
+      res.status(500).json({ message: "Failed to mark all notifications as read" });
     }
   });
 

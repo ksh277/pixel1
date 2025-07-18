@@ -12,7 +12,8 @@ import {
   X, 
   LogOut,
   Settings,
-  Package
+  Package,
+  Bell
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSupabaseAuth } from "@/components/SupabaseProvider";
@@ -22,6 +23,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { SearchModal } from "@/components/SearchModal";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
+import { useNotifications } from "@/hooks/useNotifications";
 
 export const Header = () => {
   const [location] = useLocation();
@@ -32,6 +34,7 @@ export const Header = () => {
   const { user: supabaseUser, loading: supabaseLoading } = useSupabaseAuth();
   const { toast } = useToast();
   const { itemCount } = useCart();
+  const { unreadCount } = useNotifications();
   
   // Get wishlist count from localStorage
   const getWishlistCount = () => {
@@ -160,6 +163,23 @@ export const Header = () => {
               </span>
             </Button>
           </Link>
+
+          {/* Notifications */}
+          {currentUser && (
+            <Link href="/notifications">
+              <Button variant="ghost" size="icon" className="relative">
+                <Bell className="h-4 w-4" />
+                {unreadCount > 0 && (
+                  <Badge 
+                    variant="destructive" 
+                    className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                  >
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+          )}
 
           {/* Theme Toggle */}
           <ThemeToggle />
@@ -332,6 +352,24 @@ export const Header = () => {
                             {itemCount > 0 && (
                               <Badge variant="destructive" className="ml-2">
                                 {itemCount > 99 ? '99+' : itemCount}
+                              </Badge>
+                            )}
+                          </span>
+                        </Button>
+                      </Link>
+                      
+                      <Link href="/notifications">
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <Bell className="h-5 w-5 mr-3" />
+                          <span className="flex items-center justify-between w-full">
+                            알림
+                            {unreadCount > 0 && (
+                              <Badge variant="destructive" className="ml-2">
+                                {unreadCount > 99 ? '99+' : unreadCount}
                               </Badge>
                             )}
                           </span>

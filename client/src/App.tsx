@@ -43,6 +43,7 @@ import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
 import CommunityWrite from "@/pages/CommunityWrite";
 import ReviewWrite from "@/pages/ReviewWrite";
+import { Notifications } from "@/pages/Notifications";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { SupabaseProvider } from "@/components/SupabaseProvider";
@@ -113,6 +114,13 @@ function Router() {
           {() => (
             <ProtectedRoute>
               <Wishlist />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/notifications">
+          {() => (
+            <ProtectedRoute>
+              <Notifications />
             </ProtectedRoute>
           )}
         </Route>

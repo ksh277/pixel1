@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
+import { createSampleNotifications } from "@/utils/notificationUtils";
 import type { CommunityPost } from "@shared/schema";
 
 export default function Community() {
@@ -68,12 +69,50 @@ export default function Community() {
     });
   };
 
+  const handleCreateSampleNotifications = async () => {
+    if (!user?.id) {
+      toast({
+        title: "로그인 필요",
+        description: "알림을 생성하려면 로그인이 필요합니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await createSampleNotifications(user.id);
+      toast({
+        title: "알림 생성 완료",
+        description: "샘플 알림이 생성되었습니다. 헤더의 벨 아이콘을 확인해보세요!",
+      });
+    } catch (error) {
+      console.error("Error creating sample notifications:", error);
+      toast({
+        title: "알림 생성 실패",
+        description: "알림 생성 중 오류가 발생했습니다.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0f172a]">
       {/* Navigation is now handled globally in Layout component */}
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Test Notification Button */}
+        {user && (
+          <div className="mb-8 text-center">
+            <Button 
+              onClick={handleCreateSampleNotifications}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              테스트 알림 생성하기
+            </Button>
+          </div>
+        )}
+        
         {/* Best Content Section */}
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-6">

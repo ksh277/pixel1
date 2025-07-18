@@ -196,6 +196,21 @@ export const communityComments = mysqlTable("community_comments", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const notifications = mysqlTable("notifications", {
+  id: serial("id").primaryKey(),
+  userId: int("user_id")
+    .references(() => users.id)
+    .notNull(),
+  type: text("type").notNull(), // 'comment', 'like', 'order', 'system'
+  title: text("title").notNull(),
+  message: text("message").notNull(),
+  isRead: boolean("is_read").default(false).notNull(),
+  relatedId: int("related_id"), // ID of related post, order, etc.
+  relatedType: text("related_type"), // 'post', 'order', 'product', etc.
+  relatedUrl: text("related_url"), // URL to navigate to when clicked
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const belugaTemplates = mysqlTable("beluga_templates", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -307,6 +322,11 @@ export const insertInquirySchema = createInsertSchema(inquiries).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+});
+
+export const insertNotificationSchema = createInsertSchema(notifications).omit({
+  id: true,
+  createdAt: true,
 });
 
 // Types
