@@ -79,6 +79,103 @@ export const fetchProductById = async (id: string) => {
   return data
 }
 
+// Product Reviews API
+export const fetchProductReviews = async (productId: string) => {
+  const { data, error } = await supabase
+    .from('product_reviews')
+    .select(`
+      *,
+      users(username, email, avatar_url)
+    `)
+    .eq('product_id', productId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching product reviews:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const createProductReview = async (review: {
+  user_id: string
+  product_id: string
+  rating: number
+  review_text: string
+}) => {
+  const { data, error } = await supabase
+    .from('product_reviews')
+    .insert([review])
+    .select(`
+      *,
+      users(username, email, avatar_url)
+    `)
+    .single()
+
+  if (error) {
+    console.error('Error creating product review:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const updateProductReview = async (reviewId: string, updates: {
+  rating?: number
+  review_text?: string
+}) => {
+  const { data, error } = await supabase
+    .from('product_reviews')
+    .update(updates)
+    .eq('id', reviewId)
+    .select(`
+      *,
+      users(username, email, avatar_url)
+    `)
+    .single()
+
+  if (error) {
+    console.error('Error updating product review:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const deleteProductReview = async (reviewId: string) => {
+  const { error } = await supabase
+    .from('product_reviews')
+    .delete()
+    .eq('id', reviewId)
+
+  if (error) {
+    console.error('Error deleting product review:', error)
+    throw error
+  }
+
+  return true
+}
+
+export const fetchUserReviewForProduct = async (userId: string, productId: string) => {
+  const { data, error } = await supabase
+    .from('product_reviews')
+    .select(`
+      *,
+      users(username, email, avatar_url)
+    `)
+    .eq('user_id', userId)
+    .eq('product_id', productId)
+    .single()
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 is "not found" error
+    console.error('Error fetching user review:', error)
+    throw error
+  }
+
+  return data
+}
+
 // Categories API
 export const fetchCategories = async (options?: {
   parentId?: string

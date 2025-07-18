@@ -58,6 +58,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { motion } from "framer-motion";
+import ProductReviews from "@/components/ProductReviews";
 import type { Product, ProductReview } from "@shared/schema";
 
 export default function ProductDetail() {
@@ -819,7 +820,7 @@ export default function ProductDetail() {
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="description">상품 상세</TabsTrigger>
               <TabsTrigger value="reviews">
-                상품 후기 ({mockReviews.length})
+                상품 후기
               </TabsTrigger>
               <TabsTrigger value="qna">상품 문의</TabsTrigger>
             </TabsList>
@@ -866,61 +867,10 @@ export default function ProductDetail() {
             </TabsContent>
 
             <TabsContent value="reviews" className="mt-8">
-              <div className="space-y-6">
-                {/* Review Summary */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">상품 후기</h3>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center">
-                        <div className="flex mr-2">
-                          {generateStars(Math.round(mockProduct.rating))}
-                        </div>
-                        <span className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {mockProduct.rating}
-                        </span>
-                      </div>
-                      <span className="text-gray-500 dark:text-gray-400">
-                        ({mockProduct.reviewCount}개 리뷰)
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Reviews List */}
-                  <div className="space-y-6">
-                    {mockReviews.map((review) => (
-                      <div
-                        key={review.id}
-                        className="border-b dark:border-gray-700 pb-6 last:border-b-0 space-y-3"
-                      >
-                        <div className="space-y-1 text-sm text-gray-800 dark:text-gray-200">
-                          <div className="flex items-center gap-1 text-yellow-500 text-sm">
-                            {generateStars(review.rating)}
-                          </div>
-                          <h4 className="font-medium text-gray-900 dark:text-white">{review.title}</h4>
-                          <p className="text-gray-700 dark:text-gray-100">{review.content}</p>
-                          <div className="text-xs text-gray-500 dark:text-gray-300">
-                            by {review.userName} ・{" "}
-                            {review.createdAt.toLocaleDateString()}
-                          </div>
-                        </div>
-                        {review.images && review.images.length > 0 && (
-                          <div className="flex gap-2">
-                            {review.images.map((img, index) => (
-                              <img
-                                key={index}
-                                src={img}
-                                alt={`리뷰 이미지 ${index + 1}`}
-                                className="w-20 h-20 object-cover rounded-lg"
-                              />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <ProductReviews 
+                productId={id || "1"} 
+                productName={mockProduct.nameKo}
+              />
             </TabsContent>
 
             <TabsContent value="qna" className="mt-8">
