@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { Link, useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
-import { useLanguage } from "@/hooks/useLanguage";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff, AlertCircle, Shield, MessageCircle } from "lucide-react";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Checkbox } from '@/components/ui/checkbox';
+import { AlertCircle, Eye, EyeOff, Shield, MessageCircle } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/hooks/useLanguage';
+import { useLocation } from 'wouter';
+import { Link } from 'wouter';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -67,21 +68,6 @@ export default function Login() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
-            {/* Demo credentials info */}
-            <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-700">
-              <p className="text-sm font-medium text-blue-900 dark:text-white mb-2 flex items-center">
-                <Shield className="w-4 h-4 mr-1" />
-                {t({ ko: "테스트 계정", en: "Demo Account", ja: "テストアカウント", zh: "测试账号" })}
-              </p>
-              <div className="text-sm text-blue-800 dark:text-white space-y-1">
-                <p>• {t({ ko: "관리자", en: "Admin", ja: "管理者", zh: "管理员" })}: <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">admin</span> / <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">12345</span></p>
-                <p>• {t({ ko: "사용자", en: "User", ja: "ユーザー", zh: "用户" })}: <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">user1</span> / <span className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">12345</span></p>
-                <p className="text-xs text-red-600 dark:text-red-400 mt-2">
-                  ⚠️ {t({ ko: "실제 배포 시 이 안내는 제거됩니다.", en: "This guide will be removed in production.", ja: "本番環境では削除されます。", zh: "正式部署时将削除此指南。" })}
-                </p>
-              </div>
-            </div>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
