@@ -45,6 +45,7 @@ import AdminLogin from "@/pages/admin/Login";
 import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
 import ProductSearchPage from "@/pages/ProductSearchPage";
+import ProductList from "@/pages/ProductList";
 import CommunityWrite from "@/pages/CommunityWrite";
 import ReviewWrite from "@/pages/ReviewWrite";
 import { Notifications } from "@/pages/Notifications";
@@ -81,7 +82,7 @@ function Router() {
     <Layout showCommunityNav={showCommunityNav}>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/products" component={Products} />
+        <Route path="/products" component={ProductList} />
         <Route path="/product/:id" component={ProductDetailSupabase} />
         <Route path="/search" component={ProductSearchPage} />
 
