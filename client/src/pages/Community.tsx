@@ -22,9 +22,7 @@ export default function Community() {
     queryKey: ["/api/community/posts"],
   });
 
-  // Navigation is now handled globally in Layout component
-
-  // Mock best content data
+  // Use mock data for now since we don't have actual community posts
   const bestContent = [
     {
       id: 1,
@@ -45,36 +43,6 @@ export default function Community() {
       comments: 12,
       category: "스티커",
       description: "반짝반짝 예쁜 홀로그램 효과"
-    },
-    {
-      id: 3,
-      title: "투명 아크릴 스탠드 DIY",
-      author: "짱구***",
-      image: "/api/placeholder/300/300",
-      likes: 156,
-      comments: 24,
-      category: "아크릴스탠드",
-      description: "투명한 아크릴로 만든 깔끔한 스탠드"
-    },
-    {
-      id: 4,
-      title: "커스텀 폰케이스 제작",
-      author: "디모***",
-      image: "/api/placeholder/300/300",
-      likes: 134,
-      comments: 9,
-      category: "폰케이스",
-      description: "나만의 디자인으로 만든 특별한 케이스"
-    },
-    {
-      id: 5,
-      title: "레진 아트 키링 완성",
-      author: "토루***",
-      image: "/api/placeholder/300/300",
-      likes: 98,
-      comments: 15,
-      category: "레진아트",
-      description: "레진으로 만든 아름다운 키링"
     }
   ];
 

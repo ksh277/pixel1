@@ -312,6 +312,126 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Community posts routes
+  app.get("/api/community/posts", async (req, res) => {
+    try {
+      const { data: posts, error } = await supabase
+        .from('community_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching community posts:', error);
+        return res.status(500).json({ message: "Failed to fetch community posts" });
+      }
+      
+      res.json(posts);
+    } catch (error) {
+      console.error('Error in community posts endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch community posts" });
+    }
+  });
+
+  app.get("/api/community/posts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { data: post, error } = await supabase
+        .from('community_posts')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error || !post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+      
+      res.json(post);
+    } catch (error) {
+      console.error('Error in community post endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch community post" });
+    }
+  });
+
+  // Design shares routes
+  app.get("/api/design-shares", async (req, res) => {
+    try {
+      const { data: designs, error } = await supabase
+        .from('design_shares')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching design shares:', error);
+        return res.status(500).json({ message: "Failed to fetch design shares" });
+      }
+      
+      res.json(designs);
+    } catch (error) {
+      console.error('Error in design shares endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch design shares" });
+    }
+  });
+
+  // Events routes
+  app.get("/api/events", async (req, res) => {
+    try {
+      const { data: events, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching events:', error);
+        return res.status(500).json({ message: "Failed to fetch events" });
+      }
+      
+      res.json(events);
+    } catch (error) {
+      console.error('Error in events endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch events" });
+    }
+  });
+
+  // Resources routes
+  app.get("/api/resources", async (req, res) => {
+    try {
+      const { data: resources, error } = await supabase
+        .from('resources')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching resources:', error);
+        return res.status(500).json({ message: "Failed to fetch resources" });
+      }
+      
+      res.json(resources);
+    } catch (error) {
+      console.error('Error in resources endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch resources" });
+    }
+  });
+
+  // Q&A routes
+  app.get("/api/qna", async (req, res) => {
+    try {
+      const { data: qnaPosts, error } = await supabase
+        .from('qna_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching Q&A posts:', error);
+        return res.status(500).json({ message: "Failed to fetch Q&A posts" });
+      }
+      
+      res.json(qnaPosts);
+    } catch (error) {
+      console.error('Error in Q&A endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch Q&A posts" });
+    }
+  });
+
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {
