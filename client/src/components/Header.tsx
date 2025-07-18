@@ -300,56 +300,51 @@ export const Header = () => {
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           
-          {/* Slide Panel */}
-          <div className="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white dark:bg-[#0f172a] shadow-xl border-l border-gray-200 dark:border-gray-700 transform transition-transform duration-300 ease-in-out animate-in slide-in-from-right">
+          {/* Slide Panel - 전체 화면 덮는 메뉴 */}
+          <div className="fixed inset-0 bg-white dark:bg-[#0f172a] overflow-y-auto mobile-menu-slide-in">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">메뉴</h2>
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">메뉴</h2>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="h-8 w-8"
+                className="h-10 w-10 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <X className="h-4 w-4" />
+                <X className="h-6 w-6" />
               </Button>
             </div>
             
             {/* Scrollable Content */}
             <div className="flex flex-col h-full overflow-y-auto">
               {/* Navigation Section */}
-              <div className="flex-1 py-4">
-                <div className="px-4 mb-4">
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    Navigation
-                  </h3>
-                </div>
-                
+              <div className="flex-1 py-6">
                 {/* Mobile Search */}
-                <div className="px-4 mb-4">
+                <div className="px-6 mb-6">
                   <form onSubmit={handleSearch} className="w-full">
                     <div className="relative">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={handleSearchInputChange}
                         placeholder="상품검색..."
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                       />
                     </div>
                   </form>
                 </div>
-                <nav className="space-y-1">
+                
+                <nav className="space-y-2 px-6">
                   {navItems.map((item) => (
                     <Link key={item.href} href={item.href}>
                       <Button
                         variant="ghost"
-                        className={`w-full justify-start px-4 py-3 text-base h-auto ${
+                        className={`w-full justify-start px-4 py-4 text-lg font-medium h-auto rounded-lg ${
                           location === item.href
                             ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
                             : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -363,24 +358,24 @@ export const Header = () => {
                 </nav>
                 
                 {/* User Section */}
-                <div className="px-4 mt-8 mb-4">
+                <div className="px-6 mt-8 mb-6">
                   <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
-                      User Section
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                      계정 관리
                     </h3>
                   </div>
                 </div>
                 
-                <div className="space-y-1">
+                <div className="space-y-2 px-6">
                   {currentUser ? (
                     <>
                       <Link href="/mypage">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <User className="h-5 w-5 mr-3" />
+                          <User className="h-6 w-6 mr-4" />
                           마이페이지
                         </Button>
                       </Link>
@@ -388,10 +383,10 @@ export const Header = () => {
                       <Link href="/wishlist">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <Heart className="h-5 w-5 mr-3" />
+                          <Heart className="h-6 w-6 mr-4" />
                           <span className="flex items-center justify-between w-full">
                             찜한 상품
                             <Badge variant="secondary" className="ml-2">{wishlistCount}</Badge>
@@ -402,10 +397,10 @@ export const Header = () => {
                       <Link href="/cart">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <ShoppingCart className="h-5 w-5 mr-3" />
+                          <ShoppingCart className="h-6 w-6 mr-4" />
                           <span className="flex items-center justify-between w-full">
                             장바구니
                             {itemCount > 0 && (
@@ -420,10 +415,10 @@ export const Header = () => {
                       <Link href="/notifications">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <Bell className="h-5 w-5 mr-3" />
+                          <Bell className="h-6 w-6 mr-4" />
                           <span className="flex items-center justify-between w-full">
                             알림
                             {unreadCount > 0 && (
@@ -438,7 +433,7 @@ export const Header = () => {
                       {/* Logout Button */}
                       <Button
                         variant="ghost"
-                        className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                        className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
                         onClick={() => {
                           if (isSupabaseConfigured) {
                             // Handle Supabase logout if needed
@@ -453,16 +448,16 @@ export const Header = () => {
                           setLocation('/');
                         }}
                       >
-                        <LogOut className="h-5 w-5 mr-3" />
+                        <LogOut className="h-6 w-6 mr-4" />
                         로그아웃
                       </Button>
                     </>
                   ) : (
-                    <div className="space-y-2 px-4">
+                    <div className="space-y-3 px-6">
                       <Link href="/login">
                         <Button
                           variant="outline"
-                          className="w-full justify-center"
+                          className="w-full justify-center py-3 text-lg font-medium rounded-lg"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           로그인
@@ -471,7 +466,7 @@ export const Header = () => {
                       <Link href="/register">
                         <Button
                           variant="default"
-                          className="w-full justify-center"
+                          className="w-full justify-center py-3 text-lg font-medium rounded-lg"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           회원가입

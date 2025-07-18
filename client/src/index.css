@@ -78,6 +78,37 @@
   color: #ffffff !important;
 }
 
+/* Mobile Menu Slide Animation */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.mobile-menu-slide-in {
+  animation: slideInFromRight 0.3s ease-out forwards;
+}
+
+.mobile-menu-slide-out {
+  animation: slideOutToRight 0.3s ease-in forwards;
+}
+
 /* Mobile touch optimization */
 * {
   -webkit-touch-callout: none;
