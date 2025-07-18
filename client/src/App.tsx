@@ -49,6 +49,7 @@ import { SupabaseProvider } from "@/components/SupabaseProvider";
 import SupabaseExample from "@/components/examples/SupabaseExample";
 import ProductsPage from "@/pages/ProductsPage";
 import AuthPage from "@/components/auth/AuthPage";
+import OrdersPage from "@/pages/OrdersPage";
 
 function Router() {
   const [location] = useLocation();
@@ -109,6 +110,13 @@ function Router() {
           {() => (
             <ProtectedRoute>
               <Wishlist />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/orders">
+          {() => (
+            <ProtectedRoute>
+              <OrdersPage />
             </ProtectedRoute>
           )}
         </Route>

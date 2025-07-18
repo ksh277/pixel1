@@ -13,10 +13,12 @@ import {
   Package
 } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
-import { Link } from 'wouter';
+import { useOrders } from '@/hooks/useOrders';
+import { Link, useLocation } from 'wouter';
 import { isSupabaseConfigured } from '@/lib/supabase';
 
 const CartPage = () => {
+  const [, setLocation] = useLocation();
   const { 
     cartItems, 
     cartTotal, 
@@ -30,6 +32,20 @@ const CartPage = () => {
     isRemovingFromCart,
     isClearingCart
   } = useCart();
+  
+  const { placeOrder, isPlacingOrder } = useOrders();
+
+  const handlePlaceOrder = async () => {
+    if (!cartItems || cartItems.length === 0) {
+      return;
+    }
+
+    const order = await placeOrder(cartItems);
+    if (order) {
+      // Redirect to orders page after successful order placement
+      setLocation('/orders');
+    }
+  };
 
   // Show message if Supabase is not configured
   if (!isSupabaseConfigured) {
@@ -281,9 +297,13 @@ const CartPage = () => {
                     <span className="text-white">총 결제금액</span>
                     <span className="text-white">{formatPrice(cartTotal)}</span>
                   </div>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button 
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    onClick={handlePlaceOrder}
+                    disabled={isPlacingOrder || cartItems.length === 0 || !currentUser}
+                  >
                     <CreditCard className="w-4 h-4 mr-2" />
-                    결제하기
+                    {isPlacingOrder ? '주문 처리 중...' : '주문하기'}
                   </Button>
                   <Link href="/products">
                     <Button variant="outline" className="w-full text-white border-gray-600 hover:bg-gray-700">

@@ -209,24 +209,7 @@ export const fetchOrders = async (options?: {
   return data
 }
 
-export const fetchOrderById = async (id: string) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(`
-      *,
-      users(username, email, phone),
-      order_items(*, products(name, name_ko, image_url, base_price))
-    `)
-    .eq('id', id)
-    .single()
-
-  if (error) {
-    console.error('Error fetching order:', error)
-    throw error
-  }
-
-  return data
-}
+// Removed duplicate function - using the one at the end of the file
 
 // Reviews API
 export const fetchReviews = async (options?: {
@@ -779,3 +762,99 @@ export const clearCart = async (userId: string) => {
 
   return data
 }
+
+// Order API
+export const createOrder = async (userId: string, cartItems: any[]) => {
+  try {
+    // Calculate total price
+    const totalPrice = cartItems.reduce((total, item) => {
+      const price = item.price || item.products?.base_price || 0;
+      return total + (price * item.quantity);
+    }, 0);
+
+    // Create order
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .insert([{
+        user_id: userId,
+        total_price: totalPrice,
+        status: 'pending',
+        items: cartItems.map(item => ({
+          product_id: item.product_id,
+          quantity: item.quantity,
+          price: item.price || item.products?.base_price || 0,
+          product_name: item.products?.name_ko || item.products?.name,
+          customization_options: item.customization_options
+        }))
+      }])
+      .select()
+      .single();
+
+    if (orderError) {
+      console.error('Error creating order:', orderError);
+      throw orderError;
+    }
+
+    // Create print jobs for each item
+    const printJobs = cartItems.map(item => ({
+      order_id: order.id,
+      product_id: item.product_id,
+      quantity: item.quantity,
+      status: 'pending',
+      customization_options: item.customization_options,
+      created_at: new Date().toISOString()
+    }));
+
+    if (printJobs.length > 0) {
+      const { error: printJobsError } = await supabase
+        .from('print_jobs')
+        .insert(printJobs);
+
+      if (printJobsError) {
+        console.error('Error creating print jobs:', printJobsError);
+        // Don't throw here as the order was created successfully
+      }
+    }
+
+    // Clear user's cart
+    await clearCart(userId);
+
+    return order;
+  } catch (error) {
+    console.error('Error in createOrder:', error);
+    throw error;
+  }
+};
+
+export const fetchUserOrders = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching user orders:', error);
+    throw error;
+  }
+
+  return data;
+};
+
+export const fetchOrderById = async (orderId: string) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      *,
+      print_jobs(*)
+    `)
+    .eq('id', orderId)
+    .single();
+
+  if (error) {
+    console.error('Error fetching order:', error);
+    throw error;
+  }
+
+  return data;
+};

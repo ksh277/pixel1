@@ -11,7 +11,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useSupabaseAuth } from '@/components/SupabaseProvider'
 import { useToast } from '@/hooks/use-toast'
-import { User, LogOut, Heart, ShoppingCart, Settings } from 'lucide-react'
+import { User, LogOut, Heart, ShoppingCart, Settings, Package } from 'lucide-react'
+import { Link } from 'wouter'
 
 const UserMenu: React.FC = () => {
   const { user, signOut } = useSupabaseAuth()
@@ -72,18 +73,30 @@ const UserMenu: React.FC = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
-        <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-          <User className="mr-2 h-4 w-4" />
-          <span>프로필</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-          <Heart className="mr-2 h-4 w-4" />
-          <span>찜한 상품</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          <span>장바구니</span>
-        </DropdownMenuItem>
+        <Link href="/mypage">
+          <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <User className="mr-2 h-4 w-4" />
+            <span>프로필</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link href="/wishlist">
+          <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Heart className="mr-2 h-4 w-4" />
+            <span>찜한 상품</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link href="/cart">
+          <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            <span>장바구니</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link href="/orders">
+          <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Package className="mr-2 h-4 w-4" />
+            <span>주문 내역</span>
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
           <Settings className="mr-2 h-4 w-4" />
           <span>설정</span>
