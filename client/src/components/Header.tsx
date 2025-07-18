@@ -300,12 +300,12 @@ export const Header = () => {
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Overlay Background */}
           <div 
-            className="fixed inset-0 bg-black/30"
+            className="fixed inset-0 bg-black/30 animate-in fade-in duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           
           {/* Slide Menu */}
-          <div className="fixed top-0 right-0 h-full w-[75%] max-w-xs bg-white dark:bg-[#0f172a] shadow-lg flex flex-col p-6">
+          <div className="fixed top-0 right-0 h-full w-[75%] max-w-xs bg-white dark:bg-[#0f172a] shadow-lg flex flex-col p-6 animate-in slide-in-from-right duration-300">
             {/* Close Button */}
             <button 
               className="absolute top-4 right-4 text-2xl text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
