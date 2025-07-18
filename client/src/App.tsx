@@ -55,6 +55,7 @@ import PaymentFailed from "@/pages/PaymentFailed";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { SupabaseProvider } from "@/components/SupabaseProvider";
+import { ChatWidget } from "@/components/ChatWidget";
 import SupabaseExample from "@/components/examples/SupabaseExample";
 import ProductsPage from "@/pages/ProductsPage";
 import AuthPage from "@/components/auth/AuthPage";
@@ -232,6 +233,7 @@ function App() {
                 </main>
                 <Footer />
               </div>
+              <ChatWidget />
               <Toaster />
             </AuthProvider>
           </SupabaseProvider>
