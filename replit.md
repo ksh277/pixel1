@@ -1173,6 +1173,17 @@ Preferred communication style: Simple, everyday language.
 - **Product Integration**: Added cart buttons to ProductsGrid component for seamless shopping experience
 - **Real-time Updates**: Cart state updates immediately across all components with cache invalidation
 
+### 2025-01-18: Mobile Header UI Fixes
+- **Fixed Duplicate Wishlist Button**: Removed redundant heart icon button in mobile menu header
+- **Clean Mobile UI**: Now only one functional wishlist button remains that properly routes to /wishlist page
+- **Improved UX**: Eliminated user confusion from non-functional duplicate button
+- **Cart Page Light Mode Fix**: Complete Cart page theme support implementation
+  - **Background Colors**: Updated from hardcoded gray/dark colors to dynamic bg-background and bg-card
+  - **Text Colors**: Changed all text from gray-900/white to text-foreground and text-muted-foreground
+  - **Theme Integration**: Now properly responds to light/dark mode switching
+  - **Complete Coverage**: Fixed both empty cart state and cart with items display
+  - **Mobile Responsive**: Maintained Korean e-commerce design patterns while supporting proper theme switching
+
 ### 2025-01-18: Complete Order Flow Implementation
 - **Order Creation API**: Built comprehensive order creation system with Supabase `orders` table integration
 - **Print Jobs System**: Implemented automatic print job creation linked to orders for manufacturing workflow

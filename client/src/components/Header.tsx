@@ -253,9 +253,7 @@ export const Header = () => {
                     )}
                   </Button>
                 </Link>
-                <Button variant="ghost" size="icon">
-                  <Heart className="h-4 w-4" />
-                </Button>
+
                 <ThemeToggle />
               </div>
               
