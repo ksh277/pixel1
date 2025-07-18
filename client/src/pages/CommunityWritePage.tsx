@@ -5,10 +5,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ArrowLeft, ImageIcon, Send, Eye } from 'lucide-react'
+import { ArrowLeft, Send, Eye } from 'lucide-react'
 import { Link, useLocation } from 'wouter'
 import { useSupabaseAuth } from '@/components/SupabaseProvider'
 import { useCreateCommunityPost } from '@/hooks/useCommunityPosts'
+import ImageUpload from '@/components/ImageUpload'
 
 const CommunityWritePage = () => {
   const { user } = useSupabaseAuth()
@@ -61,6 +62,20 @@ const CommunityWritePage = () => {
     setFormData(prev => ({
       ...prev,
       [field]: value
+    }))
+  }
+
+  const handleImageUpload = (imageUrl: string) => {
+    setFormData(prev => ({
+      ...prev,
+      image_url: imageUrl
+    }))
+  }
+
+  const handleImageRemove = () => {
+    setFormData(prev => ({
+      ...prev,
+      image_url: ''
     }))
   }
 
@@ -162,18 +177,13 @@ const CommunityWritePage = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="image_url" className="text-white">이미지 URL (선택)</Label>
-                    <div className="relative">
-                      <ImageIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <Input
-                        id="image_url"
-                        value={formData.image_url}
-                        onChange={(e) => handleInputChange('image_url', e.target.value)}
-                        placeholder="이미지 URL을 입력하세요"
-                        className="pl-10 bg-[#0f172a] border-gray-600 text-white placeholder-gray-400"
-                        type="url"
-                      />
-                    </div>
+                    <Label className="text-white">이미지 업로드 (선택)</Label>
+                    <ImageUpload
+                      onImageUpload={handleImageUpload}
+                      onImageRemove={handleImageRemove}
+                      currentImageUrl={formData.image_url}
+                      disabled={createPost.isPending}
+                    />
                   </div>
 
                   <div>

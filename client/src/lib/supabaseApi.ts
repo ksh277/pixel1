@@ -466,6 +466,73 @@ export const deletePostComment = async (commentId: string) => {
   }
 }
 
+// Storage API
+export const uploadPostImage = async (file: File): Promise<string> => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) {
+    throw new Error('User must be authenticated to upload images')
+  }
+
+  // Validate file size (5MB limit)
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error('File size must be less than 5MB')
+  }
+
+  // Validate file type
+  if (!file.type.startsWith('image/')) {
+    throw new Error('File must be an image')
+  }
+
+  // Generate unique filename
+  const fileExt = file.name.split('.').pop()
+  const fileName = `${user.id}/${Date.now()}.${fileExt}`
+
+  const { data, error } = await supabase.storage
+    .from('post-images')
+    .upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    })
+
+  if (error) {
+    console.error('Error uploading image:', error)
+    throw error
+  }
+
+  // Get public URL
+  const { data: { publicUrl } } = supabase.storage
+    .from('post-images')
+    .getPublicUrl(data.path)
+
+  return publicUrl
+}
+
+export const deletePostImage = async (imageUrl: string): Promise<void> => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) {
+    throw new Error('User must be authenticated to delete images')
+  }
+
+  // Extract file path from URL
+  const urlParts = imageUrl.split('/post-images/')
+  if (urlParts.length < 2) {
+    throw new Error('Invalid image URL')
+  }
+
+  const filePath = urlParts[1]
+
+  const { error } = await supabase.storage
+    .from('post-images')
+    .remove([filePath])
+
+  if (error) {
+    console.error('Error deleting image:', error)
+    throw error
+  }
+}
+
 // Categories API
 export const fetchCategories = async (options?: {
   parentId?: string
