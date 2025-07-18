@@ -211,3 +211,11 @@ export interface Comment {
   created_at: string
   updated_at: string
 }
+
+export interface Like {
+  id: string
+  user_id: string
+  target_type: 'post' | 'comment'
+  target_id: string
+  created_at: string
+}

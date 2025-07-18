@@ -205,6 +205,16 @@ CREATE TABLE goods_editor_designs (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
+-- 15. Likes 테이블 (좋아요 시스템)
+CREATE TABLE likes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id),
+    target_type VARCHAR(20) NOT NULL CHECK (target_type IN ('post', 'comment')),
+    target_id UUID NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    UNIQUE(user_id, target_type, target_id)
+);
+
 -- 15. Inquiries 테이블 (문의사항)
 CREATE TABLE inquiries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
