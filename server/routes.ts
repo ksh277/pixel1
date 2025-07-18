@@ -1944,6 +1944,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Product search endpoint
+  app.get("/api/products/search", async (req, res) => {
+    try {
+      const { q, category, min_price, max_price, sort, featured } = req.query;
+      
+      let query = supabase
+        .from('products')
+        .select(`
+          *,
+          categories (
+            id,
+            name,
+            name_ko
+          )
+        `);
+
+      // Apply search filter
+      if (q && typeof q === 'string') {
+        query = query.or(
+          `name.ilike.%${q}%,name_ko.ilike.%${q}%,description.ilike.%${q}%,description_ko.ilike.%${q}%`
+        );
+      }
+
+      // Apply category filter
+      if (category && typeof category === 'string') {
+        const categories = category.split(',').filter(Boolean);
+        if (categories.length > 0) {
+          query = query.in('category_id', categories);
+        }
+      }
+
+      // Apply price range filter
+      if (min_price && typeof min_price === 'string') {
+        query = query.gte('base_price', parseInt(min_price));
+      }
+      if (max_price && typeof max_price === 'string') {
+        query = query.lte('base_price', parseInt(max_price));
+      }
+
+      // Apply featured filter
+      if (featured === '1') {
+        query = query.eq('is_featured', true);
+      }
+
+      // Always show active products
+      query = query.eq('is_active', true);
+
+      // Apply sorting
+      switch (sort) {
+        case 'price_low':
+          query = query.order('base_price', { ascending: true });
+          break;
+        case 'price_high':
+          query = query.order('base_price', { ascending: false });
+          break;
+        case 'newest':
+          query = query.order('created_at', { ascending: false });
+          break;
+        case 'featured':
+          query = query.order('is_featured', { ascending: false }).order('name');
+          break;
+        default:
+          query = query.order('name');
+      }
+
+      const { data: products, error } = await query;
+      
+      if (error) {
+        console.error('Error searching products:', error);
+        return res.status(500).json({ message: "Failed to search products" });
+      }
+      
+      res.json(products || []);
+    } catch (error) {
+      console.error('Error in product search endpoint:', error);
+      res.status(500).json({ message: "Failed to search products" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

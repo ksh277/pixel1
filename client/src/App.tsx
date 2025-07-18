@@ -43,6 +43,7 @@ import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminLogin from "@/pages/admin/Login";
 import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
+import ProductSearchPage from "@/pages/ProductSearchPage";
 import CommunityWrite from "@/pages/CommunityWrite";
 import ReviewWrite from "@/pages/ReviewWrite";
 import { Notifications } from "@/pages/Notifications";
@@ -78,7 +79,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/products" component={Products} />
         <Route path="/product/:id" component={ProductDetailSupabase} />
-        <Route path="/search" component={SearchResults} />
+        <Route path="/search" component={ProductSearchPage} />
 
         {/* Category routes */}
         <Route

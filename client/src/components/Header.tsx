@@ -26,9 +26,10 @@ import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
 
 export const Header = () => {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [wishlistCount, setWishlistCount] = useState(0);
   const { user: localUser, logout: localLogout } = useAuth();
   const { user: supabaseUser, loading: supabaseLoading } = useSupabaseAuth();
@@ -66,6 +67,20 @@ export const Header = () => {
   // Use Supabase auth if configured, otherwise fall back to local auth
   const currentUser = isSupabaseConfigured ? supabaseUser : localUser;
   const isLoading = isSupabaseConfigured ? supabaseLoading : false;
+
+  // Handle search
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setLocation(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   const navItems = [
     { name: "홈", href: "/" },
@@ -134,7 +149,19 @@ export const Header = () => {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
           {/* Search */}
-          <Button variant="ghost" size="icon" onClick={() => setIsSearchModalOpen(true)}>
+          <form onSubmit={handleSearch} className="hidden md:flex">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                placeholder="상품검색..."
+                className="w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </form>
+          <Button variant="ghost" size="icon" onClick={() => setIsSearchModalOpen(true)} className="md:hidden">
             <Search className="h-4 w-4" />
           </Button>
 
@@ -284,6 +311,22 @@ export const Header = () => {
                   <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                     Navigation
                   </h3>
+                </div>
+                
+                {/* Mobile Search */}
+                <div className="px-4 mb-4">
+                  <form onSubmit={handleSearch} className="w-full">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearchInputChange}
+                        placeholder="상품검색..."
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+                  </form>
                 </div>
                 <nav className="space-y-1">
                   {navItems.map((item) => (
