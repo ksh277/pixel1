@@ -36,6 +36,7 @@ import CommunityResources from "@/pages/CommunityResources";
 import UserContentShowcase from "@/pages/UserContentShowcase";
 import CommunityQA from "@/pages/CommunityQA";
 import MyPage from "@/pages/MyPage";
+import MyPageSupabase from "@/pages/MyPageSupabase";
 import Wishlist from "@/pages/Wishlist";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminLogin from "@/pages/admin/Login";
@@ -107,7 +108,7 @@ function Router() {
         <Route path="/mypage">
           {() => (
             <ProtectedRoute>
-              <MyPage />
+              <MyPageSupabase />
             </ProtectedRoute>
           )}
         </Route>

@@ -397,6 +397,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // User's community posts
+  app.get("/api/community/posts/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: posts, error } = await supabase
+        .from('community_posts')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching user posts:', error);
+        return res.status(500).json({ message: "Failed to fetch user posts" });
+      }
+      
+      res.json(posts);
+    } catch (error) {
+      console.error('Error in user posts endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch user posts" });
+    }
+  });
+
+  // User's favorites
+  app.get("/api/favorites/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: favorites, error } = await supabase
+        .from('favorites')
+        .select(`
+          *,
+          products (
+            id, name, name_ko, base_price, image_url, category_id
+          )
+        `)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching user favorites:', error);
+        return res.status(500).json({ message: "Failed to fetch user favorites" });
+      }
+      
+      res.json(favorites);
+    } catch (error) {
+      console.error('Error in user favorites endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch user favorites" });
+    }
+  });
+
+  // User's orders
+  app.get("/api/orders/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          order_items (
+            *,
+            products (
+              id, name, name_ko, image_url
+            )
+          )
+        `)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching user orders:', error);
+        return res.status(500).json({ message: "Failed to fetch user orders" });
+      }
+      
+      res.json(orders);
+    } catch (error) {
+      console.error('Error in user orders endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch user orders" });
+    }
+  });
+
   app.get("/api/community/posts/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
