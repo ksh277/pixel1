@@ -115,11 +115,34 @@ export default function Register() {
     setCurrentStep(3);
   };
 
-  const handleComplete = () => {
-    // 회원가입 완료 처리 로직 (추후 구현)
-    console.log("회원가입 완료:", userData);
-    // 로그인 페이지로 리다이렉트
-    setLocation("/login");
+  const handleComplete = async () => {
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: userData.username,
+          email: userData.email,
+          password: userData.password,
+          firstName: userData.name,
+          lastName: "", // 성이 없으므로 빈 문자열
+        }),
+      });
+
+      if (response.ok) {
+        console.log("회원가입 성공:", userData);
+        // 로그인 페이지로 리다이렉트
+        setLocation("/login");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "회원가입에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("회원가입 오류:", error);
+      setError("회원가입에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   const renderStep1 = () => (

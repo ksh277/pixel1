@@ -6,6 +6,53 @@ import { insertUserSchema, insertProductSchema, insertProductReviewSchema, inser
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const { username, email, password, firstName, lastName } = req.body;
+      
+      // Check if user already exists
+      const { data: existingUser, error: checkError } = await supabase
+        .from('users')
+        .select('username, email')
+        .or(`username.eq.${username},email.eq.${email}`)
+        .single();
+      
+      if (existingUser) {
+        return res.status(400).json({ 
+          message: existingUser.username === username 
+            ? "이미 사용 중인 아이디입니다." 
+            : "이미 사용 중인 이메일입니다." 
+        });
+      }
+      
+      // Create new user
+      const { data: newUser, error } = await supabase
+        .from('users')
+        .insert([{
+          username,
+          email,
+          password, // In production, hash this password
+          first_name: firstName,
+          last_name: lastName,
+          is_admin: false
+        }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Registration error:', error);
+        return res.status(500).json({ message: "회원가입에 실패했습니다." });
+      }
+      
+      // Remove password before sending response
+      const { password: _, ...userWithoutPassword } = newUser;
+      res.status(201).json(userWithoutPassword);
+    } catch (error) {
+      console.error('Registration error:', error);
+      res.status(500).json({ message: "회원가입에 실패했습니다." });
+    }
+  });
+
   app.post("/api/auth/login", async (req, res) => {
     try {
       const { username, password } = req.body;
