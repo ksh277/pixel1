@@ -248,11 +248,11 @@ export const Header = () => {
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    onClick={() => {
+                    onClick={async () => {
                       if (isSupabaseConfigured) {
                         // Handle Supabase logout if needed
                       } else {
-                        localLogout();
+                        await localLogout();
                       }
                       toast({
                         title: "로그아웃 완료",
@@ -434,11 +434,11 @@ export const Header = () => {
                       <Button
                         variant="ghost"
                         className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
-                        onClick={() => {
+                        onClick={async () => {
                           if (isSupabaseConfigured) {
                             // Handle Supabase logout if needed
                           } else {
-                            localLogout();
+                            await localLogout();
                           }
                           toast({
                             title: "로그아웃 완료",

@@ -3,12 +3,43 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { supabase } from "./lib/supabase";
 import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema, insertGoodsEditorDesignSchema, insertInquirySchema, insertNotificationSchema } from "@shared/schema";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-here';
+
+// JWT Authentication middleware
+const authenticateToken = (req: any, res: any, next: any) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1] || req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: '토큰이 필요합니다.' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
+    if (err) {
+      return res.status(403).json({ message: '토큰이 유효하지 않습니다.' });
+    }
+    req.user = user;
+    next();
+  });
+};
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Middleware
+  app.use(cookieParser());
+  
   // Authentication routes
   app.post("/api/auth/register", async (req, res) => {
     try {
       const { username, email, password, firstName, lastName } = req.body;
+      
+      // Validation
+      if (!username || !email || !password) {
+        return res.status(400).json({ message: "모든 필드를 입력해주세요." });
+      }
       
       // Check if user already exists
       const { data: existingUser, error: checkError } = await supabase
@@ -25,13 +56,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
+      // Hash password with bcrypt
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      
       // Create new user
       const { data: newUser, error } = await supabase
         .from('users')
         .insert([{
           username,
           email,
-          password, // In production, hash this password
+          password: hashedPassword,
           first_name: firstName,
           last_name: lastName
         }])
@@ -43,9 +78,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ message: "회원가입에 실패했습니다." });
       }
       
+      // Generate JWT token
+      const token = jwt.sign(
+        { 
+          id: newUser.id, 
+          username: newUser.username, 
+          email: newUser.email,
+          isAdmin: newUser.is_admin || false 
+        },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+      
+      // Set cookie with token
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      });
+      
       // Remove password before sending response
       const { password: _, ...userWithoutPassword } = newUser;
-      res.status(201).json(userWithoutPassword);
+      res.status(201).json({ 
+        ...userWithoutPassword,
+        token 
+      });
     } catch (error) {
       console.error('Registration error:', error);
       res.status(500).json({ message: "회원가입에 실패했습니다." });
@@ -56,6 +114,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { username, password } = req.body;
       
+      // Validation
+      if (!username || !password) {
+        return res.status(400).json({ message: "아이디와 비밀번호를 입력해주세요." });
+      }
+      
       // Get user from database
       const { data: user, error } = await supabase
         .from('users')
@@ -64,20 +127,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .single();
       
       if (error || !user) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res.status(401).json({ message: "아이디 또는 비밀번호가 올바르지 않습니다." });
       }
       
-      // Check password (in production, use bcrypt)
-      if (user.password !== password) {
-        return res.status(401).json({ message: "Invalid credentials" });
+      // Check password with bcrypt
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "아이디 또는 비밀번호가 올바르지 않습니다." });
       }
+      
+      // Generate JWT token
+      const token = jwt.sign(
+        { 
+          id: user.id, 
+          username: user.username, 
+          email: user.email,
+          isAdmin: user.is_admin || false 
+        },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+      
+      // Set cookie with token
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      });
       
       // Remove password before sending response
       const { password: _, ...userWithoutPassword } = user;
-      res.json(userWithoutPassword);
+      res.json({ 
+        ...userWithoutPassword,
+        token 
+      });
     } catch (error) {
       console.error('Login error:', error);
-      res.status(500).json({ message: "Login failed" });
+      res.status(500).json({ message: "로그인에 실패했습니다." });
+    }
+  });
+
+  // Logout endpoint
+  app.post("/api/auth/logout", (req, res) => {
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    });
+    res.json({ message: "로그아웃되었습니다." });
+  });
+
+  // Check authentication status
+  app.get("/api/auth/me", authenticateToken, async (req: any, res) => {
+    try {
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('id, username, email, first_name, last_name, is_admin, created_at, updated_at')
+        .eq('id', req.user.id)
+        .single();
+      
+      if (error || !user) {
+        return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
+      }
+      
+      res.json(user);
+    } catch (error) {
+      console.error('Auth check error:', error);
+      res.status(500).json({ message: "인증 확인에 실패했습니다." });
     }
   });
 

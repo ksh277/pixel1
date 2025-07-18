@@ -19,7 +19,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (username: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
   redirectPath: string | null;
   setRedirectPath: (path: string | null) => void;
 }
@@ -32,17 +32,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [redirectPath, setRedirectPath] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
+    // Check if user is already logged in with JWT token
+    const checkAuth = async () => {
       try {
-        setUser(JSON.parse(savedUser));
+        const response = await fetch('/api/auth/me', {
+          credentials: 'include', // Include cookies
+        });
+        
+        if (response.ok) {
+          const userData = await response.json();
+          const user: User = {
+            id: userData.id.toString(),
+            name: `${userData.first_name} ${userData.last_name}`.trim(),
+            username: userData.username,
+            email: userData.email,
+            points: 0,
+            coupons: 0,
+            totalOrders: 0,
+            totalSpent: 0,
+            isAdmin: userData.is_admin,
+            firstName: userData.first_name,
+            lastName: userData.last_name || ''
+          };
+          setUser(user);
+        } else {
+          // Clear any existing user data
+          localStorage.removeItem('user');
+        }
       } catch (error) {
-        console.error('Failed to parse saved user:', error);
+        console.error('Auth check failed:', error);
         localStorage.removeItem('user');
+      } finally {
+        setIsLoading(false);
       }
-    }
-    setIsLoading(false);
+    };
+    
+    checkAuth();
   }, []);
 
   const login = async (username: string, password: string): Promise<boolean> => {
@@ -53,6 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Include cookies
         body: JSON.stringify({ username, password }),
       });
 
@@ -84,10 +110,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return false;
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    setRedirectPath(null);
+  const logout = async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include', // Include cookies
+      });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem('user');
+      setRedirectPath(null);
+    }
   };
 
   return (
