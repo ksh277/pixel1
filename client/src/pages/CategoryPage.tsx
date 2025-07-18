@@ -241,9 +241,6 @@ export default function CategoryPage() {
                 >
                   <div className="flex items-center space-x-2">
                     <span>{t(subcat.name)}</span>
-                    <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full">
-                      {subcat.count}
-                    </span>
                   </div>
                 </button>
               ))}
