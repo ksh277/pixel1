@@ -19,12 +19,14 @@ import { useSupabaseAuth } from "@/components/SupabaseProvider";
 import { isSupabaseConfigured } from "@/lib/supabase";
 import UserMenu from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { SearchModal } from "@/components/SearchModal";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
 
 export const Header = () => {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const { user: localUser } = useAuth();
   const { user: supabaseUser, loading: supabaseLoading } = useSupabaseAuth();
   const { toast } = useToast();
@@ -101,7 +103,7 @@ export const Header = () => {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
           {/* Search */}
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={() => setIsSearchModalOpen(true)}>
             <Search className="h-4 w-4" />
           </Button>
 
@@ -221,7 +223,7 @@ export const Header = () => {
             {/* Mobile Actions */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" onClick={() => setIsSearchModalOpen(true)}>
                   <Search className="h-4 w-4" />
                 </Button>
                 <Link href="/cart">
@@ -301,6 +303,12 @@ export const Header = () => {
           </div>
         </div>
       )}
+      
+      {/* Search Modal */}
+      <SearchModal 
+        isOpen={isSearchModalOpen} 
+        onClose={() => setIsSearchModalOpen(false)} 
+      />
     </header>
   );
 };

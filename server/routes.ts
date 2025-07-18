@@ -50,10 +50,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/products", async (req, res) => {
     try {
       const { category, featured, search } = req.query;
-      let query = supabase.from('products').select(`
-        *,
-        categories!products_category_id_categories_id_fk(name, name_ko)
-      `);
+      let query = supabase.from('products').select('*');
 
       if (category) {
         query = query.eq('category_id', parseInt(category as string));
