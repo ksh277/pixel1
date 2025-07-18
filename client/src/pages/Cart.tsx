@@ -110,16 +110,16 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-background dark:bg-[#1F2D4A] py-8">
+      <div className="min-h-screen bg-white dark:bg-[#1F2D4A] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
             <div className="mb-8">
               <BelugaMascot variant="empty-cart" />
             </div>
-            <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               {t({ ko: "장바구니가 비어 있습니다", en: "Your cart is empty" })}
             </h2>
-            <p className="text-muted-foreground dark:text-gray-300 mb-8">
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
               {t({ ko: "원하는 상품을 장바구니에 담아보세요", en: "Add items to your cart to get started" })}
             </p>
             <div className="flex items-center justify-center space-x-4">
@@ -136,13 +136,13 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#1F2D4A] py-8">
+    <div className="min-h-screen bg-white dark:bg-[#1F2D4A] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground dark:text-white">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             {t({ ko: "장바구니", en: "Shopping Cart" })}
           </h1>
-          <p className="text-muted-foreground dark:text-gray-300 mt-2">
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
             {t({ ko: `총 ${cartItems.length}개의 상품이 있습니다`, en: `${cartItems.length} items in your cart` })}
           </p>
         </div>
@@ -150,7 +150,7 @@ export default function Cart() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <Card className="bg-card dark:bg-[#1F2D4A] border-border dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center dark:text-white">
@@ -175,7 +175,7 @@ export default function Cart() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center space-x-4 p-4 border border-border dark:border-gray-700 rounded-lg bg-background dark:bg-[#1F2D4A]">
+                  <div key={item.id} className="flex items-center space-x-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#1F2D4A]">
                     <Checkbox
                       checked={selectedItems.includes(item.id)}
                       onCheckedChange={() => toggleSelectItem(item.id)}
@@ -188,8 +188,8 @@ export default function Cart() {
                     />
                     
                     <div className="flex-1">
-                      <h3 className="font-semibold text-foreground dark:text-white">{item.nameKo}</h3>
-                      <p className="text-sm text-muted-foreground dark:text-gray-300">{item.name}</p>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{item.nameKo}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{item.name}</p>
                       <div className="flex items-center space-x-2 mt-1">
                         {Object.entries(item.options).map(([key, value]) => (
                           <Badge key={key} variant="secondary" className="text-xs">
@@ -208,7 +208,7 @@ export default function Cart() {
                       >
                         <Minus className="w-4 h-4" />
                       </Button>
-                      <span className="w-8 text-center text-foreground dark:text-white">{item.quantity}</span>
+                      <span className="w-8 text-center text-gray-900 dark:text-white">{item.quantity}</span>
                       <Button
                         variant="outline"
                         size="sm"
@@ -219,10 +219,10 @@ export default function Cart() {
                     </div>
                     
                     <div className="text-right">
-                      <p className="font-semibold text-foreground dark:text-white">
+                      <p className="font-semibold text-gray-900 dark:text-white">
                         ₩{(item.price * item.quantity).toLocaleString()}
                       </p>
-                      <p className="text-sm text-muted-foreground dark:text-gray-300">
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         ₩{item.price.toLocaleString()} × {item.quantity}
                       </p>
                     </div>
@@ -243,7 +243,7 @@ export default function Cart() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8 bg-card dark:bg-[#1F2D4A] border-border dark:border-gray-700">
+            <Card className="sticky top-8 bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="dark:text-white">
                   {t({ ko: "주문 요약", en: "Order Summary" })}
@@ -251,17 +251,17 @@ export default function Cart() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground dark:text-gray-300">
+                  <span className="text-gray-600 dark:text-gray-300">
                     {t({ ko: "상품 금액", en: "Subtotal" })}
                   </span>
-                  <span className="font-semibold text-foreground dark:text-white">₩{subtotal.toLocaleString()}</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">₩{subtotal.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground dark:text-gray-300">
+                  <span className="text-gray-600 dark:text-gray-300">
                     {t({ ko: "배송비", en: "Shipping" })}
                   </span>
-                  <span className="font-semibold text-foreground dark:text-white">
+                  <span className="font-semibold text-gray-900 dark:text-white">
                     {shippingFee === 0 ? (
                       <span className="text-green-600 dark:text-green-400">
                         {t({ ko: "무료", en: "Free" })}
