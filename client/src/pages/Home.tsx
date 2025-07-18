@@ -41,11 +41,25 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["/api/products"],
+    queryKey: ['products'],
+    queryFn: async () => {
+      const response = await fetch('/api/products');
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      return response.json();
+    },
   });
 
   const { data: categories } = useQuery({
-    queryKey: ["/api/categories"],
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const response = await fetch('/api/categories');
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      return response.json();
+    },
   });
 
   // Mock data for enhanced sections

@@ -79,6 +79,48 @@ export const fetchProductById = async (id: string) => {
   return data
 }
 
+export const fetchProductsByCategory = async (categoryId: string) => {
+  const { data, error } = await supabase
+    .from('products')
+    .select(`
+      *,
+      categories(name, name_ko),
+      reviews(rating, id)
+    `)
+    .eq('category_id', categoryId)
+    .eq('is_available', true)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching products by category:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const fetchFeaturedProducts = async () => {
+  const { data, error } = await supabase
+    .from('products')
+    .select(`
+      *,
+      categories(name, name_ko),
+      reviews(rating, id)
+    `)
+    .eq('is_featured', true)
+    .eq('is_available', true)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching featured products:', error)
+    throw error
+  }
+
+  return data
+}
+
+
+
 // Product Reviews API
 export const fetchProductReviews = async (productId: string) => {
   const { data, error } = await supabase

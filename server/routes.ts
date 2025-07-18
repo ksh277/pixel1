@@ -1,28 +1,48 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { supabase } from "./lib/supabase";
 import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {
-      const categories = await storage.getCategories();
+      const { data: categories, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+      
+      if (error) {
+        console.error('Error fetching categories:', error);
+        return res.status(500).json({ message: "Failed to fetch categories" });
+      }
+      
       res.json(categories);
     } catch (error) {
+      console.error('Error in categories endpoint:', error);
       res.status(500).json({ message: "Failed to fetch categories" });
     }
   });
 
   app.get("/api/categories/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      const category = await storage.getCategory(id);
-      if (!category) {
+      const id = req.params.id;
+      const { data: category, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error) {
+        console.error('Error fetching category:', error);
         return res.status(404).json({ message: "Category not found" });
       }
+      
       res.json(category);
     } catch (error) {
+      console.error('Error in category endpoint:', error);
       res.status(500).json({ message: "Failed to fetch category" });
     }
   });
@@ -31,44 +51,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/products", async (req, res) => {
     try {
       const { category, featured, search } = req.query;
-      let products;
-      
+      let query = supabase.from('products').select(`
+        *,
+        categories(name, name_ko)
+      `);
+
       if (category) {
-        products = await storage.getProductsByCategory(parseInt(category as string));
-      } else if (featured === "true") {
-        products = await storage.getFeaturedProducts();
-      } else {
-        products = await storage.getProducts();
+        query = query.eq('category_id', category);
       }
+      
+      if (featured === "true") {
+        query = query.eq('is_featured', true);
+      }
+      
+      query = query.eq('is_available', true);
       
       // Search filtering
       if (search) {
-        const searchTerm = (search as string).toLowerCase();
-        products = products.filter(product => 
-          product.name.toLowerCase().includes(searchTerm) ||
-          product.nameKo.toLowerCase().includes(searchTerm) ||
-          product.description?.toLowerCase().includes(searchTerm)
-        );
+        const searchTerm = search as string;
+        query = query.or(`name.ilike.%${searchTerm}%,name_ko.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
       }
       
-      // Add real-time counts for each product
+      const { data: products, error } = await query.order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching products:', error);
+        return res.status(500).json({ message: "Failed to fetch products" });
+      }
+      
+      // Add review and like counts
       const productsWithCounts = await Promise.all(
         products.map(async (product) => {
-          const [reviewCount, likeCount] = await Promise.all([
-            storage.getProductReviewsCount(product.id),
-            storage.getProductLikesCount(product.id)
+          const [reviewCountResult, likeCountResult] = await Promise.all([
+            supabase.from('product_reviews').select('id', { count: 'exact' }).eq('product_id', product.id),
+            supabase.from('favorites').select('id', { count: 'exact' }).eq('product_id', product.id)
           ]);
           
           return {
             ...product,
-            reviewCount,
-            likeCount
+            reviewCount: reviewCountResult.count || 0,
+            likeCount: likeCountResult.count || 0
           };
         })
       );
       
       res.json(productsWithCounts);
     } catch (error) {
+      console.error('Error in products endpoint:', error);
       res.status(500).json({ message: "Failed to fetch products" });
     }
   });
