@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { formatCurrency } from '@/lib/utils';
 import { Link } from 'wouter';
 import { isSupabaseConfigured } from '@/lib/supabase';
+import DeliveryTracking from '@/components/DeliveryTracking';
 
 const OrdersPage = () => {
   const { user } = useAuth();
@@ -393,6 +394,15 @@ const OrdersPage = () => {
                                       <span className="text-white">{formatPrice(order.total_price)}</span>
                                     </div>
                                   </div>
+                                </div>
+
+                                {/* Delivery Tracking */}
+                                <div>
+                                  <DeliveryTracking 
+                                    orderId={order.id} 
+                                    orderAmount={order.total_price}
+                                    showAdminActions={user?.user_metadata?.role === 'admin'}
+                                  />
                                 </div>
                               </div>
                             </DialogContent>

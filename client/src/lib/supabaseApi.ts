@@ -176,6 +176,89 @@ export const fetchUserReviewForProduct = async (userId: string, productId: strin
   return data
 }
 
+// Delivery Tracking API
+export const fetchDeliveryTracking = async (orderId: string) => {
+  const { data, error } = await supabase
+    .from('delivery_tracking')
+    .select('*')
+    .eq('order_id', orderId)
+    .order('last_updated', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 is "not found" error
+    console.error('Error fetching delivery tracking:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const createDeliveryTracking = async (tracking: {
+  order_id: string
+  courier?: string
+  tracking_number?: string
+  status: string
+  estimated_delivery?: string
+}) => {
+  const { data, error } = await supabase
+    .from('delivery_tracking')
+    .insert([{
+      ...tracking,
+      last_updated: new Date().toISOString()
+    }])
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error creating delivery tracking:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const updateDeliveryTracking = async (trackingId: string, updates: {
+  courier?: string
+  tracking_number?: string
+  status?: string
+  estimated_delivery?: string
+}) => {
+  const { data, error } = await supabase
+    .from('delivery_tracking')
+    .update({
+      ...updates,
+      last_updated: new Date().toISOString()
+    })
+    .eq('id', trackingId)
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error updating delivery tracking:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const fetchAllDeliveryTrackings = async () => {
+  const { data, error } = await supabase
+    .from('delivery_tracking')
+    .select(`
+      *,
+      orders(id, total_amount, created_at, users(username, email))
+    `)
+    .order('last_updated', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching all delivery trackings:', error)
+    throw error
+  }
+
+  return data
+}
+
 // Categories API
 export const fetchCategories = async (options?: {
   parentId?: string
