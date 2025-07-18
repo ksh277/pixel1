@@ -2023,6 +2023,107 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Refund request endpoints
+  app.post("/api/refund-requests", async (req, res) => {
+    try {
+      const { data: refundRequest, error } = await supabase
+        .from('refund_requests')
+        .insert(req.body)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error creating refund request:', error);
+        return res.status(500).json({ message: "Failed to create refund request" });
+      }
+      
+      res.json(refundRequest);
+    } catch (error) {
+      console.error('Error in refund request creation endpoint:', error);
+      res.status(500).json({ message: "Failed to create refund request" });
+    }
+  });
+
+  app.get("/api/refund-requests/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      const { data: refundRequests, error } = await supabase
+        .from('refund_requests')
+        .select(`
+          *,
+          orders (
+            id,
+            total_amount,
+            created_at,
+            order_items
+          )
+        `)
+        .eq('user_id', userId)
+        .order('requested_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching user refund requests:', error);
+        return res.status(500).json({ message: "Failed to fetch refund requests" });
+      }
+      
+      res.json(refundRequests || []);
+    } catch (error) {
+      console.error('Error in user refund requests endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch refund requests" });
+    }
+  });
+
+  app.get("/api/refund-requests/check/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      const { data: existingRequest, error } = await supabase
+        .from('refund_requests')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+      
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error checking refund request:', error);
+        return res.status(500).json({ message: "Failed to check refund request" });
+      }
+      
+      res.json({ exists: !!existingRequest, request: existingRequest });
+    } catch (error) {
+      console.error('Error in refund request check endpoint:', error);
+      res.status(500).json({ message: "Failed to check refund request" });
+    }
+  });
+
+  app.patch("/api/refund-requests/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      
+      if (updateData.status === 'approved' || updateData.status === 'rejected') {
+        updateData.resolved_at = new Date().toISOString();
+      }
+      
+      const { data: refundRequest, error } = await supabase
+        .from('refund_requests')
+        .update(updateData)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating refund request:', error);
+        return res.status(500).json({ message: "Failed to update refund request" });
+      }
+      
+      res.json(refundRequest);
+    } catch (error) {
+      console.error('Error in refund request update endpoint:', error);
+      res.status(500).json({ message: "Failed to update refund request" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

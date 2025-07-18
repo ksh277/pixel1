@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Package, Heart, Star, Settings, LogOut, Edit2, Eye, EyeOff, MessageSquare, ShoppingBag, Calendar } from 'lucide-react';
+import { User, Package, Heart, Star, Settings, LogOut, Edit2, Eye, EyeOff, MessageSquare, ShoppingBag, Calendar, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,6 +13,10 @@ import { Link, useLocation } from 'wouter';
 import { supabase } from '@/lib/supabase';
 import { useQuery } from '@tanstack/react-query';
 import { useLanguage } from '@/hooks/useLanguage';
+import { RefundRequestModal } from '@/components/RefundRequestModal';
+import { RefundRequestList } from '@/components/RefundRequestList';
+import { RefundRequestButton } from '@/components/RefundRequestButton';
+import { useRefundRequestCheck } from '@/hooks/useRefundRequest';
 
 interface CommunityPost {
   id: string;
@@ -52,6 +56,10 @@ export default function MyPageSupabase() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const { t } = useLanguage();
+  
+  // Refund request state
+  const [refundModalOpen, setRefundModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
   
   const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -349,10 +357,11 @@ export default function MyPageSupabase() {
 
         {/* Main Content */}
         <Tabs defaultValue="posts" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="posts">내가 쓴 글</TabsTrigger>
             <TabsTrigger value="favorites">찜한 상품</TabsTrigger>
             <TabsTrigger value="orders">주문 내역</TabsTrigger>
+            <TabsTrigger value="refunds">환불 요청</TabsTrigger>
           </TabsList>
           
           {/* 내가 쓴 글 */}
@@ -540,6 +549,16 @@ export default function MyPageSupabase() {
                             <Button variant="outline" size="sm">
                               상세보기
                             </Button>
+                            <RefundRequestButton
+                              orderId={parseInt(order.id)}
+                              orderAmount={order.total_amount}
+                              orderDate={order.created_at}
+                              orderStatus={order.status}
+                              onRefundRequest={() => {
+                                setSelectedOrder(order);
+                                setRefundModalOpen(true);
+                              }}
+                            />
                           </div>
                         </div>
                         
@@ -587,8 +606,37 @@ export default function MyPageSupabase() {
               </CardContent>
             </Card>
           </TabsContent>
+          
+          {/* 환불 요청 */}
+          <TabsContent value="refunds" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <RefreshCw className="h-5 w-5" />
+                  <span>환불 요청</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RefundRequestList />
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
+      
+      {/* Refund Request Modal */}
+      {selectedOrder && (
+        <RefundRequestModal
+          orderId={parseInt(selectedOrder.id)}
+          isOpen={refundModalOpen}
+          onClose={() => {
+            setRefundModalOpen(false);
+            setSelectedOrder(null);
+          }}
+          orderAmount={selectedOrder.total_amount}
+          orderDate={selectedOrder.created_at}
+        />
+      )}
     </div>
   );
 }

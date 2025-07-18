@@ -174,6 +174,17 @@ export const payments = mysqlTable("payments", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const refundRequests = mysqlTable("refund_requests", {
+  id: serial("id").primaryKey(),
+  orderId: int("order_id").references(() => orders.id).notNull(),
+  userId: int("user_id").references(() => users.id).notNull(),
+  reason: text("reason").notNull(),
+  status: text("status").default("pending").notNull(), // pending, approved, rejected
+  requestedAt: timestamp("requested_at").defaultNow().notNull(),
+  resolvedAt: timestamp("resolved_at"),
+  adminNote: text("admin_note"),
+});
+
 export const coupons = mysqlTable("coupons", {
   id: serial("id").primaryKey(),
   code: text("code").notNull().unique(),
@@ -359,9 +370,17 @@ export const insertNotificationSchema = createInsertSchema(notifications).omit({
   createdAt: true,
 });
 
+export const insertRefundRequestSchema = createInsertSchema(refundRequests).omit({
+  id: true,
+  requestedAt: true,
+  resolvedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
+export type RefundRequest = typeof refundRequests.$inferSelect;
+export type InsertRefundRequest = z.infer<typeof insertRefundRequestSchema>;
 export type Category = typeof categories.$inferSelect;
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type Product = typeof products.$inferSelect;
