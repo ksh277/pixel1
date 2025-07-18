@@ -27,7 +27,7 @@ export const Header = () => {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const { user: localUser } = useAuth();
+  const { user: localUser, logout: localLogout } = useAuth();
   const { user: supabaseUser, loading: supabaseLoading } = useSupabaseAuth();
   const { toast } = useToast();
   const { itemCount } = useCart();
@@ -312,6 +312,44 @@ export const Header = () => {
                 </div>
               )}
             </div>
+            
+            {/* Mobile User Menu Items for Logged In Users */}
+            {currentUser && (
+              <div className="space-y-2 pt-2">
+                <Separator className="my-2" />
+                <Link href="/mypage">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    마이페이지
+                  </Button>
+                </Link>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
+                  onClick={() => {
+                    if (isSupabaseConfigured) {
+                      // Supabase logout will be handled by UserMenu
+                      return;
+                    } else {
+                      // Local auth logout
+                      localLogout();
+                      setIsMobileMenuOpen(false);
+                      toast({
+                        title: "로그아웃 완료",
+                        description: "성공적으로 로그아웃되었습니다.",
+                      });
+                    }
+                  }}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  로그아웃
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}
