@@ -259,6 +259,178 @@ export const fetchAllDeliveryTrackings = async () => {
   return data
 }
 
+// Community Posts API
+export const fetchCommunityPosts = async () => {
+  const { data, error } = await supabase
+    .from('community_posts')
+    .select(`
+      *,
+      users(id, username, email),
+      community_comments(count)
+    `)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching community posts:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const fetchCommunityPost = async (postId: string) => {
+  const { data, error } = await supabase
+    .from('community_posts')
+    .select(`
+      *,
+      users(id, username, email),
+      community_comments(
+        id,
+        content,
+        created_at,
+        users(id, username, email)
+      )
+    `)
+    .eq('id', postId)
+    .single()
+
+  if (error) {
+    console.error('Error fetching community post:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const createCommunityPost = async (post: {
+  title: string
+  content: string
+  category?: string
+  image_url?: string
+}) => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) {
+    throw new Error('User must be authenticated to create posts')
+  }
+
+  const { data, error } = await supabase
+    .from('community_posts')
+    .insert([{
+      ...post,
+      user_id: user.id
+    }])
+    .select(`
+      *,
+      users(id, username, email)
+    `)
+    .single()
+
+  if (error) {
+    console.error('Error creating community post:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const updateCommunityPost = async (postId: string, updates: {
+  title?: string
+  content?: string
+  category?: string
+  image_url?: string
+}) => {
+  const { data, error } = await supabase
+    .from('community_posts')
+    .update(updates)
+    .eq('id', postId)
+    .select(`
+      *,
+      users(id, username, email)
+    `)
+    .single()
+
+  if (error) {
+    console.error('Error updating community post:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const deleteCommunityPost = async (postId: string) => {
+  const { error } = await supabase
+    .from('community_posts')
+    .delete()
+    .eq('id', postId)
+
+  if (error) {
+    console.error('Error deleting community post:', error)
+    throw error
+  }
+}
+
+// Community Comments API
+export const fetchPostComments = async (postId: string) => {
+  const { data, error } = await supabase
+    .from('community_comments')
+    .select(`
+      *,
+      users(id, username, email)
+    `)
+    .eq('post_id', postId)
+    .order('created_at', { ascending: true })
+
+  if (error) {
+    console.error('Error fetching post comments:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const createPostComment = async (comment: {
+  post_id: string
+  content: string
+}) => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) {
+    throw new Error('User must be authenticated to comment')
+  }
+
+  const { data, error } = await supabase
+    .from('community_comments')
+    .insert([{
+      ...comment,
+      user_id: user.id
+    }])
+    .select(`
+      *,
+      users(id, username, email)
+    `)
+    .single()
+
+  if (error) {
+    console.error('Error creating comment:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const deletePostComment = async (commentId: string) => {
+  const { error } = await supabase
+    .from('community_comments')
+    .delete()
+    .eq('id', commentId)
+
+  if (error) {
+    console.error('Error deleting comment:', error)
+    throw error
+  }
+}
+
 // Categories API
 export const fetchCategories = async (options?: {
   parentId?: string
@@ -442,8 +614,8 @@ export const fetchReviews = async (options?: {
   return data
 }
 
-// Community API
-export const fetchCommunityPosts = async (options?: {
+// Community API (legacy - using community table)
+export const fetchCommunityPostsLegacy = async (options?: {
   category?: string
   featured?: boolean
   userId?: string

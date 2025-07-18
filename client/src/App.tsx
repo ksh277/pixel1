@@ -50,6 +50,9 @@ import SupabaseExample from "@/components/examples/SupabaseExample";
 import ProductsPage from "@/pages/ProductsPage";
 import AuthPage from "@/components/auth/AuthPage";
 import OrdersPage from "@/pages/OrdersPage";
+import CommunityPage from "@/pages/CommunityPage";
+import CommunityWritePage from "@/pages/CommunityWritePage";
+import CommunityPostPage from "@/pages/CommunityPostPage";
 
 function Router() {
   const [location] = useLocation();
@@ -120,14 +123,15 @@ function Router() {
             </ProtectedRoute>
           )}
         </Route>
-        <Route path="/community" component={Community} />
+        <Route path="/community" component={CommunityPage} />
         <Route path="/community/write">
           {() => (
             <ProtectedRoute>
-              <CommunityWrite />
+              <CommunityWritePage />
             </ProtectedRoute>
           )}
         </Route>
+        <Route path="/community/:id" component={CommunityPostPage} />
         <Route path="/reviews/:id" component={ReviewDetail} />
         <Route path="/reviews/write">
           {() => (
