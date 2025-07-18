@@ -44,6 +44,8 @@ import CommunityWrite from "@/pages/CommunityWrite";
 import ReviewWrite from "@/pages/ReviewWrite";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { SupabaseProvider } from "@/components/SupabaseProvider";
+import SupabaseExample from "@/components/examples/SupabaseExample";
 
 function Router() {
   const [location] = useLocation();
@@ -151,6 +153,9 @@ function Router() {
         <Route path="/admin/login" component={AdminLogin} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/dashboard" component={AdminDashboard} />
+        
+        {/* Supabase Demo */}
+        <Route path="/supabase-demo" component={SupabaseExample} />
 
         {/* Category and section routes */}
         <Route path="/popular" component={Products} />
@@ -175,16 +180,18 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <TooltipProvider>
-          <AuthProvider>
-            <div className="min-h-screen bg-background text-foreground">
-              <Header />
-              <main>
-                <Router />
-              </main>
-              <Footer />
+          <SupabaseProvider>
+            <AuthProvider>
+              <div className="min-h-screen bg-background text-foreground">
+                <Header />
+                <main>
+                  <Router />
+                </main>
+                <Footer />
             </div>
             <Toaster />
           </AuthProvider>
+        </SupabaseProvider>
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
