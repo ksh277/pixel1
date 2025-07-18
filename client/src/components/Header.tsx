@@ -535,52 +535,6 @@ export const Header = () => {
                 </div>
               )}
             </div>
-              
-              {currentUser ? (
-                <div className="space-y-3 text-center">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">
-                    {getDisplayName()}님
-                  </span>
-                  <button
-                    onClick={async () => {
-                      if (isSupabaseConfigured) {
-                        // Handle Supabase logout if needed
-                      } else {
-                        await localLogout();
-                      }
-                      toast({
-                        title: "로그아웃 완료",
-                        description: "안전하게 로그아웃되었습니다.",
-                      });
-                      setIsMobileMenuOpen(false);
-                      setLocation('/');
-                    }}
-                    className="w-full py-2 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors font-medium"
-                  >
-                    로그아웃
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <Link href="/login">
-                    <button 
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full py-2 px-4 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-600 dark:border-blue-400 rounded-lg transition-colors"
-                    >
-                      로그인
-                    </button>
-                  </Link>
-                  <Link href="/register">
-                    <button 
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
-                    >
-                      회원가입
-                    </button>
-                  </Link>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       )}

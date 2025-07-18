@@ -231,10 +231,10 @@ function App() {
                   <Router />
                 </main>
                 <Footer />
-            </div>
-            <Toaster />
-          </AuthProvider>
-        </SupabaseProvider>
+              </div>
+              <Toaster />
+            </AuthProvider>
+          </SupabaseProvider>
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
