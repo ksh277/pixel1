@@ -46,6 +46,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { SupabaseProvider } from "@/components/SupabaseProvider";
 import SupabaseExample from "@/components/examples/SupabaseExample";
+import ProductsPage from "@/pages/ProductsPage";
 
 function Router() {
   const [location] = useLocation();
@@ -156,6 +157,7 @@ function Router() {
         
         {/* Supabase Demo */}
         <Route path="/supabase-demo" component={SupabaseExample} />
+        <Route path="/supabase-products" component={ProductsPage} />
 
         {/* Category and section routes */}
         <Route path="/popular" component={Products} />

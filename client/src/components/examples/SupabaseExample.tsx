@@ -90,6 +90,14 @@ const SupabaseExample: React.FC = () => {
         <p className="text-muted-foreground">
           AllThatPrinting 프로젝트의 Supabase 연동 예제
         </p>
+        <div className="flex justify-center gap-4 mt-4">
+          <Button asChild variant="outline">
+            <a href="/supabase-products">상품 목록 페이지 보기</a>
+          </Button>
+          <Button asChild variant="outline">
+            <a href="/">메인 페이지로 돌아가기</a>
+          </Button>
+        </div>
       </div>
 
       {/* Configuration Status */}
