@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MessageCircle, HelpCircle, ShoppingBag, Star, Palette, Megaphone } from "lucide-react";
+import { MessageCircle, HelpCircle, ShoppingBag, Star, Palette, Megaphone, X, Send, Clock } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import belugaImage from "@assets/ChatGPT Image 2025년 7월 12일 오후 04_51_30_1752306698190.png";
 
 interface BelugaMascotProps {
@@ -13,6 +15,44 @@ interface BelugaMascotProps {
 export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
   const { t } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      sender: 'bot',
+      content: '안녕하세요. 올댓프린팅입니다! 😊\n발문해주셔서 감사합니다 :)',
+      timestamp: new Date()
+    }
+  ]);
+
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      setMessages([...messages, {
+        id: messages.length + 1,
+        sender: 'user',
+        content: message,
+        timestamp: new Date()
+      }]);
+      setMessage('');
+      
+      // 자동 응답 시뮬레이션
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          id: prev.length + 1,
+          sender: 'bot',
+          content: '메시지를 확인했습니다. 곧 답변드리겠습니다.',
+          timestamp: new Date()
+        }]);
+      }, 1000);
+    }
+  };
+
+  const businessHours = {
+    weekday: 'AM 9시 ~ PM 6시',
+    weekend: 'PM 12시 ~ PM 1시',
+    holiday: '(주말/공휴일 휴무)'
+  };
 
   const variants = {
     inquiry: {
@@ -129,37 +169,175 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
 
   if (variant === 'inquiry') {
     return (
-      <div className={`${config.position} ${className}`}>
-        <div className="relative">
-          <Button
-            className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 border-2 border-blue-300 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 p-0 overflow-hidden relative"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            aria-label={t({ ko: "문의하기 버튼", en: "Inquiry button", ja: "お問い合わせボタン", zh: "咨询按钮" })}
-          >
-            {/* Beluga Character - Fill entire button */}
-            <img 
-              src={belugaImage} 
-              alt="Beluga Mascot" 
-              className="w-full h-full object-cover rounded-full"
-            />
+      <>
+        {/* 채팅 위젯 */}
+        {isChatOpen && (
+          <div className="fixed bottom-24 right-6 z-50 w-80 max-w-[calc(100vw-3rem)] h-96 max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            {/* 헤더 */}
+            <div className="bg-blue-600 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-sm font-bold">올댓</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">올댓프린팅</h3>
+                  <p className="text-xs text-blue-100">운영시간 보기 &gt;</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsChatOpen(false)}
+                className="text-white hover:bg-blue-700 h-8 w-8 p-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* 메시지 영역 */}
+            <div className="flex-1 p-4 h-64 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+              {messages.map((msg) => (
+                <div key={msg.id} className={`mb-3 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                  <div className={`inline-block max-w-xs p-3 rounded-lg text-sm ${
+                    msg.sender === 'user' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700'
+                  }`}>
+                    {msg.content.split('\n').map((line, index) => (
+                      <div key={index}>{line}</div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              
+              {/* 운영시간 안내 */}
+              <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Clock className="h-4 w-4 text-red-500" />
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">상담 가능시간 안내 (영업일기준)</span>
+                </div>
+                <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                  <div>평일 {businessHours.weekday}</div>
+                  <div>점심시간 {businessHours.weekend}</div>
+                  <div>{businessHours.holiday}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* 입력 영역 */}
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="메시지를 입력하세요..."
+                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  size="sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3"
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="mt-2 text-center">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full bg-gray-800 text-white hover:bg-gray-700 border-gray-600"
+                >
+                  문의하기 ▼
+                </Button>
+              </div>
+              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-center">
+                월요일 오전 9:00부터 운영해요
+              </div>
+            </div>
+
+            {/* 하단 버튼들 */}
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">다른 방법으로 문의</div>
+              <div className="flex justify-center space-x-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-12 h-12 rounded-full bg-yellow-400 hover:bg-yellow-500 border-yellow-400"
+                  title="카카오톡"
+                >
+                  <MessageCircle className="h-5 w-5 text-white" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 border-green-500"
+                  title="네이버 톡톡"
+                >
+                  <MessageCircle className="h-5 w-5 text-white" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-12 h-12 rounded-full bg-gray-400 hover:bg-gray-500 border-gray-400"
+                  title="더보기"
+                >
+                  <span className="text-white text-lg">⋯</span>
+                </Button>
+              </div>
+              <div className="mt-3 text-center">
+                <div className="text-xs text-gray-500 dark:text-gray-400">채팅을 이용중</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 기존 문의하기 버튼 */}
+        <div className={`${config.position} ${className}`}>
+          <div className="relative">
+            <Button
+              onClick={() => setIsChatOpen(!isChatOpen)}
+              className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 border-2 border-blue-300 shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 p-0 overflow-hidden relative"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              aria-label={t({ ko: "문의하기 버튼", en: "Inquiry button", ja: "お問い合わせボタン", zh: "咨询按钮" })}
+            >
+              {/* Beluga Character - Fill entire button */}
+              <img 
+                src={belugaImage} 
+                alt="Beluga Mascot" 
+                className="w-full h-full object-cover rounded-full"
+              />
+              
+              {/* Text Label - Overlaid at bottom center */}
+              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-white/80 rounded-full">
+                <span className="text-xs font-bold text-blue-800 whitespace-nowrap">
+                  {t({ ko: "문의하기", en: "Inquiry", ja: "お問い合わせ", zh: "咨询" })}
+                </span>
+              </div>
+            </Button>
             
-            {/* Text Label - Overlaid at bottom center */}
-            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-white/80 rounded-full">
-              <span className="text-xs font-bold text-blue-800 whitespace-nowrap">
-                {t({ ko: "문의하기", en: "Inquiry", ja: "お問い合わせ", zh: "咨询" })}
-              </span>
-            </div>
-          </Button>
-          
-          {config.showTooltip && isHovered && (
-            <div className="absolute bottom-full right-0 mb-2 p-3 bg-white rounded-lg shadow-xl border border-blue-200 whitespace-nowrap animate-in fade-in-0 zoom-in-95">
-              <div className="text-sm font-medium text-blue-900">{config.message}</div>
-              <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
-            </div>
-          )}
+            {/* 말풍선 텍스트 */}
+            {!isChatOpen && (
+              <div className="absolute bottom-20 right-2 bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 whitespace-nowrap">
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">올댓프린팅</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">운영시간 보기 &gt;</div>
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800"></div>
+              </div>
+            )}
+            
+            {config.showTooltip && isHovered && !isChatOpen && (
+              <div className="absolute bottom-full right-0 mb-2 p-3 bg-white rounded-lg shadow-xl border border-blue-200 whitespace-nowrap animate-in fade-in-0 zoom-in-95">
+                <div className="text-sm font-medium text-blue-900">{config.message}</div>
+                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
