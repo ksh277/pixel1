@@ -1,8 +1,8 @@
-# 픽셀굿즈야 pixelgoods E-commerce Platform
+# pixelgoods E-commerce Platform
 
 ## Overview
 
-픽셀굿즈야 pixelgoods is a full-stack Korean-style e-commerce web application for custom printing services. The platform allows users to create personalized merchandise including acrylic keychains, stickers, t-shirts, phone cases, and other custom printed items. Built with React, TypeScript, and modern web technologies, it provides a comprehensive solution for both customers and administrators.
+pixelgoods is a full-stack Korean-style e-commerce web application for custom printing services. The platform allows users to create personalized merchandise including acrylic keychains, stickers, t-shirts, phone cases, and other custom printed items. Built with React, TypeScript, and modern web technologies, it provides a comprehensive solution for both customers and administrators.
 
 ## User Preferences
 

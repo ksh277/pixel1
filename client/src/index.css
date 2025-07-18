@@ -724,7 +724,7 @@ body.dark {
     margin-bottom: 12px;
   }
 
-  /* 픽셀굿즈야 pixelgoods 상품 카드 - 다크모드 대응 */
+  /* pixelgoods 상품 카드 - 다크모드 대응 */
   .allprint-card {
     width: 100%;
     min-width: 260px;
@@ -919,7 +919,7 @@ body.dark {
     color: #f3f4f6 !important;
   }
 
-  /* 픽셀굿즈야 pixelgoods 그리드 - 2/3/4 열 반응형 */
+  /* pixelgoods 그리드 - 2/3/4 열 반응형 */
   .allprint-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

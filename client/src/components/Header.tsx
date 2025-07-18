@@ -123,7 +123,7 @@ export const Header = () => {
               <Package className="w-4 h-4 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              픽셀굿즈야 pixelgoods
+              pixelgoods
             </span>
           </div>
         </Link>

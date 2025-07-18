@@ -217,7 +217,7 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center py-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">관리자 대시보드</h1>
-              <p className="text-gray-600">픽셀굿즈야 pixelgoods 관리 시스템</p>
+              <p className="text-gray-600">pixelgoods 관리 시스템</p>
             </div>
             <div className="flex items-center space-x-4">
               <Badge variant="outline" className="px-3 py-1">
