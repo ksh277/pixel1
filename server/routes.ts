@@ -1499,6 +1499,80 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.send(svg);
   });
 
+  // Notification routes
+  app.get("/api/notifications/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const result = await storage.db.execute(
+        "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC",
+        [userId]
+      );
+      
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error in notifications endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch notifications" });
+    }
+  });
+
+  app.post("/api/notifications", async (req, res) => {
+    try {
+      const notification = req.body;
+      const result = await storage.db.execute(
+        "INSERT INTO notifications (user_id, type, title, message, is_read, related_id, related_type, related_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING *",
+        [
+          notification.user_id,
+          notification.type,
+          notification.title,
+          notification.message,
+          notification.is_read || false,
+          notification.related_id || null,
+          notification.related_type || null,
+          notification.related_url || null
+        ]
+      );
+      
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error('Error in create notification endpoint:', error);
+      res.status(500).json({ message: "Failed to create notification" });
+    }
+  });
+
+  app.patch("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const notificationId = parseInt(req.params.id);
+      const result = await storage.db.execute(
+        "UPDATE notifications SET is_read = true WHERE id = ? RETURNING *",
+        [notificationId]
+      );
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: "Notification not found" });
+      }
+      
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error('Error in mark notification as read endpoint:', error);
+      res.status(500).json({ message: "Failed to mark notification as read" });
+    }
+  });
+
+  app.patch("/api/notifications/user/:userId/read-all", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const result = await storage.db.execute(
+        "UPDATE notifications SET is_read = true WHERE user_id = ? AND is_read = false RETURNING *",
+        [userId]
+      );
+      
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error in mark all notifications as read endpoint:', error);
+      res.status(500).json({ message: "Failed to mark all notifications as read" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
