@@ -259,6 +259,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get user orders
+  app.get("/api/orders/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          order_items (
+            *,
+            products (
+              id, name, name_ko, image_url, base_price
+            )
+          )
+        `)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching user orders:', error);
+        return res.status(500).json({ message: "Failed to fetch orders" });
+      }
+      
+      res.json(orders);
+    } catch (error) {
+      console.error('Error in user orders endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch orders" });
+    }
+  });
+
+  // Update user profile
+  app.patch("/api/users/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { first_name, last_name, email, phone, address } = req.body;
+      
+      const { data: updatedUser, error } = await supabase
+        .from('users')
+        .update({
+          first_name,
+          last_name,
+          email,
+          phone,
+          address,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', userId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating user profile:', error);
+        return res.status(500).json({ message: "Failed to update profile" });
+      }
+      
+      // Remove password before sending response
+      const { password: _, ...userWithoutPassword } = updatedUser;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      console.error('Error in user update endpoint:', error);
+      res.status(500).json({ message: "Failed to update profile" });
+    }
+  });
+
   app.get("/api/orders/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);

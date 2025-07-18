@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Package, Heart, Star, Settings, LogOut, Edit2, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,13 +18,40 @@ export default function MyPage() {
   
   const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
   const [userInfo, setUserInfo] = useState({
     name: localUser?.name || supabaseUser?.user_metadata?.name || '사용자',
     email: localUser?.email || supabaseUser?.email || 'user@example.com',
-    phone: '010-1234-5678',
-    address: '서울시 강남구 테헤란로 123',
+    phone: localUser?.phone || '010-1234-5678',
+    address: localUser?.address || '서울시 강남구 테헤란로 123',
     password: '••••••••'
   });
+
+  // Load user orders from database
+  useEffect(() => {
+    const loadUserOrders = async () => {
+      if (!localUser?.id) return;
+      
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/orders/user/${localUser.id}`);
+        
+        if (response.ok) {
+          const ordersData = await response.json();
+          setOrders(ordersData);
+        } else {
+          console.error('Failed to load orders');
+        }
+      } catch (error) {
+        console.error('Error loading orders:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUserOrders();
+  }, [localUser?.id]);
 
   const handleLogout = async () => {
     try {
@@ -59,19 +86,69 @@ export default function MyPage() {
     }
   };
 
-  const handleSaveProfile = () => {
-    setIsEditing(false);
-    toast({
-      title: "프로필 수정 완료",
-      description: "프로필 정보가 저장되었습니다.",
-    });
+  const handleSaveProfile = async () => {
+    if (!localUser?.id) return;
+    
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/users/${localUser.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: userInfo.name.split(' ')[0],
+          last_name: userInfo.name.split(' ')[1] || '',
+          email: userInfo.email,
+          phone: userInfo.phone,
+          address: userInfo.address,
+        }),
+      });
+      
+      if (response.ok) {
+        setIsEditing(false);
+        toast({
+          title: "프로필 수정 완료",
+          description: "프로필 정보가 저장되었습니다.",
+        });
+      } else {
+        toast({
+          title: "프로필 수정 실패",
+          description: "프로필 정보 저장에 실패했습니다.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast({
+        title: "프로필 수정 실패",
+        description: "네트워크 오류가 발생했습니다.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // 임시 주문 데이터
-  const orders = [
+  // 주문 상태 표시 함수
+  const getStatusBadge = (status: string) => {
+    const statusConfig = {
+      'pending': { label: '주문접수', variant: 'secondary' as const },
+      'processing': { label: '제작중', variant: 'default' as const },
+      'shipping': { label: '배송중', variant: 'outline' as const },
+      'delivered': { label: '배송완료', variant: 'default' as const },
+      'cancelled': { label: '취소됨', variant: 'destructive' as const },
+    };
+    
+    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
+    return <Badge variant={config.variant}>{config.label}</Badge>;
+  };
+
+  // 임시 주문 데이터 (데이터베이스에서 가져온 데이터가 없을 때 표시)
+  const fallbackOrders = [
     {
       id: 'ORD-2024-001',
-      date: '2024-01-15',
+      created_at: '2024-01-15',
       status: '배송완료',
       items: [{ name: '아크릴 키링', quantity: 2, price: 15000 }],
       total: 30000
@@ -247,43 +324,55 @@ export default function MyPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {orders.map((order) => (
-                    <div key={order.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h3 className="font-semibold text-gray-900 dark:text-white">
-                            주문번호: {order.id}
-                          </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {order.date}
-                          </p>
+                  {loading ? (
+                    <div className="text-center py-8">
+                      <div className="text-gray-600 dark:text-gray-300">주문 내역을 불러오는 중...</div>
+                    </div>
+                  ) : orders.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Package className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600 mb-4" />
+                      <p className="text-gray-600 dark:text-gray-300">주문 내역이 없습니다.</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                        첫 주문을 시작해보세요.
+                      </p>
+                    </div>
+                  ) : (
+                    orders.map((order) => (
+                      <div key={order.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">
+                              주문번호: {order.id}
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                              {new Date(order.created_at).toLocaleDateString('ko-KR')}
+                            </p>
+                          </div>
+                          {getStatusBadge(order.status)}
                         </div>
-                        <Badge variant={order.status === '배송완료' ? 'default' : 'secondary'}>
-                          {order.status}
-                        </Badge>
-                      </div>
-                      <div className="space-y-2">
-                        {order.items.map((item, index) => (
-                          <div key={index} className="flex justify-between">
-                            <span className="text-gray-900 dark:text-white">
-                              {item.name} x {item.quantity}
-                            </span>
-                            <span className="text-gray-900 dark:text-white">
-                              ₩{item.price.toLocaleString()}
+                        <div className="space-y-2">
+                          {order.order_items?.map((item: any, index: number) => (
+                            <div key={index} className="flex justify-between">
+                              <span className="text-gray-900 dark:text-white">
+                                {item.products?.name_ko || item.products?.name} x {item.quantity}
+                              </span>
+                              <span className="text-gray-900 dark:text-white">
+                                ₩{item.price.toLocaleString()}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                          <div className="flex justify-between font-semibold">
+                            <span className="text-gray-900 dark:text-white">총 금액:</span>
+                            <span className="text-blue-600 dark:text-blue-400">
+                              ₩{order.total_amount.toLocaleString()}
                             </span>
                           </div>
-                        ))}
-                      </div>
-                      <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                        <div className="flex justify-between font-semibold">
-                          <span className="text-gray-900 dark:text-white">총 금액:</span>
-                          <span className="text-blue-600 dark:text-blue-400">
-                            ₩{order.total.toLocaleString()}
-                          </span>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -415,9 +504,10 @@ export default function MyPage() {
                       </Button>
                       <Button
                         onClick={handleSaveProfile}
+                        disabled={loading}
                         className="bg-blue-600 hover:bg-blue-700 text-white"
                       >
-                        저장
+                        {loading ? '저장 중...' : '저장'}
                       </Button>
                     </div>
                   )}
