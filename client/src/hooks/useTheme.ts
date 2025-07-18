@@ -1,42 +1,36 @@
-import { useState, useEffect } from "react";
-import { STORAGE_KEYS } from "@/lib/constants";
+import { useState, useEffect } from 'react';
 
-export type Theme = "light" | "dark";
-
-export function useTheme() {
-  const [theme, setTheme] = useState<Theme>("light");
+export const useTheme = () => {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    // Check localStorage for saved theme
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
+    // Check for saved theme preference or default to light
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    setTheme(initialTheme);
+    
+    // Apply theme to document
+    if (initialTheme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      // Check system preference
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      setTheme(systemTheme);
-      document.documentElement.classList.toggle("dark", systemTheme === "dark");
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
   const toggleTheme = () => {
-    const newTheme: Theme = theme === "light" ? "dark" : "light";
+    const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    localStorage.setItem(STORAGE_KEYS.THEME, newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem('theme', newTheme);
+    
+    // Apply theme to document
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   };
 
-  const setSpecificTheme = (newTheme: Theme) => {
-    setTheme(newTheme);
-    localStorage.setItem(STORAGE_KEYS.THEME, newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
-
-  return {
-    theme,
-    toggleTheme,
-    setTheme: setSpecificTheme,
-    isDark: theme === "dark"
-  };
-}
+  return { theme, toggleTheme };
+};

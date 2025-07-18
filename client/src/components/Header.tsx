@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSupabaseAuth } from "@/components/SupabaseProvider";
 import { isSupabaseConfigured } from "@/lib/supabase";
 import UserMenu from "@/components/auth/UserMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
 
@@ -124,6 +125,9 @@ export const Header = () => {
             <Heart className="h-4 w-4" />
           </Button>
 
+          {/* Theme Toggle */}
+          <ThemeToggle />
+          
           {/* User Authentication */}
           {isSupabaseConfigured ? (
             <div className="flex items-center space-x-2">
@@ -137,11 +141,18 @@ export const Header = () => {
                   <UserMenu />
                 </div>
               ) : (
-                <Link href="/auth">
-                  <Button variant="outline" size="sm">
-                    로그인
-                  </Button>
-                </Link>
+                <div className="flex items-center space-x-2">
+                  <Link href="/auth">
+                    <Button variant="outline" size="sm">
+                      로그인
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button variant="default" size="sm">
+                      회원가입
+                    </Button>
+                  </Link>
+                </div>
               )}
             </div>
           ) : (
@@ -156,11 +167,18 @@ export const Header = () => {
                   </Button>
                 </div>
               ) : (
-                <Link href="/login">
-                  <Button variant="outline" size="sm">
-                    로그인
-                  </Button>
-                </Link>
+                <div className="flex items-center space-x-2">
+                  <Link href="/login">
+                    <Button variant="outline" size="sm">
+                      로그인
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button variant="default" size="sm">
+                      회원가입
+                    </Button>
+                  </Link>
+                </div>
               )}
             </div>
           )}
@@ -222,6 +240,7 @@ export const Header = () => {
                 <Button variant="ghost" size="icon">
                   <Heart className="h-4 w-4" />
                 </Button>
+                <ThemeToggle />
               </div>
               
               {/* Mobile User Menu */}
@@ -237,11 +256,18 @@ export const Header = () => {
                       <UserMenu />
                     </div>
                   ) : (
-                    <Link href="/auth">
-                      <Button variant="outline" size="sm">
-                        로그인
-                      </Button>
-                    </Link>
+                    <div className="flex items-center space-x-2">
+                      <Link href="/auth">
+                        <Button variant="outline" size="sm">
+                          로그인
+                        </Button>
+                      </Link>
+                      <Link href="/register">
+                        <Button variant="default" size="sm">
+                          회원가입
+                        </Button>
+                      </Link>
+                    </div>
                   )}
                 </div>
               ) : (
@@ -256,11 +282,18 @@ export const Header = () => {
                       </Button>
                     </div>
                   ) : (
-                    <Link href="/login">
-                      <Button variant="outline" size="sm">
-                        로그인
-                      </Button>
-                    </Link>
+                    <div className="flex items-center space-x-2">
+                      <Link href="/login">
+                        <Button variant="outline" size="sm">
+                          로그인
+                        </Button>
+                      </Link>
+                      <Link href="/register">
+                        <Button variant="default" size="sm">
+                          회원가입
+                        </Button>
+                      </Link>
+                    </div>
                   )}
                 </div>
               )}

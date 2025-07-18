@@ -52,7 +52,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { category, featured, search } = req.query;
       let query = supabase.from('products').select(`
         *,
-        categories(name, name_ko)
+        categories!inner(name, name_ko)
       `);
 
       if (category) {
