@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DraggableImage } from "@/components/DraggableImage";
+import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import type { InsertGoodsEditorDesign } from "@/shared/schema";
 
 interface ProductType {
   id: string;
@@ -68,6 +73,10 @@ interface CanvasImage {
 export default function Editor() {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
   const [showProductSelector, setShowProductSelector] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     null,
@@ -89,6 +98,31 @@ export default function Editor() {
   const [imageLoadErrors, setImageLoadErrors] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  // Design save mutation
+  const saveDesignMutation = useMutation({
+    mutationFn: async (designData: InsertGoodsEditorDesign) => {
+      return await apiRequest('/api/goods-editor-designs', {
+        method: 'POST',
+        body: designData,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/goods-editor-designs'] });
+      toast({
+        title: "디자인 저장됨",
+        description: "디자인이 성공적으로 저장되었습니다.",
+      });
+    },
+    onError: (error) => {
+      console.error('Failed to save design:', error);
+      toast({
+        title: "저장 실패",
+        description: "디자인 저장에 실패했습니다.",
+        variant: 'destructive',
+      });
+    },
+  });
 
   // Initialize scroll position to top when editor page loads
   useEffect(() => {
@@ -318,6 +352,44 @@ export default function Editor() {
         img.id === id ? { ...img, flipped: !img.flipped } : img,
       ),
     );
+  };
+
+  const saveDesign = async (designName: string) => {
+    if (!user || !selectedProduct) {
+      toast({
+        title: "로그인 필요",
+        description: "디자인을 저장하려면 로그인이 필요합니다.",
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const designData: InsertGoodsEditorDesign = {
+      userId: user.id,
+      designName,
+      productType: selectedProduct.id,
+      designData: {
+        images,
+        canvasSize,
+        ringPosition,
+        ringSize,
+        whiteAreaAdjustment,
+        removeWhiteSpill,
+        doubleSided,
+        currentSide,
+        settings: {
+          canvasBackground: selectedProduct.id === 'keyring' ? '#ffffff' : '#f5f5f5',
+          showGrid: true,
+          snapToGrid: false,
+          gridSize: 10,
+          zoom: 100,
+        }
+      },
+      thumbnailUrl: null,
+      isPublic: false,
+    };
+
+    await saveDesignMutation.mutateAsync(designData);
   };
 
   const handleAspectRatioToggle = (id: string) => {
@@ -824,7 +896,18 @@ export default function Editor() {
             >
               <FolderOpen className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="p-1 sm:p-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-1 sm:p-2"
+              onClick={() => {
+                const designName = prompt("디자인 이름을 입력하세요:");
+                if (designName) {
+                  saveDesign(designName);
+                }
+              }}
+              disabled={!selectedProduct || images.length === 0 || saveDesignMutation.isPending}
+            >
               <Save className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
             <Button variant="ghost" size="sm" className="p-1 sm:p-2">

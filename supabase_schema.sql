@@ -190,6 +190,41 @@ CREATE TABLE additional_services (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
+-- 14. Goods Editor Designs 테이블 (굿즈 에디터에서 만든 디자인)
+CREATE TABLE goods_editor_designs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id),
+    title VARCHAR(200) NOT NULL,
+    product_type VARCHAR(50) NOT NULL CHECK (product_type IN ('키링', '스탠드', '코롯토', '포카홀더', '스마트톡', '뱃지', '자석문구류', '카라비너')),
+    canvas_data JSONB NOT NULL, -- 캔버스 상태 데이터 (이미지, 텍스트, 위치, 크기 등)
+    thumbnail_url TEXT,
+    is_public BOOLEAN DEFAULT false,
+    is_saved BOOLEAN DEFAULT true,
+    tags TEXT[],
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- 15. Inquiries 테이블 (문의사항)
+CREATE TABLE inquiries (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id),
+    type VARCHAR(50) NOT NULL CHECK (type IN ('product', 'order', 'technical', 'general', 'complaint')),
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    contact_email VARCHAR(255),
+    contact_phone VARCHAR(20),
+    order_id UUID REFERENCES orders(id), -- 주문 관련 문의인 경우
+    product_id UUID REFERENCES products(id), -- 상품 관련 문의인 경우
+    attachment_urls TEXT[],
+    status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'in_progress', 'answered', 'closed')),
+    admin_response TEXT,
+    admin_user_id UUID REFERENCES users(id),
+    priority VARCHAR(10) DEFAULT 'normal' CHECK (priority IN ('low', 'normal', 'high', 'urgent')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
 -- 인덱스 생성
 CREATE INDEX idx_products_category_id ON products(category_id);
 CREATE INDEX idx_products_is_featured ON products(is_featured);
@@ -203,6 +238,10 @@ CREATE INDEX idx_community_posts_user_id ON community_posts(user_id);
 CREATE INDEX idx_community_comments_post_id ON community_comments(post_id);
 CREATE INDEX idx_cart_items_user_id ON cart_items(user_id);
 CREATE INDEX idx_favorites_user_id ON favorites(user_id);
+CREATE INDEX idx_goods_editor_designs_user_id ON goods_editor_designs(user_id);
+CREATE INDEX idx_inquiries_user_id ON inquiries(user_id);
+CREATE INDEX idx_inquiries_status ON inquiries(status);
+CREATE INDEX idx_inquiries_type ON inquiries(type);
 
 -- RLS (Row Level Security) 정책 활성화
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -213,6 +252,8 @@ ALTER TABLE community_posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE community_comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cart_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
+ALTER TABLE goods_editor_designs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE inquiries ENABLE ROW LEVEL SECURITY;
 
 -- 기본 RLS 정책 설정 (사용자는 자신의 데이터만 접근 가능)
 CREATE POLICY "Users can view their own data" ON users FOR SELECT USING (auth.uid() = id);
@@ -226,6 +267,13 @@ CREATE POLICY "Users can manage their own cart" ON cart_items FOR ALL USING (aut
 
 CREATE POLICY "Users can view their own favorites" ON favorites FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can manage their own favorites" ON favorites FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own designs" ON goods_editor_designs FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage their own designs" ON goods_editor_designs FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view their own inquiries" ON inquiries FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can create inquiries" ON inquiries FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update their own inquiries" ON inquiries FOR UPDATE USING (auth.uid() = user_id);
 
 -- 공개 데이터 정책 (모든 사용자가 조회 가능)
 CREATE POLICY "Anyone can view categories" ON categories FOR SELECT USING (true);

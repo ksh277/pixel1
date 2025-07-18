@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { supabase } from "./lib/supabase";
-import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema } from "@shared/schema";
+import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema, insertGoodsEditorDesignSchema, insertInquirySchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Categories
@@ -667,6 +667,214 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(log);
     } catch (error) {
       res.status(400).json({ message: "Invalid admin log data" });
+    }
+  });
+
+  // Goods Editor Design routes
+  app.get("/api/designs", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      const designs = await storage.getGoodsEditorDesigns(userId ? parseInt(userId) : undefined);
+      res.json(designs);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch designs" });
+    }
+  });
+
+  app.post("/api/designs", async (req, res) => {
+    try {
+      const designData = insertGoodsEditorDesignSchema.parse(req.body);
+      const design = await storage.createGoodsEditorDesign(designData);
+      res.status(201).json(design);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid design data" });
+    }
+  });
+
+  app.get("/api/designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const design = await storage.getGoodsEditorDesignById(id);
+      if (!design) {
+        return res.status(404).json({ message: "Design not found" });
+      }
+      res.json(design);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch design" });
+    }
+  });
+
+  app.put("/api/designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      const design = await storage.updateGoodsEditorDesign(id, updateData);
+      if (!design) {
+        return res.status(404).json({ message: "Design not found" });
+      }
+      res.json(design);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update design" });
+    }
+  });
+
+  app.delete("/api/designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteGoodsEditorDesign(id);
+      if (!success) {
+        return res.status(404).json({ message: "Design not found" });
+      }
+      res.json({ message: "Design deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete design" });
+    }
+  });
+
+  // Inquiry routes
+  app.get("/api/inquiries", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      const inquiries = await storage.getInquiries(userId ? parseInt(userId) : undefined);
+      res.json(inquiries);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch inquiries" });
+    }
+  });
+
+  app.post("/api/inquiries", async (req, res) => {
+    try {
+      const inquiryData = insertInquirySchema.parse(req.body);
+      const inquiry = await storage.createInquiry(inquiryData);
+      res.status(201).json(inquiry);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid inquiry data" });
+    }
+  });
+
+  app.get("/api/inquiries/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const inquiry = await storage.getInquiryById(id);
+      if (!inquiry) {
+        return res.status(404).json({ message: "Inquiry not found" });
+      }
+      res.json(inquiry);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch inquiry" });
+    }
+  });
+
+  app.put("/api/inquiries/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      const inquiry = await storage.updateInquiry(id, updateData);
+      if (!inquiry) {
+        return res.status(404).json({ message: "Inquiry not found" });
+      }
+      res.json(inquiry);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update inquiry" });
+    }
+  });
+
+  // Goods Editor Design routes
+  app.get("/api/goods-editor-designs", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      const designs = await storage.getGoodsEditorDesigns(userId ? parseInt(userId) : undefined);
+      res.json(designs);
+    } catch (error) {
+      console.error("Error fetching designs:", error);
+      res.status(500).json({ error: "Failed to fetch designs" });
+    }
+  });
+
+  app.get("/api/goods-editor-designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const design = await storage.getGoodsEditorDesignById(id);
+      
+      if (!design) {
+        return res.status(404).json({ error: "Design not found" });
+      }
+      
+      res.json(design);
+    } catch (error) {
+      console.error("Error fetching design:", error);
+      res.status(500).json({ error: "Failed to fetch design" });
+    }
+  });
+
+  app.post("/api/goods-editor-designs", async (req, res) => {
+    try {
+      const validatedData = insertGoodsEditorDesignSchema.parse(req.body);
+      const design = await storage.createGoodsEditorDesign(validatedData);
+      res.json(design);
+    } catch (error) {
+      console.error("Error creating design:", error);
+      res.status(500).json({ error: "Failed to create design" });
+    }
+  });
+
+  app.put("/api/goods-editor-designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const design = await storage.updateGoodsEditorDesign(id, req.body);
+      
+      if (!design) {
+        return res.status(404).json({ error: "Design not found" });
+      }
+      
+      res.json(design);
+    } catch (error) {
+      console.error("Error updating design:", error);
+      res.status(500).json({ error: "Failed to update design" });
+    }
+  });
+
+  app.delete("/api/goods-editor-designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteGoodsEditorDesign(id);
+      
+      if (!deleted) {
+        return res.status(404).json({ error: "Design not found" });
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting design:", error);
+      res.status(500).json({ error: "Failed to delete design" });
+    }
+  });
+
+  // Inquiry routes (additional endpoints)
+  app.post("/api/inquiries", async (req, res) => {
+    try {
+      const validatedData = insertInquirySchema.parse(req.body);
+      const inquiry = await storage.createInquiry(validatedData);
+      res.json(inquiry);
+    } catch (error) {
+      console.error("Error creating inquiry:", error);
+      res.status(500).json({ error: "Failed to create inquiry" });
+    }
+  });
+
+  app.get("/api/inquiries/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const inquiry = await storage.getInquiryById(id);
+      
+      if (!inquiry) {
+        return res.status(404).json({ error: "Inquiry not found" });
+      }
+      
+      res.json(inquiry);
+    } catch (error) {
+      console.error("Error fetching inquiry:", error);
+      res.status(500).json({ error: "Failed to fetch inquiry" });
     }
   });
 

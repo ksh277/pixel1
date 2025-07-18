@@ -73,6 +73,41 @@ export const productLikes = mysqlTable("product_likes", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const goodsEditorDesigns = mysqlTable("goods_editor_designs", {
+  id: serial("id").primaryKey(),
+  userId: int("user_id")
+    .references(() => users.id)
+    .notNull(),
+  title: text("title").notNull(),
+  productType: text("product_type").notNull(),
+  canvasData: json("canvas_data").notNull(),
+  thumbnailUrl: text("thumbnail_url"),
+  isPublic: boolean("is_public").default(false).notNull(),
+  isSaved: boolean("is_saved").default(true).notNull(),
+  tags: json("tags"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const inquiries = mysqlTable("inquiries", {
+  id: serial("id").primaryKey(),
+  userId: int("user_id")
+    .references(() => users.id)
+    .notNull(),
+  type: text("type").notNull(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  contactEmail: text("contact_email"),
+  contactPhone: text("contact_phone"),
+  attachmentUrls: json("attachment_urls"),
+  status: text("status").default("pending").notNull(),
+  adminResponse: text("admin_response"),
+  adminUserId: int("admin_user_id").references(() => users.id),
+  priority: text("priority").default("normal").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const cartItems = mysqlTable("cart_items", {
   id: serial("id").primaryKey(),
   userId: int("user_id")
@@ -260,6 +295,20 @@ export const insertBelugaTemplateSchema = createInsertSchema(
   updatedAt: true,
 });
 
+export const insertGoodsEditorDesignSchema = createInsertSchema(
+  goodsEditorDesigns,
+).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertInquirySchema = createInsertSchema(inquiries).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -291,3 +340,7 @@ export type InsertCommunityComment = z.infer<
 >;
 export type BelugaTemplate = typeof belugaTemplates.$inferSelect;
 export type InsertBelugaTemplate = z.infer<typeof insertBelugaTemplateSchema>;
+export type GoodsEditorDesign = typeof goodsEditorDesigns.$inferSelect;
+export type InsertGoodsEditorDesign = z.infer<typeof insertGoodsEditorDesignSchema>;
+export type Inquiry = typeof inquiries.$inferSelect;
+export type InsertInquiry = z.infer<typeof insertInquirySchema>;

@@ -1,5 +1,5 @@
 import { 
-  users, categories, products, productReviews, productLikes, cartItems, orders, orderItems, payments, coupons, adminLogs, communityPosts, communityComments, belugaTemplates,
+  users, categories, products, productReviews, productLikes, cartItems, orders, orderItems, payments, coupons, adminLogs, communityPosts, communityComments, belugaTemplates, goodsEditorDesigns, inquiries,
   type User, type InsertUser, type Category, type InsertCategory, type Product, type InsertProduct,
   type ProductReview, type InsertProductReview, type ProductLike, type InsertProductLike,
   type CartItem, type InsertCartItem,
@@ -7,7 +7,9 @@ import {
   type Payment, type InsertPayment, type Coupon, type InsertCoupon,
   type AdminLog, type InsertAdminLog,
   type CommunityPost, type InsertCommunityPost,
-  type CommunityComment, type InsertCommunityComment, type BelugaTemplate, type InsertBelugaTemplate
+  type CommunityComment, type InsertCommunityComment, type BelugaTemplate, type InsertBelugaTemplate,
+  type GoodsEditorDesign, type InsertGoodsEditorDesign,
+  type Inquiry, type InsertInquiry
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, count, and, sql } from "drizzle-orm";
@@ -93,6 +95,19 @@ export interface IStorage {
   updateBelugaTemplate(id: number, updates: Partial<InsertBelugaTemplate>): Promise<BelugaTemplate | undefined>;
   deleteBelugaTemplate(id: number): Promise<boolean>;
   reorderBelugaTemplates(templateIds: number[]): Promise<boolean>;
+  
+  // Goods Editor Design methods
+  getGoodsEditorDesigns(userId?: number): Promise<GoodsEditorDesign[]>;
+  getGoodsEditorDesignById(id: number): Promise<GoodsEditorDesign | undefined>;
+  createGoodsEditorDesign(design: InsertGoodsEditorDesign): Promise<GoodsEditorDesign>;
+  updateGoodsEditorDesign(id: number, updates: Partial<InsertGoodsEditorDesign>): Promise<GoodsEditorDesign | undefined>;
+  deleteGoodsEditorDesign(id: number): Promise<boolean>;
+  
+  // Inquiry methods
+  getInquiries(userId?: number): Promise<Inquiry[]>;
+  getInquiryById(id: number): Promise<Inquiry | undefined>;
+  createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
+  updateInquiry(id: number, updates: Partial<InsertInquiry>): Promise<Inquiry | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -110,6 +125,8 @@ export class MemStorage implements IStorage {
   private communityPosts: Map<number, CommunityPost>;
   private communityComments: Map<number, CommunityComment>;
   private belugaTemplates: Map<number, BelugaTemplate>;
+  private goodsEditorDesigns: Map<number, GoodsEditorDesign>;
+  private inquiries: Map<number, Inquiry>;
   private currentId: number;
 
   constructor() {
@@ -127,6 +144,8 @@ export class MemStorage implements IStorage {
     this.communityPosts = new Map();
     this.communityComments = new Map();
     this.belugaTemplates = new Map();
+    this.goodsEditorDesigns = new Map();
+    this.inquiries = new Map();
     this.currentId = 1;
     this.initializeData();
   }
@@ -829,6 +848,57 @@ export class DatabaseStorage implements IStorage {
   async createAdminLog(insertAdminLog: InsertAdminLog): Promise<AdminLog> {
     const [adminLog] = await db.insert(adminLogs).values(insertAdminLog).returning();
     return adminLog;
+  }
+  
+  // Goods Editor Design methods
+  async getGoodsEditorDesigns(userId?: number): Promise<GoodsEditorDesign[]> {
+    if (userId) {
+      return await db.select().from(goodsEditorDesigns).where(eq(goodsEditorDesigns.userId, userId));
+    }
+    return await db.select().from(goodsEditorDesigns);
+  }
+  
+  async getGoodsEditorDesignById(id: number): Promise<GoodsEditorDesign | undefined> {
+    const [design] = await db.select().from(goodsEditorDesigns).where(eq(goodsEditorDesigns.id, id));
+    return design;
+  }
+  
+  async createGoodsEditorDesign(insertDesign: InsertGoodsEditorDesign): Promise<GoodsEditorDesign> {
+    const [design] = await db.insert(goodsEditorDesigns).values(insertDesign).returning();
+    return design;
+  }
+  
+  async updateGoodsEditorDesign(id: number, updates: Partial<InsertGoodsEditorDesign>): Promise<GoodsEditorDesign | undefined> {
+    const [design] = await db.update(goodsEditorDesigns).set(updates).where(eq(goodsEditorDesigns.id, id)).returning();
+    return design;
+  }
+  
+  async deleteGoodsEditorDesign(id: number): Promise<boolean> {
+    const result = await db.delete(goodsEditorDesigns).where(eq(goodsEditorDesigns.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+  
+  // Inquiry methods
+  async getInquiries(userId?: number): Promise<Inquiry[]> {
+    if (userId) {
+      return await db.select().from(inquiries).where(eq(inquiries.userId, userId));
+    }
+    return await db.select().from(inquiries);
+  }
+  
+  async getInquiryById(id: number): Promise<Inquiry | undefined> {
+    const [inquiry] = await db.select().from(inquiries).where(eq(inquiries.id, id));
+    return inquiry;
+  }
+  
+  async createInquiry(insertInquiry: InsertInquiry): Promise<Inquiry> {
+    const [inquiry] = await db.insert(inquiries).values(insertInquiry).returning();
+    return inquiry;
+  }
+  
+  async updateInquiry(id: number, updates: Partial<InsertInquiry>): Promise<Inquiry | undefined> {
+    const [inquiry] = await db.update(inquiries).set(updates).where(eq(inquiries.id, id)).returning();
+    return inquiry;
   }
 }
 
