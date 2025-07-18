@@ -63,7 +63,7 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
         ja: "何でも聞いてください！", 
         zh: "有什么问题都可以问我！" 
       }),
-      position: "fixed bottom-4 right-4 z-50",
+      position: "fixed bottom-4 right-4 z-[70]",
       size: "w-8 h-8",
       showTooltip: true
     },
@@ -172,7 +172,7 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
       <>
         {/* 채팅 위젯 */}
         {isChatOpen && (
-          <div className="fixed bottom-24 right-6 z-50 w-80 max-w-[calc(100vw-3rem)] h-96 max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="fixed bottom-24 right-6 z-[80] w-80 max-w-[calc(100vw-3rem)] h-96 max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             {/* 헤더 */}
             <div className="bg-blue-600 text-white p-4 flex items-center justify-between">
               <div className="flex items-center space-x-3">

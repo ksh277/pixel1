@@ -315,8 +315,8 @@ export const Header = () => {
           
           {/* Slide Menu */}
           <div 
-            className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white dark:bg-[#0f172a] shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out overflow-y-auto"
-            style={{ transform: 'translateX(0)' }}
+            className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white dark:bg-[#0f172a] shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out overflow-y-auto"
+            style={{ transform: 'translateX(0)', minHeight: '100vh' }}
           >
             {/* Header */}
             <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 flex items-center justify-between">
@@ -357,70 +357,70 @@ export const Header = () => {
             </div>
             
             {/* Categories */}
-            <div className="flex-1 px-4 py-2 space-y-1">
+            <div className="flex-1 px-4 py-4 space-y-3">
               {/* 아크릴굿즈 */}
-              <div className="space-y-1">
-                <div className="text-sm font-medium text-black dark:text-white py-2">아크릴굿즈</div>
-                <div className="pl-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-black dark:text-white py-3">아크릴굿즈</div>
+                <div className="pl-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <Link href="/products?category=keyring" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">아크릴키링</div>
+                    <div className="py-2">아크릴키링</div>
                   </Link>
                   <Link href="/products?category=corot" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">코롯토</div>
+                    <div className="py-2">코롯토</div>
                   </Link>
                   <Link href="/products?category=smart-tok" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">스마트톡</div>
+                    <div className="py-2">스마트톡</div>
                   </Link>
                   <Link href="/products?category=stand" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">스탠드/디오라마</div>
+                    <div className="py-2">스탠드/디오라마</div>
                   </Link>
                   <Link href="/products?category=holder" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">포카홀더/포토액자</div>
+                    <div className="py-2">포카홀더/포토액자</div>
                   </Link>
                   <Link href="/products?category=others" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">아크릴셰이커</div>
+                    <div className="py-2">아크릴셰이커</div>
                   </Link>
                   <Link href="/products?category=carabiner" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">아크릴카라비너</div>
+                    <div className="py-2">아크릴카라비너</div>
                   </Link>
                   <Link href="/products?category=badge" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">거울</div>
+                    <div className="py-2">거울</div>
                   </Link>
                   <Link href="/products?category=magnet" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">자석/메시/코스터</div>
+                    <div className="py-2">자석/메시/코스터</div>
                   </Link>
                   <Link href="/products?category=stationery" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">문구류(잡화, 볼펜 등)</div>
+                    <div className="py-2">문구류(잡화, 볼펜 등)</div>
                   </Link>
                   <Link href="/products?category=cutting" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">아크릴 제단</div>
+                    <div className="py-2">아크릴 제단</div>
                   </Link>
                 </div>
               </div>
               
               {/* 우드굿즈 */}
-              <div className="space-y-1">
-                <div className="text-sm font-medium text-black dark:text-white py-2">우드굿즈</div>
-                <div className="pl-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-black dark:text-white py-3">우드굿즈</div>
+                <div className="pl-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <Link href="/products?category=wood-keyring" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">우드키링</div>
+                    <div className="py-2">우드키링</div>
                   </Link>
                   <Link href="/products?category=wood-magnet" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">우드마그넷</div>
+                    <div className="py-2">우드마그넷</div>
                   </Link>
                   <Link href="/products?category=wood-stand" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">우드스탠드</div>
+                    <div className="py-2">우드스탠드</div>
                   </Link>
                   <Link href="/products?category=wood-goods" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="py-1">핸드폰굿즈</div>
+                    <div className="py-2">핸드폰굿즈</div>
                   </Link>
                 </div>
               </div>
               
               {/* 포장/부자재 */}
-              <div className="space-y-1">
-                <div className="text-sm font-medium text-black dark:text-white py-2">포장/부자재</div>
-                <div className="pl-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-black dark:text-white py-3">포장/부자재</div>
+                <div className="pl-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <Link href="/products?category=packaging" onClick={() => setIsMobileMenuOpen(false)}>
                     <div className="py-1">스와치</div>
                   </Link>

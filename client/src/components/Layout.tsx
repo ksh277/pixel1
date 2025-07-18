@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +6,6 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Share2, Calendar, FileText, Users, MessageSquare, MessageCircle, Puzzle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BelugaMascot } from "./BelugaMascot";
-import InquiryModal from "./InquiryModal";
 
 interface LayoutProps {
   children: ReactNode;
@@ -170,7 +169,6 @@ function CommunityTopNav() {
 
 export function Layout({ children, showCommunityNav = false }: LayoutProps) {
   const { t } = useLanguage();
-  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   
   return (
     <div className="min-h-screen bg-background dark:bg-[#1F2D4A]">
@@ -181,19 +179,7 @@ export function Layout({ children, showCommunityNav = false }: LayoutProps) {
       
       {/* Global Fixed Floating Buttons */}
       {/* Beluga Mascot Inquiry Button (Bottom-Right) */}
-      <div 
-        onClick={() => setIsInquiryModalOpen(true)}
-        className="fixed bottom-6 right-6 z-50 cursor-pointer fab-slide-in-right"
-        aria-label={t({ ko: "문의하기 버튼", en: "Inquiry button", ja: "お問い合わせボタン", zh: "咨询按钮" })}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setIsInquiryModalOpen(true);
-          }
-        }}
-      >
+      <div className="fixed bottom-6 right-6 z-[60] cursor-pointer fab-slide-in-right">
         <BelugaMascot variant="inquiry" />
       </div>
 
@@ -214,11 +200,6 @@ export function Layout({ children, showCommunityNav = false }: LayoutProps) {
         </Link>
       </div>
 
-      {/* Inquiry Modal */}
-      <InquiryModal 
-        isOpen={isInquiryModalOpen}
-        onClose={() => setIsInquiryModalOpen(false)}
-      />
     </div>
   );
 }
