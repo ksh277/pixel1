@@ -19,6 +19,7 @@ import { useSupabaseAuth } from "@/components/SupabaseProvider";
 import { isSupabaseConfigured } from "@/lib/supabase";
 import UserMenu from "@/components/auth/UserMenu";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/useCart";
 
 export const Header = () => {
   const [location] = useLocation();
@@ -26,6 +27,7 @@ export const Header = () => {
   const { user: localUser } = useAuth();
   const { user: supabaseUser, loading: supabaseLoading } = useSupabaseAuth();
   const { toast } = useToast();
+  const { itemCount } = useCart();
 
   // Use Supabase auth if configured, otherwise fall back to local auth
   const currentUser = isSupabaseConfigured ? supabaseUser : localUser;
@@ -103,9 +105,19 @@ export const Header = () => {
           </Button>
 
           {/* Cart */}
-          <Button variant="ghost" size="icon">
-            <ShoppingCart className="h-4 w-4" />
-          </Button>
+          <Link href="/cart">
+            <Button variant="ghost" size="icon" className="relative">
+              <ShoppingCart className="h-4 w-4" />
+              {itemCount > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                >
+                  {itemCount > 99 ? '99+' : itemCount}
+                </Badge>
+              )}
+            </Button>
+          </Link>
 
           {/* Favorites */}
           <Button variant="ghost" size="icon">
@@ -194,9 +206,19 @@ export const Header = () => {
                 <Button variant="ghost" size="icon">
                   <Search className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon">
-                  <ShoppingCart className="h-4 w-4" />
-                </Button>
+                <Link href="/cart">
+                  <Button variant="ghost" size="icon" className="relative">
+                    <ShoppingCart className="h-4 w-4" />
+                    {itemCount > 0 && (
+                      <Badge 
+                        variant="destructive" 
+                        className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                      >
+                        {itemCount > 99 ? '99+' : itemCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </Link>
                 <Button variant="ghost" size="icon">
                   <Heart className="h-4 w-4" />
                 </Button>

@@ -15,6 +15,7 @@ import CategoryPage from "@/pages/CategoryPage";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Cart from "@/pages/Cart";
+import CartPage from "@/pages/CartPage";
 import Checkout from "@/pages/Checkout";
 import OrderComplete from "@/pages/OrderComplete";
 import Community from "@/pages/Community";
@@ -81,7 +82,7 @@ function Router() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/auth" component={AuthPage} />
-        <Route path="/cart" component={Cart} />
+        <Route path="/cart" component={CartPage} />
         <Route path="/checkout">
           {() => (
             <ProtectedRoute>

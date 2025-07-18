@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, Package, AlertCircle } from 'lucide-react'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import { useToast } from '@/hooks/use-toast'
 import FavoriteButton from '@/components/FavoriteButton'
+import { AddToCartButton } from '@/components/AddToCartButton'
 
 interface Product {
   id: string
@@ -227,6 +228,13 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ pageSize = 12 }) => {
                     {new Date(product.created_at).toLocaleDateString('ko-KR')}
                   </span>
                 </div>
+
+                {/* Add to Cart Button */}
+                <AddToCartButton 
+                  product={product} 
+                  variant="compact"
+                  className="mt-3"
+                />
               </div>
             </CardContent>
           </Card>

@@ -182,6 +182,18 @@ export interface Cart {
   updated_at: string
 }
 
+export interface CartItem {
+  id: string
+  user_id: string
+  product_id: string
+  quantity: number
+  price: number
+  customization_options?: any // JSON object
+  created_at: string
+  updated_at: string
+  products?: Product // Relationship to product
+}
+
 export interface Favorite {
   id: string
   user_id: string

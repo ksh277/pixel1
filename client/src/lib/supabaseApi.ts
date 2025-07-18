@@ -463,13 +463,21 @@ export const removeFromWishlist = async (userId: string, productId: string) => {
   return data
 }
 
-// Cart API
+// Cart API (using cart_items table)
 export const fetchCart = async (userId: string) => {
   const { data, error } = await supabase
-    .from('cart')
+    .from('cart_items')
     .select(`
       *,
-      products(*, categories(name, name_ko))
+      products(
+        id,
+        name,
+        name_ko,
+        base_price,
+        image_url,
+        is_available,
+        categories(name, name_ko)
+      )
     `)
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
@@ -485,25 +493,60 @@ export const fetchCart = async (userId: string) => {
 export const addToCart = async (
   userId: string, 
   productId: string, 
-  quantity: number, 
+  quantity: number = 1, 
+  price: number,
   customizationOptions?: any
 ) => {
-  const { data, error } = await supabase
-    .from('cart')
-    .insert([{ 
-      user_id: userId, 
-      product_id: productId, 
-      quantity,
-      customization_options: customizationOptions 
-    }])
-    .select()
+  // Check if item already exists in cart
+  const { data: existingItem, error: fetchError } = await supabase
+    .from('cart_items')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('product_id', productId)
+    .single()
 
-  if (error) {
-    console.error('Error adding to cart:', error)
-    throw error
+  if (fetchError && fetchError.code !== 'PGRST116') {
+    console.error('Error checking existing cart item:', fetchError)
+    throw fetchError
   }
 
-  return data
+  if (existingItem) {
+    // Update existing item quantity
+    const { data, error } = await supabase
+      .from('cart_items')
+      .update({
+        quantity: existingItem.quantity + quantity,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', existingItem.id)
+      .select()
+
+    if (error) {
+      console.error('Error updating cart item:', error)
+      throw error
+    }
+
+    return data
+  } else {
+    // Create new cart item
+    const { data, error } = await supabase
+      .from('cart_items')
+      .insert([{
+        user_id: userId,
+        product_id: productId,
+        quantity,
+        price,
+        customization_options: customizationOptions
+      }])
+      .select()
+
+    if (error) {
+      console.error('Error adding to cart:', error)
+      throw error
+    }
+
+    return data
+  }
 }
 
 export const updateCartItem = async (
@@ -512,7 +555,7 @@ export const updateCartItem = async (
   customizationOptions?: any
 ) => {
   const { data, error } = await supabase
-    .from('cart')
+    .from('cart_items')
     .update({ 
       quantity, 
       customization_options: customizationOptions,
@@ -531,7 +574,7 @@ export const updateCartItem = async (
 
 export const removeFromCart = async (cartItemId: string) => {
   const { data, error } = await supabase
-    .from('cart')
+    .from('cart_items')
     .delete()
     .eq('id', cartItemId)
 
@@ -703,4 +746,36 @@ export const toggleFavorite = async (userId: string, productId: string) => {
     await addToFavorites(userId, productId)
     return true
   }
+}
+
+export const updateCartItemQuantity = async (cartItemId: string, quantity: number) => {
+  const { data, error } = await supabase
+    .from('cart_items')
+    .update({
+      quantity,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', cartItemId)
+    .select()
+
+  if (error) {
+    console.error('Error updating cart item quantity:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const clearCart = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('cart_items')
+    .delete()
+    .eq('user_id', userId)
+
+  if (error) {
+    console.error('Error clearing cart:', error)
+    throw error
+  }
+
+  return data
 }
