@@ -300,7 +300,7 @@ export const Header = () => {
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Overlay Background */}
           <div 
-            className="fixed inset-0 bg-black/30"
+            className="fixed inset-0 bg-black/50"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           
