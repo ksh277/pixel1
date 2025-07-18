@@ -78,27 +78,72 @@ export default function Checkout() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      // Create order in database first
+      const orderData = {
+        user_id: user?.id || 1,
+        total_amount: total,
+        status: 'pending',
+        shipping_address: `${formData.address} ${formData.addressDetail}`,
+        shipping_phone: formData.phone,
+        shipping_name: formData.name,
+        special_requests: formData.requests,
+        order_items: cartItems.map(item => ({
+          product_id: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          options: item.options
+        }))
+      };
 
-    // Create order data
-    const orderData = {
-      id: Date.now().toString(),
-      items: cartItems,
-      customer: formData,
-      total: total,
-      orderDate: new Date().toISOString(),
-      status: "confirmed"
-    };
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
 
-    // Save order to localStorage
-    localStorage.setItem('lastOrder', JSON.stringify(orderData));
-    
-    // Clear cart
-    localStorage.removeItem('cart');
+      if (!response.ok) {
+        throw new Error('주문 생성 실패');
+      }
 
-    // Redirect to order complete page
-    setLocation('/order-complete');
+      const createdOrder = await response.json();
+      
+      // Create payment entry
+      const paymentData = {
+        order_id: createdOrder.id,
+        amount: total,
+        method: formData.paymentMethod === 'card' ? 'toss' : formData.paymentMethod,
+        status: 'pending'
+      };
+
+      const paymentResponse = await fetch('/api/payments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (!paymentResponse.ok) {
+        throw new Error('결제 정보 생성 실패');
+      }
+
+      // Save order data for payment reference
+      localStorage.setItem('currentOrder', JSON.stringify(createdOrder));
+      
+      // Clear cart
+      localStorage.removeItem('cart');
+
+      // Redirect to payment selection page
+      setLocation(`/payment/select/${createdOrder.id}?amount=${total}&orderName=${cartItems.length > 1 ? 'pixelgoods 주문' : cartItems[0].nameKo}`);
+    } catch (error) {
+      console.error('Order creation error:', error);
+      alert('주문 생성 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);

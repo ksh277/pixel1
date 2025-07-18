@@ -48,6 +48,9 @@ import ProductSearchPage from "@/pages/ProductSearchPage";
 import CommunityWrite from "@/pages/CommunityWrite";
 import ReviewWrite from "@/pages/ReviewWrite";
 import { Notifications } from "@/pages/Notifications";
+import PaymentSelect from "@/pages/PaymentSelect";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import PaymentFailed from "@/pages/PaymentFailed";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { SupabaseProvider } from "@/components/SupabaseProvider";
@@ -100,13 +103,15 @@ function Router() {
             </ProtectedRoute>
           )}
         </Route>
-        <Route path="/payment">
+        <Route path="/payment/select/:orderId">
           {() => (
             <ProtectedRoute>
-              <Checkout />
+              <PaymentSelect />
             </ProtectedRoute>
           )}
         </Route>
+        <Route path="/payment-success" component={PaymentSuccess} />
+        <Route path="/payment-failed" component={PaymentFailed} />
         <Route path="/order-complete" component={OrderComplete} />
         <Route path="/mypage">
           {() => (

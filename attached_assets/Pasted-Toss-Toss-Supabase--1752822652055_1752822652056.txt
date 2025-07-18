@@ -1,0 +1,118 @@
+Toss + 카카오페이 연동 시스템 구성
+사용자가 결제 시, 원하는 결제 수단을 선택하고
+Toss 또는 카카오페이로 결제를 진행 →
+결과를 Supabase에 반영하는 구조입니다.
+
+✅ 기본 흐름
+css
+복사
+편집
+[사용자 선택]  
+→ [결제 수단: Toss or KakaoPay]  
+→ [결제 요청 (각 PG SDK 호출)]  
+→ [성공/실패 후 리디렉션]  
+→ [Supabase에 결제 상태 반영]
+1️⃣ 프론트엔드 구성 (공통)
+▶️ 선택 UI
+tsx
+복사
+편집
+<Button onClick={() => handlePayment('toss')}>Toss 결제</Button>
+<Button onClick={() => handlePayment('kakao')}>카카오페이</Button>
+2️⃣ Toss 연동 (JS SDK 방식)
+html
+복사
+편집
+<script src="https://js.tosspayments.com/v1/payment"></script>
+ts
+복사
+편집
+const toss = TossPayments('YOUR_TOSS_CLIENT_KEY');
+
+toss.requestPayment('카드', {
+  amount: totalPrice,
+  orderId: `order_${Date.now()}`,
+  orderName: '픽셀굿즈 주문',
+  successUrl: 'https://your-site.com/payment-success?toss=1',
+  failUrl: 'https://your-site.com/payment-failed?toss=1',
+});
+3️⃣ 카카오페이 연동 (서버 연동 필요)
+카카오페이는 백엔드 서버(Node.js 등) 필요합니다
+프론트에서 직접 결제 요청은 불가합니다.
+
+✅ 백엔드 예시 흐름
+프론트에서 POST 요청 → /api/kakao/pay
+
+서버가 카카오에 결제 준비 API 호출
+
+리턴된 next_redirect_pc_url로 리다이렉션
+
+ts
+복사
+편집
+// Express 예시
+app.post('/api/kakao/pay', async (req, res) => {
+  const response = await axios.post('https://kapi.kakao.com/v1/payment/ready', null, {
+    headers: { Authorization: `KakaoAK ${YOUR_ADMIN_KEY}` },
+    params: {
+      cid: 'TC0ONETIME',
+      partner_order_id: orderId,
+      partner_user_id: userId,
+      item_name: '픽셀굿즈 주문',
+      quantity: 1,
+      total_amount: totalPrice,
+      tax_free_amount: 0,
+      approval_url: 'https://your-site.com/payment-success?kakao=1',
+      fail_url: 'https://your-site.com/payment-failed?kakao=1',
+      cancel_url: 'https://your-site.com/payment-cancel?kakao=1',
+    },
+  });
+
+  res.json({ redirectUrl: response.data.next_redirect_pc_url });
+});
+4️⃣ 결제 결과 처리 (공통)
+✅ /payment-success에서 Supabase 업데이트
+ts
+복사
+편집
+// 쿼리스트링에서 PG 구분
+const pg = searchParams.get('toss') ? 'toss' : 'kakao';
+
+await supabase.from('payments').update({
+  payment_status: 'success',
+  payment_method: pg,
+  paid_at: new Date()
+}).eq('order_id', orderId);
+
+await supabase.from('orders').update({
+  status: 'completed'
+}).eq('id', orderId);
+5️⃣ Supabase 테이블 반영
+payments.payment_method: "toss", "kakao" 저장
+
+orders.status: "completed"
+
+payments.payment_status: "success" / "failed"
+
+✅ 요약 프롬프트 (리플릿/개발자에게 전달)
+txt
+복사
+편집
+Toss Payments와 KakaoPay를 모두 지원하는 실결제 시스템을 구현해 주세요.
+
+1. 사용자가 결제 수단을 선택할 수 있게 해 주세요.
+2. Toss 결제는 JS SDK 방식으로 진행하고, 성공 시 `/payment-success?toss=1`으로 리디렉션
+3. 카카오페이는 서버 API(`/api/kakao/pay`)를 호출해 `next_redirect_pc_url`로 이동
+4. 결제 성공 후 Supabase의 `payments`, `orders` 테이블을 업데이트 해 주세요:
+   - `payment_status = success`
+   - `orders.status = completed`
+   - `payment_method = toss` 또는 `kakao`
+5. 실패 시 `/payment-failed` 페이지로 이동하고 `payment_status = failed` 처리
+💡 보완 및 확장 기능
+Webhook 기반 결제 상태 확인 (PG사에서 push)
+
+결제 내역 이메일 발송
+
+관리자 페이지에서 결제 내역 확인
+
+포인트/쿠폰 결제 지원

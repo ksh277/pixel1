@@ -2124,6 +2124,189 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Payment system endpoints
+  app.post("/api/kakao/pay", async (req, res) => {
+    try {
+      const { orderId, userId, itemName, totalAmount, quantity } = req.body;
+      
+      // KakaoPay API 요청
+      const response = await fetch('https://kapi.kakao.com/v1/payment/ready', {
+        method: 'POST',
+        headers: {
+          'Authorization': `KakaoAK ${process.env.KAKAO_ADMIN_KEY || 'YOUR_KAKAO_ADMIN_KEY'}`,
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        },
+        body: new URLSearchParams({
+          cid: 'TC0ONETIME',
+          partner_order_id: orderId.toString(),
+          partner_user_id: userId.toString(),
+          item_name: itemName,
+          quantity: quantity.toString(),
+          total_amount: totalAmount.toString(),
+          tax_free_amount: '0',
+          approval_url: `${process.env.VITE_APP_URL || 'http://localhost:5000'}/payment-success?kakao=1&orderId=${orderId}`,
+          fail_url: `${process.env.VITE_APP_URL || 'http://localhost:5000'}/payment-failed?kakao=1&orderId=${orderId}`,
+          cancel_url: `${process.env.VITE_APP_URL || 'http://localhost:5000'}/payment-failed?kakao=1&orderId=${orderId}`,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`KakaoPay API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // 결제 준비 성공 시 리디렉션 URL 반환
+      res.json({ redirectUrl: data.next_redirect_pc_url, tid: data.tid });
+    } catch (error) {
+      console.error('KakaoPay payment error:', error);
+      res.status(500).json({ message: "KakaoPay payment initialization failed" });
+    }
+  });
+
+  app.post("/api/payment/complete", async (req, res) => {
+    try {
+      const { orderId, paymentMethod, status } = req.body;
+      
+      // Update payments table
+      const { data: payment, error: paymentError } = await supabase
+        .from('payments')
+        .update({
+          status: status,
+          payment_method: paymentMethod,
+          updated_at: new Date().toISOString()
+        })
+        .eq('order_id', orderId)
+        .select()
+        .single();
+      
+      if (paymentError) {
+        console.error('Error updating payment:', paymentError);
+        return res.status(500).json({ message: "Failed to update payment status" });
+      }
+      
+      // Update orders table
+      const orderStatus = status === 'success' ? 'completed' : 'failed';
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .update({
+          status: orderStatus,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', orderId)
+        .select()
+        .single();
+      
+      if (orderError) {
+        console.error('Error updating order:', orderError);
+        return res.status(500).json({ message: "Failed to update order status" });
+      }
+      
+      res.json({ 
+        orderId: orderId,
+        paymentMethod: paymentMethod,
+        status: status,
+        amount: payment.amount,
+        order: order 
+      });
+    } catch (error) {
+      console.error('Error in payment completion endpoint:', error);
+      res.status(500).json({ message: "Failed to complete payment processing" });
+    }
+  });
+
+  app.get("/api/payment/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      const { data: payment, error } = await supabase
+        .from('payments')
+        .select(`
+          *,
+          orders (
+            id,
+            total_amount,
+            status,
+            created_at
+          )
+        `)
+        .eq('order_id', orderId)
+        .single();
+      
+      if (error) {
+        console.error('Error fetching payment:', error);
+        return res.status(500).json({ message: "Failed to fetch payment information" });
+      }
+      
+      res.json(payment);
+    } catch (error) {
+      console.error('Error in payment info endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch payment information" });
+    }
+  });
+
+  // Create order endpoint
+  app.post("/api/orders", async (req, res) => {
+    try {
+      const { user_id, total_amount, status, shipping_address, shipping_phone, shipping_name, special_requests, order_items } = req.body;
+      
+      const { data: order, error } = await supabase
+        .from('orders')
+        .insert([{
+          user_id,
+          total_amount,
+          status: status || 'pending',
+          shipping_address: {
+            address: shipping_address,
+            phone: shipping_phone,
+            name: shipping_name,
+            special_requests: special_requests || ''
+          },
+          order_items: order_items || []
+        }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error creating order:', error);
+        return res.status(500).json({ message: "Failed to create order" });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      console.error('Error in order creation endpoint:', error);
+      res.status(500).json({ message: "Failed to create order" });
+    }
+  });
+
+  // Create payment endpoint
+  app.post("/api/payments", async (req, res) => {
+    try {
+      const { order_id, amount, method, status } = req.body;
+      
+      const { data: payment, error } = await supabase
+        .from('payments')
+        .insert([{
+          order_id,
+          amount,
+          method: method || 'toss',
+          status: status || 'pending'
+        }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error creating payment:', error);
+        return res.status(500).json({ message: "Failed to create payment" });
+      }
+      
+      res.json(payment);
+    } catch (error) {
+      console.error('Error in payment creation endpoint:', error);
+      res.status(500).json({ message: "Failed to create payment" });
+    }
+  });
+
   // Order Detail API Endpoints
   app.get("/api/orders/:id", async (req, res) => {
     try {
