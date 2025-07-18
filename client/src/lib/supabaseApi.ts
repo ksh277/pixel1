@@ -617,3 +617,90 @@ export const subscribeToReviews = (callback: (payload: any) => void) => {
     .on('postgres_changes', { event: '*', schema: 'public', table: 'reviews' }, callback)
     .subscribe()
 }
+
+// Favorites API
+export const fetchUserFavorites = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('favorites')
+    .select(`
+      *,
+      products(
+        id,
+        name,
+        name_ko,
+        base_price,
+        image_url,
+        is_available,
+        is_featured
+      )
+    `)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching user favorites:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const addToFavorites = async (userId: string, productId: string) => {
+  const { data, error } = await supabase
+    .from('favorites')
+    .insert([{ 
+      user_id: userId, 
+      product_id: productId 
+    }])
+    .select()
+
+  if (error) {
+    console.error('Error adding to favorites:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const removeFromFavorites = async (userId: string, productId: string) => {
+  const { data, error } = await supabase
+    .from('favorites')
+    .delete()
+    .eq('user_id', userId)
+    .eq('product_id', productId)
+
+  if (error) {
+    console.error('Error removing from favorites:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const isFavorite = async (userId: string, productId: string) => {
+  const { data, error } = await supabase
+    .from('favorites')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('product_id', productId)
+    .single()
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error checking favorite status:', error)
+    throw error
+  }
+
+  return !!data
+}
+
+export const toggleFavorite = async (userId: string, productId: string) => {
+  const favorite = await isFavorite(userId, productId)
+  
+  if (favorite) {
+    await removeFromFavorites(userId, productId)
+    return false
+  } else {
+    await addToFavorites(userId, productId)
+    return true
+  }
+}

@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { ChevronLeft, ChevronRight, Package, AlertCircle } from 'lucide-react'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import { useToast } from '@/hooks/use-toast'
+import FavoriteButton from '@/components/FavoriteButton'
 
 interface Product {
   id: string
@@ -189,6 +190,15 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ pageSize = 12 }) => {
                       품절
                     </Badge>
                   )}
+                </div>
+
+                {/* Favorite Button */}
+                <div className="absolute top-2 right-2">
+                  <FavoriteButton 
+                    productId={product.id} 
+                    variant="icon-only"
+                    className="bg-white/80 hover:bg-white/90 backdrop-blur-sm"
+                  />
                 </div>
               </div>
 

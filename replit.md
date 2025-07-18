@@ -1128,13 +1128,24 @@ Preferred communication style: Simple, everyday language.
 
 ### 2025-01-17: Complete Supabase Integration Implementation
 - **Comprehensive API Layer**: Created complete Supabase integration with TypeScript interfaces for all e-commerce entities
-- **Database Schema Types**: Defined interfaces for Products, Categories, Users, Orders, Reviews, Community, Events, Templates, AdditionalServices, Wishlist, and Cart
+- **Database Schema Types**: Defined interfaces for Products, Categories, Users, Orders, Reviews, Community, Events, Templates, AdditionalServices, Wishlist, Cart, and Favorites
 - **Dynamic Data Fetching**: Implemented 20+ API functions including fetchProducts, fetchOrders, fetchReviews, fetchCommunityPosts, fetchEvents, fetchTemplates
 - **Advanced Query Options**: Each API function supports filtering, sorting, pagination, and relationship loading
 - **React Hooks Integration**: Created custom hooks (useProducts, useOrders, useReviews, etc.) with TanStack Query for caching and state management
 - **Authentication System**: Built SupabaseProvider with complete auth functionality (signUp, signIn, signOut, resetPassword, updateProfile)
 - **Real-time Features**: Implemented real-time subscriptions for products, orders, and reviews using Supabase channels
 - **Shopping Cart & Wishlist**: Full CRUD operations for cart and wishlist management with user authentication
+
+### 2025-01-18: Favorites System Implementation
+- **Complete Favorites API**: Added comprehensive favorites functionality with add/remove/toggle operations
+- **Database Integration**: Implemented favorites table support with user_id and product_id relationships
+- **Custom Hooks**: Created useFavorites hook for managing user favorites state with TanStack Query
+- **Interactive UI Components**: Built FavoriteButton component with three variants (default, compact, icon-only)
+- **Heart Icon Toggle**: Added heart icon to ProductsGrid cards with toggle functionality
+- **Authentication Integration**: Proper authentication checks with user-friendly error messages
+- **Real-time Updates**: Favorites state updates immediately with cache invalidation
+- **Toast Notifications**: User feedback for add/remove operations with Korean messaging
+- **Responsive Design**: Heart icons positioned in top-right corner of product cards with backdrop blur
 - **Search & Statistics**: Advanced search functionality and comprehensive statistics dashboard
 - **Interactive Demo**: Created /supabase-demo route with live data display, authentication testing, and all API demonstrations
 - **Environment Configuration**: Added .env.example with Supabase URL and ANON_KEY configuration
