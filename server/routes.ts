@@ -33,8 +33,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           email,
           password, // In production, hash this password
           first_name: firstName,
-          last_name: lastName,
-          is_admin: false
+          last_name: lastName
         }])
         .select()
         .single();

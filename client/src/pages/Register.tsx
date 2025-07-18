@@ -102,7 +102,7 @@ export default function Register() {
     setCurrentStep(2);
   };
 
-  const handleStep2Next = () => {
+  const handleStep2Next = async () => {
     if (!canProceedFromStep2) {
       setError("필수 정보를 모두 입력해주세요.");
       return;
@@ -111,11 +111,7 @@ export default function Register() {
       setError("비밀번호가 일치하지 않습니다.");
       return;
     }
-    setError("");
-    setCurrentStep(3);
-  };
-
-  const handleComplete = async () => {
+    
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -133,8 +129,8 @@ export default function Register() {
 
       if (response.ok) {
         console.log("회원가입 성공:", userData);
-        // 로그인 페이지로 리다이렉트
-        setLocation("/login");
+        setError("");
+        setCurrentStep(3);
       } else {
         const errorData = await response.json();
         setError(errorData.message || "회원가입에 실패했습니다.");
@@ -144,6 +140,8 @@ export default function Register() {
       setError("회원가입에 실패했습니다. 다시 시도해주세요.");
     }
   };
+
+
 
   const renderStep1 = () => (
     <div className="space-y-6">
@@ -439,12 +437,13 @@ export default function Register() {
       </div>
 
       <div className="space-y-3">
-        <Button 
-          onClick={handleComplete}
-          className="w-full h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700"
-        >
-          로그인 하러 가기
-        </Button>
+        <Link href="/login" className="w-full">
+          <Button 
+            className="w-full h-12 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700"
+          >
+            로그인 하러 가기
+          </Button>
+        </Link>
         
         <div className="text-center">
           <Link href="/" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 text-sm">
