@@ -32,10 +32,24 @@ export const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [wishlistCount, setWishlistCount] = useState(0);
   const { user: localUser, logout: localLogout } = useAuth();
-  const { user: supabaseUser, loading: supabaseLoading } = useSupabaseAuth();
   const { toast } = useToast();
   const { itemCount } = useCart();
   const { unreadCount } = useNotifications();
+  
+  // Conditionally use Supabase auth hook
+  let supabaseUser = null;
+  let supabaseLoading = false;
+  
+  try {
+    if (isSupabaseConfigured) {
+      const supabaseAuth = useSupabaseAuth();
+      supabaseUser = supabaseAuth.user;
+      supabaseLoading = supabaseAuth.loading;
+    }
+  } catch (error) {
+    // If Supabase auth fails, fall back to local auth
+    console.warn('Supabase auth not available, using local auth');
+  }
   
   // Get wishlist count from localStorage
   const getWishlistCount = () => {

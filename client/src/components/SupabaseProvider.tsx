@@ -16,7 +16,7 @@ interface SupabaseContextType {
 
 const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined)
 
-export const useSupabaseAuth = () => {
+export function useSupabaseAuth() {
   const context = useContext(SupabaseContext)
   if (!context) {
     throw new Error('useSupabaseAuth must be used within a SupabaseProvider')
@@ -36,9 +36,15 @@ export const SupabaseProvider: React.FC<SupabaseProviderProps> = ({ children }) 
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error) {
+        console.error('Error getting session:', error)
+      }
       setSession(session)
       setUser(session?.user ?? null)
+      setLoading(false)
+    }).catch((err) => {
+      console.error('Failed to get session:', err)
       setLoading(false)
     })
 

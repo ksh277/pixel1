@@ -7,11 +7,13 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIU
 // Check if environment variables are properly configured
 export const isSupabaseConfigured = !!(
   import.meta.env.VITE_SUPABASE_URL && 
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.VITE_SUPABASE_ANON_KEY &&
+  import.meta.env.VITE_SUPABASE_URL !== 'https://placeholder.supabase.co' &&
+  import.meta.env.VITE_SUPABASE_ANON_KEY !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDI3NTkyMDAsImV4cCI6MTk1ODMzNTIwMH0.placeholder-key'
 )
 
 if (!isSupabaseConfigured) {
-  console.warn('Supabase environment variables not found. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file')
+  console.warn('Supabase environment variables not found or using placeholder values. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file')
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
