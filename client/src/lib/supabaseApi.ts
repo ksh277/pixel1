@@ -266,7 +266,7 @@ export const fetchCommunityPosts = async () => {
     .select(`
       *,
       users(id, username, email),
-      community_comments(count)
+      comments(count)
     `)
     .order('created_at', { ascending: false })
 
@@ -284,7 +284,7 @@ export const fetchCommunityPost = async (postId: string) => {
     .select(`
       *,
       users(id, username, email),
-      community_comments(
+      comments(
         id,
         content,
         created_at,
@@ -370,10 +370,10 @@ export const deleteCommunityPost = async (postId: string) => {
   }
 }
 
-// Community Comments API
+// Comments API
 export const fetchPostComments = async (postId: string) => {
   const { data, error } = await supabase
-    .from('community_comments')
+    .from('comments')
     .select(`
       *,
       users(id, username, email)
@@ -400,7 +400,7 @@ export const createPostComment = async (comment: {
   }
 
   const { data, error } = await supabase
-    .from('community_comments')
+    .from('comments')
     .insert([{
       ...comment,
       user_id: user.id
@@ -419,11 +419,46 @@ export const createPostComment = async (comment: {
   return data
 }
 
+export const updatePostComment = async (commentId: string, updates: {
+  content: string
+}) => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) {
+    throw new Error('User must be authenticated to update comments')
+  }
+
+  const { data, error } = await supabase
+    .from('comments')
+    .update(updates)
+    .eq('id', commentId)
+    .eq('user_id', user.id) // Ensure user can only update their own comments
+    .select(`
+      *,
+      users(id, username, email)
+    `)
+    .single()
+
+  if (error) {
+    console.error('Error updating comment:', error)
+    throw error
+  }
+
+  return data
+}
+
 export const deletePostComment = async (commentId: string) => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) {
+    throw new Error('User must be authenticated to delete comments')
+  }
+
   const { error } = await supabase
-    .from('community_comments')
+    .from('comments')
     .delete()
     .eq('id', commentId)
+    .eq('user_id', user.id) // Ensure user can only delete their own comments
 
   if (error) {
     console.error('Error deleting comment:', error)

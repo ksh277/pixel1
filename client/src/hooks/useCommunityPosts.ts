@@ -8,6 +8,7 @@ import {
   deleteCommunityPost,
   fetchPostComments,
   createPostComment,
+  updatePostComment,
   deletePostComment
 } from '@/lib/supabaseApi'
 import { useToast } from '@/hooks/use-toast'
@@ -144,6 +145,34 @@ export function useCreatePostComment() {
       toast({
         title: "댓글 작성 실패",
         description: "댓글 작성 중 오류가 발생했습니다. 다시 시도해주세요.",
+        variant: "destructive",
+      })
+    },
+  })
+}
+
+export function useUpdatePostComment() {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ commentId, content }: { commentId: string; content: string }) =>
+      updatePostComment(commentId, { content }),
+    onSuccess: () => {
+      toast({
+        title: "댓글이 수정되었습니다",
+        description: "댓글이 성공적으로 수정되었습니다.",
+      })
+      
+      // Invalidate and refetch comments
+      queryClient.invalidateQueries({ queryKey: ['post-comments'] })
+      queryClient.invalidateQueries({ queryKey: ['community-post'] })
+    },
+    onError: (error) => {
+      console.error('Comment update error:', error)
+      toast({
+        title: "댓글 수정 실패",
+        description: "댓글 수정 중 오류가 발생했습니다. 다시 시도해주세요.",
         variant: "destructive",
       })
     },

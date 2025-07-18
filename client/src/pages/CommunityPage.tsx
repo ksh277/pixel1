@@ -196,7 +196,7 @@ const CommunityPage = () => {
                           </div>
                           <div className="flex items-center space-x-1">
                             <MessageSquare className="w-4 h-4" />
-                            <span>{post.community_comments?.length || 0}</span>
+                            <span>{post.comments?.length || 0}</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             <Eye className="w-4 h-4" />

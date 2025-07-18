@@ -1,45 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Separator } from '@/components/ui/separator'
-import { ArrowLeft, MessageSquare, User, Calendar, Eye, Edit2, Trash2, Send, AlertCircle } from 'lucide-react'
+
+import { ArrowLeft, MessageSquare, User, Calendar, Eye, Edit2, Trash2, AlertCircle } from 'lucide-react'
 import { Link, useParams } from 'wouter'
 import { useSupabaseAuth } from '@/components/SupabaseProvider'
-import { useCommunityPost, useCreatePostComment, useDeleteCommunityPost, useDeletePostComment, getPostCategoryColor, getPostCategoryText, formatPostDate } from '@/hooks/useCommunityPosts'
+import { useCommunityPost, useDeleteCommunityPost, getPostCategoryColor, getPostCategoryText, formatPostDate } from '@/hooks/useCommunityPosts'
+import CommentSection from '@/components/CommentSection'
 
 const CommunityPostPage = () => {
   const { id } = useParams<{ id: string }>()
   const { user } = useSupabaseAuth()
   const { data: post, isLoading, error } = useCommunityPost(id!)
-  const createComment = useCreatePostComment()
   const deletePost = useDeleteCommunityPost()
-  const deleteComment = useDeletePostComment()
-  
-  const [commentContent, setCommentContent] = useState('')
-  const [isCommentLoading, setIsCommentLoading] = useState(false)
-
-  const handleCommentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!user || !commentContent.trim()) {
-      return
-    }
-
-    setIsCommentLoading(true)
-    try {
-      await createComment.mutateAsync({
-        post_id: id!,
-        content: commentContent.trim()
-      })
-      setCommentContent('')
-    } catch (error) {
-      console.error('Error creating comment:', error)
-    } finally {
-      setIsCommentLoading(false)
-    }
-  }
 
   const handleDeletePost = async () => {
     if (!user || !post || post.user_id !== user.id) {
@@ -56,19 +30,7 @@ const CommunityPostPage = () => {
     }
   }
 
-  const handleDeleteComment = async (commentId: string) => {
-    if (!user) {
-      return
-    }
 
-    if (window.confirm('댓글을 삭제하시겠습니까?')) {
-      try {
-        await deleteComment.mutateAsync(commentId)
-      } catch (error) {
-        console.error('Error deleting comment:', error)
-      }
-    }
-  }
 
   if (isLoading) {
     return (
@@ -178,7 +140,7 @@ const CommunityPostPage = () => {
                 </div>
                 <div className="flex items-center space-x-1">
                   <MessageSquare className="w-4 h-4" />
-                  <span>{post.community_comments?.length || 0}개 댓글</span>
+                  <span>{post.comments?.length || 0}개 댓글</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Eye className="w-4 h-4" />
@@ -211,97 +173,10 @@ const CommunityPostPage = () => {
           </Card>
 
           {/* Comments Section */}
-          <Card className="bg-[#1e2b3c] border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center">
-                <MessageSquare className="w-5 h-5 mr-2" />
-                댓글 {post.community_comments?.length || 0}개
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Comment Form */}
-              {user ? (
-                <form onSubmit={handleCommentSubmit} className="mb-6">
-                  <Textarea
-                    value={commentContent}
-                    onChange={(e) => setCommentContent(e.target.value)}
-                    placeholder="댓글을 입력하세요..."
-                    rows={4}
-                    className="bg-[#0f172a] border-gray-600 text-white placeholder-gray-400 mb-4"
-                  />
-                  <div className="flex justify-end">
-                    <Button
-                      type="submit"
-                      disabled={!commentContent.trim() || isCommentLoading}
-                      className="bg-blue-600 hover:bg-blue-700"
-                    >
-                      <Send className="w-4 h-4 mr-2" />
-                      {isCommentLoading ? '작성 중...' : '댓글 작성'}
-                    </Button>
-                  </div>
-                </form>
-              ) : (
-                <div className="bg-[#0f172a] border border-gray-600 rounded-lg p-4 mb-6 text-center">
-                  <p className="text-gray-400 mb-4">
-                    댓글을 작성하려면 로그인이 필요합니다.
-                  </p>
-                  <Link href="/login">
-                    <Button className="bg-blue-600 hover:bg-blue-700">
-                      로그인
-                    </Button>
-                  </Link>
-                </div>
-              )}
-
-              {/* Comments List */}
-              {post.community_comments?.length === 0 ? (
-                <div className="text-center py-8">
-                  <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                  <p className="text-gray-400">
-                    아직 댓글이 없습니다. 첫 번째 댓글을 남겨보세요!
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {post.community_comments?.map((comment, index) => (
-                    <div key={comment.id}>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
-                          <User className="w-4 h-4 text-gray-300" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <span className="font-medium text-white">
-                              {comment.users?.username || '익명'}
-                            </span>
-                            <span className="text-sm text-gray-400">
-                              {formatPostDate(comment.created_at)}
-                            </span>
-                            {user && comment.user_id === user.id && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleDeleteComment(comment.id)}
-                                className="text-red-400 hover:text-red-300 hover:bg-red-900/20 p-1 h-auto"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </Button>
-                            )}
-                          </div>
-                          <p className="text-gray-300 whitespace-pre-wrap">
-                            {comment.content}
-                          </p>
-                        </div>
-                      </div>
-                      {index < (post.community_comments?.length || 0) - 1 && (
-                        <Separator className="bg-gray-600 mt-4" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <CommentSection 
+            postId={id!} 
+            commentsCount={post.comments?.length || 0}
+          />
         </div>
       </div>
     </div>
