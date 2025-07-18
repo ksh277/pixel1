@@ -60,8 +60,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         query = query.eq('is_featured', true);
       }
       
-      query = query.eq('is_active', true);
-      
       // Search filtering
       if (search) {
         const searchTerm = search as string;

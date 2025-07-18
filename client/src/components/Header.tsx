@@ -123,9 +123,15 @@ export const Header = () => {
           </Link>
 
           {/* Favorites */}
-          <Button variant="ghost" size="icon">
-            <Heart className="h-4 w-4" />
-          </Button>
+          <Link href="/wishlist">
+            <Button variant="ghost" size="icon" className="relative">
+              <Heart className="h-4 w-4" />
+              {/* Wishlist count badge */}
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                0
+              </span>
+            </Button>
+          </Link>
 
           {/* Theme Toggle */}
           <ThemeToggle />
@@ -226,6 +232,14 @@ export const Header = () => {
                 <Button variant="ghost" size="icon" onClick={() => setIsSearchModalOpen(true)}>
                   <Search className="h-4 w-4" />
                 </Button>
+                <Link href="/wishlist">
+                  <Button variant="ghost" size="icon" className="relative">
+                    <Heart className="h-4 w-4" />
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      0
+                    </span>
+                  </Button>
+                </Link>
                 <Link href="/cart">
                   <Button variant="ghost" size="icon" className="relative">
                     <ShoppingCart className="h-4 w-4" />

@@ -76,7 +76,7 @@ const UserMenu: React.FC = () => {
         <Link href="/mypage">
           <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             <User className="mr-2 h-4 w-4" />
-            <span>프로필</span>
+            <span>마이페이지</span>
           </DropdownMenuItem>
         </Link>
         <Link href="/wishlist">
@@ -91,16 +91,18 @@ const UserMenu: React.FC = () => {
             <span>장바구니</span>
           </DropdownMenuItem>
         </Link>
-        <Link href="/orders">
+        <Link href="/mypage">
           <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             <Package className="mr-2 h-4 w-4" />
             <span>주문 내역</span>
           </DropdownMenuItem>
         </Link>
-        <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-          <Settings className="mr-2 h-4 w-4" />
-          <span>설정</span>
-        </DropdownMenuItem>
+        <Link href="/mypage">
+          <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>설정</span>
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
         <DropdownMenuItem 
           onClick={handleSignOut}
