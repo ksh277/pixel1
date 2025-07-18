@@ -107,8 +107,7 @@ export const Header = () => {
   // Add Supabase specific nav items if configured
   if (isSupabaseConfigured) {
     navItems.push(
-      { name: "Supabase 상품", href: "/supabase-products" },
-      { name: "Supabase 데모", href: "/supabase-demo" }
+      { name: "Supabase 상품", href: "/supabase-products" }
     );
   }
 
