@@ -13,7 +13,8 @@ import {
   LogOut,
   Settings,
   Package,
-  Bell
+  Bell,
+  ChevronRight
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSupabaseAuth } from "@/components/SupabaseProvider";
@@ -314,50 +315,127 @@ export const Header = () => {
           
           {/* Slide Menu */}
           <div 
-            className="fixed top-0 right-0 h-full w-[75%] max-w-xs bg-white dark:bg-[#0f172a] shadow-lg flex flex-col p-6 transform transition-transform duration-300 ease-in-out"
+            className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white dark:bg-[#0f172a] shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out overflow-y-auto"
             style={{ transform: 'translateX(0)' }}
           >
-            {/* Close Button */}
-            <button 
-              className="absolute top-4 right-4 text-2xl text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              ×
-            </button>
-            
-            {/* Navigation Links */}
-            <div className="mt-12 space-y-4">
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <button
-                    className={`w-full text-left py-2 px-4 rounded-lg transition-colors ${
-                      location === item.href 
-                        ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
-                        : 'text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </button>
-                </Link>
-              ))}
+            {/* Header */}
+            <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600 dark:text-gray-300">한국어</span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </div>
+              <button 
+                className="text-2xl text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                ×
+              </button>
             </div>
             
-            {/* Search Box */}
-            <div className="mt-6">
-              <form onSubmit={handleSearch} className="w-full">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                  placeholder="상품검색..."
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </form>
+            {/* Company Info */}
+            <div className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
+              회사명: 본과 수종효과 최고실상품
             </div>
             
-            {/* User Actions */}
-            <div className="mt-6 space-y-4">
+            {/* About Button */}
+            <div className="px-4 py-2">
+              <button className="w-full bg-black dark:bg-gray-800 text-white py-2 px-4 rounded-full text-sm font-medium">
+                ABOUT 올댓프린팅
+              </button>
+            </div>
+            
+            {/* Category Tabs */}
+            <div className="px-4 py-2">
+              <div className="flex border-b border-gray-200 dark:border-gray-700">
+                <button className="flex-1 py-2 text-sm font-medium text-black dark:text-white border-b-2 border-black dark:border-white">
+                  카테고리
+                </button>
+                <button className="flex-1 py-2 text-sm text-gray-500 dark:text-gray-400">
+                  고객센터
+                </button>
+              </div>
+            </div>
+            
+            {/* Categories */}
+            <div className="flex-1 px-4 py-2 space-y-1">
+              {/* 아크릴굿즈 */}
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-black dark:text-white py-2">아크릴굿즈</div>
+                <div className="pl-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                  <Link href="/products?category=keyring" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">아크릴키링</div>
+                  </Link>
+                  <Link href="/products?category=corot" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">코롯토</div>
+                  </Link>
+                  <Link href="/products?category=smart-tok" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">스마트톡</div>
+                  </Link>
+                  <Link href="/products?category=stand" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">스탠드/디오라마</div>
+                  </Link>
+                  <Link href="/products?category=holder" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">포카홀더/포토액자</div>
+                  </Link>
+                  <Link href="/products?category=others" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">아크릴셰이커</div>
+                  </Link>
+                  <Link href="/products?category=carabiner" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">아크릴카라비너</div>
+                  </Link>
+                  <Link href="/products?category=badge" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">거울</div>
+                  </Link>
+                  <Link href="/products?category=magnet" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">자석/메시/코스터</div>
+                  </Link>
+                  <Link href="/products?category=stationery" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">문구류(잡화, 볼펜 등)</div>
+                  </Link>
+                  <Link href="/products?category=cutting" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">아크릴 제단</div>
+                  </Link>
+                </div>
+              </div>
+              
+              {/* 우드굿즈 */}
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-black dark:text-white py-2">우드굿즈</div>
+                <div className="pl-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                  <Link href="/products?category=wood-keyring" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">우드키링</div>
+                  </Link>
+                  <Link href="/products?category=wood-magnet" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">우드마그넷</div>
+                  </Link>
+                  <Link href="/products?category=wood-stand" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">우드스탠드</div>
+                  </Link>
+                  <Link href="/products?category=wood-goods" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">핸드폰굿즈</div>
+                  </Link>
+                </div>
+              </div>
+              
+              {/* 포장/부자재 */}
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-black dark:text-white py-2">포장/부자재</div>
+                <div className="pl-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                  <Link href="/products?category=packaging" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">스와치</div>
+                  </Link>
+                  <Link href="/products?category=materials" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">부자재</div>
+                  </Link>
+                  <Link href="/products?category=tools" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="py-1">포장재</div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            
+            {/* Bottom Actions */}
+            <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex justify-around">
                 <Link href="/wishlist">
                   <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -373,6 +451,90 @@ export const Header = () => {
                   <ThemeToggle />
                 </div>
               </div>
+            </div>
+            
+            {/* User Authentication */}
+            <div className="px-4 py-2">
+              {isSupabaseConfigured ? (
+                <div>
+                  {isLoading ? (
+                    <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
+                  ) : currentUser ? (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-foreground">
+                        {getDisplayName()}님
+                      </span>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={async () => {
+                          // Handle Supabase logout if needed
+                          toast({
+                            title: "로그아웃 완료",
+                            description: "안전하게 로그아웃되었습니다.",
+                          });
+                          setLocation('/');
+                          setIsMobileMenuOpen(false);
+                        }}
+                      >
+                        로그아웃
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col space-y-2">
+                      <Link href="/auth">
+                        <Button variant="outline" size="sm" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          로그인
+                        </Button>
+                      </Link>
+                      <Link href="/register">
+                        <Button variant="default" size="sm" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          회원가입
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  {currentUser ? (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-foreground">
+                        {getDisplayName()}님
+                      </span>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={async () => {
+                          await localLogout();
+                          toast({
+                            title: "로그아웃 완료",
+                            description: "안전하게 로그아웃되었습니다.",
+                          });
+                          setLocation('/');
+                          setIsMobileMenuOpen(false);
+                        }}
+                      >
+                        로그아웃
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col space-y-2">
+                      <Link href="/login">
+                        <Button variant="outline" size="sm" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          로그인
+                        </Button>
+                      </Link>
+                      <Link href="/register">
+                        <Button variant="default" size="sm" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          회원가입
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
               
               {currentUser ? (
                 <div className="space-y-3 text-center">
