@@ -47,72 +47,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (username: string, password: string): Promise<boolean> => {
     setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock authentication for admin accounts
-    if (username === 'admin' && password === '12345') {
-      const userData: User = {
-        id: '1',
-        name: '관리자',
-        email: 'admin@allthatprinting.com',
-        points: 50000,
-        coupons: 10,
-        totalOrders: 50,
-        totalSpent: 1000000,
-        isAdmin: true,
-        firstName: '관리자',
-        lastName: ''
-      };
-      
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      setIsLoading(false);
-      return true;
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        const user: User = {
+          id: userData.id.toString(),
+          name: `${userData.first_name} ${userData.last_name}`.trim(),
+          username: userData.username,
+          email: userData.email,
+          points: 0,
+          coupons: 0,
+          totalOrders: 0,
+          totalSpent: 0,
+          isAdmin: userData.is_admin,
+          firstName: userData.first_name,
+          lastName: userData.last_name || ''
+        };
+        
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        setIsLoading(false);
+        return true;
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
     }
-    
-    if (username === 'superadmin' && password === '12345') {
-      const userData: User = {
-        id: '2',
-        name: '슈퍼관리자',
-        email: 'superadmin@allthatprinting.com',
-        points: 100000,
-        coupons: 20,
-        totalOrders: 100,
-        totalSpent: 2000000,
-        isAdmin: true,
-        firstName: '슈퍼관리자',
-        lastName: ''
-      };
-      
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      setIsLoading(false);
-      return true;
-    }
-    
-    // Regular user accounts
-    if (username === 'user1' && password === '12345') {
-      const userData: User = {
-        id: '3',
-        name: '일반회원',
-        email: 'user1@example.com',
-        points: 5000,
-        coupons: 3,
-        totalOrders: 10,
-        totalSpent: 150000,
-        isAdmin: false,
-        firstName: '일반',
-        lastName: '회원'
-      };
-      
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      setIsLoading(false);
-      return true;
-    }
-    
     setIsLoading(false);
     return false;
   };

@@ -5,6 +5,313 @@ import { supabase } from "./lib/supabase";
 import { insertUserSchema, insertProductSchema, insertProductReviewSchema, insertProductLikeSchema, insertCartItemSchema, insertOrderSchema, insertOrderItemSchema, insertPaymentSchema, insertCouponSchema, insertAdminLogSchema, insertCommunityPostSchema, insertCommunityCommentSchema, insertBelugaTemplateSchema, insertGoodsEditorDesignSchema, insertInquirySchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Authentication routes
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      // Get user from database
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('username', username)
+        .single();
+      
+      if (error || !user) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      
+      // Check password (in production, use bcrypt)
+      if (user.password !== password) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      
+      // Remove password before sending response
+      const { password: _, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ message: "Login failed" });
+    }
+  });
+
+  // Wishlist routes
+  app.get("/api/wishlist/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: wishlist, error } = await supabase
+        .from('wishlist')
+        .select(`
+          *,
+          products (
+            id, name, name_ko, base_price, image_url, category_id
+          )
+        `)
+        .eq('user_id', userId);
+      
+      if (error) {
+        console.error('Error fetching wishlist:', error);
+        return res.status(500).json({ message: "Failed to fetch wishlist" });
+      }
+      
+      res.json(wishlist);
+    } catch (error) {
+      console.error('Error in wishlist endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch wishlist" });
+    }
+  });
+
+  app.post("/api/wishlist", async (req, res) => {
+    try {
+      const { user_id, product_id } = req.body;
+      const { data: wishlistItem, error } = await supabase
+        .from('wishlist')
+        .insert([{ user_id, product_id }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error adding to wishlist:', error);
+        return res.status(500).json({ message: "Failed to add to wishlist" });
+      }
+      
+      res.status(201).json(wishlistItem);
+    } catch (error) {
+      console.error('Error in wishlist endpoint:', error);
+      res.status(500).json({ message: "Failed to add to wishlist" });
+    }
+  });
+
+  app.delete("/api/wishlist/:userId/:productId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const productId = parseInt(req.params.productId);
+      
+      const { error } = await supabase
+        .from('wishlist')
+        .delete()
+        .eq('user_id', userId)
+        .eq('product_id', productId);
+      
+      if (error) {
+        console.error('Error removing from wishlist:', error);
+        return res.status(500).json({ message: "Failed to remove from wishlist" });
+      }
+      
+      res.json({ message: "Removed from wishlist" });
+    } catch (error) {
+      console.error('Error in wishlist endpoint:', error);
+      res.status(500).json({ message: "Failed to remove from wishlist" });
+    }
+  });
+
+  // Cart routes
+  app.get("/api/cart/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: cartItems, error } = await supabase
+        .from('cart_items')
+        .select(`
+          *,
+          products (
+            id, name, name_ko, base_price, image_url, category_id
+          )
+        `)
+        .eq('user_id', userId);
+      
+      if (error) {
+        console.error('Error fetching cart:', error);
+        return res.status(500).json({ message: "Failed to fetch cart" });
+      }
+      
+      res.json(cartItems);
+    } catch (error) {
+      console.error('Error in cart endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch cart" });
+    }
+  });
+
+  app.post("/api/cart", async (req, res) => {
+    try {
+      const { user_id, product_id, quantity, options } = req.body;
+      
+      // Check if item already exists in cart
+      const { data: existingItem, error: checkError } = await supabase
+        .from('cart_items')
+        .select('*')
+        .eq('user_id', user_id)
+        .eq('product_id', product_id)
+        .single();
+      
+      if (existingItem) {
+        // Update quantity
+        const { data: updatedItem, error: updateError } = await supabase
+          .from('cart_items')
+          .update({ 
+            quantity: existingItem.quantity + quantity,
+            options: options || existingItem.options
+          })
+          .eq('id', existingItem.id)
+          .select()
+          .single();
+        
+        if (updateError) {
+          console.error('Error updating cart item:', updateError);
+          return res.status(500).json({ message: "Failed to update cart item" });
+        }
+        
+        res.json(updatedItem);
+      } else {
+        // Add new item
+        const { data: cartItem, error } = await supabase
+          .from('cart_items')
+          .insert([{ user_id, product_id, quantity, options }])
+          .select()
+          .single();
+        
+        if (error) {
+          console.error('Error adding to cart:', error);
+          return res.status(500).json({ message: "Failed to add to cart" });
+        }
+        
+        res.status(201).json(cartItem);
+      }
+    } catch (error) {
+      console.error('Error in cart endpoint:', error);
+      res.status(500).json({ message: "Failed to add to cart" });
+    }
+  });
+
+  app.delete("/api/cart/:userId/:itemId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const itemId = parseInt(req.params.itemId);
+      
+      const { error } = await supabase
+        .from('cart_items')
+        .delete()
+        .eq('user_id', userId)
+        .eq('id', itemId);
+      
+      if (error) {
+        console.error('Error removing from cart:', error);
+        return res.status(500).json({ message: "Failed to remove from cart" });
+      }
+      
+      res.json({ message: "Removed from cart" });
+    } catch (error) {
+      console.error('Error in cart endpoint:', error);
+      res.status(500).json({ message: "Failed to remove from cart" });
+    }
+  });
+
+  // Orders routes
+  app.post("/api/orders", async (req, res) => {
+    try {
+      const { user_id, total_amount, shipping_address, payment_method, items } = req.body;
+      
+      // Create order
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert([{
+          user_id,
+          total_amount,
+          shipping_address,
+          payment_method,
+          status: 'pending'
+        }])
+        .select()
+        .single();
+      
+      if (orderError) {
+        console.error('Error creating order:', orderError);
+        return res.status(500).json({ message: "Failed to create order" });
+      }
+      
+      // Add order items
+      const orderItems = items.map((item: any) => ({
+        order_id: order.id,
+        product_id: item.product_id,
+        quantity: item.quantity,
+        price: item.price,
+        options: item.options
+      }));
+      
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+      
+      if (itemsError) {
+        console.error('Error adding order items:', itemsError);
+        return res.status(500).json({ message: "Failed to add order items" });
+      }
+      
+      // Clear cart
+      await supabase
+        .from('cart_items')
+        .delete()
+        .eq('user_id', user_id);
+      
+      res.status(201).json(order);
+    } catch (error) {
+      console.error('Error in orders endpoint:', error);
+      res.status(500).json({ message: "Failed to create order" });
+    }
+  });
+
+  app.get("/api/orders/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          order_items (
+            *,
+            products (
+              id, name, name_ko, image_url
+            )
+          )
+        `)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching orders:', error);
+        return res.status(500).json({ message: "Failed to fetch orders" });
+      }
+      
+      res.json(orders);
+    } catch (error) {
+      console.error('Error in orders endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch orders" });
+    }
+  });
+
+  app.patch("/api/orders/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const { status } = req.body;
+      
+      const { data: order, error } = await supabase
+        .from('orders')
+        .update({ status })
+        .eq('id', orderId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating order:', error);
+        return res.status(500).json({ message: "Failed to update order" });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      console.error('Error in orders endpoint:', error);
+      res.status(500).json({ message: "Failed to update order" });
+    }
+  });
+
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {
@@ -150,21 +457,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/products/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const product = await storage.getProduct(id);
-      if (!product) {
+      const { data: product, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error || !product) {
         return res.status(404).json({ message: "Product not found" });
       }
+      
       res.json(product);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch product" });
     }
   });
 
-  // Admin Product Management
+  // Admin Product Management (connected to database)
   app.post("/api/products", async (req, res) => {
     try {
-      const productData = insertProductSchema.parse(req.body);
-      const product = await storage.createProduct(productData);
+      const productData = req.body;
+      const { data: product, error } = await supabase
+        .from('products')
+        .insert([productData])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error creating product:', error);
+        return res.status(500).json({ message: "Failed to create product" });
+      }
+      
       res.status(201).json(product);
     } catch (error) {
       res.status(400).json({ message: "Invalid product data" });
@@ -176,19 +499,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const id = parseInt(req.params.id);
       const updateData = req.body;
       
-      // Get existing product
-      const existingProduct = await storage.getProduct(id);
-      if (!existingProduct) {
-        return res.status(404).json({ message: "Product not found" });
+      const { data: product, error } = await supabase
+        .from('products')
+        .update(updateData)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating product:', error);
+        return res.status(500).json({ message: "Failed to update product" });
       }
       
-      // Update product
-      const updatedProduct = await storage.updateProduct(id, updateData);
-      if (!updatedProduct) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-      
-      res.json(updatedProduct);
+      res.json(product);
     } catch (error) {
       res.status(500).json({ message: "Failed to update product" });
     }
@@ -197,10 +520,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.delete("/api/products/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const success = await storage.deleteProduct(id);
-      if (!success) {
-        return res.status(404).json({ message: "Product not found" });
+      
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Error deleting product:', error);
+        return res.status(500).json({ message: "Failed to delete product" });
       }
+      
       res.json({ message: "Product deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Failed to delete product" });
