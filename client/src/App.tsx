@@ -38,6 +38,7 @@ import UserContentShowcase from "@/pages/UserContentShowcase";
 import CommunityQA from "@/pages/CommunityQA";
 import MyPage from "@/pages/MyPage";
 import MyPageSupabase from "@/pages/MyPageSupabase";
+import OrderDetail from "@/pages/OrderDetail";
 import Wishlist from "@/pages/Wishlist";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminLogin from "@/pages/admin/Login";
@@ -111,6 +112,13 @@ function Router() {
           {() => (
             <ProtectedRoute>
               <MyPageSupabase />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/order/:id">
+          {() => (
+            <ProtectedRoute>
+              <OrderDetail />
             </ProtectedRoute>
           )}
         </Route>

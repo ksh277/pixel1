@@ -546,9 +546,11 @@ export default function MyPageSupabase() {
                           </div>
                           <div className="flex items-center space-x-3">
                             {getStatusBadge(order.status)}
-                            <Button variant="outline" size="sm">
-                              상세보기
-                            </Button>
+                            <Link href={`/order/${order.id}`}>
+                              <Button variant="outline" size="sm">
+                                상세보기
+                              </Button>
+                            </Link>
                             <RefundRequestButton
                               orderId={parseInt(order.id)}
                               orderAmount={order.total_amount}

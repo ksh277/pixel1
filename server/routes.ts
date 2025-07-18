@@ -2124,6 +2124,248 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Order Detail API Endpoints
+  app.get("/api/orders/:id", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.id);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      const { data: order, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', orderId)
+        .single();
+
+      if (error || !order) {
+        return res.status(404).json({ message: '주문을 찾을 수 없습니다.' });
+      }
+
+      res.json(order);
+    } catch (error) {
+      console.error('Error fetching order:', error);
+      res.status(500).json({ message: '주문 정보를 불러오는데 실패했습니다.' });
+    }
+  });
+
+  app.get("/api/payments/order/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      const { data: payment, error } = await supabase
+        .from('payments')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching payment:', error);
+        return res.status(500).json({ message: '결제 정보를 불러오는데 실패했습니다.' });
+      }
+
+      res.json(payment || null);
+    } catch (error) {
+      console.error('Error fetching payment:', error);
+      res.status(500).json({ message: '결제 정보를 불러오는데 실패했습니다.' });
+    }
+  });
+
+  app.get("/api/shipping/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      const { data: shipping, error } = await supabase
+        .from('shipping_info')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching shipping info:', error);
+        return res.status(500).json({ message: '배송 정보를 불러오는데 실패했습니다.' });
+      }
+
+      res.json(shipping || null);
+    } catch (error) {
+      console.error('Error fetching shipping info:', error);
+      res.status(500).json({ message: '배송 정보를 불러오는데 실패했습니다.' });
+    }
+  });
+
+  app.get("/api/delivery-tracking/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      const { data: tracking, error } = await supabase
+        .from('delivery_tracking')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching delivery tracking:', error);
+        return res.status(500).json({ message: '배송 추적 정보를 불러오는데 실패했습니다.' });
+      }
+
+      res.json(tracking || null);
+    } catch (error) {
+      console.error('Error fetching delivery tracking:', error);
+      res.status(500).json({ message: '배송 추적 정보를 불러오는데 실패했습니다.' });
+    }
+  });
+
+  app.get("/api/print-jobs/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      const { data: printJob, error } = await supabase
+        .from('print_jobs')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching print job:', error);
+        return res.status(500).json({ message: '프린트 작업 정보를 불러오는데 실패했습니다.' });
+      }
+
+      res.json(printJob || null);
+    } catch (error) {
+      console.error('Error fetching print job:', error);
+      res.status(500).json({ message: '프린트 작업 정보를 불러오는데 실패했습니다.' });
+    }
+  });
+
+  // Refund Request API Endpoints
+  app.post("/api/refund-requests", async (req, res) => {
+    try {
+      const { order_id, reason, amount, description } = req.body;
+      
+      if (!order_id || !reason || !amount) {
+        return res.status(400).json({ message: '필수 필드가 누락되었습니다.' });
+      }
+
+      // Check if refund request already exists
+      const { data: existingRequest, error: checkError } = await supabase
+        .from('refund_requests')
+        .select('*')
+        .eq('order_id', order_id)
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking existing refund request:', checkError);
+        return res.status(500).json({ message: '환불 요청 확인 중 오류가 발생했습니다.' });
+      }
+
+      if (existingRequest) {
+        return res.status(400).json({ message: '이미 환불 요청이 존재합니다.' });
+      }
+
+      const { data: refundRequest, error } = await supabase
+        .from('refund_requests')
+        .insert([{
+          order_id,
+          reason,
+          amount,
+          description,
+          status: 'pending'
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating refund request:', error);
+        return res.status(500).json({ message: '환불 요청 생성에 실패했습니다.' });
+      }
+
+      res.json(refundRequest);
+    } catch (error) {
+      console.error('Error creating refund request:', error);
+      res.status(500).json({ message: '환불 요청 생성에 실패했습니다.' });
+    }
+  });
+
+  app.get("/api/refund-requests/check/:orderId", async (req, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      const { data: refundRequest, error } = await supabase
+        .from('refund_requests')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error checking refund request:', error);
+        return res.status(500).json({ message: '환불 요청 확인에 실패했습니다.' });
+      }
+
+      res.json({
+        exists: !!refundRequest,
+        request: refundRequest || null
+      });
+    } catch (error) {
+      console.error('Error checking refund request:', error);
+      res.status(500).json({ message: '환불 요청 확인에 실패했습니다.' });
+    }
+  });
+
+  app.get("/api/refund-requests/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      if (isNaN(userId)) {
+        return res.status(400).json({ message: '유효하지 않은 사용자 ID입니다.' });
+      }
+
+      const { data: refundRequests, error } = await supabase
+        .from('refund_requests')
+        .select(`
+          *,
+          orders (
+            id,
+            total_amount,
+            created_at,
+            status
+          )
+        `)
+        .eq('orders.user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching refund requests:', error);
+        return res.status(500).json({ message: '환불 요청 목록을 불러오는데 실패했습니다.' });
+      }
+
+      res.json(refundRequests || []);
+    } catch (error) {
+      console.error('Error fetching refund requests:', error);
+      res.status(500).json({ message: '환불 요청 목록을 불러오는데 실패했습니다.' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
