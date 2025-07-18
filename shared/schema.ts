@@ -205,9 +205,10 @@ export const notifications = mysqlTable("notifications", {
   title: text("title").notNull(),
   message: text("message").notNull(),
   isRead: boolean("is_read").default(false).notNull(),
-  relatedId: int("related_id"), // ID of related post, order, etc.
-  relatedType: text("related_type"), // 'post', 'order', 'product', etc.
-  relatedUrl: text("related_url"), // URL to navigate to when clicked
+  relatedPostId: int("related_post_id")
+    .references(() => communityPosts.id),
+  relatedOrderId: int("related_order_id")
+    .references(() => orders.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -371,3 +372,5 @@ export type GoodsEditorDesign = typeof goodsEditorDesigns.$inferSelect;
 export type InsertGoodsEditorDesign = z.infer<typeof insertGoodsEditorDesignSchema>;
 export type Inquiry = typeof inquiries.$inferSelect;
 export type InsertInquiry = z.infer<typeof insertInquirySchema>;
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = z.infer<typeof insertNotificationSchema>;

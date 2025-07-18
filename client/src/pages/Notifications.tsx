@@ -45,6 +45,13 @@ export const Notifications = () => {
     if (!notification.is_read) {
       markAsRead(notification.id);
     }
+    
+    // Navigate to related content
+    if (notification.related_post_id) {
+      window.location.href = `/community/${notification.related_post_id}`;
+    } else if (notification.related_order_id) {
+      window.location.href = `/mypage?tab=orders`;
+    }
   };
 
   const getNotificationTypeColor = (type: string) => {
@@ -170,71 +177,69 @@ export const Notifications = () => {
             </Card>
           ) : (
             filteredNotifications.map((notification: any) => (
-              <Card
+              <Card 
                 key={notification.id}
-                className={`cursor-pointer transition-all hover:shadow-lg border-l-4 ${
-                  notification.is_read
-                    ? "bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700 border-l-gray-300 dark:border-l-gray-600"
-                    : "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700 border-l-blue-500"
+                className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+                  !notification.is_read 
+                    ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700' 
+                    : 'bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700'
                 }`}
                 onClick={() => handleNotificationClick(notification)}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start space-x-3">
-                    <div className={`p-2 rounded-full ${getNotificationTypeColor(notification.type)}`}>
-                      <NotificationIcon type={notification.type} className="h-4 w-4" />
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
+                      !notification.is_read ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    }`}>
+                      <NotificationIcon 
+                        type={notification.type || 'default'} 
+                        className="h-5 w-5"
+                      />
                     </div>
-                    
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className={`font-medium ${
-                          notification.is_read
-                            ? "text-gray-900 dark:text-white"
-                            : "text-gray-900 dark:text-white font-semibold"
-                        }`}>
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate">
                           {notification.title}
                         </h3>
                         <div className="flex items-center space-x-2">
-                          <Badge
-                            variant="secondary"
-                            className={`text-xs ${getNotificationTypeColor(notification.type)}`}
-                          >
-                            {getNotificationTypeText(notification.type)}
-                          </Badge>
-                          {!notification.is_read && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          {notification.type && (
+                            <Badge className={`text-xs ${getNotificationTypeColor(notification.type)}`}>
+                              {getNotificationTypeText(notification.type)}
+                            </Badge>
                           )}
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {format(new Date(notification.created_at), 'MM/dd HH:mm')}
+                          </span>
                         </div>
                       </div>
-                      
-                      <p className={`text-sm mb-2 ${
-                        notification.is_read
-                          ? "text-gray-600 dark:text-gray-400"
-                          : "text-gray-700 dark:text-gray-300"
-                      }`}>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                         {notification.message}
                       </p>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500 dark:text-gray-500">
-                          {format(new Date(notification.created_at), "yyyy년 MM월 dd일 HH:mm")}
-                        </span>
-                        {notification.related_url && (
-                          <Link href={notification.related_url}>
-                            <Button variant="ghost" size="sm" className="text-xs">
-                              보러가기
-                              <ChevronRight className="h-3 w-3 ml-1" />
-                            </Button>
-                          </Link>
-                        )}
-                      </div>
+                      {!notification.is_read && (
+                        <div className="flex items-center mt-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-xs text-blue-600 dark:text-blue-400 ml-1">
+                            새 알림
+                          </span>
+                        </div>
+                      )}
                     </div>
+                    <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
             ))
           )}
         </div>
+
+        {/* Load More Button */}
+        {filteredNotifications.length > 0 && (
+          <div className="text-center mt-8">
+            <Button variant="outline" className="w-full sm:w-auto">
+              더 많은 알림 보기
+            </Button>
+          </div>
+        )}
       </div>
     </ProtectedRoute>
   );

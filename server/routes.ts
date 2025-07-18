@@ -1055,6 +1055,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "User ID and comment are required" });
       }
       
+      // Create the comment
       const result = await storage.db.execute(
         "INSERT INTO community_comments (post_id, user_id, comment) VALUES (?, ?, ?) RETURNING *",
         [postId, user_id, comment]
@@ -1068,6 +1069,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
          WHERE c.id = ?`,
         [result.rows[0].id]
       );
+      
+      // Get post details and create notification for post author
+      const postResult = await storage.db.execute(
+        "SELECT p.*, u.username as author_username FROM community_posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?",
+        [postId]
+      );
+      
+      const commenterResult = await storage.db.execute(
+        "SELECT username FROM users WHERE id = ?",
+        [user_id]
+      );
+      
+      if (postResult.rows.length > 0 && commenterResult.rows.length > 0) {
+        const post = postResult.rows[0] as any;
+        const commenter = commenterResult.rows[0] as any;
+        
+        // Don't notify if user is commenting on their own post
+        if (post.user_id !== user_id) {
+          await storage.db.execute(
+            "INSERT INTO notifications (user_id, title, message, related_post_id) VALUES (?, ?, ?, ?)",
+            [
+              post.user_id,
+              "💬 새 댓글 알림",
+              `${commenter.username}님이 "${post.title}" 게시물에 댓글을 남겼습니다.`,
+              postId
+            ]
+          );
+        }
+      }
       
       res.status(201).json(commentWithUser.rows[0]);
     } catch (error) {
@@ -1611,7 +1641,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = parseInt(req.params.userId);
       const result = await storage.db.execute(
-        "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC",
+        "SELECT * FROM notifications WHERE user_id = ? ORDER BY sent_at DESC",
         [userId]
       );
       
@@ -1626,16 +1656,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const notification = req.body;
       const result = await storage.db.execute(
-        "INSERT INTO notifications (user_id, type, title, message, is_read, related_id, related_type, related_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING *",
+        "INSERT INTO notifications (user_id, title, message, is_read, related_post_id, related_order_id) VALUES (?, ?, ?, ?, ?, ?) RETURNING *",
         [
           notification.user_id,
-          notification.type,
           notification.title,
           notification.message,
           notification.is_read || false,
-          notification.related_id || null,
-          notification.related_type || null,
-          notification.related_url || null
+          notification.related_post_id || null,
+          notification.related_order_id || null
         ]
       );
       

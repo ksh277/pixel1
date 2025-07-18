@@ -9,9 +9,8 @@ export interface Notification {
   title: string;
   message: string;
   is_read: boolean;
-  related_id?: number;
-  related_type?: string;
-  related_url?: string;
+  related_post_id?: number;
+  related_order_id?: number;
   created_at: string;
 }
 
