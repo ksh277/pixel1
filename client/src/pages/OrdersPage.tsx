@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Package, Clock, CheckCircle, XCircle, Eye } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Package, Clock, CheckCircle, XCircle, Eye, Calendar, ShoppingBag } from 'lucide-react';
 import { useOrders } from '@/hooks/useOrders';
 import { useAuth } from '@/contexts/AuthContext';
 import { formatCurrency } from '@/lib/utils';
@@ -13,6 +14,7 @@ import { isSupabaseConfigured } from '@/lib/supabase';
 const OrdersPage = () => {
   const { user } = useAuth();
   const { orders, isLoading, error } = useOrders();
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('ko-KR', {
@@ -20,6 +22,21 @@ const OrdersPage = () => {
       currency: 'KRW',
       minimumFractionDigits: 0,
     }).format(price);
+  };
+
+  const formatOrderId = (orderId: string) => {
+    // Format order ID for display (e.g., #ORD-1234)
+    return `#${orderId.slice(0, 8).toUpperCase()}`;
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   };
 
   const getStatusIcon = (status: string) => {
@@ -219,13 +236,20 @@ const OrdersPage = () => {
                         <div className={`p-2 rounded-full ${getStatusColor(order.status)}`}>
                           {getStatusIcon(order.status)}
                         </div>
-                        <div>
-                          <CardTitle className="text-white">
-                            주문번호: {order.id}
+                        <div className="flex-1">
+                          <CardTitle className="text-white text-lg md:text-xl">
+                            주문번호: {formatOrderId(order.id)}
                           </CardTitle>
-                          <p className="text-gray-400 text-sm">
-                            {new Date(order.created_at).toLocaleString('ko-KR')}
-                          </p>
+                          <div className="flex items-center space-x-4 text-sm text-gray-400 mt-1">
+                            <span className="flex items-center">
+                              <Calendar className="w-4 h-4 mr-1" />
+                              {formatDate(order.created_at)}
+                            </span>
+                            <span className="flex items-center">
+                              <ShoppingBag className="w-4 h-4 mr-1" />
+                              {order.items?.length || 0}개 상품
+                            </span>
+                          </div>
                         </div>
                       </div>
                       <Badge className={`${getStatusColor(order.status)} text-white`}>
@@ -239,14 +263,14 @@ const OrdersPage = () => {
                       <div>
                         <h4 className="text-white font-semibold mb-2">주문 상품</h4>
                         <div className="space-y-2">
-                          {order.items?.map((item, index) => (
+                          {order.items?.slice(0, 2).map((item, index) => (
                             <div key={index} className="flex items-center justify-between py-2 border-b border-gray-600 last:border-b-0">
                               <div className="flex-1">
                                 <p className="text-white font-medium">
                                   {item.product_name || 'Unknown Product'}
                                 </p>
                                 <p className="text-gray-400 text-sm">
-                                  수량: {item.quantity}개
+                                  수량: {item.quantity}개 | 단가: {formatPrice(item.price)}
                                 </p>
                               </div>
                               <div className="text-right">
@@ -256,26 +280,125 @@ const OrdersPage = () => {
                               </div>
                             </div>
                           ))}
+                          {order.items && order.items.length > 2 && (
+                            <div className="text-center py-2">
+                              <span className="text-gray-400 text-sm">
+                                및 {order.items.length - 2}개 상품 더...
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
 
                       <Separator className="bg-gray-600" />
 
                       {/* Order Summary */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
                         <div>
                           <p className="text-gray-400">총 주문 금액</p>
                           <p className="text-2xl font-bold text-white">
                             {formatPrice(order.total_price)}
                           </p>
                         </div>
-                        <div className="flex space-x-3">
-                          <Button variant="outline" size="sm" className="text-white border-gray-600 hover:bg-gray-700">
-                            <Eye className="w-4 h-4 mr-2" />
-                            상세보기
-                          </Button>
+                        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" size="sm" className="text-white border-gray-600 hover:bg-gray-700 w-full sm:w-auto">
+                                <Eye className="w-4 h-4 mr-2" />
+                                상세보기
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-[#1e2b3c] border-gray-700">
+                              <DialogHeader>
+                                <DialogTitle className="text-white flex items-center space-x-2">
+                                  <Package className="w-5 h-5" />
+                                  <span>주문 상세 정보</span>
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-6">
+                                {/* Order Header */}
+                                <div className="bg-[#0f172a] p-4 rounded-lg">
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                      <p className="text-gray-400 text-sm">주문번호</p>
+                                      <p className="text-white font-semibold">{formatOrderId(order.id)}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-400 text-sm">주문일시</p>
+                                      <p className="text-white font-semibold">{formatDate(order.created_at)}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-400 text-sm">주문상태</p>
+                                      <Badge className={`${getStatusColor(order.status)} text-white`}>
+                                        {getStatusText(order.status)}
+                                      </Badge>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Order Items */}
+                                <div>
+                                  <h3 className="text-white font-semibold mb-4 flex items-center">
+                                    <ShoppingBag className="w-4 h-4 mr-2" />
+                                    주문 상품 ({order.items?.length || 0}개)
+                                  </h3>
+                                  <div className="space-y-3">
+                                    {order.items?.map((item, index) => (
+                                      <Card key={index} className="bg-[#0f172a] border-gray-600">
+                                        <CardContent className="p-4">
+                                          <div className="flex items-center justify-between">
+                                            <div className="flex-1">
+                                              <h4 className="text-white font-medium mb-1">
+                                                {item.product_name || 'Unknown Product'}
+                                              </h4>
+                                              <div className="flex items-center space-x-4 text-sm text-gray-400">
+                                                <span>수량: {item.quantity}개</span>
+                                                <span>단가: {formatPrice(item.price)}</span>
+                                              </div>
+                                              {item.customization_options && (
+                                                <div className="mt-2 p-2 bg-gray-700 rounded">
+                                                  <p className="text-xs text-gray-300">맞춤 옵션</p>
+                                                  <pre className="text-xs text-gray-400 mt-1">
+                                                    {JSON.stringify(item.customization_options, null, 2)}
+                                                  </pre>
+                                                </div>
+                                              )}
+                                            </div>
+                                            <div className="text-right">
+                                              <p className="text-white font-semibold">
+                                                {formatPrice(item.price * item.quantity)}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </CardContent>
+                                      </Card>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                {/* Order Summary */}
+                                <div className="bg-[#0f172a] p-4 rounded-lg">
+                                  <div className="space-y-3">
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-400">상품 금액</span>
+                                      <span className="text-white">{formatPrice(order.total_price)}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-400">배송비</span>
+                                      <span className="text-white">무료</span>
+                                    </div>
+                                    <Separator className="bg-gray-600" />
+                                    <div className="flex justify-between text-lg font-bold">
+                                      <span className="text-white">총 결제 금액</span>
+                                      <span className="text-white">{formatPrice(order.total_price)}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
                           {order.status === 'pending' && (
-                            <Button variant="outline" size="sm" className="text-red-400 border-red-400 hover:bg-red-900/20">
+                            <Button variant="outline" size="sm" className="text-red-400 border-red-400 hover:bg-red-900/20 w-full sm:w-auto">
                               주문 취소
                             </Button>
                           )}
