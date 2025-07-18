@@ -297,106 +297,117 @@ export const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-white dark:bg-[#0f172a] z-50 flex flex-col items-center justify-start pt-20 space-y-6 md:hidden">
-          {/* Close Button */}
-          <button 
-            className="absolute top-4 right-4 text-2xl text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+        <div className="fixed inset-0 z-50 md:hidden">
+          {/* Overlay Background */}
+          <div 
+            className="fixed inset-0 bg-black/30"
             onClick={() => setIsMobileMenuOpen(false)}
-          >
-            ×
-          </button>
+          />
           
-          {/* Navigation Links */}
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href}>
-              <button
-                className={`text-lg font-semibold py-3 px-6 rounded-lg transition-colors ${
-                  location === item.href 
-                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
-                    : 'text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </button>
-            </Link>
-          ))}
-          
-          {/* Search Box */}
-          <div className="w-3/4">
-            <form onSubmit={handleSearch} className="w-full">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                placeholder="상품검색..."
-                className="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </form>
-          </div>
-          
-          {/* User Actions */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="flex space-x-6 text-2xl text-gray-900 dark:text-white">
-              <Link href="/wishlist">
-                <button onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  <Heart className="w-7 h-7" />
-                </button>
-              </Link>
-              <Link href="/notifications">
-                <button onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  <Bell className="w-7 h-7" />
-                </button>
-              </Link>
-              <div className="flex items-center">
-                <ThemeToggle />
-              </div>
+          {/* Slide Menu */}
+          <div className="fixed top-0 right-0 h-full w-[75%] max-w-xs bg-white dark:bg-[#0f172a] shadow-lg flex flex-col p-6">
+            {/* Close Button */}
+            <button 
+              className="absolute top-4 right-4 text-2xl text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              ×
+            </button>
+            
+            {/* Navigation Links */}
+            <div className="mt-12 space-y-4">
+              {navItems.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  <button
+                    className={`w-full text-left py-2 px-4 rounded-lg transition-colors ${
+                      location === item.href 
+                        ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
+                        : 'text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </button>
+                </Link>
+              ))}
             </div>
             
-            {currentUser ? (
-              <div className="flex flex-col items-center space-y-3 text-center">
-                <span className="text-base font-medium text-gray-900 dark:text-white">
-                  {getDisplayName()}님
-                </span>
-                <button
-                  onClick={async () => {
-                    if (isSupabaseConfigured) {
-                      // Handle Supabase logout if needed
-                    } else {
-                      await localLogout();
-                    }
-                    toast({
-                      title: "로그아웃 완료",
-                      description: "안전하게 로그아웃되었습니다.",
-                    });
-                    setIsMobileMenuOpen(false);
-                    setLocation('/');
-                  }}
-                  className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors font-medium"
-                >
-                  로그아웃
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col space-y-3 w-64">
-                <Link href="/login">
-                  <button 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full py-3 px-6 text-base font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-600 dark:border-blue-400 rounded-lg transition-colors"
-                  >
-                    로그인
+            {/* Search Box */}
+            <div className="mt-6">
+              <form onSubmit={handleSearch} className="w-full">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  placeholder="상품검색..."
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </form>
+            </div>
+            
+            {/* User Actions */}
+            <div className="mt-6 space-y-4">
+              <div className="flex justify-around">
+                <Link href="/wishlist">
+                  <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    <Heart className="w-6 h-6" />
                   </button>
                 </Link>
-                <Link href="/register">
-                  <button 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full py-3 px-6 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
-                  >
-                    회원가입
+                <Link href="/notifications">
+                  <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    <Bell className="w-6 h-6" />
                   </button>
                 </Link>
+                <div className="p-2">
+                  <ThemeToggle />
+                </div>
               </div>
-            )}
+              
+              {currentUser ? (
+                <div className="space-y-3 text-center">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    {getDisplayName()}님
+                  </span>
+                  <button
+                    onClick={async () => {
+                      if (isSupabaseConfigured) {
+                        // Handle Supabase logout if needed
+                      } else {
+                        await localLogout();
+                      }
+                      toast({
+                        title: "로그아웃 완료",
+                        description: "안전하게 로그아웃되었습니다.",
+                      });
+                      setIsMobileMenuOpen(false);
+                      setLocation('/');
+                    }}
+                    className="w-full py-2 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors font-medium"
+                  >
+                    로그아웃
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <Link href="/login">
+                    <button 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full py-2 px-4 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-600 dark:border-blue-400 rounded-lg transition-colors"
+                    >
+                      로그인
+                    </button>
+                  </Link>
+                  <Link href="/register">
+                    <button 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                    >
+                      회원가입
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
