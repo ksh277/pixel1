@@ -11,6 +11,7 @@ import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 import Products from "@/pages/Products";
 import ProductDetail from "@/pages/ProductDetail";
+import ProductDetailSupabase from "@/pages/ProductDetailSupabase";
 import CategoryPage from "@/pages/CategoryPage";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
@@ -76,7 +77,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/products" component={Products} />
-        <Route path="/product/:id" component={ProductDetail} />
+        <Route path="/product/:id" component={ProductDetailSupabase} />
         <Route path="/search" component={SearchResults} />
 
         {/* Category routes */}

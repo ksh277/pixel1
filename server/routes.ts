@@ -476,6 +476,163 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Product images
+  app.get("/api/products/:productId/images", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.productId);
+      const { data: images, error } = await supabase
+        .from('product_images')
+        .select('*')
+        .eq('product_id', productId)
+        .order('display_order');
+      
+      if (error) {
+        console.error('Error fetching product images:', error);
+        return res.status(500).json({ message: "Failed to fetch product images" });
+      }
+      
+      res.json(images);
+    } catch (error) {
+      console.error('Error in product images endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch product images" });
+    }
+  });
+
+  // Product reviews
+  app.get("/api/products/:productId/reviews", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.productId);
+      const { data: reviews, error } = await supabase
+        .from('product_reviews')
+        .select(`
+          *,
+          users (
+            username
+          )
+        `)
+        .eq('product_id', productId)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching product reviews:', error);
+        return res.status(500).json({ message: "Failed to fetch product reviews" });
+      }
+      
+      res.json(reviews);
+    } catch (error) {
+      console.error('Error in product reviews endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch product reviews" });
+    }
+  });
+
+  // Toggle favorite
+  app.post("/api/favorites/toggle", async (req, res) => {
+    try {
+      const { user_id, product_id } = req.body;
+      
+      // Check if favorite exists
+      const { data: existing, error: checkError } = await supabase
+        .from('favorites')
+        .select('*')
+        .eq('user_id', user_id)
+        .eq('product_id', product_id)
+        .single();
+      
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking favorite:', checkError);
+        return res.status(500).json({ message: "Failed to check favorite status" });
+      }
+      
+      if (existing) {
+        // Remove favorite
+        const { error: deleteError } = await supabase
+          .from('favorites')
+          .delete()
+          .eq('user_id', user_id)
+          .eq('product_id', product_id);
+        
+        if (deleteError) {
+          console.error('Error removing favorite:', deleteError);
+          return res.status(500).json({ message: "Failed to remove favorite" });
+        }
+        
+        res.json({ isFavorite: false });
+      } else {
+        // Add favorite
+        const { error: insertError } = await supabase
+          .from('favorites')
+          .insert([{ user_id, product_id }]);
+        
+        if (insertError) {
+          console.error('Error adding favorite:', insertError);
+          return res.status(500).json({ message: "Failed to add favorite" });
+        }
+        
+        res.json({ isFavorite: true });
+      }
+    } catch (error) {
+      console.error('Error in toggle favorite endpoint:', error);
+      res.status(500).json({ message: "Failed to toggle favorite" });
+    }
+  });
+
+  // Add to cart
+  app.post("/api/cart/add", async (req, res) => {
+    try {
+      const { user_id, product_id, quantity, customization } = req.body;
+      
+      // Check if item already exists in cart
+      const { data: existing, error: checkError } = await supabase
+        .from('cart_items')
+        .select('*')
+        .eq('user_id', user_id)
+        .eq('product_id', product_id)
+        .single();
+      
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking cart item:', checkError);
+        return res.status(500).json({ message: "Failed to check cart item" });
+      }
+      
+      if (existing) {
+        // Update quantity
+        const { data: updated, error: updateError } = await supabase
+          .from('cart_items')
+          .update({ 
+            quantity: existing.quantity + quantity,
+            customization: customization || existing.customization
+          })
+          .eq('id', existing.id)
+          .select()
+          .single();
+        
+        if (updateError) {
+          console.error('Error updating cart item:', updateError);
+          return res.status(500).json({ message: "Failed to update cart item" });
+        }
+        
+        res.json(updated);
+      } else {
+        // Add new item
+        const { data: newItem, error: insertError } = await supabase
+          .from('cart_items')
+          .insert([{ user_id, product_id, quantity, customization }])
+          .select()
+          .single();
+        
+        if (insertError) {
+          console.error('Error adding to cart:', insertError);
+          return res.status(500).json({ message: "Failed to add to cart" });
+        }
+        
+        res.json(newItem);
+      }
+    } catch (error) {
+      console.error('Error in add to cart endpoint:', error);
+      res.status(500).json({ message: "Failed to add to cart" });
+    }
+  });
+
   app.get("/api/community/posts/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);

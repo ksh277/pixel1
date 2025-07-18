@@ -84,6 +84,17 @@ export const favorites = mysqlTable("favorites", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const productImages = mysqlTable("product_images", {
+  id: serial("id").primaryKey(),
+  productId: int("product_id")
+    .references(() => products.id)
+    .notNull(),
+  imageUrl: text("image_url").notNull(),
+  altText: text("alt_text"),
+  displayOrder: int("display_order").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const goodsEditorDesigns = mysqlTable("goods_editor_designs", {
   id: serial("id").primaryKey(),
   userId: int("user_id")
