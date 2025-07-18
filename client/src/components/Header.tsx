@@ -245,8 +245,24 @@ export const Header = () => {
                   <span className="text-sm font-medium text-foreground">
                     {getDisplayName()}님
                   </span>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-4 w-4" />
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => {
+                      if (isSupabaseConfigured) {
+                        // Handle Supabase logout if needed
+                      } else {
+                        localLogout();
+                      }
+                      toast({
+                        title: "로그아웃 완료",
+                        description: "안전하게 로그아웃되었습니다.",
+                      });
+                      setLocation('/');
+                    }}
+                    title="로그아웃"
+                  >
+                    <LogOut className="h-4 w-4" />
                   </Button>
                 </div>
               ) : (
@@ -418,6 +434,28 @@ export const Header = () => {
                           </span>
                         </Button>
                       </Link>
+                      
+                      {/* Logout Button */}
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                        onClick={() => {
+                          if (isSupabaseConfigured) {
+                            // Handle Supabase logout if needed
+                          } else {
+                            localLogout();
+                          }
+                          toast({
+                            title: "로그아웃 완료",
+                            description: "안전하게 로그아웃되었습니다.",
+                          });
+                          setIsMobileMenuOpen(false);
+                          setLocation('/');
+                        }}
+                      >
+                        <LogOut className="h-5 w-5 mr-3" />
+                        로그아웃
+                      </Button>
                     </>
                   ) : (
                     <div className="space-y-2 px-4">
