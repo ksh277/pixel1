@@ -1,8 +1,8 @@
-# AllThatPrinting E-commerce Platform
+# 픽셀굿즈야 pixelgoods E-commerce Platform
 
 ## Overview
 
-AllThatPrinting is a full-stack Korean-style e-commerce web application for custom printing services. The platform allows users to create personalized merchandise including acrylic keychains, stickers, t-shirts, phone cases, and other custom printed items. Built with React, TypeScript, and modern web technologies, it provides a comprehensive solution for both customers and administrators.
+픽셀굿즈야 pixelgoods is a full-stack Korean-style e-commerce web application for custom printing services. The platform allows users to create personalized merchandise including acrylic keychains, stickers, t-shirts, phone cases, and other custom printed items. Built with React, TypeScript, and modern web technologies, it provides a comprehensive solution for both customers and administrators.
 
 ## User Preferences
 
@@ -925,6 +925,34 @@ Preferred communication style: Simple, everyday language.
   - Product navigation and cart integration
 - **Authentication Integration**: Full compatibility with both local auth and Supabase auth systems
 - **Category Numbers Removal**: Fixed category navigation by removing hardcoded count numbers (120, 85, 67, 94, 78, 52) from category tabs per user request
+
+### 2025-01-18: Advanced Product Search & Filtering System Implementation
+- **Complete ProductSearchPage**: Created comprehensive search page with full Supabase integration
+- **Multi-Filter System**: Advanced filtering capabilities with combinable filters:
+  - Text search across Korean/English product names and descriptions
+  - Category filtering with multiple selection support
+  - Price range filtering with min/max values
+  - Featured products filter
+  - Active products filter (always applied)
+- **Professional Search Interface**: Grid/list view toggle with responsive design
+- **API Enhancement**: Added `/api/products/search` endpoint with complex query building:
+  - `.ilike()` text search across multiple fields
+  - `.in()` category filtering for multiple categories
+  - `.gte()` and `.lte()` price range filtering
+  - Multiple sorting options (name, price low/high, newest, featured)
+- **Header Search Integration**: Enhanced Header component with search functionality:
+  - Desktop: Inline search input with form submission
+  - Mobile: Search input in mobile menu overlay
+  - Real-time search query handling and URL navigation
+- **Mobile-First Design**: Responsive search interface optimized for all devices
+- **URL State Management**: Search parameters persist in URL for shareable search results
+- **User Experience**: Loading states, empty states, and proper error handling throughout
+
+### 2025-01-18: Site Branding Update - 픽셀굿즈야 pixelgoods
+- **Complete Brand Identity Update**: Changed site name from "AllThatPrinting" to "픽셀굿즈야 pixelgoods" throughout the platform
+- **Updated Components**: Header logo, admin dashboard, CSS class comments, and documentation
+- **Consistent Korean Branding**: Applied Korean-first naming convention with English subtitle
+- **Documentation Update**: Updated replit.md title and overview to reflect new brand identity
 
 ### 2025-01-17: Comprehensive Card Description Text Enhancement
 - **Text Color Optimization**: Upgraded all card descriptions from `text-gray-400/500` to `text-black/dark:text-white` for maximum contrast
