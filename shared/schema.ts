@@ -302,6 +302,13 @@ export const insertCommunityCommentSchema = createInsertSchema(
   createdAt: true,
 });
 
+export const insertCommentSchema = createInsertSchema(
+  communityComments,
+).omit({
+  id: true,
+  createdAt: true,
+});
+
 export const insertBelugaTemplateSchema = createInsertSchema(
   belugaTemplates,
 ).omit({

@@ -290,7 +290,7 @@ export default function Community() {
           ) : posts && posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {posts.slice(0, 4).map((post: CommunityPost) => (
-                <Link key={post.id} href={`/reviews/${post.id}`}>
+                <Link key={post.id} href={`/community/${post.id}`}>
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer bg-[#1e293b] border-[#334155]">
                     <div className="aspect-square bg-gradient-to-br from-blue-900/20 to-purple-900/20 flex items-center justify-center">
                       <img 

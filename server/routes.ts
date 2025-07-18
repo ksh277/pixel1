@@ -1004,6 +1004,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/community/posts/:id", async (req, res) => {
+    try {
+      const postId = parseInt(req.params.id);
+      const result = await storage.db.execute(
+        `SELECT p.*, u.username, u.first_name, u.last_name 
+         FROM community_posts p 
+         JOIN users u ON p.user_id = u.id 
+         WHERE p.id = ?`,
+        [postId]
+      );
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+      
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      res.status(500).json({ message: "Failed to fetch post" });
+    }
+  });
+
+  // Comments
+  app.get("/api/community/posts/:postId/comments", async (req, res) => {
+    try {
+      const postId = parseInt(req.params.postId);
+      const result = await storage.db.execute(
+        `SELECT c.*, u.username, u.first_name, u.last_name 
+         FROM community_comments c 
+         JOIN users u ON c.user_id = u.id 
+         WHERE c.post_id = ? 
+         ORDER BY c.created_at DESC`,
+        [postId]
+      );
+      
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      res.status(500).json({ message: "Failed to fetch comments" });
+    }
+  });
+
+  app.post("/api/community/posts/:postId/comments", async (req, res) => {
+    try {
+      const postId = parseInt(req.params.postId);
+      const { user_id, comment } = req.body;
+      
+      if (!user_id || !comment) {
+        return res.status(400).json({ message: "User ID and comment are required" });
+      }
+      
+      const result = await storage.db.execute(
+        "INSERT INTO community_comments (post_id, user_id, comment) VALUES (?, ?, ?) RETURNING *",
+        [postId, user_id, comment]
+      );
+      
+      // Get the comment with user info
+      const commentWithUser = await storage.db.execute(
+        `SELECT c.*, u.username, u.first_name, u.last_name 
+         FROM community_comments c 
+         JOIN users u ON c.user_id = u.id 
+         WHERE c.id = ?`,
+        [result.rows[0].id]
+      );
+      
+      res.status(201).json(commentWithUser.rows[0]);
+    } catch (error) {
+      console.error('Error creating comment:', error);
+      res.status(500).json({ message: "Failed to create comment" });
+    }
+  });
+
+  app.delete("/api/community/posts/:postId/comments/:commentId", async (req, res) => {
+    try {
+      const commentId = parseInt(req.params.commentId);
+      const { user_id } = req.body;
+      
+      if (!user_id) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+      
+      // Check if user owns the comment
+      const checkResult = await storage.db.execute(
+        "SELECT user_id FROM community_comments WHERE id = ?",
+        [commentId]
+      );
+      
+      if (checkResult.rows.length === 0) {
+        return res.status(404).json({ message: "Comment not found" });
+      }
+      
+      if (checkResult.rows[0].user_id !== user_id) {
+        return res.status(403).json({ message: "Not authorized to delete this comment" });
+      }
+      
+      await storage.db.execute(
+        "DELETE FROM community_comments WHERE id = ?",
+        [commentId]
+      );
+      
+      res.json({ message: "Comment deleted successfully" });
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      res.status(500).json({ message: "Failed to delete comment" });
+    }
+  });
+
   app.post("/api/community/posts", async (req, res) => {
     try {
       const postData = insertCommunityPostSchema.parse(req.body);

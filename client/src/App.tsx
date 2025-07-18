@@ -54,6 +54,7 @@ import OrdersPage from "@/pages/OrdersPage";
 import CommunityPage from "@/pages/CommunityPage";
 import CommunityWritePage from "@/pages/CommunityWritePage";
 import CommunityPostPage from "@/pages/CommunityPostPage";
+import CommunityPostDetail from "@/pages/CommunityPostDetail";
 
 function Router() {
   const [location] = useLocation();
@@ -139,7 +140,7 @@ function Router() {
             </ProtectedRoute>
           )}
         </Route>
-        <Route path="/community/:id" component={CommunityPostPage} />
+        <Route path="/community/:id" component={CommunityPostDetail} />
         <Route path="/reviews/:id" component={ReviewDetail} />
         <Route path="/reviews/write">
           {() => (
