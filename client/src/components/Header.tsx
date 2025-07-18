@@ -104,12 +104,7 @@ export const Header = () => {
     { name: "이벤트", href: "/events" },
   ];
 
-  // Add Supabase specific nav items if configured
-  if (isSupabaseConfigured) {
-    navItems.push(
-      { name: "Supabase 상품", href: "/supabase-products" }
-    );
-  }
+
 
   const getDisplayName = () => {
     if (isSupabaseConfigured && supabaseUser) {
