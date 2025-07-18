@@ -297,259 +297,106 @@ export const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300"
+        <div className="fixed top-0 left-0 w-full h-full bg-white dark:bg-[#0f172a] z-50 flex flex-col items-center justify-start pt-20 space-y-6 md:hidden">
+          {/* Close Button */}
+          <button 
+            className="absolute top-4 right-4 text-2xl text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
             onClick={() => setIsMobileMenuOpen(false)}
-          />
+          >
+            ×
+          </button>
           
-          {/* Slide Panel - 전체 화면 덮는 메뉴 */}
-          <div className="fixed inset-0 bg-white dark:bg-[#0f172a] overflow-y-auto mobile-menu-slide-in">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">메뉴</h2>
-              <Button
-                variant="ghost"
-                size="icon"
+          {/* Navigation Links */}
+          {navItems.map((item) => (
+            <Link key={item.href} href={item.href}>
+              <button
+                className={`text-lg font-semibold py-3 px-6 rounded-lg transition-colors ${
+                  location === item.href 
+                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
+                    : 'text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="h-10 w-10 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <X className="h-6 w-6" />
-              </Button>
+                {item.name}
+              </button>
+            </Link>
+          ))}
+          
+          {/* Search Box */}
+          <div className="w-3/4">
+            <form onSubmit={handleSearch} className="w-full">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                placeholder="상품검색..."
+                className="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </form>
+          </div>
+          
+          {/* User Actions */}
+          <div className="flex flex-col items-center space-y-4">
+            <div className="flex space-x-6 text-2xl text-gray-900 dark:text-white">
+              <Link href="/wishlist">
+                <button onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <Heart className="w-7 h-7" />
+                </button>
+              </Link>
+              <Link href="/notifications">
+                <button onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <Bell className="w-7 h-7" />
+                </button>
+              </Link>
+              <div className="flex items-center">
+                <ThemeToggle />
+              </div>
             </div>
             
-            {/* Scrollable Content */}
-            <div className="flex flex-col h-full overflow-y-auto">
-              {/* Navigation Section */}
-              <div className="flex-1 py-6">
-                {/* Mobile Search */}
-                <div className="px-6 mb-6">
-                  <form onSubmit={handleSearch} className="w-full">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={handleSearchInputChange}
-                        placeholder="상품검색..."
-                        className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
-                      />
-                    </div>
-                  </form>
-                </div>
-                
-                <nav className="space-y-2 px-6">
-                  {navItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <Button
-                        variant="ghost"
-                        className={`w-full justify-start px-4 py-4 text-lg font-medium h-auto rounded-lg ${
-                          location === item.href
-                            ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                            : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                        }`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Button>
-                    </Link>
-                  ))}
-                </nav>
-                
-                {/* User Section */}
-                <div className="px-6 mt-8 mb-6">
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      계정 관리
-                    </h3>
-                  </div>
-                </div>
-                
-                <div className="space-y-2 px-6">
-                  {currentUser ? (
-                    <>
-                      <Link href="/mypage">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <User className="h-6 w-6 mr-4" />
-                          마이페이지
-                        </Button>
-                      </Link>
-                      
-                      <Link href="/wishlist">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <Heart className="h-6 w-6 mr-4" />
-                          <span className="flex items-center justify-between w-full">
-                            찜한 상품
-                            <Badge variant="secondary" className="ml-2">{wishlistCount}</Badge>
-                          </span>
-                        </Button>
-                      </Link>
-                      
-                      <Link href="/cart">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <ShoppingCart className="h-6 w-6 mr-4" />
-                          <span className="flex items-center justify-between w-full">
-                            장바구니
-                            {itemCount > 0 && (
-                              <Badge variant="destructive" className="ml-2">
-                                {itemCount > 99 ? '99+' : itemCount}
-                              </Badge>
-                            )}
-                          </span>
-                        </Button>
-                      </Link>
-                      
-                      <Link href="/notifications">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <Bell className="h-6 w-6 mr-4" />
-                          <span className="flex items-center justify-between w-full">
-                            알림
-                            {unreadCount > 0 && (
-                              <Badge variant="destructive" className="ml-2">
-                                {unreadCount > 99 ? '99+' : unreadCount}
-                              </Badge>
-                            )}
-                          </span>
-                        </Button>
-                      </Link>
-                      
-                      {/* Logout Button */}
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start px-4 py-4 text-lg font-medium h-auto text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
-                        onClick={async () => {
-                          if (isSupabaseConfigured) {
-                            // Handle Supabase logout if needed
-                          } else {
-                            await localLogout();
-                          }
-                          toast({
-                            title: "로그아웃 완료",
-                            description: "안전하게 로그아웃되었습니다.",
-                          });
-                          setIsMobileMenuOpen(false);
-                          setLocation('/');
-                        }}
-                      >
-                        <LogOut className="h-6 w-6 mr-4" />
-                        로그아웃
-                      </Button>
-                    </>
-                  ) : (
-                    <div className="space-y-3 px-6">
-                      <Link href="/login">
-                        <Button
-                          variant="outline"
-                          className="w-full justify-center py-3 text-lg font-medium rounded-lg"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          로그인
-                        </Button>
-                      </Link>
-                      <Link href="/register">
-                        <Button
-                          variant="default"
-                          className="w-full justify-center py-3 text-lg font-medium rounded-lg"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          회원가입
-                        </Button>
-                      </Link>
-                    </div>
-                  )}
-                  
-                  {/* Dark Mode Toggle */}
-                  <div className="px-4 py-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-base text-gray-900 dark:text-white">다크모드</span>
-                      <ThemeToggle />
-                    </div>
-                  </div>
-                  
-                  {/* Search */}
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start px-4 py-3 text-base h-auto text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                    onClick={() => {
-                      setIsSearchModalOpen(true);
-                      setIsMobileMenuOpen(false);
-                    }}
-                  >
-                    <Search className="h-5 w-5 mr-3" />
-                    검색
-                  </Button>
-                </div>
+            {currentUser ? (
+              <div className="flex flex-col items-center space-y-3 text-center">
+                <span className="text-base font-medium text-gray-900 dark:text-white">
+                  {getDisplayName()}님
+                </span>
+                <button
+                  onClick={async () => {
+                    if (isSupabaseConfigured) {
+                      // Handle Supabase logout if needed
+                    } else {
+                      await localLogout();
+                    }
+                    toast({
+                      title: "로그아웃 완료",
+                      description: "안전하게 로그아웃되었습니다.",
+                    });
+                    setIsMobileMenuOpen(false);
+                    setLocation('/');
+                  }}
+                  className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors font-medium"
+                >
+                  로그아웃
+                </button>
               </div>
-              
-              {/* Bottom Section */}
-              {currentUser && (
-                <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                        <User className="h-4 w-4 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">
-                        {getDisplayName()}님
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
-                    onClick={async () => {
-                      try {
-                        // Local auth logout
-                        if (localUser) {
-                          localLogout();
-                        }
-                        
-                        // Clear local storage
-                        localStorage.removeItem('cart');
-                        localStorage.removeItem('wishlist');
-                        
-                        setIsMobileMenuOpen(false);
-                        toast({
-                          title: "로그아웃 완료",
-                          description: "성공적으로 로그아웃되었습니다.",
-                        });
-                        
-                        // Redirect to home
-                        window.location.href = '/';
-                      } catch (error) {
-                        console.error('Logout error:', error);
-                        toast({
-                          title: "로그아웃 오류",
-                          description: "로그아웃 중 오류가 발생했습니다.",
-                          variant: "destructive",
-                        });
-                      }
-                    }}
+            ) : (
+              <div className="flex flex-col space-y-3 w-64">
+                <Link href="/login">
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full py-3 px-6 text-base font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-600 dark:border-blue-400 rounded-lg transition-colors"
                   >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    로그아웃
-                  </Button>
-                </div>
-              )}
-            </div>
+                    로그인
+                  </button>
+                </Link>
+                <Link href="/register">
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full py-3 px-6 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                  >
+                    회원가입
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
