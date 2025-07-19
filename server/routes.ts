@@ -373,7 +373,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { user_id, total_amount, shipping_address, payment_method, items } = req.body;
       
-      // Create order
+      // 1. 재고 확인 먼저 수행
+      for (const item of items) {
+        const { data: product, error: productError } = await supabase
+          .from('products')
+          .select('stock, name_ko, is_active')
+          .eq('id', item.product_id)
+          .single();
+        
+        if (productError || !product) {
+          return res.status(400).json({ 
+            message: `상품 정보를 찾을 수 없습니다. (상품 ID: ${item.product_id})` 
+          });
+        }
+        
+        if (!product.is_active) {
+          return res.status(400).json({ 
+            message: `${product.name_ko}는 현재 판매 중단된 상품입니다.` 
+          });
+        }
+        
+        if (product.stock < item.quantity) {
+          return res.status(400).json({ 
+            message: `${product.name_ko}의 재고가 부족합니다. (요청: ${item.quantity}개, 재고: ${product.stock}개)` 
+          });
+        }
+      }
+      
+      // 2. 재고 차감 (주문 생성 전에 미리 차감)
+      for (const item of items) {
+        const { error: stockError } = await supabase
+          .from('products')
+          .update({ 
+            stock: supabase.sql`stock - ${item.quantity}` 
+          })
+          .eq('id', item.product_id);
+        
+        if (stockError) {
+          console.error('Error updating stock:', stockError);
+          return res.status(500).json({ message: "재고 업데이트 중 오류가 발생했습니다." });
+        }
+      }
+      
+      // 3. 주문 생성
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert([{
@@ -381,17 +423,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
           total_amount,
           shipping_address,
           payment_method,
-          status: 'pending'
+          status: 'preparing'  // 주문 상태를 preparing으로 설정
         }])
         .select()
         .single();
       
       if (orderError) {
         console.error('Error creating order:', orderError);
-        return res.status(500).json({ message: "Failed to create order" });
+        
+        // 주문 생성 실패 시 재고 복구
+        for (const item of items) {
+          await supabase
+            .from('products')
+            .update({ 
+              stock: supabase.sql`stock + ${item.quantity}` 
+            })
+            .eq('id', item.product_id);
+        }
+        
+        return res.status(500).json({ message: "주문 생성 중 오류가 발생했습니다." });
       }
       
-      // Add order items
+      // 4. 주문 항목 추가
       const orderItems = items.map((item: any) => ({
         order_id: order.id,
         product_id: item.product_id,
@@ -406,7 +459,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (itemsError) {
         console.error('Error adding order items:', itemsError);
-        return res.status(500).json({ message: "Failed to add order items" });
+        
+        // 주문 항목 추가 실패 시 재고 복구 및 주문 삭제
+        for (const item of items) {
+          await supabase
+            .from('products')
+            .update({ 
+              stock: supabase.sql`stock + ${item.quantity}` 
+            })
+            .eq('id', item.product_id);
+        }
+        
+        await supabase.from('orders').delete().eq('id', order.id);
+        
+        return res.status(500).json({ message: "주문 항목 추가 중 오류가 발생했습니다." });
       }
       
       // Clear cart
@@ -1044,6 +1110,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         query = query.or(`name.ilike.%${searchTerm}%,name_ko.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
       }
       
+      // 활성화된 상품만 가져오기
+      query = query.eq('is_active', true);
+      
       const { data: products, error } = await query.order('created_at', { ascending: false });
       
       if (error) {
@@ -1051,14 +1120,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ message: "Failed to fetch products" });
       }
       
-      // Add review and like counts (using simple count for now)
-      const productsWithCounts = products.map(product => ({
+      // 재고 정보와 품절 상태 추가
+      const productsWithStock = products.map(product => ({
         ...product,
         reviewCount: 0,
-        likeCount: 0
+        likeCount: 0,
+        isOutOfStock: product.stock <= 0,
+        isLowStock: product.stock > 0 && product.stock <= 5
       }));
       
-      res.json(productsWithCounts);
+      res.json(productsWithStock);
     } catch (error) {
       console.error('Error in products endpoint:', error);
       res.status(500).json({ message: "Failed to fetch products" });

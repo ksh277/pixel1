@@ -10,7 +10,13 @@ import { useToast } from "@/hooks/use-toast";
 import type { Product } from "@shared/schema";
 
 interface ProductCardProps {
-  product: Product & { reviewCount?: number; likeCount?: number };
+  product: Product & { 
+    reviewCount?: number; 
+    likeCount?: number; 
+    stock?: number;
+    isOutOfStock?: boolean;
+    isLowStock?: boolean;
+  };
   onAddToCart?: (product: Product) => void;
   onToggleFavorite?: (product: Product) => void;
   isFavorite?: boolean;
@@ -102,6 +108,19 @@ export function ProductCard({
             </div>
           )}
 
+          {/* 품절/재고 부족 배지 */}
+          {product.isOutOfStock && (
+            <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded-md font-medium z-10">
+              품절
+            </div>
+          )}
+          
+          {product.isLowStock && !product.isOutOfStock && (
+            <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-md font-medium z-10">
+              재고 부족
+            </div>
+          )}
+          
           {product.isFeatured && (
             <div className="allprint-card-hot-badge">HOT</div>
           )}
@@ -120,9 +139,28 @@ export function ProductCard({
             {language === "ko" ? product.nameKo : product.name}
           </div>
           <div className="allprint-card-price">₩ {formattedPrice}</div>
-          <div className="allprint-card-stats">
-            리뷰 {reviewCount?.toLocaleString() || "11,390"} / LIKE{" "}
-            {likeCount || 15}
+          
+          {/* 재고 정보 표시 */}
+          <div className="flex items-center justify-between mb-2">
+            <div className="allprint-card-stats">
+              리뷰 {reviewCount?.toLocaleString() || "11,390"} / LIKE{" "}
+              {likeCount || 15}
+            </div>
+            {product.stock !== undefined && (
+              <div className={`text-xs font-medium ${
+                product.isOutOfStock 
+                  ? 'text-red-600' 
+                  : product.isLowStock 
+                    ? 'text-orange-600' 
+                    : 'text-green-600'
+              }`}>
+                {product.isOutOfStock 
+                  ? '품절' 
+                  : product.isLowStock 
+                    ? `재고 ${product.stock}개` 
+                    : '재고 충분'}
+              </div>
+            )}
           </div>
         </div>
       </motion.div>

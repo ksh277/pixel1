@@ -43,6 +43,7 @@ export const products = mysqlTable("products", {
     .references(() => categories.id)
     .notNull(),
   imageUrl: text("image_url").notNull(),
+  stock: int("stock").default(0).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   isFeatured: boolean("is_featured").default(false).notNull(),
   customizationOptions: json("customization_options"),
