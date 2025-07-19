@@ -121,27 +121,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "아이디와 비밀번호를 입력해주세요." });
       }
       
-      // Get user from database
+      // Get user from database (check both username and email fields)
+      console.log('Attempting to find user:', username);
       const { data: user, error } = await supabase
         .from('users')
         .select('id, username, email, password, first_name, last_name, is_admin')
-        .eq('username', username)
+        .or(`username.eq.${username},email.eq.${username}`)
         .single();
         
-      console.log('User data from DB:', user);
+      console.log('Supabase query result:', { data: user, error: error ? error.message : null });
+        
+      console.log('Login attempt for:', username);
+      console.log('User found:', user ? 'Yes' : 'No');
+      if (user) {
+        console.log('User username:', user.username);
+        console.log('User email:', user.email);
+      }
       
       if (error || !user) {
         return res.status(401).json({ message: "아이디 또는 비밀번호가 올바르지 않습니다." });
       }
       
-      // Check password with bcrypt (with debug for admin)
+      // Check password with bcrypt
       let isPasswordValid = false;
       
-      // For admin account, allow simple password for testing
-      if (username === 'admin' && password === '12345') {
-        isPasswordValid = true;
-      } else {
-        isPasswordValid = await bcrypt.compare(password, user.password);
+      try {
+        // For admin account, allow simple password for testing
+        if (username === 'admin' && password === '12345') {
+          isPasswordValid = true;
+        } else {
+          isPasswordValid = await bcrypt.compare(password, user.password);
+        }
+      } catch (bcryptError) {
+        console.error('Bcrypt error:', bcryptError);
+        // If bcrypt fails, it might be a plain text password (for testing)
+        isPasswordValid = password === user.password;
       }
       
       console.log(`Password check for ${username}: ${isPasswordValid}`);
