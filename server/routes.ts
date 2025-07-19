@@ -1821,6 +1821,243 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all users for admin
+  app.get("/api/admin/users", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { data: users, error } = await supabase
+        .from('users')
+        .select('id, username, email, first_name, last_name, is_admin, created_at')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching users:', error);
+        return res.status(500).json({ message: "사용자 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(users);
+    } catch (error) {
+      console.error('Error in admin users endpoint:', error);
+      res.status(500).json({ message: "사용자 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Update user role (admin/user)
+  app.put("/api/admin/users/:userId/role", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { userId } = req.params;
+      const { isAdmin } = req.body;
+      
+      const { data: user, error } = await supabase
+        .from('users')
+        .update({ is_admin: isAdmin })
+        .eq('id', userId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating user role:', error);
+        return res.status(500).json({ message: "사용자 권한 변경에 실패했습니다." });
+      }
+      
+      res.json(user);
+    } catch (error) {
+      console.error('Error in user role endpoint:', error);
+      res.status(500).json({ message: "사용자 권한 변경에 실패했습니다." });
+    }
+  });
+
+  // Get all reviews for admin
+  app.get("/api/admin/reviews", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { data: reviews, error } = await supabase
+        .from('product_reviews')
+        .select(`
+          *,
+          users (
+            id, username, email
+          ),
+          products (
+            id, name, name_ko, image_url
+          )
+        `)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching admin reviews:', error);
+        return res.status(500).json({ message: "리뷰 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(reviews);
+    } catch (error) {
+      console.error('Error in admin reviews endpoint:', error);
+      res.status(500).json({ message: "리뷰 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Delete review (admin)
+  app.delete("/api/admin/reviews/:reviewId", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { reviewId } = req.params;
+      
+      const { error } = await supabase
+        .from('product_reviews')
+        .delete()
+        .eq('id', reviewId);
+      
+      if (error) {
+        console.error('Error deleting review:', error);
+        return res.status(500).json({ message: "리뷰 삭제에 실패했습니다." });
+      }
+      
+      res.json({ message: "리뷰가 삭제되었습니다." });
+    } catch (error) {
+      console.error('Error in review delete endpoint:', error);
+      res.status(500).json({ message: "리뷰 삭제에 실패했습니다." });
+    }
+  });
+
+  // Create category (admin)
+  app.post("/api/admin/categories", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { name, name_ko } = req.body;
+      
+      const { data: category, error } = await supabase
+        .from('categories')
+        .insert([{ name, name_ko }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error creating category:', error);
+        return res.status(500).json({ message: "카테고리 생성에 실패했습니다." });
+      }
+      
+      res.json(category);
+    } catch (error) {
+      console.error('Error in category create endpoint:', error);
+      res.status(500).json({ message: "카테고리 생성에 실패했습니다." });
+    }
+  });
+
+  // Update category (admin)
+  app.put("/api/admin/categories/:categoryId", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { categoryId } = req.params;
+      const { name, name_ko } = req.body;
+      
+      const { data: category, error } = await supabase
+        .from('categories')
+        .update({ name, name_ko })
+        .eq('id', categoryId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating category:', error);
+        return res.status(500).json({ message: "카테고리 수정에 실패했습니다." });
+      }
+      
+      res.json(category);
+    } catch (error) {
+      console.error('Error in category update endpoint:', error);
+      res.status(500).json({ message: "카테고리 수정에 실패했습니다." });
+    }
+  });
+
+  // Delete category (admin)
+  app.delete("/api/admin/categories/:categoryId", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { categoryId } = req.params;
+      
+      const { error } = await supabase
+        .from('categories')
+        .delete()
+        .eq('id', categoryId);
+      
+      if (error) {
+        console.error('Error deleting category:', error);
+        return res.status(500).json({ message: "카테고리 삭제에 실패했습니다." });
+      }
+      
+      res.json({ message: "카테고리가 삭제되었습니다." });
+    } catch (error) {
+      console.error('Error in category delete endpoint:', error);
+      res.status(500).json({ message: "카테고리 삭제에 실패했습니다." });
+    }
+  });
+
+  // Broadcast notification to all users (admin)
+  app.post("/api/admin/notifications/broadcast", authenticateToken, async (req: any, res) => {
+    try {
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { title, message, type = 'announcement' } = req.body;
+      
+      // Get all user IDs
+      const { data: users, error: usersError } = await supabase
+        .from('users')
+        .select('id');
+      
+      if (usersError) {
+        console.error('Error fetching users for notification:', usersError);
+        return res.status(500).json({ message: "알림 발송에 실패했습니다." });
+      }
+      
+      // Create notifications for all users
+      const notifications = users.map(user => ({
+        user_id: user.id,
+        title,
+        message,
+        type,
+        is_read: false
+      }));
+      
+      const { error } = await supabase
+        .from('notifications')
+        .insert(notifications);
+      
+      if (error) {
+        console.error('Error broadcasting notification:', error);
+        return res.status(500).json({ message: "알림 발송에 실패했습니다." });
+      }
+      
+      res.json({ message: `${users.length}명의 사용자에게 알림을 발송했습니다.` });
+    } catch (error) {
+      console.error('Error in notification broadcast endpoint:', error);
+      res.status(500).json({ message: "알림 발송에 실패했습니다." });
+    }
+  });
+
   // Search products endpoint
   app.get("/api/products/search", async (req, res) => {
     try {
