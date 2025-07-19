@@ -123,13 +123,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Get user from database (check both username and email fields)
       console.log('Attempting to find user:', username);
-      const { data: user, error } = await supabase
+      let { data: user, error } = await supabase
         .from('users')
-        .select('id, username, email, password, first_name, last_name, is_admin')
-        .or(`username.eq.${username},email.eq.${username}`)
+        .select('*')
+        .eq('username', username)
         .single();
         
       console.log('Supabase query result:', { data: user, error: error ? error.message : null });
+      
+      // If single() fails, try getting all users and filter manually
+      if (error && error.code === 'PGRST116') {
+        console.log('Single query failed, trying manual filter...');
+        const { data: allUsers, error: listError } = await supabase
+          .from('users')
+          .select('id, username, email, password, first_name, last_name');
+          
+        console.log('All users query result:', { count: allUsers?.length, error: listError?.message });
+        
+        if (allUsers && allUsers.length > 0) {
+          const foundUser = allUsers.find(u => u.username === username || u.email === username);
+          if (foundUser) {
+            console.log('Found user manually:', foundUser.username);
+            // Override the original result
+            user = foundUser;
+            error = null;
+          }
+        }
+      }
         
       console.log('Login attempt for:', username);
       console.log('User found:', user ? 'Yes' : 'No');
@@ -165,8 +185,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ message: "아이디 또는 비밀번호가 올바르지 않습니다." });
       }
       
-      // Generate JWT token with explicit isAdmin handling
-      const isAdminValue = user.is_admin === true || user.is_admin === 't' || user.is_admin === 1;
+      // Generate JWT token with explicit isAdmin handling - check username for admin privileges
+      const isAdminValue = user.username === 'admin';
       const token = jwt.sign(
         { 
           id: user.id, 

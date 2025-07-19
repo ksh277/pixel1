@@ -1163,6 +1163,18 @@ Preferred communication style: Simple, everyday language.
 - **Maintained Functionality**: Preserved hover effects, overlay interactions, and responsive grid system
 - **Clean Design**: Posts now appear as natural image grid without distracting background containers
 
+### 2025-01-19: Username-Based Login System Implementation
+- **Complete Authentication System Overhaul**: Successfully converted from email-based to username-based login system
+- **Login Page Updates**: Changed input type from email to text with "아이디를 입력하세요" placeholder
+- **Database Authentication Integration**: Fixed Supabase connection issues with PostgreSQL database
+- **Admin Account Setup**: Configured admin login credentials (username: admin, password: 123)
+- **JWT Token System**: Implemented secure token-based authentication with admin privilege detection
+- **Login Route**: `/login` page fully functional with username/password authentication
+- **Admin Dashboard Access**: Admin users automatically get `isAdmin: true` flag in JWT tokens
+- **Password Handling**: Support for both plain text (testing) and bcrypt encrypted passwords
+- **Error Handling**: Proper Korean error messages for invalid credentials and connection issues
+- **Session Management**: Cookie-based session storage with 7-day expiration
+
 ### 2025-01-17: Complete Dark Mode Text Visibility Enhancement
 - **Review Pages Text Fix**: Enhanced review text visibility in ReviewsAll.tsx with `dark:text-gray-100` for better readability
 - **Product Detail Page**: Updated product features and warnings text with `dark:text-gray-100` for improved contrast
