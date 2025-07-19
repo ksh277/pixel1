@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useSupabaseAuth } from '@/components/SupabaseProvider'
 import { useToast } from '@/hooks/use-toast'
-import { User, LogOut, Heart, ShoppingCart, Settings, Package } from 'lucide-react'
+import { User, LogOut, Heart, ShoppingCart, Settings, Package, Store } from 'lucide-react'
 import { Link } from 'wouter'
 
 const UserMenu: React.FC = () => {
@@ -101,6 +101,13 @@ const UserMenu: React.FC = () => {
           <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             <Settings className="mr-2 h-4 w-4" />
             <span>설정</span>
+          </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
+        <Link href="/seller">
+          <DropdownMenuItem className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Store className="mr-2 h-4 w-4" />
+            <span>판매자 센터</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />

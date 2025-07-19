@@ -63,6 +63,7 @@ import CommunityPage from "@/pages/CommunityPage";
 import CommunityWritePage from "@/pages/CommunityWritePage";
 import CommunityPostPage from "@/pages/CommunityPostPage";
 import CommunityPostDetail from "@/pages/CommunityPostDetail";
+import SellerDashboard from "@/pages/SellerDashboard";
 
 function Router() {
   const [location] = useLocation();
@@ -190,6 +191,22 @@ function Router() {
         <Route path="/reviews/all" component={ReviewsAll} />
         <Route path="/design-service" component={DesignServiceProduct} />
         <Route path="/additional-services" component={AdditionalServices} />
+
+        {/* Seller routes */}
+        <Route path="/seller">
+          {() => (
+            <ProtectedRoute>
+              <SellerDashboard />
+            </ProtectedRoute>
+          )}
+        </Route>
+        <Route path="/seller/dashboard">
+          {() => (
+            <ProtectedRoute>
+              <SellerDashboard />
+            </ProtectedRoute>
+          )}
+        </Route>
 
         {/* Admin routes */}
         <Route path="/admin/login" component={AdminLogin} />

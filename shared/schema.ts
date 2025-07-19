@@ -32,6 +32,33 @@ export const categories = mysqlTable("categories", {
   isActive: boolean("is_active").default(true).notNull(),
 });
 
+export const sellers = mysqlTable("sellers", {
+  id: serial("id").primaryKey(),
+  userId: int("user_id")
+    .references(() => users.id)
+    .notNull(),
+  shopName: text("shop_name").notNull(),
+  businessNumber: text("business_number"),
+  contactEmail: text("contact_email"),
+  contactPhone: text("contact_phone"),
+  address: text("address"),
+  bankAccount: text("bank_account"),
+  bankName: text("bank_name"),
+  isApproved: boolean("is_approved").default(false).notNull(),
+  status: text("status").default("pending").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const shippingCompanies = mysqlTable("shipping_companies", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  code: text("code").notNull().unique(),
+  trackingUrl: text("tracking_url"),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const products = mysqlTable("products", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -42,10 +69,14 @@ export const products = mysqlTable("products", {
   categoryId: int("category_id")
     .references(() => categories.id)
     .notNull(),
+  sellerId: int("seller_id")
+    .references(() => sellers.id),
   imageUrl: text("image_url").notNull(),
   stock: int("stock").default(0).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   isFeatured: boolean("is_featured").default(false).notNull(),
+  isApproved: boolean("is_approved").default(false).notNull(),
+  approvalDate: timestamp("approval_date"),
   customizationOptions: json("customization_options"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -153,6 +184,10 @@ export const orders = mysqlTable("orders", {
   totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
   shippingAddress: json("shipping_address").notNull(),
   orderItems: json("order_items").notNull(),
+  trackingNumber: text("tracking_number"),
+  shippingCompanyId: int("shipping_company_id")
+    .references(() => shippingCompanies.id),
+  shippedAt: timestamp("shipped_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

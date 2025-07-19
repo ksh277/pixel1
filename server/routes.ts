@@ -191,10 +191,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
       }
       
-      res.json(user);
+      // Check if user is a seller
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+      
+      res.json({ ...user, seller });
     } catch (error) {
       console.error('Auth check error:', error);
       res.status(500).json({ message: "인증 확인에 실패했습니다." });
+    }
+  });
+
+  // Seller registration
+  app.post("/api/sellers/register", authenticateToken, async (req: any, res) => {
+    try {
+      const { shopName, businessNumber, contactEmail, contactPhone, address, bankAccount, bankName } = req.body;
+      
+      // Check if user already has seller account
+      const { data: existingSeller } = await supabase
+        .from('sellers')
+        .select('id')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (existingSeller) {
+        return res.status(400).json({ message: "이미 판매자로 등록되어 있습니다." });
+      }
+      
+      const { data: seller, error } = await supabase
+        .from('sellers')
+        .insert([{
+          user_id: req.user.id,
+          shop_name: shopName,
+          business_number: businessNumber,
+          contact_email: contactEmail,
+          contact_phone: contactPhone,
+          address,
+          bank_account: bankAccount,
+          bank_name: bankName,
+          status: 'pending'
+        }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Seller registration error:', error);
+        return res.status(500).json({ message: "판매자 등록에 실패했습니다." });
+      }
+      
+      res.status(201).json(seller);
+    } catch (error) {
+      console.error('Seller registration error:', error);
+      res.status(500).json({ message: "판매자 등록에 실패했습니다." });
     }
   });
 
@@ -1110,8 +1161,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         query = query.or(`name.ilike.%${searchTerm}%,name_ko.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
       }
       
-      // 활성화된 상품만 가져오기
-      query = query.eq('is_active', true);
+      // 활성화되고 승인된 상품만 가져오기
+      query = query.eq('is_active', true).eq('is_approved', true);
       
       const { data: products, error } = await query.order('created_at', { ascending: false });
       
@@ -1133,6 +1184,366 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error in products endpoint:', error);
       res.status(500).json({ message: "Failed to fetch products" });
+    }
+  });
+
+  // Seller products management
+  app.get("/api/seller/products", authenticateToken, async (req: any, res) => {
+    try {
+      // Get seller info
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('id')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (!seller) {
+        return res.status(403).json({ message: "판매자 권한이 없습니다." });
+      }
+      
+      const { data: products, error } = await supabase
+        .from('products')
+        .select(`
+          *,
+          categories (
+            id, name, name_ko
+          )
+        `)
+        .eq('seller_id', seller.id)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching seller products:', error);
+        return res.status(500).json({ message: "상품 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(products);
+    } catch (error) {
+      console.error('Error in seller products endpoint:', error);
+      res.status(500).json({ message: "상품 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Add new product
+  app.post("/api/seller/products", authenticateToken, async (req: any, res) => {
+    try {
+      // Get seller info
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('id, is_approved')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (!seller) {
+        return res.status(403).json({ message: "판매자 권한이 없습니다." });
+      }
+      
+      if (!seller.is_approved) {
+        return res.status(403).json({ message: "판매자 승인이 필요합니다." });
+      }
+      
+      const { name, nameKo, description, descriptionKo, basePrice, categoryId, imageUrl, stock, customizationOptions } = req.body;
+      
+      const { data: product, error } = await supabase
+        .from('products')
+        .insert([{
+          name,
+          name_ko: nameKo,
+          description,
+          description_ko: descriptionKo,
+          base_price: basePrice,
+          category_id: categoryId,
+          seller_id: seller.id,
+          image_url: imageUrl,
+          stock,
+          customization_options: customizationOptions,
+          is_active: true,
+          is_approved: false // 관리자 승인 대기
+        }])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error adding product:', error);
+        return res.status(500).json({ message: "상품 등록에 실패했습니다." });
+      }
+      
+      res.status(201).json(product);
+    } catch (error) {
+      console.error('Error in add product endpoint:', error);
+      res.status(500).json({ message: "상품 등록에 실패했습니다." });
+    }
+  });
+
+  // Update product
+  app.put("/api/seller/products/:productId", authenticateToken, async (req: any, res) => {
+    try {
+      const { productId } = req.params;
+      
+      // Get seller info
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('id')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (!seller) {
+        return res.status(403).json({ message: "판매자 권한이 없습니다." });
+      }
+      
+      // Check if product belongs to seller
+      const { data: existingProduct } = await supabase
+        .from('products')
+        .select('id')
+        .eq('id', productId)
+        .eq('seller_id', seller.id)
+        .single();
+      
+      if (!existingProduct) {
+        return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
+      }
+      
+      const { name, nameKo, description, descriptionKo, basePrice, categoryId, imageUrl, stock, customizationOptions } = req.body;
+      
+      const { data: product, error } = await supabase
+        .from('products')
+        .update({
+          name,
+          name_ko: nameKo,
+          description,
+          description_ko: descriptionKo,
+          base_price: basePrice,
+          category_id: categoryId,
+          image_url: imageUrl,
+          stock,
+          customization_options: customizationOptions,
+          is_approved: false // 수정 시 재승인 필요
+        })
+        .eq('id', productId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating product:', error);
+        return res.status(500).json({ message: "상품 수정에 실패했습니다." });
+      }
+      
+      res.json(product);
+    } catch (error) {
+      console.error('Error in update product endpoint:', error);
+      res.status(500).json({ message: "상품 수정에 실패했습니다." });
+    }
+  });
+
+  // Delete product (soft delete)
+  app.delete("/api/seller/products/:productId", authenticateToken, async (req: any, res) => {
+    try {
+      const { productId } = req.params;
+      
+      // Get seller info
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('id')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (!seller) {
+        return res.status(403).json({ message: "판매자 권한이 없습니다." });
+      }
+      
+      // Check if product belongs to seller
+      const { data: existingProduct } = await supabase
+        .from('products')
+        .select('id')
+        .eq('id', productId)
+        .eq('seller_id', seller.id)
+        .single();
+      
+      if (!existingProduct) {
+        return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
+      }
+      
+      const { error } = await supabase
+        .from('products')
+        .update({ is_active: false })
+        .eq('id', productId);
+      
+      if (error) {
+        console.error('Error deleting product:', error);
+        return res.status(500).json({ message: "상품 삭제에 실패했습니다." });
+      }
+      
+      res.json({ message: "상품이 삭제되었습니다." });
+    } catch (error) {
+      console.error('Error in delete product endpoint:', error);
+      res.status(500).json({ message: "상품 삭제에 실패했습니다." });
+    }
+  });
+
+  // Get seller orders
+  app.get("/api/seller/orders", authenticateToken, async (req: any, res) => {
+    try {
+      // Get seller info
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('id')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (!seller) {
+        return res.status(403).json({ message: "판매자 권한이 없습니다." });
+      }
+      
+      // Get orders containing seller's products
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          users (
+            id, username, email
+          )
+        `)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching seller orders:', error);
+        return res.status(500).json({ message: "주문 목록을 가져오는데 실패했습니다." });
+      }
+      
+      // Filter orders that contain seller's products
+      const sellerOrders = orders.filter(order => {
+        if (!order.order_items || !Array.isArray(order.order_items)) return false;
+        return order.order_items.some((item: any) => item.sellerId === seller.id);
+      });
+      
+      res.json(sellerOrders);
+    } catch (error) {
+      console.error('Error in seller orders endpoint:', error);
+      res.status(500).json({ message: "주문 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Update order status (seller)
+  app.put("/api/seller/orders/:orderId/status", authenticateToken, async (req: any, res) => {
+    try {
+      const { orderId } = req.params;
+      const { status, trackingNumber, shippingCompanyId } = req.body;
+      
+      // Get seller info
+      const { data: seller } = await supabase
+        .from('sellers')
+        .select('id')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (!seller) {
+        return res.status(403).json({ message: "판매자 권한이 없습니다." });
+      }
+      
+      const updateData: any = { status };
+      
+      if (trackingNumber) {
+        updateData.tracking_number = trackingNumber;
+      }
+      
+      if (shippingCompanyId) {
+        updateData.shipping_company_id = shippingCompanyId;
+      }
+      
+      if (status === 'shipped') {
+        updateData.shipped_at = new Date().toISOString();
+      }
+      
+      const { data: order, error } = await supabase
+        .from('orders')
+        .update(updateData)
+        .eq('id', orderId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating order status:', error);
+        return res.status(500).json({ message: "주문 상태 업데이트에 실패했습니다." });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      console.error('Error in update order status endpoint:', error);
+      res.status(500).json({ message: "주문 상태 업데이트에 실패했습니다." });
+    }
+  });
+
+  // Get shipping companies
+  app.get("/api/shipping-companies", async (req, res) => {
+    try {
+      const { data: companies, error } = await supabase
+        .from('shipping_companies')
+        .select('*')
+        .eq('is_active', true)
+        .order('name');
+      
+      if (error) {
+        console.error('Error fetching shipping companies:', error);
+        return res.status(500).json({ message: "배송업체 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(companies);
+    } catch (error) {
+      console.error('Error in shipping companies endpoint:', error);
+      res.status(500).json({ message: "배송업체 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Get seller profile
+  app.get("/api/seller/profile", authenticateToken, async (req: any, res) => {
+    try {
+      const { data: seller, error } = await supabase
+        .from('sellers')
+        .select('*')
+        .eq('user_id', req.user.id)
+        .single();
+      
+      if (error || !seller) {
+        return res.status(404).json({ message: "판매자 정보를 찾을 수 없습니다." });
+      }
+      
+      res.json(seller);
+    } catch (error) {
+      console.error('Error in seller profile endpoint:', error);
+      res.status(500).json({ message: "판매자 정보를 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Update seller profile
+  app.put("/api/seller/profile", authenticateToken, async (req: any, res) => {
+    try {
+      const { shopName, businessNumber, contactEmail, contactPhone, address, bankAccount, bankName } = req.body;
+      
+      const { data: seller, error } = await supabase
+        .from('sellers')
+        .update({
+          shop_name: shopName,
+          business_number: businessNumber,
+          contact_email: contactEmail,
+          contact_phone: contactPhone,
+          address,
+          bank_account: bankAccount,
+          bank_name: bankName,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', req.user.id)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating seller profile:', error);
+        return res.status(500).json({ message: "판매자 정보 수정에 실패했습니다." });
+      }
+      
+      res.json(seller);
+    } catch (error) {
+      console.error('Error in update seller profile endpoint:', error);
+      res.status(500).json({ message: "판매자 정보 수정에 실패했습니다." });
     }
   });
 
