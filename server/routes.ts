@@ -166,15 +166,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let isPasswordValid = false;
       
       try {
-        // For admin account, allow simple password for testing
-        if (username === 'admin' && password === '12345') {
-          isPasswordValid = true;
-        } else {
+        // Check if password starts with bcrypt hash
+        if (user.password.startsWith('$2b$')) {
+          // bcrypt encrypted password
           isPasswordValid = await bcrypt.compare(password, user.password);
+          console.log(`BCrypt password check for ${user.username}:`, isPasswordValid);
+        } else {
+          // Plain text password (for development/testing)
+          isPasswordValid = password === user.password;
+          console.log(`Plain text password check for ${user.username}:`, isPasswordValid, `"${password}" === "${user.password}"`);
         }
       } catch (bcryptError) {
         console.error('Bcrypt error:', bcryptError);
-        // If bcrypt fails, it might be a plain text password (for testing)
+        // If bcrypt fails, try plain text comparison
         isPasswordValid = password === user.password;
       }
       

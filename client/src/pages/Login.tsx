@@ -71,29 +71,39 @@ export default function Login() {
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  아이디
+                </label>
                 <Input
                   id="username"
                   type="text"
-                  placeholder="아이디"
+                  placeholder="아이디를 입력하세요 (예: admin, ham244)"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                   required
                   disabled={isLoading}
                   className="h-12 text-base"
+                  autoComplete="username"
+                  pattern="[a-zA-Z0-9_]+"
+                  title="아이디는 영문, 숫자, 언더스코어만 사용 가능합니다"
                 />
               </div>
               
               <div className="space-y-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  비밀번호
+                </label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="비밀번호"
+                    placeholder="비밀번호를 입력하세요"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
                     disabled={isLoading}
                     className="h-12 text-base pr-10"
+                    autoComplete="current-password"
                   />
                   <button
                     type="button"
