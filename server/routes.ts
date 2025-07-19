@@ -1162,7 +1162,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // 활성화되고 승인된 상품만 가져오기
-      query = query.eq('is_active', true).eq('is_approved', true);
+      query = query.eq('is_active', true);
       
       const { data: products, error } = await query.order('created_at', { ascending: false });
       
@@ -1544,6 +1544,280 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error in update seller profile endpoint:', error);
       res.status(500).json({ message: "판매자 정보 수정에 실패했습니다." });
+    }
+  });
+
+  // Admin routes - 관리자 전용 API
+  
+  // Get all products for admin (including inactive and unapproved)
+  app.get("/api/admin/products", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { data: products, error } = await supabase
+        .from('products')
+        .select(`
+          *,
+          categories (
+            id, name, name_ko
+          ),
+          sellers (
+            id, shop_name, contact_email
+          )
+        `)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching admin products:', error);
+        return res.status(500).json({ message: "상품 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(products);
+    } catch (error) {
+      console.error('Error in admin products endpoint:', error);
+      res.status(500).json({ message: "상품 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Approve/reject product
+  app.put("/api/admin/products/:productId/approve", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { productId } = req.params;
+      const { approved } = req.body;
+      
+      const updateData: any = { is_approved: approved };
+      if (approved) {
+        updateData.approval_date = new Date().toISOString();
+      } else {
+        updateData.approval_date = null;
+      }
+      
+      const { data: product, error } = await supabase
+        .from('products')
+        .update(updateData)
+        .eq('id', productId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating product approval:', error);
+        return res.status(500).json({ message: "상품 승인 상태 변경에 실패했습니다." });
+      }
+      
+      res.json(product);
+    } catch (error) {
+      console.error('Error in product approval endpoint:', error);
+      res.status(500).json({ message: "상품 승인 상태 변경에 실패했습니다." });
+    }
+  });
+
+  // Update product status (active/inactive)
+  app.put("/api/admin/products/:productId/status", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { productId } = req.params;
+      const { is_active } = req.body;
+      
+      const { data: product, error } = await supabase
+        .from('products')
+        .update({ is_active })
+        .eq('id', productId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating product status:', error);
+        return res.status(500).json({ message: "상품 상태 변경에 실패했습니다." });
+      }
+      
+      res.json(product);
+    } catch (error) {
+      console.error('Error in product status endpoint:', error);
+      res.status(500).json({ message: "상품 상태 변경에 실패했습니다." });
+    }
+  });
+
+  // Delete product (admin)
+  app.delete("/api/admin/products/:productId", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { productId } = req.params;
+      
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', productId);
+      
+      if (error) {
+        console.error('Error deleting product:', error);
+        return res.status(500).json({ message: "상품 삭제에 실패했습니다." });
+      }
+      
+      res.json({ message: "상품이 삭제되었습니다." });
+    } catch (error) {
+      console.error('Error in product delete endpoint:', error);
+      res.status(500).json({ message: "상품 삭제에 실패했습니다." });
+    }
+  });
+
+  // Get all sellers for admin
+  app.get("/api/admin/sellers", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { data: sellers, error } = await supabase
+        .from('sellers')
+        .select(`
+          *,
+          users (
+            id, username, email, created_at
+          )
+        `)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching sellers:', error);
+        return res.status(500).json({ message: "판매자 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(sellers);
+    } catch (error) {
+      console.error('Error in admin sellers endpoint:', error);
+      res.status(500).json({ message: "판매자 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Approve/reject seller
+  app.put("/api/admin/sellers/:sellerId/approve", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { sellerId } = req.params;
+      const { approved } = req.body;
+      
+      const status = approved ? 'approved' : 'rejected';
+      const updateData: any = { is_approved: approved, status };
+      
+      if (approved) {
+        updateData.approved_at = new Date().toISOString();
+      }
+      
+      const { data: seller, error } = await supabase
+        .from('sellers')
+        .update(updateData)
+        .eq('id', sellerId)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error updating seller approval:', error);
+        return res.status(500).json({ message: "판매자 승인 상태 변경에 실패했습니다." });
+      }
+      
+      res.json(seller);
+    } catch (error) {
+      console.error('Error in seller approval endpoint:', error);
+      res.status(500).json({ message: "판매자 승인 상태 변경에 실패했습니다." });
+    }
+  });
+
+  // Get all orders for admin
+  app.get("/api/admin/orders", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          users (
+            id, username, email
+          )
+        `)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching admin orders:', error);
+        return res.status(500).json({ message: "주문 목록을 가져오는데 실패했습니다." });
+      }
+      
+      res.json(orders);
+    } catch (error) {
+      console.error('Error in admin orders endpoint:', error);
+      res.status(500).json({ message: "주문 목록을 가져오는데 실패했습니다." });
+    }
+  });
+
+  // Get site statistics for admin dashboard
+  app.get("/api/admin/stats", authenticateToken, async (req: any, res) => {
+    try {
+      // Check admin permissions
+      if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "관리자 권한이 필요합니다." });
+      }
+      
+      // Get various counts
+      const [
+        { count: totalProducts },
+        { count: totalUsers },
+        { count: totalOrders },
+        { count: totalSellers },
+        { count: pendingProducts },
+        { count: pendingSellers }
+      ] = await Promise.all([
+        supabase.from('products').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
+        supabase.from('users').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
+        supabase.from('orders').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
+        supabase.from('sellers').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
+        supabase.from('products').select('*', { count: 'exact' }).eq('is_approved', false).then(({ count }) => ({ count: count || 0 })),
+        supabase.from('sellers').select('*', { count: 'exact' }).eq('is_approved', false).then(({ count }) => ({ count: count || 0 }))
+      ]);
+      
+      // Calculate total revenue
+      const { data: orders } = await supabase
+        .from('orders')
+        .select('total_amount')
+        .eq('status', 'completed');
+      
+      const totalRevenue = orders?.reduce((sum, order) => sum + (order.total_amount || 0), 0) || 0;
+      
+      res.json({
+        totalProducts,
+        totalUsers,
+        totalOrders,
+        totalSellers,
+        pendingProducts,
+        pendingSellers,
+        totalRevenue
+      });
+    } catch (error) {
+      console.error('Error in admin stats endpoint:', error);
+      res.status(500).json({ message: "통계 정보를 가져오는데 실패했습니다." });
     }
   });
 

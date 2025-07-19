@@ -28,7 +28,11 @@ import {
   Settings,
   FileText,
   DollarSign,
-  Upload
+  Upload,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Search
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -53,11 +57,40 @@ export default function AdminDashboard() {
 
   // Data fetching
   const { data: products, isLoading: productsLoading } = useQuery({
-    queryKey: ["/api/products"],
+    queryKey: ["/api/admin/products"],
+    queryFn: async () => {
+      const response = await fetch("/api/admin/products", {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error("Failed to fetch products");
+      return response.json();
+    }
   });
 
   const { data: categories } = useQuery({
     queryKey: ["/api/categories"],
+  });
+
+  const { data: stats } = useQuery({
+    queryKey: ["/api/admin/stats"],
+    queryFn: async () => {
+      const response = await fetch("/api/admin/stats", {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error("Failed to fetch stats");
+      return response.json();
+    }
+  });
+
+  const { data: sellers } = useQuery({
+    queryKey: ["/api/admin/sellers"],
+    queryFn: async () => {
+      const response = await fetch("/api/admin/sellers", {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error("Failed to fetch sellers");
+      return response.json();
+    }
   });
 
   // Mutations
