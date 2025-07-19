@@ -41,6 +41,7 @@ import {
   ChevronUp,
   ImageIcon,
   AlertCircle,
+  MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DraggableImage } from "@/components/DraggableImage";
