@@ -96,7 +96,7 @@ function Router() {
 
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/auth" component={AuthPage} />
+        <Route path="/auth" component={Login} />
         <Route path="/cart" component={CartPage} />
         <Route path="/checkout">
           {() => (

@@ -64,19 +64,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup }) => {
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-900 dark:text-white">
-              이메일
+            <Label htmlFor="username" className="text-gray-900 dark:text-white">
+              아이디
             </Label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
+                id="username"
+                name="username"
+                type="text"
+                placeholder="아이디를 입력하세요"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="pl-10 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                autoComplete="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
               />
             </div>
           </div>
