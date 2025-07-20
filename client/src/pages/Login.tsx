@@ -76,16 +76,16 @@ export default function Login() {
                 </label>
                 <Input
                   id="username"
+                  name="username"
                   type="text"
-                  placeholder="아이디를 입력하세요 (예: admin, ham244)"
+                  placeholder="아이디를 입력하세요"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                   required
                   disabled={isLoading}
                   className="h-12 text-base"
-                  autoComplete="username"
-                  pattern="[a-zA-Z0-9_]+"
-                  title="아이디는 영문, 숫자, 언더스코어만 사용 가능합니다"
+                  autoComplete="off"
+                  inputMode="text"
                 />
               </div>
               
