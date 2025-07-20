@@ -71,21 +71,22 @@ export default function Login() {
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="user-id" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   아이디
                 </label>
-                <Input
-                  id="username"
-                  name="username"
+                <input
+                  id="user-id"
+                  name="user-id"
                   type="text"
                   placeholder="아이디를 입력하세요"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 text-base"
+                  className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   autoComplete="off"
-                  inputMode="text"
+                  autoCapitalize="off"
+                  spellCheck="false"
                 />
               </div>
               
