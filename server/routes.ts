@@ -240,7 +240,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { data: user, error } = await supabase
         .from('users')
-        .select('id, username, email, first_name, last_name, is_admin, created_at, updated_at')
+        .select('id, username, email, first_name, last_name, created_at')
         .eq('id', req.user.id)
         .single();
       
@@ -1218,7 +1218,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         query = query.or(`name.ilike.%${searchTerm}%,name_ko.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
       }
       
-      // 활성화되고 승인된 상품만 가져오기
+      // 활성화된 상품만 가져오기
       query = query.eq('is_active', true);
       
       const { data: products, error } = await query.order('created_at', { ascending: false });
