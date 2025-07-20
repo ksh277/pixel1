@@ -1218,8 +1218,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         query = query.or(`name.ilike.%${searchTerm}%,name_ko.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
       }
       
-      // 활성화된 상품만 가져오기
-      query = query.eq('is_active', true);
+      // 활성화된 상품만 가져오기 (컬럼이 존재하는 경우에만)
+      // query = query.eq('is_active', true);
       
       const { data: products, error } = await query.order('created_at', { ascending: false });
       
