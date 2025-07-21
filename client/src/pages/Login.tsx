@@ -57,7 +57,7 @@ export default function Login() {
         <Card className="shadow-lg bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-              {t({ ko: "로그인", en: "Login" })}
+              {t({ ko: "로그인", en: "Login", ja: "ログイン", zh: "登录" })}
             </CardTitle>
           </CardHeader>
           
@@ -72,13 +72,13 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <label htmlFor="user-id" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  아이디
+                  {t({ ko: "아이디", en: "Username", ja: "ユーザー名", zh: "用户名" })}
                 </label>
                 <input
                   id="user-id"
                   name="user-id"
                   type="text"
-                  placeholder="아이디를 입력하세요"
+                  placeholder={t({ ko: "아이디를 입력하세요", en: "Enter your username", ja: "ユーザー名を入力してください", zh: "请输入用户名" })}
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                   required
@@ -92,13 +92,13 @@ export default function Login() {
               
               <div className="space-y-2">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  비밀번호
+                  {t({ ko: "비밀번호", en: "Password", ja: "パスワード", zh: "密码" })}
                 </label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="비밀번호를 입력하세요"
+                    placeholder={t({ ko: "비밀번호를 입력하세요", en: "Enter your password", ja: "パスワードを入力してください", zh: "请输入密码" })}
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
@@ -125,7 +125,7 @@ export default function Login() {
                     />
                     <label htmlFor="secure-login" className="text-sm text-gray-600 dark:text-white cursor-pointer flex items-center">
                       <Shield className="w-4 h-4 mr-1" />
-                      보안접속
+                      {t({ ko: "보안접속", en: "Secure Login", ja: "セキュアログイン", zh: "安全登录" })}
                     </label>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ export default function Login() {
                 className="w-full h-12 bg-blue-600 text-white hover:bg-blue-700 text-base font-medium"
                 disabled={isLoading}
               >
-                {isLoading ? "로그인 중..." : "로그인"}
+                {isLoading ? t({ ko: "로그인 중...", en: "Logging in...", ja: "ログイン中...", zh: "登录中..." }) : t({ ko: "로그인", en: "Login", ja: "ログイン", zh: "登录" })}
               </Button>
             </form>
             

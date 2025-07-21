@@ -257,7 +257,7 @@ export default function Home() {
               <span className="text-2xl">🔥</span>
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-foreground">
-                  {t({ ko: "인기상품", en: "Popular Items" })}
+                  {t({ ko: "인기상품", en: "Popular Items", ja: "人気商品", zh: "热门商品" })}
                 </h2>
                 <p className="text-sm text-muted-foreground hidden sm:block">
                   {t({
@@ -269,7 +269,7 @@ export default function Home() {
             </div>
             <Link href="/products">
               <button className="text-sm text-blue-500 hover:underline flex items-center">
-                {t({ ko: "더보기", en: "View More" })}{" "}
+                {t({ ko: "더보기", en: "View More", ja: "もっと見る", zh: "查看更多" })}{" "}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </Link>
@@ -285,21 +285,21 @@ export default function Home() {
               {/* Desktop View - 3 Column Grid */}
               <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
                 <PopularBox
-                  title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!" })}
+                  title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!", ja: "1個から製作可能です！", zh: "1件起即可制作！" })}
                   description={t({ ko: "소량 제작도 부담 없이", en: "Small quantity orders welcome" })}
                   image="/api/placeholder/400/300"
                   products={products?.slice(0, 3) || []}
                   bgColor="bg-purple-50"
                 />
                 <PopularBox
-                  title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit" })}
+                  title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit", ja: "グッズイベント団体キット", zh: "商品活动团体套装" })}
                   description={t({ ko: "단체 주문 특가 혜택", en: "Special group order benefits" })}
                   image="/api/placeholder/400/300"
                   products={products?.slice(3, 6) || []}
                   bgColor="bg-green-50"
                 />
                 <PopularBox
-                  title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts" })}
+                  title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts", ja: "ベスト団体Tシャツ", zh: "最佳团体T恤" })}
                   description={t({ ko: "인기 단체복 추천", en: "Popular group clothing recommendations" })}
                   image="/api/placeholder/400/300"
                   products={products?.slice(6, 9) || []}
@@ -331,7 +331,7 @@ export default function Home() {
                 >
                   <SwiperSlide>
                     <PopularBox
-                      title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!" })}
+                      title={t({ ko: "1개부터 제작 가능해요!", en: "Available from 1 piece!", ja: "1個から製作可能です！", zh: "1件起即可制作！" })}
                       description={t({ ko: "소량 제작도 부담 없이", en: "Small quantity orders welcome" })}
                       image="/api/placeholder/400/300"
                       products={products?.slice(0, 3) || []}
@@ -340,7 +340,7 @@ export default function Home() {
                   </SwiperSlide>
                   <SwiperSlide>
                     <PopularBox
-                      title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit" })}
+                      title={t({ ko: "굿즈 행사 단체 키트", en: "Event Group Kit", ja: "グッズイベント団体キット", zh: "商品活动团体套装" })}
                       description={t({ ko: "단체 주문 특가 혜택", en: "Special group order benefits" })}
                       image="/api/placeholder/400/300"
                       products={products?.slice(3, 6) || []}
@@ -349,7 +349,7 @@ export default function Home() {
                   </SwiperSlide>
                   <SwiperSlide>
                     <PopularBox
-                      title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts" })}
+                      title={t({ ko: "베스트 단체 티셔츠", en: "Best Group T-shirts", ja: "ベスト団体Tシャツ", zh: "最佳团体T恤" })}
                       description={t({ ko: "인기 단체복 추천", en: "Popular group clothing recommendations" })}
                       image="/api/placeholder/400/300"
                       products={products?.slice(6, 9) || []}
@@ -379,19 +379,23 @@ export default function Home() {
                   {t({
                     ko: "창작자들의 소중한 리뷰",
                     en: "Precious Reviews from Creators",
+                    ja: "クリエイターの大切なレビュー",
+                    zh: "创作者宝贵评论"
                   })}
                 </h2>
                 <p className="text-sm text-muted-foreground hidden sm:block">
                   {t({
                     ko: "실제 창작자들이 남긴 생생한 후기를 확인해보세요",
                     en: "Check out vivid reviews from real creators",
+                    ja: "実際のクリエイターが残した生の感想をご覧ください",
+                    zh: "查看真实创作者留下的生动评价"
                   })}
                 </p>
               </div>
             </div>
             <Link href="/reviews">
               <button className="text-sm text-blue-500 hover:underline flex items-center">
-                {t({ ko: "더보기", en: "View More" })}{" "}
+                {t({ ko: "더보기", en: "View More", ja: "もっと見る", zh: "查看更多" })}{" "}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </Link>
@@ -488,7 +492,7 @@ export default function Home() {
             </div>
             <Link href="/community">
               <button className="text-sm text-blue-500 hover:underline flex items-center">
-                {t({ ko: "더보기", en: "View More" })}{" "}
+                {t({ ko: "더보기", en: "View More", ja: "もっと見る", zh: "查看更多" })}{" "}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </Link>
@@ -586,7 +590,7 @@ export default function Home() {
             </div>
             <Link href="/products">
               <button className="text-sm text-blue-500 hover:underline flex items-center">
-                {t({ ko: "더보기", en: "View More" })}{" "}
+                {t({ ko: "더보기", en: "View More", ja: "もっと見る", zh: "查看更多" })}{" "}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </Link>

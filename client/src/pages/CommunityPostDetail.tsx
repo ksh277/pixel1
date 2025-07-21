@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useParams } from "wouter";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Heart, MessageCircle, Calendar, User, Trash2, Send } from "lucide-react";
+import {
+  Heart,
+  MessageCircle,
+  Calendar,
+  User,
+  Trash2,
+  Send,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -39,7 +46,9 @@ export default function CommunityPostDetail() {
     enabled: !!id,
   });
 
-  const { data: comments, isLoading: commentsLoading } = useQuery<CommentWithUser[]>({
+  const { data: comments, isLoading: commentsLoading } = useQuery<
+    CommentWithUser[]
+  >({
     queryKey: ["/api/community/posts", id, "comments"],
     enabled: !!id,
   });
@@ -55,7 +64,9 @@ export default function CommunityPostDetail() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/community/posts", id, "comments"] });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/community/posts", id, "comments"],
+      });
       setNewComment("");
       toast({
         title: "댓글이 등록되었습니다",
@@ -81,7 +92,9 @@ export default function CommunityPostDetail() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/community/posts", id, "comments"] });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/community/posts", id, "comments"],
+      });
       toast({
         title: "댓글이 삭제되었습니다",
         description: "댓글이 성공적으로 삭제되었습니다.",
@@ -120,7 +133,7 @@ export default function CommunityPostDetail() {
 
   const handleDeleteComment = (commentId: number) => {
     if (!user) return;
-    
+
     if (window.confirm("댓글을 삭제하시겠습니까?")) {
       deleteCommentMutation.mutate(commentId);
     }
@@ -142,7 +155,7 @@ export default function CommunityPostDetail() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] p-4">
+      <div className="min-h-screen bg-gray-20 dark:bg-[#1a1a1a] p-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             게시글을 찾을 수 없습니다
@@ -155,9 +168,10 @@ export default function CommunityPostDetail() {
     );
   }
 
-  const displayName = post.first_name && post.last_name 
-    ? `${post.first_name} ${post.last_name}`
-    : post.username;
+  const displayName =
+    post.first_name && post.last_name
+      ? `${post.first_name} ${post.last_name}`
+      : post.username;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] p-4">
@@ -249,12 +263,16 @@ export default function CommunityPostDetail() {
                       </span>
                       <Button
                         onClick={handleSubmitComment}
-                        disabled={createCommentMutation.isPending || !newComment.trim()}
+                        disabled={
+                          createCommentMutation.isPending || !newComment.trim()
+                        }
                         size="sm"
                         className="bg-blue-600 hover:bg-blue-700 text-white"
                       >
                         <Send className="w-4 h-4 mr-1" />
-                        {createCommentMutation.isPending ? "등록 중..." : "댓글 등록"}
+                        {createCommentMutation.isPending
+                          ? "등록 중..."
+                          : "댓글 등록"}
                       </Button>
                     </div>
                   </div>
@@ -287,12 +305,16 @@ export default function CommunityPostDetail() {
             ) : comments && comments.length > 0 ? (
               <div className="space-y-4">
                 {comments.map((comment) => {
-                  const commentDisplayName = comment.first_name && comment.last_name 
-                    ? `${comment.first_name} ${comment.last_name}`
-                    : comment.username;
-                  
+                  const commentDisplayName =
+                    comment.first_name && comment.last_name
+                      ? `${comment.first_name} ${comment.last_name}`
+                      : comment.username;
+
                   return (
-                    <div key={comment.id} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0">
+                    <div
+                      key={comment.id}
+                      className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0"
+                    >
                       <div className="flex items-start space-x-3">
                         <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
                           <User className="w-4 h-4 text-white" />
@@ -304,10 +326,14 @@ export default function CommunityPostDetail() {
                                 {commentDisplayName}
                               </span>
                               <span className="text-sm text-gray-500 dark:text-gray-400">
-                                {formatDistance(new Date(comment.createdAt), new Date(), {
-                                  addSuffix: true,
-                                  locale: ko,
-                                })}
+                                {formatDistance(
+                                  new Date(comment.createdAt),
+                                  new Date(),
+                                  {
+                                    addSuffix: true,
+                                    locale: ko,
+                                  },
+                                )}
                               </span>
                             </div>
                             {user && user.id === comment.userId && (

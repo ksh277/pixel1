@@ -25,6 +25,9 @@ import { SearchModal } from "@/components/SearchModal";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/useCart";
 import { useNotifications } from "@/hooks/useNotifications";
+import { useLanguage } from "@/hooks/useLanguage";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Globe } from "lucide-react";
 
 export const Header = () => {
   const [location, setLocation] = useLocation();
@@ -36,6 +39,7 @@ export const Header = () => {
   const { toast } = useToast();
   const { itemCount } = useCart();
   const { unreadCount } = useNotifications();
+  const { language, setLanguage, t } = useLanguage();
   
   // Conditionally use Supabase auth hook
   let supabaseUser = null;
@@ -98,11 +102,11 @@ export const Header = () => {
   };
 
   const navItems = [
-    { name: "홈", href: "/" },
-    { name: "상품", href: "/products" },
-    { name: "커뮤니티", href: "/community" },
-    { name: "자료실", href: "/resources" },
-    { name: "이벤트", href: "/events" },
+    { name: t({ ko: "홈", en: "Home", ja: "ホーム", zh: "首页" }), href: "/" },
+    { name: t({ ko: "상품", en: "Products", ja: "商品", zh: "产品" }), href: "/products" },
+    { name: t({ ko: "커뮤니티", en: "Community", ja: "コミュニティ", zh: "社区" }), href: "/community" },
+    { name: t({ ko: "자료실", en: "Resources", ja: "資料室", zh: "资源" }), href: "/resources" },
+    { name: t({ ko: "이벤트", en: "Events", ja: "イベント", zh: "活动" }), href: "/events" },
   ];
 
 
@@ -165,7 +169,7 @@ export const Header = () => {
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchInputChange}
-                placeholder="상품검색..."
+                placeholder={t({ ko: "상품검색...", en: "Search products...", ja: "商品検索...", zh: "搜索商品..." })}
                 className="w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -217,6 +221,22 @@ export const Header = () => {
             </Link>
           )}
 
+          {/* Language Selector */}
+          <Select value={language} onValueChange={setLanguage}>
+            <SelectTrigger className="w-20 h-10 border-0 bg-transparent">
+              <div className="flex items-center space-x-1">
+                <Globe className="h-4 w-4" />
+                <SelectValue />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ko">한국어</SelectItem>
+              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="ja">日本語</SelectItem>
+              <SelectItem value="zh">中文</SelectItem>
+            </SelectContent>
+          </Select>
+
           {/* Theme Toggle */}
           <ThemeToggle />
           
@@ -236,12 +256,12 @@ export const Header = () => {
                 <div className="flex items-center space-x-2">
                   <Link href="/auth">
                     <Button variant="outline" size="sm">
-                      로그인
+                      {t({ ko: "로그인", en: "Login", ja: "ログイン", zh: "登录" })}
                     </Button>
                   </Link>
                   <Link href="/register">
                     <Button variant="default" size="sm">
-                      회원가입
+                      {t({ ko: "회원가입", en: "Sign Up", ja: "会員登録", zh: "注册" })}
                     </Button>
                   </Link>
                 </div>
@@ -264,8 +284,8 @@ export const Header = () => {
                         await localLogout();
                       }
                       toast({
-                        title: "로그아웃 완료",
-                        description: "안전하게 로그아웃되었습니다.",
+                        title: t({ ko: "로그아웃 완료", en: "Logout Complete", ja: "ログアウト完了", zh: "登出完成" }),
+                        description: t({ ko: "안전하게 로그아웃되었습니다.", en: "You have been safely logged out.", ja: "安全にログアウトされました。", zh: "您已安全登出。" }),
                       });
                       setLocation('/');
                     }}
@@ -278,12 +298,12 @@ export const Header = () => {
                 <div className="flex items-center space-x-2">
                   <Link href="/login">
                     <Button variant="outline" size="sm">
-                      로그인
+                      {t({ ko: "로그인", en: "Login", ja: "ログイン", zh: "登录" })}
                     </Button>
                   </Link>
                   <Link href="/register">
                     <Button variant="default" size="sm">
-                      회원가입
+                      {t({ ko: "회원가입", en: "Sign Up", ja: "会員登録", zh: "注册" })}
                     </Button>
                   </Link>
                 </div>
@@ -292,8 +312,14 @@ export const Header = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        {/* Mobile Actions */}
+        <div className="md:hidden flex items-center space-x-2">
+          {/* Mobile Search Button */}
+          <Button variant="ghost" size="icon" onClick={() => setIsSearchModalOpen(true)}>
+            <Search className="h-4 w-4" />
+          </Button>
+          
+          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
@@ -332,28 +358,115 @@ export const Header = () => {
               </button>
             </div>
             
-            {/* Company Info */}
-            <div className="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
-              회사명: 본과 수종효과 최고실상품
+            {/* Mobile Search Bar */}
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <form onSubmit={handleSearch} className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  placeholder={t({ ko: "상품검색...", en: "Search products...", ja: "商品検索...", zh: "搜索商品..." })}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </form>
             </div>
-            
-            {/* About Button */}
-            <div className="px-4 py-2">
-              <button className="w-full bg-black dark:bg-[#1a1a1a] text-white py-2 px-4 rounded-full text-sm font-medium">
-                ABOUT 올댓프린팅
-              </button>
-            </div>
-            
-            {/* Category Tabs */}
-            <div className="px-4 py-2">
-              <div className="flex border-b border-gray-200 dark:border-gray-700">
-                <button className="flex-1 py-2 text-sm font-medium text-black dark:text-white border-b-2 border-black dark:border-white">
-                  카테고리
-                </button>
-                <button className="flex-1 py-2 text-sm text-gray-500 dark:text-gray-400">
-                  고객센터
-                </button>
+
+            {/* Mobile Navigation */}
+            <div className="px-4 py-4 border-b border-gray-200 dark:border-gray-700">
+              <div className="space-y-2">
+                {navItems.map((item) => (
+                  <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="flex items-center justify-between py-3 text-base font-medium text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400">
+                      {item.name}
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    </div>
+                  </Link>
+                ))}
               </div>
+            </div>
+
+            {/* User Actions */}
+            <div className="px-4 py-4 border-b border-gray-200 dark:border-gray-700">
+              {currentUser ? (
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">{getDisplayName()}님</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {t({ ko: "환영합니다", en: "Welcome", ja: "いらっしゃいませ", zh: "欢迎" })}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <Link href="/cart" onClick={() => setIsMobileMenuOpen(false)}>
+                      <div className="flex flex-col items-center py-3 text-center">
+                        <div className="relative">
+                          <ShoppingCart className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                          {itemCount > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                              {itemCount}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                          {t({ ko: "장바구니", en: "Cart", ja: "カート", zh: "购物车" })}
+                        </span>
+                      </div>
+                    </Link>
+                    <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)}>
+                      <div className="flex flex-col items-center py-3 text-center">
+                        <div className="relative">
+                          <Heart className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                            0
+                          </span>
+                        </div>
+                        <span className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                          {t({ ko: "찜하기", en: "Wishlist", ja: "お気に入り", zh: "收藏" })}
+                        </span>
+                      </div>
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        if (isSupabaseConfigured) {
+                          // Handle Supabase logout if needed
+                        } else {
+                          await localLogout();
+                        }
+                        toast({
+                          title: t({ ko: "로그아웃 완료", en: "Logout Complete", ja: "ログアウト完了", zh: "登出完成" }),
+                          description: t({ ko: "안전하게 로그아웃되었습니다.", en: "You have been safely logged out.", ja: "安全にログアウトされました。", zh: "您已安全登出。" }),
+                        });
+                        setIsMobileMenuOpen(false);
+                        setLocation('/');
+                      }}
+                      className="flex flex-col items-center py-3 text-center"
+                    >
+                      <LogOut className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                      <span className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                        {t({ ko: "로그아웃", en: "Logout", ja: "ログアウト", zh: "登出" })}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      {t({ ko: "로그인", en: "Login", ja: "ログイン", zh: "登录" })}
+                    </Button>
+                  </Link>
+                  <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="default" className="w-full">
+                      {t({ ko: "회원가입", en: "Sign Up", ja: "会員登録", zh: "注册" })}
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
             
             {/* Categories */}
