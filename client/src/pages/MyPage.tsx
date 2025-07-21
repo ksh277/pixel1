@@ -438,7 +438,7 @@ export default function MyPage() {
                       value={userInfo.name}
                       onChange={(e) => setUserInfo({...userInfo, name: e.target.value})}
                       disabled={!isEditing}
-                      className="mt-1 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                      className="mt-1 dark:bg-[#1a1a1a] dark:text-white dark:border-gray-600"
                     />
                   </div>
                   <div>
@@ -447,7 +447,7 @@ export default function MyPage() {
                       value={userInfo.email}
                       onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}
                       disabled={!isEditing}
-                      className="mt-1 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                      className="mt-1 dark:bg-[#1a1a1a] dark:text-white dark:border-gray-600"
                     />
                   </div>
                   <div>
@@ -456,7 +456,7 @@ export default function MyPage() {
                       value={userInfo.phone}
                       onChange={(e) => setUserInfo({...userInfo, phone: e.target.value})}
                       disabled={!isEditing}
-                      className="mt-1 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                      className="mt-1 dark:bg-[#1a1a1a] dark:text-white dark:border-gray-600"
                     />
                   </div>
                   <div>
@@ -465,7 +465,7 @@ export default function MyPage() {
                       value={userInfo.address}
                       onChange={(e) => setUserInfo({...userInfo, address: e.target.value})}
                       disabled={!isEditing}
-                      className="mt-1 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                      className="mt-1 dark:bg-[#1a1a1a] dark:text-white dark:border-gray-600"
                     />
                   </div>
                   <div>
@@ -476,7 +476,7 @@ export default function MyPage() {
                         value={userInfo.password}
                         onChange={(e) => setUserInfo({...userInfo, password: e.target.value})}
                         disabled={!isEditing}
-                        className="mt-1 pr-10 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                        className="mt-1 pr-10 dark:bg-[#1a1a1a] dark:text-white dark:border-gray-600"
                       />
                       <Button
                         type="button"

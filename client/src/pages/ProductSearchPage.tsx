@@ -345,7 +345,7 @@ export default function ProductSearchPage() {
                         {categoriesLoading ? (
                           <div className="space-y-2">
                             {[...Array(5)].map((_, i) => (
-                              <div key={i} className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                              <div key={i} className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded animate-pulse" />
                             ))}
                           </div>
                         ) : (
@@ -502,11 +502,11 @@ export default function ProductSearchPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(9)].map((_, i) => (
                   <Card key={i} className="animate-pulse">
-                    <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-t-lg" />
+                    <div className="h-48 bg-gray-200 dark:bg-[#1a1a1a] rounded-t-lg" />
                     <CardContent className="p-4">
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
-                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
-                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+                      <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2" />
+                      <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2" />
+                      <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2" />
                     </CardContent>
                   </Card>
                 ))}

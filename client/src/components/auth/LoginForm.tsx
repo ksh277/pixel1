@@ -79,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup }) => {
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck="false"
-                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                className="bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
               />
             </div>
           </div>
@@ -97,7 +97,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="pl-10 pr-10 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                className="pl-10 pr-10 bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
               />
               <button
                 type="button"

@@ -148,7 +148,7 @@ export default function Rewards() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+          className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-lg p-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
         >
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -291,7 +291,7 @@ export default function Rewards() {
                   hoveredTier === tier.name.ko ? 'scale-105' : ''
                 }`}
               >
-                <Card className={`h-full ${tier.color} border-2 hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-gray-800 dark:border-gray-700`}>
+                <Card className={`h-full ${tier.color} border-2 hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-[#1a1a1a] dark:border-gray-700`}>
                   <CardHeader className="text-center pb-4">
                     <div className={`w-16 h-16 mx-auto rounded-full bg-white flex items-center justify-center mb-4 ${tier.textColor}`}>
                       {tier.icon}
@@ -302,7 +302,7 @@ export default function Rewards() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
-                      <div className="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg">
+                      <div className="bg-white/50 dark:bg-[#1a1a1a]/50 p-3 rounded-lg">
                         <div className="text-xs text-gray-600 dark:text-gray-300 mb-1">
                           {t({ ko: "등급 조건", en: "Tier Requirement", ja: "等級条件", zh: "等级要求" })}
                         </div>
@@ -311,7 +311,7 @@ export default function Rewards() {
                         </div>
                       </div>
                       
-                      <div className="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg">
+                      <div className="bg-white/50 dark:bg-[#1a1a1a]/50 p-3 rounded-lg">
                         <div className="text-xs text-gray-600 dark:text-gray-300 mb-1 flex items-center">
                           <Percent className="w-3 h-3 mr-1" />
                           {t({ ko: "포인트", en: "Points", ja: "ポイント", zh: "积分" })}
@@ -321,7 +321,7 @@ export default function Rewards() {
                         </div>
                       </div>
                       
-                      <div className="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg">
+                      <div className="bg-white/50 dark:bg-[#1a1a1a]/50 p-3 rounded-lg">
                         <div className="text-xs text-gray-600 dark:text-gray-300 mb-1 flex items-center">
                           <Truck className="w-3 h-3 mr-1" />
                           {t({ ko: "배송", en: "Shipping", ja: "배송", zh: "配送" })}
@@ -331,7 +331,7 @@ export default function Rewards() {
                         </div>
                       </div>
                       
-                      <div className="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg">
+                      <div className="bg-white/50 dark:bg-[#1a1a1a]/50 p-3 rounded-lg">
                         <div className="text-xs text-gray-600 dark:text-gray-300 mb-1 flex items-center">
                           <Gift className="w-3 h-3 mr-1" />
                           {t({ ko: "추가 혜택", en: "Benefits", ja: "追加特典", zh: "附加优惠" })}

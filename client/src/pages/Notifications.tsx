@@ -63,9 +63,9 @@ export const Notifications = () => {
       case "order":
         return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
       case "system":
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400";
+        return "bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-400";
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400";
+        return "bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-400";
     }
   };
 
@@ -189,7 +189,7 @@ export const Notifications = () => {
                 <CardContent className="p-4">
                   <div className="flex items-start space-x-3">
                     <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
-                      !notification.is_read ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                      !notification.is_read ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 dark:text-gray-400'
                     }`}>
                       <NotificationIcon 
                         type={notification.type || 'default'} 

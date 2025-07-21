@@ -105,7 +105,7 @@ export const RefundRequestList: React.FC = () => {
       {refundRequests.map((request: RefundRequest) => (
         <div
           key={request.id}
-          className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-[#1a1a1a] rounded-lg border border-gray-200 dark:border-gray-700 p-6"
         >
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center space-x-3">

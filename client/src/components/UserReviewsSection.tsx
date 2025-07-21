@@ -171,7 +171,7 @@ export function UserReviewsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayedReviews.map((review, index) => (
               <motion.div key={review.id} variants={itemVariants}>
-                <Card className="rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
+                <Card className="rounded-xl bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
                   <Link href={`/reviews/${review.id}`}>
                     <CardContent className="p-0 flex flex-col justify-between h-full">
                       {/* Product Image */}

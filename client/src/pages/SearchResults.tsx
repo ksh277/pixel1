@@ -239,12 +239,12 @@ export default function SearchResults() {
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm animate-pulse">
-                  <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-t-lg"></div>
+                <div key={i} className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm animate-pulse">
+                  <div className="aspect-square bg-gray-200 dark:bg-[#1a1a1a] rounded-t-lg"></div>
                   <div className="p-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2"></div>
                   </div>
                 </div>
               ))}

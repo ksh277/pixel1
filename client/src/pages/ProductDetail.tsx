@@ -604,7 +604,7 @@ export default function ProductDetail() {
                     </button>
                   </div>
                 </div>
-                <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                <div className="bg-gray-50 dark:bg-[#1a1a1a]/50 rounded-lg p-3">
                   <div className="text-sm text-gray-600 dark:text-gray-300">
                     <strong>수량별 할인 안내:</strong>
                   </div>
@@ -807,7 +807,7 @@ export default function ProductDetail() {
                 </p>
               </div>
             </div>
-            <Button variant="outline" className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+            <Button variant="outline" className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
               <Download className="w-4 h-4 mr-2" />
               다운로드
             </Button>
@@ -828,7 +828,7 @@ export default function ProductDetail() {
             <TabsContent value="description" className="mt-8">
               <div className="space-y-8">
                 {/* Product Detail Images */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+                <div className="bg-white dark:bg-[#1a1a1a] rounded-lg p-6">
                   <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">상품 상세 정보</h3>
                   <div className="space-y-6">
                     <img
@@ -874,7 +874,7 @@ export default function ProductDetail() {
             </TabsContent>
 
             <TabsContent value="qna" className="mt-8">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
+              <div className="bg-white dark:bg-[#1a1a1a] rounded-lg p-6">
                 <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">상품 문의</h3>
                 <div className="text-center py-12">
                   <HelpCircle className="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
@@ -892,7 +892,7 @@ export default function ProductDetail() {
 
       {/* Product Overview Section */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+        <div className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {t({
@@ -1338,7 +1338,7 @@ export default function ProductDetail() {
           <Button
             variant="outline"
             size="lg"
-            className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 shadow-lg border border-gray-200 dark:border-gray-700 rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
+            className="bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 shadow-lg border border-gray-200 dark:border-gray-700 rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
           >
             <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500 dark:text-blue-400" />
             <div className="text-left">
@@ -1350,9 +1350,9 @@ export default function ProductDetail() {
           </Button>
 
           {/* Speech bubble */}
-          <div className="absolute bottom-full right-0 mb-2 bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          <div className="absolute bottom-full right-0 mb-2 bg-gray-800 dark:bg-[#1a1a1a] text-white text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
             평일 9시~6시 (점심 12~1시)
-            <div className="absolute top-full right-4 w-2 h-2 bg-gray-800 dark:bg-gray-700 transform rotate-45"></div>
+            <div className="absolute top-full right-4 w-2 h-2 bg-gray-800 dark:bg-[#1a1a1a] transform rotate-45"></div>
           </div>
         </div>
 
@@ -1360,7 +1360,7 @@ export default function ProductDetail() {
         <Link href="/editor">
           <Button
             size="lg"
-            className="bg-black dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white shadow-lg rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
+            className="bg-black dark:bg-[#1a1a1a] hover:bg-gray-800 dark:hover:bg-gray-600 text-white shadow-lg rounded-full px-4 sm:px-6 py-3 flex items-center space-x-2 transition-all hover:shadow-xl"
           >
             <Puzzle className="h-4 w-4 sm:h-5 sm:w-5" />
             <span className="font-medium text-xs sm:text-sm">

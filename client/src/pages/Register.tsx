@@ -276,7 +276,7 @@ export default function Register() {
             placeholder="아이디를 입력하세요"
             value={userData.username}
             onChange={(e) => setUserData({ ...userData, username: e.target.value })}
-            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+            className="mt-1 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
@@ -289,7 +289,7 @@ export default function Register() {
               placeholder="비밀번호를 입력하세요"
               value={userData.password}
               onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-              className="pr-10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+              className="pr-10 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
             />
             <button
               type="button"
@@ -311,7 +311,7 @@ export default function Register() {
               placeholder="비밀번호를 다시 입력하세요"
               value={userData.confirmPassword}
               onChange={(e) => setUserData({ ...userData, confirmPassword: e.target.value })}
-              className="pr-10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+              className="pr-10 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
             />
             <button
               type="button"
@@ -331,7 +331,7 @@ export default function Register() {
             placeholder="이름을 입력하세요"
             value={userData.name}
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+            className="mt-1 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
@@ -343,7 +343,7 @@ export default function Register() {
             placeholder="휴대전화 번호를 입력하세요"
             value={userData.phone}
             onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+            className="mt-1 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 
@@ -355,7 +355,7 @@ export default function Register() {
             placeholder="이메일을 입력하세요"
             value={userData.email}
             onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-            className="mt-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+            className="mt-1 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
           />
         </div>
 

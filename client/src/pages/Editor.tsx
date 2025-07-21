@@ -491,7 +491,7 @@ export default function Editor() {
                 </div>
 
                 {/* Product Image Placeholder - Fixed Height */}
-                <div className="product-thumbnail w-full h-36 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3 flex items-center justify-center border border-gray-200 dark:border-gray-600 flex-shrink-0">
+                <div className="product-thumbnail w-full h-36 bg-gray-100 dark:bg-[#1a1a1a] rounded-lg mb-3 flex items-center justify-center border border-gray-200 dark:border-gray-600 flex-shrink-0">
                   <div className="text-center">
                     <ImageIcon className="w-8 h-8 text-gray-400 dark:text-gray-500 mx-auto mb-1" />
                     <span className="text-xs text-gray-500 dark:text-white">
@@ -1029,7 +1029,7 @@ export default function Editor() {
 
               {/* Mobile Image Controls */}
               {selectedImage && (
-                <div className="space-y-3 p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
+                <div className="space-y-3 p-3 border rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
                   <Label className="text-sm font-medium block text-gray-900 dark:text-white">
                     {t({
                       ko: "이미지 제어",
@@ -1271,7 +1271,7 @@ export default function Editor() {
 
               {/* Selected Image Controls */}
               {selectedImage && (
-                <div className="space-y-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
+                <div className="space-y-4 p-4 border rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
                   <Label className="text-sm font-medium block text-gray-900 dark:text-white">
                     {t({
                       ko: "선택된 이미지 제어",

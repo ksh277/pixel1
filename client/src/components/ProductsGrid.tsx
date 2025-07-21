@@ -166,7 +166,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ pageSize = 12 }) => {
           <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <CardContent className="p-0">
               {/* Product Image */}
-              <div className="h-48 bg-gray-100 dark:bg-gray-800 relative">
+              <div className="h-48 bg-gray-100 dark:bg-[#1a1a1a] relative">
                 {product.image_url ? (
                   <img
                     src={product.image_url}

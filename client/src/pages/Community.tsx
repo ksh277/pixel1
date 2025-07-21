@@ -140,7 +140,7 @@ export default function Community() {
                         .slice(slideIndex * itemsPerView, (slideIndex + 1) * itemsPerView)
                         .map((item) => (
                           <Link key={item.id} href={`/reviews/${item.id}`}>
-                            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer bg-white dark:bg-[#1e293b] border-gray-200 dark:border-[#334155]">
+                            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-[#334155]">
                               <div className="relative aspect-square">
                                 <img
                                   src={item.image}
@@ -197,14 +197,14 @@ export default function Community() {
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-800/90 hover:bg-gray-800 dark:bg-[#1e293b]/90 dark:hover:bg-[#1e293b] rounded-full p-2 shadow-lg transition-colors z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-800/90 hover:bg-gray-800 dark:bg-[#1a1a1a]/90 dark:hover:bg-[#1e293b] rounded-full p-2 shadow-lg transition-colors z-10"
             >
               <ChevronLeft className="h-5 w-5 text-white" />
             </button>
             
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-800/90 hover:bg-gray-800 dark:bg-[#1e293b]/90 dark:hover:bg-[#1e293b] rounded-full p-2 shadow-lg transition-colors z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-800/90 hover:bg-gray-800 dark:bg-[#1a1a1a]/90 dark:hover:bg-[#1e293b] rounded-full p-2 shadow-lg transition-colors z-10"
             >
               <ChevronRight className="h-5 w-5 text-white" />
             </button>
@@ -274,14 +274,14 @@ export default function Community() {
           {postsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="overflow-hidden bg-white dark:bg-[#1e293b] border-gray-200 dark:border-[#334155]">
-                  <div className="aspect-square bg-gray-200 dark:bg-[#334155] animate-pulse" />
+                <Card key={i} className="overflow-hidden bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-[#334155]">
+                  <div className="aspect-square bg-gray-200 dark:bg-[#1a1a1a] animate-pulse" />
                   <CardContent className="p-4">
-                    <div className="h-4 bg-gray-200 dark:bg-[#334155] animate-pulse rounded mb-2" />
-                    <div className="h-3 bg-gray-200 dark:bg-[#334155] animate-pulse rounded mb-4" />
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] animate-pulse rounded mb-2" />
+                    <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] animate-pulse rounded mb-4" />
                     <div className="flex justify-between">
-                      <div className="h-3 bg-gray-200 dark:bg-[#334155] animate-pulse rounded w-16" />
-                      <div className="h-3 bg-gray-200 dark:bg-[#334155] animate-pulse rounded w-16" />
+                      <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] animate-pulse rounded w-16" />
+                      <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] animate-pulse rounded w-16" />
                     </div>
                   </CardContent>
                 </Card>
@@ -291,7 +291,7 @@ export default function Community() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {posts.slice(0, 4).map((post: CommunityPost) => (
                 <Link key={post.id} href={`/community/${post.id}`}>
-                  <Card className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer bg-white dark:bg-[#1e293b] border-gray-200 dark:border-[#334155]">
+                  <Card className="overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-[#334155]">
                     <div className="aspect-square bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
                       <img 
                         src="/api/placeholder/300/300" 

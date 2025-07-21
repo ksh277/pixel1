@@ -262,7 +262,7 @@ const SupabaseExample: React.FC = () => {
                 </div>
                 <div className="p-4 border rounded-lg">
                   <h4 className="font-medium mb-2">예상 상품 구조</h4>
-                  <pre className="text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                  <pre className="text-xs bg-gray-100 dark:bg-[#1a1a1a] p-2 rounded">
 {`{
   id: "uuid",
   name: "Acrylic Keychain",

@@ -482,7 +482,7 @@ export default function ProductDetailSupabase() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Product Images */}
           <div className="space-y-4">
-            <div className="relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+            <div className="relative bg-white dark:bg-[#1a1a1a] rounded-lg overflow-hidden">
               <img
                 src={allImages[currentImageIndex]?.image_url || '/api/placeholder/500/500'}
                 alt={allImages[currentImageIndex]?.alt_text || product.name}
@@ -493,13 +493,13 @@ export default function ProductDetailSupabase() {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-colors"
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-[#1a1a1a]/80 rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-colors"
                   >
                     <ChevronLeft className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-colors"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-[#1a1a1a]/80 rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-800 transition-colors"
                   >
                     <ChevronRight className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                   </button>
@@ -696,9 +696,9 @@ export default function ProductDetailSupabase() {
               <div className="space-y-4">
                 {[...Array(3)].map((_, i) => (
                   <div key={i} className="border rounded-lg p-4 animate-pulse">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2 mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded w-2/3"></div>
                   </div>
                 ))}
               </div>

@@ -303,7 +303,7 @@ export function AllReviewsListSection() {
 
                         {/* Category Badge */}
                         <div className="absolute top-2 right-2">
-                          <Badge variant="secondary" className="bg-white/90 dark:bg-gray-800/90 text-xs dark:text-white">
+                          <Badge variant="secondary" className="bg-white/90 dark:bg-[#1a1a1a]/90 text-xs dark:text-white">
                             {review.category}
                           </Badge>
                         </div>
@@ -335,7 +335,7 @@ export function AllReviewsListSection() {
                         </div>
 
                         {/* Review Preview */}
-                        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                        <div className="bg-gray-50 dark:bg-[#1a1a1a] rounded-lg p-3">
                           <div className="flex items-center gap-2 mb-2">
                             <Sparkles className="h-4 w-4 text-yellow-500" />
                             <span className="text-xs font-medium text-gray-700 dark:text-gray-300">

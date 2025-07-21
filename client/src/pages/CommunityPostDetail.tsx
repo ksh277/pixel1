@@ -131,9 +131,9 @@ export default function CommunityPostDetail() {
       <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] p-4">
         <div className="max-w-4xl mx-auto">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
-            <div className="h-96 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
-            <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div className="h-8 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-4"></div>
+            <div className="h-96 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-4"></div>
+            <div className="h-24 bg-gray-200 dark:bg-[#1a1a1a] rounded"></div>
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@ export default function CommunityPostDetail() {
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
                       placeholder="댓글을 입력하세요..."
-                      className="min-h-[80px] border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="min-h-[80px] border-gray-300 dark:border-gray-600 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white"
                       maxLength={500}
                     />
                     <div className="flex justify-between items-center mt-2">
@@ -261,7 +261,7 @@ export default function CommunityPostDetail() {
                 </div>
               </div>
             ) : (
-              <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="mb-6 p-4 bg-gray-50 dark:bg-[#1a1a1a] rounded-lg">
                 <p className="text-gray-600 dark:text-gray-300 text-center">
                   댓글을 작성하려면 로그인해주세요.
                 </p>
@@ -274,11 +274,11 @@ export default function CommunityPostDetail() {
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="animate-pulse">
                     <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                      <div className="w-8 h-8 bg-gray-200 dark:bg-[#1a1a1a] rounded-full"></div>
                       <div className="flex-1">
-                        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-2"></div>
-                        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-1"></div>
-                        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/4 mb-2"></div>
+                        <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded w-3/4 mb-1"></div>
+                        <div className="h-3 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2"></div>
                       </div>
                     </div>
                   </div>

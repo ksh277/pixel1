@@ -68,11 +68,11 @@ const ProductList: React.FC = () => {
 
   const ProductCard = ({ product }: { product: Product }) => (
     <Card 
-      className="group cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+      className="group cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700"
       onClick={() => handleProductClick(product.id)}
     >
       <CardHeader className="p-0 relative">
-        <div className="aspect-square bg-gray-100 dark:bg-gray-700 rounded-t-lg overflow-hidden">
+        <div className="aspect-square bg-gray-100 dark:bg-[#1a1a1a] rounded-t-lg overflow-hidden">
           <img 
             src={product.imageUrl || '/api/placeholder/300/300'} 
             alt={product.nameKo}
@@ -90,7 +90,7 @@ const ProductList: React.FC = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-2 right-2 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800"
+          className="absolute top-2 right-2 bg-white/80 hover:bg-white dark:bg-[#1a1a1a]/80 dark:hover:bg-gray-800"
           onClick={(e) => handleToggleFavorite(e, product)}
         >
           <Heart className="h-4 w-4" />
@@ -127,12 +127,12 @@ const ProductList: React.FC = () => {
 
   const ProductListItem = ({ product }: { product: Product }) => (
     <Card 
-      className="group cursor-pointer transition-all duration-200 hover:shadow-lg bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+      className="group cursor-pointer transition-all duration-200 hover:shadow-lg bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700"
       onClick={() => handleProductClick(product.id)}
     >
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
-          <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0">
+          <div className="w-20 h-20 bg-gray-100 dark:bg-[#1a1a1a] rounded-lg overflow-hidden flex-shrink-0">
             <img 
               src={product.imageUrl || '/api/placeholder/300/300'} 
               alt={product.nameKo}
@@ -187,16 +187,16 @@ const ProductList: React.FC = () => {
 
   if (productsLoading || categoriesLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
         <div className="container mx-auto px-4">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-48 mb-8"></div>
+            <div className="h-8 bg-gray-200 dark:bg-[#1a1a1a] rounded w-48 mb-8"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                  <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div key={i} className="bg-white dark:bg-[#1a1a1a] rounded-lg p-4">
+                  <div className="aspect-square bg-gray-200 dark:bg-[#1a1a1a] rounded mb-4"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-[#1a1a1a] rounded"></div>
                 </div>
               ))}
             </div>
@@ -207,7 +207,7 @@ const ProductList: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
@@ -220,7 +220,7 @@ const ProductList: React.FC = () => {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm p-6 mb-8 border border-gray-200 dark:border-gray-700">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
             <div className="flex-1">
@@ -230,7 +230,7 @@ const ProductList: React.FC = () => {
                   placeholder="상품명을 검색하세요..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600"
+                  className="pl-10 bg-gray-50 dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-600"
                 />
               </div>
             </div>
@@ -257,7 +257,7 @@ const ProductList: React.FC = () => {
             <select 
               value={sortBy} 
               onChange={(e) => setSortBy(e.target.value as 'name' | 'price' | 'featured')}
-              className="px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+              className="px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white text-sm"
             >
               <option value="featured">인기순</option>
               <option value="name">이름순</option>

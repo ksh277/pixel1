@@ -185,7 +185,7 @@ export default function Login() {
             </div>
             
             {/* Sign up promotion */}
-            <div className="bg-gray-50 dark:bg-[#44556A] p-4 rounded-lg text-center border dark:border-gray-600">
+            <div className="bg-gray-50 dark:bg-[#1a1a1a] p-4 rounded-lg text-center border dark:border-gray-600">
               <p className="text-sm text-gray-600 dark:text-white mb-3">
                 아직 회원이 아니신가요? 지금 회원가입을 하시면<br />
                 다양한 특별 혜택이 준비되어 있습니다.
@@ -193,7 +193,7 @@ export default function Login() {
               <Link href="/register">
                 <Button 
                   variant="outline" 
-                  className="w-full h-10 border-gray-300 dark:border-gray-500 hover:bg-white dark:hover:bg-gray-700 text-gray-700 dark:text-white bg-white dark:bg-[#4A5A6F]"
+                  className="w-full h-10 border-gray-300 dark:border-gray-500 hover:bg-white dark:hover:bg-gray-700 text-gray-700 dark:text-white bg-white dark:bg-[#1a1a1a]"
                 >
                   회원가입
                 </Button>

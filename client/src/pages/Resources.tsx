@@ -95,7 +95,7 @@ export default function Resources() {
               ))
             ) : (
               templates.map((template) => (
-                <Card key={template.id} className="group bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 dark:border-gray-700">
+                <Card key={template.id} className="group bg-white dark:bg-[#1a1a1a] shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 dark:border-gray-700">
                   {/* Badge Overlays */}
                   <div className="relative">
                     {template.status === "HOT" && (
@@ -116,7 +116,7 @@ export default function Resources() {
                     
                     {/* Image Placeholder - Ready for dynamic image insertion */}
                     <div 
-                      className="image-placeholder aspect-square bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 flex items-center justify-center group-hover:bg-gray-50 dark:group-hover:bg-gray-600 transition-colors"
+                      className="image-placeholder aspect-square bg-gray-100 dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-600 flex items-center justify-center group-hover:bg-gray-50 dark:group-hover:bg-gray-600 transition-colors"
                       data-template-id={template.id}
                       data-src={template.imageUrl || ""}
                     >

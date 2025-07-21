@@ -91,7 +91,7 @@ export default function AdminLogin() {
                 placeholder="admin 또는 superadmin"
                 required
                 disabled={loading}
-                className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+                className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
             
@@ -107,7 +107,7 @@ export default function AdminLogin() {
                 placeholder="비밀번호 입력"
                 required
                 disabled={loading}
-                className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+                className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
             
@@ -120,7 +120,7 @@ export default function AdminLogin() {
             </Button>
           </form>
           
-          <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+          <div className="mt-6 p-4 bg-gray-50 dark:bg-[#1a1a1a]/50 rounded-lg border border-gray-200 dark:border-gray-600">
             <p className="text-sm text-gray-600 dark:text-gray-300 text-center font-medium">
               테스트 계정
             </p>

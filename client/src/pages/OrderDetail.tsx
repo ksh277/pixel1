@@ -166,11 +166,11 @@ export default function OrderDetail() {
       'pending': { label: '대기중', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' },
       'processing': { label: '처리중', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' },
       'shipped': { label: '배송중', color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' },
-      'delivered': { label: '배송완료', color: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' },
+      'delivered': { label: '배송완료', color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' },
       'cancelled': { label: '취소됨', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' }
     };
     
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' };
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' };
     
     return (
       <Badge className={statusInfo.color}>
@@ -184,10 +184,10 @@ export default function OrderDetail() {
       'pending': { label: '결제 대기', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' },
       'completed': { label: '결제 완료', color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' },
       'failed': { label: '결제 실패', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' },
-      'refunded': { label: '환불 완료', color: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' }
+      'refunded': { label: '환불 완료', color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' }
     };
     
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' };
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' };
     
     return (
       <Badge className={statusInfo.color}>
@@ -319,7 +319,7 @@ export default function OrderDetail() {
                     {order.order_items.map((item: any, index: number) => (
                       <div key={index} className="flex items-center justify-between p-4 border rounded-lg dark:border-gray-700">
                         <div className="flex items-center space-x-4">
-                          <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                          <div className="w-16 h-16 bg-gray-200 dark:bg-[#1a1a1a] rounded-lg flex items-center justify-center">
                             <Package className="h-8 w-8 text-gray-400" />
                           </div>
                           <div>
@@ -363,9 +363,9 @@ export default function OrderDetail() {
               <CardContent>
                 {paymentLoading ? (
                   <div className="animate-pulse space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/3"></div>
                   </div>
                 ) : payment ? (
                   <div className="space-y-4">
@@ -398,7 +398,7 @@ export default function OrderDetail() {
                     {payment.transaction_id && (
                       <div>
                         <p className="text-sm text-gray-600 dark:text-gray-300">거래 ID</p>
-                        <p className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                        <p className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a] p-2 rounded">
                           {payment.transaction_id}
                         </p>
                       </div>
@@ -425,9 +425,9 @@ export default function OrderDetail() {
               <CardContent>
                 {shippingLoading ? (
                   <div className="animate-pulse space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-3/4"></div>
                   </div>
                 ) : shipping ? (
                   <div className="space-y-4">
@@ -468,7 +468,7 @@ export default function OrderDetail() {
                     {shipping.tracking_number && (
                       <div>
                         <p className="text-sm text-gray-600 dark:text-gray-300">운송장 번호</p>
-                        <p className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                        <p className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a] p-2 rounded">
                           {shipping.tracking_number}
                         </p>
                       </div>
@@ -495,9 +495,9 @@ export default function OrderDetail() {
               <CardContent>
                 {trackingLoading ? (
                   <div className="animate-pulse space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/3"></div>
                   </div>
                 ) : tracking ? (
                   <div className="space-y-4">
@@ -510,7 +510,7 @@ export default function OrderDetail() {
                       </div>
                       <div>
                         <p className="text-sm text-gray-600 dark:text-gray-300">운송장 번호</p>
-                        <p className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                        <p className="text-sm font-mono text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a] p-2 rounded">
                           {tracking.tracking_number}
                         </p>
                       </div>
@@ -549,9 +549,9 @@ export default function OrderDetail() {
               <CardContent>
                 {printJobLoading ? (
                   <div className="animate-pulse space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-[#1a1a1a] rounded w-1/3"></div>
                   </div>
                 ) : printJob ? (
                   <div className="space-y-4">
@@ -580,7 +580,7 @@ export default function OrderDetail() {
                     {printJob.print_details && (
                       <div>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">제작 상세</p>
-                        <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+                        <div className="bg-gray-100 dark:bg-[#1a1a1a] p-4 rounded-lg">
                           <pre className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
                             {JSON.stringify(printJob.print_details, null, 2)}
                           </pre>

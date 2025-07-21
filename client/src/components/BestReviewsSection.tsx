@@ -226,7 +226,7 @@ export function BestReviewsSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
+              <Card className="rounded-xl bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 shadow-md p-2 h-[270px] flex flex-col justify-between hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
                 {/* Best Review Ribbon */}
                 <div className="absolute top-0 right-0 z-10">
                   <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 text-xs font-bold transform rotate-12 translate-x-2 -translate-y-1 shadow-lg">
@@ -244,7 +244,7 @@ export function BestReviewsSection() {
 
                     {/* Product Badge */}
                     <div className="absolute bottom-2 left-2">
-                      <Badge className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white text-xs">
+                      <Badge className="bg-white/90 dark:bg-[#1a1a1a]/90 text-gray-800 dark:text-white text-xs">
                         {review.productNameKo}
                       </Badge>
                     </div>

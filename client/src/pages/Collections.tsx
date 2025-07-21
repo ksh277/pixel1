@@ -146,7 +146,7 @@ export default function Collections() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-3 right-3 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-red-500 transition-colors"
+                  className="absolute top-3 right-3 bg-white/80 dark:bg-[#1a1a1a]/80 hover:bg-white dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-red-500 transition-colors"
                   onClick={() => handleLike(collection.id)}
                 >
                   <Heart 

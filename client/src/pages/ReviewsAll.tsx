@@ -341,11 +341,11 @@ export default function ReviewsAll() {
         >
           {filteredAndSortedReviews.map((review) => (
             <motion.div key={review.id} variants={itemVariants}>
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer dark:bg-gray-900 dark:border-gray-700">
+              <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer dark:bg-[#1a1a1a] dark:border-gray-700">
                 <Link href={`/reviews/${review.id}`}>
                   <CardContent className="p-0">
                     {/* Product Image */}
-                    <div className="relative aspect-square bg-gray-100 dark:bg-gray-700 rounded-t-lg overflow-hidden">
+                    <div className="relative aspect-square bg-gray-100 dark:bg-[#1a1a1a] rounded-t-lg overflow-hidden">
                       <img
                         src={review.productImage}
                         alt={language === 'ko' ? review.productNameKo : review.productName}

@@ -650,43 +650,43 @@ export default function SellerDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label>상점명</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.shopName}
                     </p>
                   </div>
                   <div>
                     <Label>사업자등록번호</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.businessNumber || '미등록'}
                     </p>
                   </div>
                   <div>
                     <Label>연락처 이메일</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.contactEmail}
                     </p>
                   </div>
                   <div>
                     <Label>연락처 전화번호</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.contactPhone}
                     </p>
                   </div>
                   <div className="md:col-span-2">
                     <Label>주소</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.address || '미등록'}
                     </p>
                   </div>
                   <div>
                     <Label>은행명</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.bankName || '미등록'}
                     </p>
                   </div>
                   <div>
                     <Label>계좌번호</Label>
-                    <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <p className="p-2 bg-gray-50 dark:bg-[#1a1a1a] rounded-md">
                       {seller.bankAccount || '미등록'}
                     </p>
                   </div>

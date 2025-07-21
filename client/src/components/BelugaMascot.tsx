@@ -172,7 +172,7 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
       <>
         {/* 채팅 위젯 */}
         {isChatOpen && (
-          <div className="fixed bottom-24 right-6 z-[80] w-80 max-w-[calc(100vw-3rem)] h-96 max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="fixed bottom-24 right-6 z-[80] w-80 max-w-[calc(100vw-3rem)] h-96 max-h-[calc(100vh-8rem)] bg-white dark:bg-[#1a1a1a] rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             {/* 헤더 */}
             <div className="bg-blue-600 text-white p-4 flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -197,13 +197,13 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
             </div>
 
             {/* 메시지 영역 */}
-            <div className="flex-1 p-4 h-64 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+            <div className="flex-1 p-4 h-64 overflow-y-auto bg-gray-50 dark:bg-[#1a1a1a]">
               {messages.map((msg) => (
                 <div key={msg.id} className={`mb-3 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                   <div className={`inline-block max-w-xs p-3 rounded-lg text-sm ${
                     msg.sender === 'user' 
                       ? 'bg-blue-600 text-white' 
-                      : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700'
+                      : 'bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700'
                   }`}>
                     {msg.content.split('\n').map((line, index) => (
                       <div key={index}>{line}</div>
@@ -213,7 +213,7 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
               ))}
               
               {/* 운영시간 안내 */}
-              <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div className="mt-4 p-3 bg-white dark:bg-[#1a1a1a] rounded-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-2 mb-2">
                   <Clock className="h-4 w-4 text-red-500" />
                   <span className="text-sm font-semibold text-gray-900 dark:text-white">상담 가능시간 안내 (영업일기준)</span>
@@ -235,7 +235,7 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="메시지를 입력하세요..."
-                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#1a1a1a] dark:text-white"
                 />
                 <Button
                   onClick={handleSendMessage}
@@ -322,7 +322,7 @@ export function BelugaMascot({ variant, className = "" }: BelugaMascotProps) {
             
             {/* 말풍선 텍스트 */}
             {!isChatOpen && (
-              <div className="absolute bottom-20 right-2 bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 whitespace-nowrap">
+              <div className="absolute bottom-20 right-2 bg-white dark:bg-[#1a1a1a] px-3 py-2 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 whitespace-nowrap">
                 <div className="text-sm font-semibold text-gray-900 dark:text-white">올댓프린팅</div>
                 <div className="text-xs text-gray-600 dark:text-gray-400">운영시간 보기 &gt;</div>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800"></div>

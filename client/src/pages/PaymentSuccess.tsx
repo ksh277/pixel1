@@ -167,7 +167,7 @@ const PaymentSuccess = () => {
               </div>
               
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gray-100 dark:bg-[#1a1a1a] rounded-full flex items-center justify-center">
                   <span className="text-sm font-medium text-gray-600 dark:text-gray-400">2</span>
                 </div>
                 <div>
@@ -177,7 +177,7 @@ const PaymentSuccess = () => {
               </div>
               
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gray-100 dark:bg-[#1a1a1a] rounded-full flex items-center justify-center">
                   <span className="text-sm font-medium text-gray-600 dark:text-gray-400">3</span>
                 </div>
                 <div>
