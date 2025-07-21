@@ -1623,15 +1623,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const { data: products, error } = await supabase
         .from('products')
-        .select(`
-          *,
-          categories (
-            id, name, name_ko
-          ),
-          sellers (
-            id, shop_name, contact_email
-          )
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -1889,13 +1881,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get all users for admin
   app.get("/api/admin/users", authenticateToken, async (req: any, res) => {
     try {
-      const isAdmin = req.user.isAdmin === true || req.user.username === 'admin'; if (!isAdmin) {
+      const isAdmin = req.user.isAdmin === true || req.user.username === 'admin'; 
+      if (!isAdmin) {
         return res.status(403).json({ message: "관리자 권한이 필요합니다." });
       }
       
       const { data: users, error } = await supabase
         .from('users')
-        .select('id, username, email, first_name, last_name, is_admin, created_at')
+        .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -1903,7 +1896,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ message: "사용자 목록을 가져오는데 실패했습니다." });
       }
       
-      res.json(users);
+      // Admin flag 추가 (admin 사용자명인 경우 true로 설정)
+      const usersWithAdminFlag = users.map(user => ({
+        ...user,
+        isAdmin: user.username === 'admin'
+      }));
+      
+      res.json(usersWithAdminFlag);
     } catch (error) {
       console.error('Error in admin users endpoint:', error);
       res.status(500).json({ message: "사용자 목록을 가져오는데 실패했습니다." });
