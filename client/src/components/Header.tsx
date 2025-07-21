@@ -229,11 +229,11 @@ export const Header = () => {
                 <SelectValue />
               </div>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="ko">한국어</SelectItem>
-              <SelectItem value="en">English</SelectItem>
-              <SelectItem value="ja">日本語</SelectItem>
-              <SelectItem value="zh">中文</SelectItem>
+            <SelectContent className="bg-gray-50 dark:bg-gray-50 border border-gray-200">
+              <SelectItem value="ko" className="hover:bg-gray-100 text-gray-900">한국어</SelectItem>
+              <SelectItem value="en" className="hover:bg-gray-100 text-gray-900">English</SelectItem>
+              <SelectItem value="ja" className="hover:bg-gray-100 text-gray-900">日本語</SelectItem>
+              <SelectItem value="zh" className="hover:bg-gray-100 text-gray-900">中文</SelectItem>
             </SelectContent>
           </Select>
 
