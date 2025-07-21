@@ -254,7 +254,7 @@ export const Header = () => {
 
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
-            <SelectTrigger className="w-24 h-10 border-0 bg-transparent">
+            <SelectTrigger className="w-28 h-10 border-0 bg-transparent">
               <div className="flex items-center space-x-1">
                 <Globe className="h-4 w-4" />
                 <SelectValue />
