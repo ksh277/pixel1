@@ -63,7 +63,7 @@ export function CategoryNav({ className }: CategoryNavProps) {
   const hoveredCategory = categories.find(cat => cat.id === hoveredTab);
 
   return (
-    <div className={cn("bg-white dark:bg-[#1F2D4A] border-b border-gray-200 dark:border-gray-600 relative", className)}>
+    <div className={cn("bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-600 relative", className)}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Tab Navigation */}
         <div className="flex justify-center">
@@ -95,7 +95,7 @@ export function CategoryNav({ className }: CategoryNavProps) {
         {/* Hover Sub Menu */}
         {hoveredTab && hoveredCategory && (
           <div
-            className="absolute left-0 right-0 bg-white dark:bg-[#1F2D4A] border-b border-gray-200 dark:border-gray-600 shadow-lg z-50 animate-in fade-in-0 duration-200"
+            className="absolute left-0 right-0 bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-600 shadow-lg z-50 animate-in fade-in-0 duration-200"
             onMouseEnter={() => setHoveredTab(hoveredTab)}
             onMouseLeave={() => setHoveredTab(null)}
           >

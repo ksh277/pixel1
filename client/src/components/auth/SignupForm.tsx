@@ -61,7 +61,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin }) => {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+    <Card className="w-full max-w-md mx-auto bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
           회원가입

@@ -51,7 +51,7 @@ export default function Inquiry() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -66,7 +66,7 @@ export default function Inquiry() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
           <div className="lg:col-span-1">
-            <Card className="bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center dark:text-white">
                   <MessageCircle className="h-5 w-5 mr-2 text-blue-500" />
@@ -128,7 +128,7 @@ export default function Inquiry() {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <Card className="bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center dark:text-white">
                   <FileText className="h-5 w-5 mr-2 text-blue-500" />
@@ -150,7 +150,7 @@ export default function Inquiry() {
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         required
                         placeholder={t({ ko: '성함을 입력해주세요', en: 'Enter your name', ja: 'お名前を入力してください', zh: '请输入您的姓名' })}
-                        className="bg-white dark:bg-[#1F2D4A] text-black dark:text-white border dark:border-gray-600"
+                        className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white border dark:border-gray-600"
                       />
                     </div>
 
@@ -166,7 +166,7 @@ export default function Inquiry() {
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         required
                         placeholder={t({ ko: '이메일을 입력해주세요', en: 'Enter your email', ja: 'メールを入力してください', zh: '请输入您的邮箱' })}
-                        className="bg-white dark:bg-[#1F2D4A] text-black dark:text-white border dark:border-gray-600"
+                        className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white border dark:border-gray-600"
                       />
                     </div>
                   </div>
@@ -183,7 +183,7 @@ export default function Inquiry() {
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
                         placeholder={t({ ko: '전화번호를 입력해주세요', en: 'Enter your phone number', ja: '電話番号を入力してください', zh: '请输入您的电话号码' })}
-                        className="bg-white dark:bg-[#1F2D4A] text-black dark:text-white border dark:border-gray-600"
+                        className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white border dark:border-gray-600"
                       />
                     </div>
 
@@ -192,7 +192,7 @@ export default function Inquiry() {
                         {t({ ko: '문의 유형', en: 'Inquiry Type', ja: 'お問い合わせ種別', zh: '咨询类型' })} *
                       </Label>
                       <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                        <SelectTrigger className="bg-white dark:bg-[#1F2D4A] text-black dark:text-white border dark:border-gray-600">
+                        <SelectTrigger className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white border dark:border-gray-600">
                           <SelectValue placeholder={t({ ko: '문의 유형을 선택해주세요', en: 'Select inquiry type', ja: 'お問い合わせ種別を選択', zh: '请选择咨询类型' })} />
                         </SelectTrigger>
                         <SelectContent>
@@ -217,7 +217,7 @@ export default function Inquiry() {
                       onChange={(e) => handleInputChange('subject', e.target.value)}
                       required
                       placeholder={t({ ko: '문의 제목을 입력해주세요', en: 'Enter inquiry subject', ja: 'お問い合わせ件名を入力', zh: '请输入咨询主题' })}
-                      className="bg-white dark:bg-[#1F2D4A] text-black dark:text-white border dark:border-gray-600"
+                      className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white border dark:border-gray-600"
                     />
                   </div>
 
@@ -232,7 +232,7 @@ export default function Inquiry() {
                       required
                       rows={6}
                       placeholder={t({ ko: '문의 내용을 자세히 적어주세요', en: 'Please describe your inquiry in detail', ja: 'お問い合わせ内容を詳しく記入してください', zh: '请详细描述您的咨询内容' })}
-                      className="bg-white dark:bg-[#1F2D4A] text-black dark:text-white border dark:border-gray-600"
+                      className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white border dark:border-gray-600"
                     />
                   </div>
 

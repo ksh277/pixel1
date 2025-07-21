@@ -88,10 +88,10 @@ const OrdersPage = () => {
   // Show message if Supabase is not configured
   if (!isSupabaseConfigured) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -115,10 +115,10 @@ const OrdersPage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -142,13 +142,13 @@ const OrdersPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl font-bold mb-8 text-white">주문 내역</h1>
             <div className="space-y-4">
               {[...Array(3)].map((_, i) => (
-                <Card key={i} className="bg-[#1e2b3c] border-gray-700">
+                <Card key={i} className="bg-[#1a1a1a] border-gray-700">
                   <CardContent className="p-6">
                     <div className="animate-pulse">
                       <div className="h-4 bg-gray-600 rounded w-1/4 mb-4"></div>
@@ -167,10 +167,10 @@ const OrdersPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <XCircle className="w-16 h-16 mx-auto mb-4 text-red-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -191,7 +191,7 @@ const OrdersPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -211,7 +211,7 @@ const OrdersPage = () => {
 
           {/* Orders List */}
           {orders.length === 0 ? (
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -230,7 +230,7 @@ const OrdersPage = () => {
           ) : (
             <div className="space-y-6">
               {orders.map((order) => (
-                <Card key={order.id} className="bg-[#1e2b3c] border-gray-700">
+                <Card key={order.id} className="bg-[#1a1a1a] border-gray-700">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
@@ -309,7 +309,7 @@ const OrdersPage = () => {
                                 상세보기
                               </Button>
                             </DialogTrigger>
-                            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-[#1e2b3c] border-gray-700">
+                            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-[#1a1a1a] border-gray-700">
                               <DialogHeader>
                                 <DialogTitle className="text-white flex items-center space-x-2">
                                   <Package className="w-5 h-5" />
@@ -318,7 +318,7 @@ const OrdersPage = () => {
                               </DialogHeader>
                               <div className="space-y-6">
                                 {/* Order Header */}
-                                <div className="bg-[#0f172a] p-4 rounded-lg">
+                                <div className="bg-[#1a1a1a] p-4 rounded-lg">
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                       <p className="text-gray-400 text-sm">주문번호</p>
@@ -345,7 +345,7 @@ const OrdersPage = () => {
                                   </h3>
                                   <div className="space-y-3">
                                     {order.items?.map((item, index) => (
-                                      <Card key={index} className="bg-[#0f172a] border-gray-600">
+                                      <Card key={index} className="bg-[#1a1a1a] border-gray-600">
                                         <CardContent className="p-4">
                                           <div className="flex items-center justify-between">
                                             <div className="flex-1">
@@ -378,7 +378,7 @@ const OrdersPage = () => {
                                 </div>
 
                                 {/* Order Summary */}
-                                <div className="bg-[#0f172a] p-4 rounded-lg">
+                                <div className="bg-[#1a1a1a] p-4 rounded-lg">
                                   <div className="space-y-3">
                                     <div className="flex justify-between">
                                       <span className="text-gray-400">상품 금액</span>

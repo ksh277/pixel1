@@ -152,10 +152,10 @@ export default function Checkout() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 dark:bg-[#1e2b3c] rounded-full flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 dark:bg-[#1a1a1a] rounded-full flex items-center justify-center">
               <ShoppingBag className="w-12 h-12 text-gray-400 dark:text-gray-300" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
@@ -174,7 +174,7 @@ export default function Checkout() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -189,7 +189,7 @@ export default function Checkout() {
           {/* Order Form */}
           <div className="lg:col-span-2 space-y-6">
             {/* Customer Information */}
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center text-gray-900 dark:text-white">
                   <User className="h-5 w-5 mr-2" />
@@ -241,7 +241,7 @@ export default function Checkout() {
             </Card>
 
             {/* Shipping Address */}
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center text-gray-900 dark:text-white">
                   <MapPin className="h-5 w-5 mr-2" />
@@ -307,7 +307,7 @@ export default function Checkout() {
             </Card>
 
             {/* Payment Method */}
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center text-gray-900 dark:text-white">
                   <CreditCard className="h-5 w-5 mr-2" />
@@ -351,7 +351,7 @@ export default function Checkout() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="sticky top-8 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">
                   {t({ ko: "주문 요약", en: "Order Summary" })}

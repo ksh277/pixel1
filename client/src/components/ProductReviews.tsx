@@ -88,7 +88,7 @@ const ReviewForm = ({
   }
 
   return (
-    <div className="bg-[#0f172a] text-white">
+    <div className="bg-[#1a1a1a] text-white">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-2">평점</label>
@@ -104,7 +104,7 @@ const ReviewForm = ({
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             placeholder="이 상품에 대한 솔직한 리뷰를 작성해주세요..."
-            className="min-h-[100px] bg-[#1e2b3c] border-gray-600 text-white placeholder-gray-400"
+            className="min-h-[100px] bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400"
             rows={4}
           />
         </div>
@@ -164,7 +164,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
 
   if (isLoading) {
     return (
-      <div className="bg-[#0f172a] text-white p-6 rounded-lg">
+      <div className="bg-[#1a1a1a] text-white p-6 rounded-lg">
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-700 rounded w-1/4"></div>
           <div className="h-4 bg-gray-700 rounded w-1/3"></div>
@@ -179,8 +179,8 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
   }
 
   return (
-    <div className="bg-[#0f172a] text-white rounded-lg">
-      <Card className="bg-[#1e2b3c] border-gray-700">
+    <div className="bg-[#1a1a1a] text-white rounded-lg">
+      <Card className="bg-[#1a1a1a] border-gray-700">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <div>
@@ -217,7 +217,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
                           리뷰 수정
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-2xl bg-[#1e2b3c] border-gray-700">
+                      <DialogContent className="max-w-2xl bg-[#1a1a1a] border-gray-700">
                         <DialogHeader>
                           <DialogTitle className="text-white">리뷰 수정</DialogTitle>
                         </DialogHeader>
@@ -243,7 +243,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
                           리뷰 삭제
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="bg-[#1e2b3c] border-gray-700">
+                      <AlertDialogContent className="bg-[#1a1a1a] border-gray-700">
                         <AlertDialogHeader>
                           <AlertDialogTitle className="text-white">리뷰 삭제</AlertDialogTitle>
                           <AlertDialogDescription className="text-gray-300">
@@ -271,7 +271,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
                         리뷰 작성
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl bg-[#1e2b3c] border-gray-700">
+                    <DialogContent className="max-w-2xl bg-[#1a1a1a] border-gray-700">
                       <DialogHeader>
                         <DialogTitle className="text-white">리뷰 작성</DialogTitle>
                       </DialogHeader>
@@ -291,7 +291,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
           {reviews && reviews.length > 0 ? (
             <div className="space-y-4">
               {reviews.map((review) => (
-                <div key={review.id} className="bg-[#0f172a] p-4 rounded-lg">
+                <div key={review.id} className="bg-[#1a1a1a] p-4 rounded-lg">
                   <div className="flex items-start space-x-3">
                     <Avatar className="w-10 h-10">
                       <AvatarImage src={review.users?.avatar_url} />
@@ -334,7 +334,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
                       첫 번째 리뷰 작성하기
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl bg-[#1e2b3c] border-gray-700">
+                  <DialogContent className="max-w-2xl bg-[#1a1a1a] border-gray-700">
                     <DialogHeader>
                       <DialogTitle className="text-white">리뷰 작성</DialogTitle>
                     </DialogHeader>

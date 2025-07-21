@@ -133,7 +133,7 @@ export default function CommunityWrite() {
   };
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#1F2D4A] py-8">
+    <div className="min-h-screen bg-background dark:bg-[#1a1a1a] py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -154,7 +154,7 @@ export default function CommunityWrite() {
         </div>
 
         {/* Writing Form */}
-        <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-white">
               {t({ ko: "새 게시물 작성", en: "Create New Post", ja: "新しい投稿を作成", zh: "创建新帖子" })}

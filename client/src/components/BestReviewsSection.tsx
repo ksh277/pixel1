@@ -156,7 +156,7 @@ export function BestReviewsSection() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 bg-gray-50 dark:bg-[#0d1b2a]">
+    <div className="max-w-7xl mx-auto px-4 py-8 bg-gray-50 dark:bg-[#1a1a1a]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

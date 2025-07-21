@@ -120,7 +120,7 @@ export function UserReviewsSection() {
   };
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-[#0d1b2a]">
+    <section className="py-16 bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           variants={containerVariants}

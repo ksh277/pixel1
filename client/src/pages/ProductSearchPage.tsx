@@ -279,7 +279,7 @@ export default function ProductSearchPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -524,7 +524,7 @@ export default function ProductSearchPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="group hover:shadow-lg transition-all duration-300 bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700">
+                    <Card className="group hover:shadow-lg transition-all duration-300 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700">
                       <div className="relative">
                         <img
                           src={product.image_url || '/api/placeholder/400/300'}

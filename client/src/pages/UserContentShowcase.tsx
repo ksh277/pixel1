@@ -28,9 +28,9 @@ export default function UserContentShowcase() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       {/* Page Header */}
-      <div className="bg-white dark:bg-[#1F2D4A] shadow-sm">
+      <div className="bg-white dark:bg-[#1a1a1a] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -44,7 +44,7 @@ export default function UserContentShowcase() {
       </div>
 
       {/* Navigation Menu */}
-      <div className="bg-white dark:bg-[#1F2D4A] border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex space-x-8 overflow-x-auto py-4">
             <a href="#best-reviews" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 whitespace-nowrap">
@@ -71,7 +71,7 @@ export default function UserContentShowcase() {
         className="space-y-16"
       >
         {/* Section 1: Best Reviews */}
-        <motion.section id="best-reviews" variants={itemVariants} className="bg-white dark:bg-[#1F2D4A]">
+        <motion.section id="best-reviews" variants={itemVariants} className="bg-white dark:bg-[#1a1a1a]">
           <BestReviewsSection />
         </motion.section>
 
@@ -81,12 +81,12 @@ export default function UserContentShowcase() {
         </motion.section>
 
         {/* Section 3: Community Showcase */}
-        <motion.section id="community-showcase" variants={itemVariants} className="bg-white dark:bg-[#1F2D4A]">
+        <motion.section id="community-showcase" variants={itemVariants} className="bg-white dark:bg-[#1a1a1a]">
           <CommunityShowcaseSection />
         </motion.section>
 
         {/* Section 4: All Reviews List */}
-        <motion.section id="all-reviews" variants={itemVariants} className="bg-gray-50 dark:bg-[#1F2D4A]">
+        <motion.section id="all-reviews" variants={itemVariants} className="bg-gray-50 dark:bg-[#1a1a1a]">
           <AllReviewsListSection />
         </motion.section>
       </motion.div>

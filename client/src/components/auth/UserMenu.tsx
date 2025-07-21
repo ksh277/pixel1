@@ -63,7 +63,7 @@ const UserMenu: React.FC = () => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700" align="end">
+      <DropdownMenuContent className="w-56 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700" align="end">
         <DropdownMenuLabel className="text-gray-900 dark:text-white">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{getDisplayName()}</p>

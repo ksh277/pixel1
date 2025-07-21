@@ -171,7 +171,7 @@ export function Layout({ children, showCommunityNav = false }: LayoutProps) {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-background dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-background dark:bg-[#1a1a1a]">
       {showCommunityNav && <CommunityTopNav />}
       <div className={cn(showCommunityNav ? "pt-0" : "")}>
         {children}

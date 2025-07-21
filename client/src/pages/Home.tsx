@@ -238,7 +238,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-background dark:bg-[#1a1a1a]">
       <CategoryNav />
       <Hero />
 

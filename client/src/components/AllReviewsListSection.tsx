@@ -267,7 +267,7 @@ export function AllReviewsListSection() {
         </div>
 
         {/* Reviews List */}
-        <motion.div variants={itemVariants} className="bg-white dark:bg-[#1F2D4A] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+        <motion.div variants={itemVariants} className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex gap-6 overflow-x-auto pb-4">
             {visibleReviews.map((review, index) => (
               <motion.div
@@ -276,7 +276,7 @@ export function AllReviewsListSection() {
                 className="flex-shrink-0 w-64"
               >
                 <Link href={`/product/${review.productId}`}>
-                  <Card className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+                  <Card className="group hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
                     <CardContent className="p-4">
                       <div className="relative mb-4">
                         <img

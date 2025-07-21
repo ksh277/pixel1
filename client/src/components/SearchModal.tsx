@@ -23,7 +23,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-white">
             상품 검색

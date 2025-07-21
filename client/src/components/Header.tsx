@@ -315,7 +315,7 @@ export const Header = () => {
           
           {/* Slide Menu */}
           <div 
-            className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white dark:bg-[#0f172a] shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out overflow-y-auto"
+            className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white dark:bg-[#1a1a1a] shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out overflow-y-auto"
             style={{ transform: 'translateX(0)', minHeight: '100vh' }}
           >
             {/* Header */}

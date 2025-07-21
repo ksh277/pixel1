@@ -246,7 +246,7 @@ export default function SellerDashboard() {
   // Show seller registration form if not registered
   if (!sellerInfo?.seller) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
         <div className="max-w-2xl mx-auto px-4">
           <Card>
             <CardHeader>
@@ -341,7 +341,7 @@ export default function SellerDashboard() {
   const pendingProducts = products.filter((p: Product) => !p.isApproved);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">

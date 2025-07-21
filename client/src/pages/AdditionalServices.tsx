@@ -167,7 +167,7 @@ export default function AdditionalServices() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -186,7 +186,7 @@ export default function AdditionalServices() {
 
         {/* Service Categories */}
         <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-4 bg-white dark:bg-[#1e2b3c] border border-gray-200 dark:border-gray-700">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-4 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700">
             <TabsTrigger value="all" className="flex items-center gap-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white dark:text-gray-300 dark:data-[state=active]:bg-blue-600">
               <FileText className="w-4 h-4" />
               전체

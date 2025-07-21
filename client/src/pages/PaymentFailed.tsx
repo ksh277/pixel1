@@ -68,7 +68,7 @@ const PaymentFailed = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="max-w-2xl mx-auto px-4">
         {/* Failure Header */}
         <div className="text-center mb-8">
@@ -84,7 +84,7 @@ const PaymentFailed = () => {
         </div>
 
         {/* Failure Info */}
-        <Card className="mb-6 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="mb-6 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-white">결제 실패 정보</CardTitle>
           </CardHeader>
@@ -113,7 +113,7 @@ const PaymentFailed = () => {
         </Card>
 
         {/* Common Failure Reasons */}
-        <Card className="mb-6 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="mb-6 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-white">자주 발생하는 결제 실패 원인</CardTitle>
           </CardHeader>

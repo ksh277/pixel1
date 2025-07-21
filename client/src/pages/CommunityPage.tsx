@@ -33,7 +33,7 @@ const CommunityPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="animate-pulse space-y-6">
@@ -51,10 +51,10 @@ const CommunityPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <MessageSquare className="w-16 h-16 mx-auto mb-4 text-red-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -75,7 +75,7 @@ const CommunityPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -103,7 +103,7 @@ const CommunityPage = () => {
           </div>
 
           {/* Search and Filter */}
-          <Card className="bg-[#1e2b3c] border-gray-700 mb-6">
+          <Card className="bg-[#1a1a1a] border-gray-700 mb-6">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                 <div className="flex-1 relative">
@@ -112,16 +112,16 @@ const CommunityPage = () => {
                     placeholder="제목이나 내용으로 검색..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-[#0f172a] border-gray-600 text-white placeholder-gray-400"
+                    className="pl-10 bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400"
                   />
                 </div>
                 <div className="flex items-center space-x-2">
                   <Filter className="w-4 h-4 text-gray-400" />
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="w-32 bg-[#0f172a] border-gray-600 text-white">
+                    <SelectTrigger className="w-32 bg-[#1a1a1a] border-gray-600 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#1e2b3c] border-gray-600">
+                    <SelectContent className="bg-[#1a1a1a] border-gray-600">
                       {categories.map((category) => (
                         <SelectItem key={category.value} value={category.value}>
                           {category.label}
@@ -136,7 +136,7 @@ const CommunityPage = () => {
 
           {/* Posts List */}
           {filteredPosts?.length === 0 ? (
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -161,7 +161,7 @@ const CommunityPage = () => {
           ) : (
             <div className="space-y-4">
               {filteredPosts?.map((post) => (
-                <Card key={post.id} className="bg-[#1e2b3c] border-gray-700 hover:bg-[#253041] transition-colors">
+                <Card key={post.id} className="bg-[#1a1a1a] border-gray-700 hover:bg-[#253041] transition-colors">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">

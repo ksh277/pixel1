@@ -70,7 +70,7 @@ const PaymentSuccess = () => {
 
   if (isProcessing) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -85,7 +85,7 @@ const PaymentSuccess = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="max-w-2xl mx-auto px-4">
         {/* Success Header */}
         <div className="text-center mb-8">
@@ -101,7 +101,7 @@ const PaymentSuccess = () => {
         </div>
 
         {/* Payment Details */}
-        <Card className="mb-6 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="mb-6 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center text-gray-900 dark:text-white">
               <CreditCard className="w-5 h-5 mr-2" />
@@ -147,7 +147,7 @@ const PaymentSuccess = () => {
         </Card>
 
         {/* Next Steps */}
-        <Card className="mb-6 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="mb-6 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center text-gray-900 dark:text-white">
               <Package className="w-5 h-5 mr-2" />

@@ -50,10 +50,10 @@ const CartPage = () => {
   // Show message if Supabase is not configured
   if (!isSupabaseConfigured) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <Package className="w-16 h-16 mx-auto mb-4 text-blue-400" />
                 <h2 className="text-2xl font-bold mb-2">장바구니</h2>
@@ -77,10 +77,10 @@ const CartPage = () => {
   // Show login prompt if not authenticated
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-blue-400" />
                 <h2 className="text-2xl font-bold mb-2">로그인이 필요합니다</h2>
@@ -110,7 +110,7 @@ const CartPage = () => {
   // Loading state
   if (isLoadingCart) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="animate-pulse">
@@ -130,10 +130,10 @@ const CartPage = () => {
   // Empty cart
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-400" />
                 <h2 className="text-2xl font-bold mb-2">장바구니가 비어있습니다</h2>
@@ -162,7 +162,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -203,7 +203,7 @@ const CartPage = () => {
                 const subtotal = price * item.quantity;
 
                 return (
-                  <Card key={item.id} className="bg-[#1e2b3c] border-gray-700">
+                  <Card key={item.id} className="bg-[#1a1a1a] border-gray-700">
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-4">
                         {/* Product Image */}
@@ -279,7 +279,7 @@ const CartPage = () => {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <Card className="bg-[#1e2b3c] border-gray-700 sticky top-8">
+              <Card className="bg-[#1a1a1a] border-gray-700 sticky top-8">
                 <CardHeader>
                   <CardTitle className="text-white">주문 요약</CardTitle>
                 </CardHeader>

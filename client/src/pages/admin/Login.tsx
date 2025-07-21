@@ -64,14 +64,14 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0d1b2a] p-4">
-      <Card className="w-full max-w-md bg-white dark:bg-[#1e2b3c] shadow-lg border border-gray-200 dark:border-gray-700">
-        <CardHeader className="bg-white dark:bg-[#1e2b3c]">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#1a1a1a] p-4">
+      <Card className="w-full max-w-md bg-white dark:bg-[#1a1a1a] shadow-lg border border-gray-200 dark:border-gray-700">
+        <CardHeader className="bg-white dark:bg-[#1a1a1a]">
           <CardTitle className="text-center text-2xl font-bold text-gray-900 dark:text-white">
             관리자 로그인
           </CardTitle>
         </CardHeader>
-        <CardContent className="bg-white dark:bg-[#1e2b3c] p-6">
+        <CardContent className="bg-white dark:bg-[#1a1a1a] p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="text-sm text-red-700 dark:text-red-400 text-center bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">

@@ -34,7 +34,7 @@ const CommunityPostPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="animate-pulse space-y-6">
@@ -50,10 +50,10 @@ const CommunityPostPage = () => {
 
   if (error || !post) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <AlertCircle className="w-16 h-16 mx-auto mb-4 text-red-400" />
                 <h2 className="text-2xl font-bold mb-4 text-white">
@@ -78,7 +78,7 @@ const CommunityPostPage = () => {
   const isAuthor = user && post.user_id === user.id
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -114,7 +114,7 @@ const CommunityPostPage = () => {
           </div>
 
           {/* Post Content */}
-          <Card className="bg-[#1e2b3c] border-gray-700 mb-8">
+          <Card className="bg-[#1a1a1a] border-gray-700 mb-8">
             <CardHeader>
               <div className="flex items-center space-x-2 mb-4">
                 {post.category && (

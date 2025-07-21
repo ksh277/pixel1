@@ -52,16 +52,16 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#1F2D4A] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background dark:bg-[#1a1a1a] flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
-        <Card className="shadow-lg bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
+        <Card className="shadow-lg bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
               {t({ ko: "로그인", en: "Login" })}
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="space-y-6 bg-white dark:bg-[#3F4C5F]">
+          <CardContent className="space-y-6 bg-white dark:bg-[#1a1a1a]">
             {error && (
               <Alert variant="destructive" className="animate-shake">
                 <AlertCircle className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default function Login() {
                   <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white dark:bg-[#3F4C5F] text-gray-500 dark:text-white">간편 로그인</span>
+                  <span className="px-2 bg-white dark:bg-[#1a1a1a] text-gray-500 dark:text-white">간편 로그인</span>
                 </div>
               </div>
               

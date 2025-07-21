@@ -236,7 +236,7 @@ export function CommunityShowcaseSection() {
         </motion.div>
 
         {/* Search and Filters */}
-        <motion.div variants={itemVariants} className="bg-white dark:bg-[#1F2D4A] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+        <motion.div variants={itemVariants} className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="flex-1 max-w-md">
               <div className="relative">
@@ -298,7 +298,7 @@ export function CommunityShowcaseSection() {
         </motion.div>
 
         {/* Posts Grid */}
-        <motion.div variants={itemVariants} className="bg-white dark:bg-[#1F2D4A] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+        <motion.div variants={itemVariants} className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="unified-mobile-grid">
             {sortedPosts.map((post) => (
               <div key={post.id} className="unified-mobile-card">

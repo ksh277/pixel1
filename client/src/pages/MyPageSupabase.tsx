@@ -249,7 +249,7 @@ export default function MyPageSupabase() {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
         <Card className="w-full max-w-md mx-4">
           <CardContent className="p-6 text-center">
             <User className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -278,7 +278,7 @@ export default function MyPageSupabase() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

@@ -107,7 +107,7 @@ export function ReviewRewardsSection() {
           {rewardTiers.map((tier, index) => {
             const IconComponent = tier.icon;
             return (
-              <Card key={tier.id} className="relative group hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-[#1F2D4A] border-gray-200 dark:border-gray-700">
+              <Card key={tier.id} className="relative group hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
                 <CardHeader className="text-center pb-3">
                   <div className={`w-16 h-16 mx-auto rounded-full ${tier.bgColor} dark:bg-opacity-20 flex items-center justify-center mb-4`}>
                     <IconComponent className={`h-8 w-8 ${tier.color}`} />
@@ -153,7 +153,7 @@ export function ReviewRewardsSection() {
         </motion.div>
 
         {/* Important Notice */}
-        <motion.div variants={itemVariants} className="bg-gray-50 dark:bg-[#1F2D4A] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+        <motion.div variants={itemVariants} className="bg-gray-50 dark:bg-[#1a1a1a] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
             <div className="space-y-2">

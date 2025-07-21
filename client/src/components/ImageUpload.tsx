@@ -81,7 +81,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   return (
     <div className="space-y-4">
       {currentImageUrl ? (
-        <Card className="bg-[#1e2b3c] border-gray-700">
+        <Card className="bg-[#1a1a1a] border-gray-700">
           <CardContent className="p-4">
             <div className="relative">
               <img
@@ -106,7 +106,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           </CardContent>
         </Card>
       ) : (
-        <Card className="bg-[#1e2b3c] border-gray-700">
+        <Card className="bg-[#1a1a1a] border-gray-700">
           <CardContent className="p-4">
             <div
               className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${

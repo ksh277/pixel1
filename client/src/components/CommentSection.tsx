@@ -93,7 +93,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
             <Textarea
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
-              className="bg-[#0f172a] border-gray-600 text-white placeholder-gray-400 text-sm"
+              className="bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400 text-sm"
               rows={3}
             />
             <div className="flex items-center space-x-2">
@@ -184,7 +184,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ postId, comments
   const actualCommentsCount = comments?.length || commentsCount
 
   return (
-    <Card className="bg-[#1e2b3c] border-gray-700">
+    <Card className="bg-[#1a1a1a] border-gray-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center">
           <MessageSquare className="w-5 h-5 mr-2" />
@@ -205,7 +205,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ postId, comments
                   onChange={(e) => setCommentContent(e.target.value)}
                   placeholder="댓글을 입력하세요..."
                   rows={3}
-                  className="bg-[#0f172a] border-gray-600 text-white placeholder-gray-400 mb-3"
+                  className="bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400 mb-3"
                 />
                 <div className="flex justify-end">
                   <Button
@@ -221,7 +221,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ postId, comments
             </div>
           </form>
         ) : (
-          <div className="bg-[#0f172a] border border-gray-600 rounded-lg p-4 mb-6 text-center">
+          <div className="bg-[#1a1a1a] border border-gray-600 rounded-lg p-4 mb-6 text-center">
             <p className="text-gray-400 mb-4">
               댓글을 작성하려면 로그인이 필요합니다.
             </p>

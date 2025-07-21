@@ -142,7 +142,7 @@ body {
 }
 
 body.dark {
-  background-color: #0f172a;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
 
@@ -281,34 +281,34 @@ body.dark {
 }
 
 .dark body {
-  background-color: #0f172a;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
 
 /* 다크모드 카드 및 컴포넌트 스타일 */
 .dark .card, .dark .box, .dark .section {
-  background-color: #0f172a;
+  background-color: #1a1a1a;
   color: #ffffff;
-  border-color: #0f172a;
+  border-color: #1a1a1a;
 }
 
 .dark .coupon-box, .dark .coupon-card {
-  background-color: #0f172a !important;
+  background-color: #1a1a1a !important;
   color: #ffffff !important;
 }
 
 .dark .event-container, .dark .login-panel {
-  background-color: #0f172a;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
 
 .dark .btn {
-  background-color: #0f172a;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
 
 .dark .btn:hover {
-  background-color: #0f172a;
+  background-color: #1a1a1a;
 }
 
 /* 다크모드 버튼 및 상호작용 요소 */
@@ -684,25 +684,25 @@ body.dark {
 }
 
 .dark {
-  --background: 210 38% 21%;
+  --background: 0 0% 10.2%;
   --foreground: 210 40% 98%;
-  --muted: 210 38% 21%;
+  --muted: 0 0% 10.2%;
   --muted-foreground: 210 20% 65%;
-  --popover: 210 38% 21%;
+  --popover: 0 0% 10.2%;
   --popover-foreground: 210 40% 98%;
-  --card: 210 38% 21%;
+  --card: 0 0% 10.2%;
   --card-foreground: 210 40% 98%;
-  --border: 210 38% 21%;
-  --input: 210 38% 21%;
+  --border: 0 0% 10.2%;
+  --input: 0 0% 10.2%;
   --primary: 207 90% 54%;
   --primary-foreground: 211 100% 99%;
-  --secondary: 210 38% 21%;
+  --secondary: 0 0% 10.2%;
   --secondary-foreground: 210 40% 98%;
   --accent: 0 73% 66%;
   --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
-  --ring: 210 38% 21%;
+  --ring: 0 0% 10.2%;
   --radius: 0.5rem;
 }
 

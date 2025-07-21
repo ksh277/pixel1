@@ -198,7 +198,7 @@ export default function OrderDetail() {
 
   if (orderLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">주문 정보를 불러오는 중...</p>
@@ -209,7 +209,7 @@ export default function OrderDetail() {
 
   if (orderError || !order) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
         <Card className="w-full max-w-md mx-4">
           <CardContent className="p-6 text-center">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
@@ -231,7 +231,7 @@ export default function OrderDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

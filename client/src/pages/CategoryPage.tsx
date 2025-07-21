@@ -160,7 +160,7 @@ export default function CategoryPage() {
 
   if (!currentCategory) {
     return (
-      <div className="min-h-screen bg-background dark:bg-[#1F2D4A] flex items-center justify-center">
+      <div className="min-h-screen bg-background dark:bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">카테고리를 찾을 수 없습니다</h2>
           <Link href="/" className="text-blue-600 dark:text-blue-400 hover:underline">홈으로 돌아가기</Link>
@@ -170,9 +170,9 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-background dark:bg-[#1a1a1a]">
       {/* Breadcrumb */}
-      <div className="bg-white dark:bg-[#1e2b3c] border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 py-4 text-sm">
             <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">홈</Link>
@@ -191,7 +191,7 @@ export default function CategoryPage() {
       </div>
 
       {/* Category Header */}
-      <div className="bg-white dark:bg-[#1e2b3c] border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{t(currentCategory.name)}</h1>
@@ -206,7 +206,7 @@ export default function CategoryPage() {
       </div>
 
       {/* Subcategory Tabs */}
-      <div className="bg-white dark:bg-[#1e2b3c] border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto scrollbar-hide">
             <div className="flex space-x-0 min-w-max">
@@ -254,7 +254,7 @@ export default function CategoryPage() {
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white dark:bg-[#1e2b3c] rounded-lg shadow-sm p-4 animate-pulse">
+              <div key={i} className="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm p-4 animate-pulse">
                 <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg mb-3"></div>
                 <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
                 <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>

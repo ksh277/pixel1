@@ -73,7 +73,7 @@ export default function Wishlist() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center h-64">
             <div className="text-lg text-gray-600 dark:text-gray-300">
@@ -86,7 +86,7 @@ export default function Wishlist() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
@@ -115,7 +115,7 @@ export default function Wishlist() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {wishlistItems.map((item) => (
-              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
                 <div className="relative">
                   <img
                     src={item.image_url || '/api/placeholder/300/300'}

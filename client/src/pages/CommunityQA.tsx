@@ -64,7 +64,7 @@ export default function CommunityQA() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">질문을 불러오는 중...</p>
@@ -74,7 +74,7 @@ export default function CommunityQA() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-lg shadow-lg mb-8">
           <h1 className="text-2xl font-bold mb-2">궁금햄물어봐</h1>
@@ -88,11 +88,11 @@ export default function CommunityQA() {
               placeholder="질문 검색..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white dark:bg-[#1e2b3c] border-gray-300 dark:border-gray-600"
+              className="pl-10 bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-gray-600"
             />
           </div>
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full lg:w-48 bg-white dark:bg-[#1e2b3c]">
+            <SelectTrigger className="w-full lg:w-48 bg-white dark:bg-[#1a1a1a]">
               <SelectValue placeholder="카테고리" />
             </SelectTrigger>
             <SelectContent>
@@ -104,7 +104,7 @@ export default function CommunityQA() {
             </SelectContent>
           </Select>
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-full lg:w-48 bg-white dark:bg-[#1e2b3c]">
+            <SelectTrigger className="w-full lg:w-48 bg-white dark:bg-[#1a1a1a]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -121,7 +121,7 @@ export default function CommunityQA() {
 
         <div className="space-y-4">
           {sortedPosts.map((post) => (
-            <Card key={post.id} className="hover:shadow-lg transition-shadow bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card key={post.id} className="hover:shadow-lg transition-shadow bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">

@@ -128,7 +128,7 @@ export default function CommunityPostDetail() {
 
   if (postLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] p-4">
         <div className="max-w-4xl mx-auto">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
@@ -142,7 +142,7 @@ export default function CommunityPostDetail() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] p-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             게시글을 찾을 수 없습니다
@@ -160,10 +160,10 @@ export default function CommunityPostDetail() {
     : post.username;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] p-4">
       <div className="max-w-4xl mx-auto">
         {/* Post Content */}
-        <Card className="mb-6 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="mb-6 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -221,7 +221,7 @@ export default function CommunityPostDetail() {
         </Card>
 
         {/* Comments Section */}
-        <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
               댓글 {comments?.length || 0}개

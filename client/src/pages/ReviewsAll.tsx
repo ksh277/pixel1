@@ -219,9 +219,9 @@ export default function ReviewsAll() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       {/* Header */}
-      <div className="bg-white dark:bg-[#1F2D4A] shadow-sm sticky top-0 z-10">
+      <div className="bg-white dark:bg-[#1a1a1a] shadow-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

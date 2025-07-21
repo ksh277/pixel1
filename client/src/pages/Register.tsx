@@ -455,9 +455,9 @@ export default function Register() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#1F2D4A] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
-        <Card className="shadow-lg bg-white dark:bg-[#3F4C5F] border-gray-200 dark:border-gray-700">
+        <Card className="shadow-lg bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader className="text-center pb-6">
             <div className="flex items-center justify-center mb-4">
               <div className="flex items-center space-x-2">

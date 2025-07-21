@@ -166,7 +166,7 @@ export default function MyPage() {
   
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
         <div className="container mx-auto px-4">
           <div className="text-center py-16">
             <User className="mx-auto h-24 w-24 text-gray-300 dark:text-gray-600 mb-4" />
@@ -188,7 +188,7 @@ export default function MyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
@@ -200,7 +200,7 @@ export default function MyPage() {
         </div>
 
         {/* 프로필 카드 */}
-        <Card className="mb-8 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+        <Card className="mb-8 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center justify-between text-gray-900 dark:text-white">
               <span className="flex items-center">
@@ -252,7 +252,7 @@ export default function MyPage() {
 
         {/* 통계 카드 */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+          <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <div className="flex items-center">
                 <Package className="h-8 w-8 text-blue-600 dark:text-blue-400" />
@@ -265,7 +265,7 @@ export default function MyPage() {
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+          <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <div className="flex items-center">
                 <Heart className="h-8 w-8 text-red-500" />
@@ -276,7 +276,7 @@ export default function MyPage() {
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+          <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <div className="flex items-center">
                 <Star className="h-8 w-8 text-yellow-500" />
@@ -287,7 +287,7 @@ export default function MyPage() {
               </div>
             </CardContent>
           </Card>
-          <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+          <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
             <CardContent className="p-4">
               <div className="flex items-center">
                 <Package className="h-8 w-8 text-green-500" />
@@ -302,7 +302,7 @@ export default function MyPage() {
 
         {/* 탭 메뉴 */}
         <Tabs defaultValue="orders" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+          <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
             <TabsTrigger value="orders" className="dark:text-gray-300 dark:data-[state=active]:bg-blue-600">
               주문내역
             </TabsTrigger>
@@ -318,7 +318,7 @@ export default function MyPage() {
           </TabsList>
 
           <TabsContent value="orders" className="space-y-4">
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">주문 내역</CardTitle>
               </CardHeader>
@@ -379,7 +379,7 @@ export default function MyPage() {
           </TabsContent>
 
           <TabsContent value="wishlist">
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">찜한 상품</CardTitle>
               </CardHeader>
@@ -398,7 +398,7 @@ export default function MyPage() {
           </TabsContent>
 
           <TabsContent value="reviews">
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">리뷰 관리</CardTitle>
               </CardHeader>
@@ -415,7 +415,7 @@ export default function MyPage() {
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between text-gray-900 dark:text-white">
                   <span>개인정보 설정</span>

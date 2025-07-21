@@ -70,16 +70,16 @@ const DeliveryTrackingForm = ({
   }
 
   return (
-    <div className="bg-[#0f172a] text-white p-6 rounded-lg">
+    <div className="bg-[#1a1a1a] text-white p-6 rounded-lg">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="courier" className="text-white">택배사</Label>
             <Select value={courier} onValueChange={setCourier}>
-              <SelectTrigger className="bg-[#1e2b3c] border-gray-600 text-white">
+              <SelectTrigger className="bg-[#1a1a1a] border-gray-600 text-white">
                 <SelectValue placeholder="택배사를 선택하세요" />
               </SelectTrigger>
-              <SelectContent className="bg-[#1e2b3c] border-gray-600">
+              <SelectContent className="bg-[#1a1a1a] border-gray-600">
                 <SelectItem value="cj">CJ대한통운</SelectItem>
                 <SelectItem value="hanjin">한진택배</SelectItem>
                 <SelectItem value="lotte">롯데택배</SelectItem>
@@ -99,7 +99,7 @@ const DeliveryTrackingForm = ({
               value={trackingNumber}
               onChange={(e) => setTrackingNumber(e.target.value)}
               placeholder="송장번호를 입력하세요"
-              className="bg-[#1e2b3c] border-gray-600 text-white placeholder-gray-400"
+              className="bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400"
             />
           </div>
         </div>
@@ -107,10 +107,10 @@ const DeliveryTrackingForm = ({
         <div>
           <Label htmlFor="status" className="text-white">배송 상태</Label>
           <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger className="bg-[#1e2b3c] border-gray-600 text-white">
+            <SelectTrigger className="bg-[#1a1a1a] border-gray-600 text-white">
               <SelectValue placeholder="배송 상태를 선택하세요" />
             </SelectTrigger>
-            <SelectContent className="bg-[#1e2b3c] border-gray-600">
+            <SelectContent className="bg-[#1a1a1a] border-gray-600">
               <SelectItem value="pending">배송 대기</SelectItem>
               <SelectItem value="processing">배송 준비중</SelectItem>
               <SelectItem value="shipped">배송 시작</SelectItem>
@@ -130,7 +130,7 @@ const DeliveryTrackingForm = ({
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal bg-[#1e2b3c] border-gray-600 text-white hover:bg-gray-700",
+                  "w-full justify-start text-left font-normal bg-[#1a1a1a] border-gray-600 text-white hover:bg-gray-700",
                   !estimatedDelivery && "text-gray-400"
                 )}
               >
@@ -138,13 +138,13 @@ const DeliveryTrackingForm = ({
                 {estimatedDelivery ? format(estimatedDelivery, "PPP", { locale: ko }) : "날짜를 선택하세요"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 bg-[#1e2b3c] border-gray-600">
+            <PopoverContent className="w-auto p-0 bg-[#1a1a1a] border-gray-600">
               <CalendarComponent
                 mode="single"
                 selected={estimatedDelivery}
                 onSelect={setEstimatedDelivery}
                 initialFocus
-                className="bg-[#1e2b3c] text-white"
+                className="bg-[#1a1a1a] text-white"
               />
             </PopoverContent>
           </Popover>
@@ -213,7 +213,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
 
   if (isLoading) {
     return (
-      <div className="bg-[#0f172a] text-white p-6 rounded-lg">
+      <div className="bg-[#1a1a1a] text-white p-6 rounded-lg">
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-700 rounded w-1/4"></div>
           <div className="h-4 bg-gray-700 rounded w-1/3"></div>
@@ -225,15 +225,15 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
 
   if (error) {
     return (
-      <div className="bg-[#0f172a] text-white p-6 rounded-lg">
+      <div className="bg-[#1a1a1a] text-white p-6 rounded-lg">
         <p className="text-red-400">배송 정보를 불러오는 중 오류가 발생했습니다.</p>
       </div>
     )
   }
 
   return (
-    <div className="bg-[#0f172a] text-white rounded-lg">
-      <Card className="bg-[#1e2b3c] border-gray-700">
+    <div className="bg-[#1a1a1a] text-white rounded-lg">
+      <Card className="bg-[#1a1a1a] border-gray-700">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <CardTitle className="text-xl text-white flex items-center">
@@ -256,7 +256,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
                         배송 정보 수정
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl bg-[#1e2b3c] border-gray-700">
+                    <DialogContent className="max-w-2xl bg-[#1a1a1a] border-gray-700">
                       <DialogHeader>
                         <DialogTitle className="text-white">배송 정보 수정</DialogTitle>
                       </DialogHeader>
@@ -278,7 +278,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
                         배송 정보 등록
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl bg-[#1e2b3c] border-gray-700">
+                    <DialogContent className="max-w-2xl bg-[#1a1a1a] border-gray-700">
                       <DialogHeader>
                         <DialogTitle className="text-white">배송 정보 등록</DialogTitle>
                       </DialogHeader>
@@ -312,7 +312,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
               {/* Tracking Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {tracking.courier && (
-                  <div className="bg-[#0f172a] p-4 rounded-lg">
+                  <div className="bg-[#1a1a1a] p-4 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
                       <Package className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-gray-400">택배사</span>
@@ -322,7 +322,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
                 )}
 
                 {tracking.tracking_number && (
-                  <div className="bg-[#0f172a] p-4 rounded-lg">
+                  <div className="bg-[#1a1a1a] p-4 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
                       <MapPin className="w-4 h-4 text-green-400" />
                       <span className="text-sm text-gray-400">송장번호</span>
@@ -353,7 +353,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
               {/* Estimated Delivery & Last Updated */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {tracking.estimated_delivery && (
-                  <div className="bg-[#0f172a] p-4 rounded-lg">
+                  <div className="bg-[#1a1a1a] p-4 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
                       <Clock className="w-4 h-4 text-purple-400" />
                       <span className="text-sm text-gray-400">예상 배송일</span>
@@ -365,7 +365,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
                 )}
 
                 {tracking.last_updated && (
-                  <div className="bg-[#0f172a] p-4 rounded-lg">
+                  <div className="bg-[#1a1a1a] p-4 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
                       <Clock className="w-4 h-4 text-orange-400" />
                       <span className="text-sm text-gray-400">마지막 업데이트</span>
@@ -391,7 +391,7 @@ const DeliveryTracking: React.FC<DeliveryTrackingProps> = ({
                       배송 정보 등록
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl bg-[#1e2b3c] border-gray-700">
+                  <DialogContent className="max-w-2xl bg-[#1a1a1a] border-gray-700">
                     <DialogHeader>
                       <DialogTitle className="text-white">배송 정보 등록</DialogTitle>
                     </DialogHeader>

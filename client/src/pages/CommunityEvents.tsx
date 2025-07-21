@@ -32,7 +32,7 @@ export default function CommunityEvents() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">이벤트를 불러오는 중...</p>
@@ -42,7 +42,7 @@ export default function CommunityEvents() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-lg shadow-lg mb-8">
           <h1 className="text-2xl font-bold mb-2">이벤트</h1>
@@ -51,7 +51,7 @@ export default function CommunityEvents() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {transformedEvents.map((event) => (
-            <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <div className="relative">
                 <img 
                   src={event.image} 

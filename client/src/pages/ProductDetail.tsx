@@ -358,9 +358,9 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0d1b2a]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       {/* Breadcrumb */}
-      <div className="bg-white dark:bg-[#1e2b3c] border-b dark:border-gray-700">
+      <div className="bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400">
             <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-300">
@@ -382,7 +382,7 @@ export default function ProductDetail() {
           {/* Left Column - Product Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="aspect-square bg-white dark:bg-[#1e2b3c] rounded-lg overflow-hidden shadow-sm border dark:border-gray-700">
+            <div className="aspect-square bg-white dark:bg-[#1a1a1a] rounded-lg overflow-hidden shadow-sm border dark:border-gray-700">
               <img
                 src={mockProduct.images[currentImageIndex]}
                 alt={mockProduct.nameKo}

@@ -81,10 +81,10 @@ const CommunityWritePage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-[#1a1a1a] text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1e2b3c] border-gray-700">
+            <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <h2 className="text-2xl font-bold mb-4 text-white">
                   로그인이 필요합니다
@@ -113,7 +113,7 @@ const CommunityWritePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-[#1a1a1a] text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -142,7 +142,7 @@ const CommunityWritePage = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Write Form */}
-            <Card className={`bg-[#1e2b3c] border-gray-700 ${isPreview ? 'lg:block hidden' : ''}`}>
+            <Card className={`bg-[#1a1a1a] border-gray-700 ${isPreview ? 'lg:block hidden' : ''}`}>
               <CardHeader>
                 <CardTitle className="text-white">글쓰기</CardTitle>
               </CardHeader>
@@ -155,7 +155,7 @@ const CommunityWritePage = () => {
                       value={formData.title}
                       onChange={(e) => handleInputChange('title', e.target.value)}
                       placeholder="제목을 입력하세요"
-                      className="bg-[#0f172a] border-gray-600 text-white placeholder-gray-400"
+                      className="bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400"
                       required
                     />
                   </div>
@@ -163,10 +163,10 @@ const CommunityWritePage = () => {
                   <div>
                     <Label htmlFor="category" className="text-white">카테고리</Label>
                     <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                      <SelectTrigger className="bg-[#0f172a] border-gray-600 text-white">
+                      <SelectTrigger className="bg-[#1a1a1a] border-gray-600 text-white">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#1e2b3c] border-gray-600">
+                      <SelectContent className="bg-[#1a1a1a] border-gray-600">
                         {categories.map((category) => (
                           <SelectItem key={category.value} value={category.value}>
                             {category.label}
@@ -194,7 +194,7 @@ const CommunityWritePage = () => {
                       onChange={(e) => handleInputChange('content', e.target.value)}
                       placeholder="내용을 입력하세요"
                       rows={12}
-                      className="bg-[#0f172a] border-gray-600 text-white placeholder-gray-400 resize-none"
+                      className="bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400 resize-none"
                     />
                   </div>
 
@@ -218,7 +218,7 @@ const CommunityWritePage = () => {
             </Card>
 
             {/* Preview */}
-            <Card className={`bg-[#1e2b3c] border-gray-700 ${isPreview ? '' : 'lg:block hidden'}`}>
+            <Card className={`bg-[#1a1a1a] border-gray-700 ${isPreview ? '' : 'lg:block hidden'}`}>
               <CardHeader>
                 <CardTitle className="text-white">미리보기</CardTitle>
               </CardHeader>

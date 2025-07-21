@@ -164,7 +164,7 @@ export const Notifications = () => {
               <p className="text-gray-600 dark:text-gray-400 mt-2">알림을 불러오는 중...</p>
             </div>
           ) : filteredNotifications.length === 0 ? (
-            <Card className="bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardContent className="py-12 text-center">
                 <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
@@ -182,7 +182,7 @@ export const Notifications = () => {
                 className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
                   !notification.is_read 
                     ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700' 
-                    : 'bg-white dark:bg-[#1e2b3c] border-gray-200 dark:border-gray-700'
+                    : 'bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700'
                 }`}
                 onClick={() => handleNotificationClick(notification)}
               >

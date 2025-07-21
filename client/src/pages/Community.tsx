@@ -96,7 +96,7 @@ export default function Community() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       {/* Navigation is now handled globally in Layout component */}
 
       {/* Main Content */}
