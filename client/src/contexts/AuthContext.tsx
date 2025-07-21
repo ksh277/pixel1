@@ -35,6 +35,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Check if user is already logged in with JWT token
     const checkAuth = async () => {
       try {
+        // First check localStorage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          try {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+          } catch (e) {
+            localStorage.removeItem('user');
+          }
+        }
+
+        // Then verify with server
         const response = await fetch('/api/auth/me', {
           credentials: 'include', // Include cookies
         });
@@ -55,13 +67,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             lastName: userData.last_name || ''
           };
           setUser(user);
+          localStorage.setItem('user', JSON.stringify(user));
         } else {
-          // Clear any existing user data
+          // Clear any existing user data if server says no
+          setUser(null);
           localStorage.removeItem('user');
         }
       } catch (error) {
         console.error('Auth check failed:', error);
-        localStorage.removeItem('user');
+        // Keep localStorage user if server check fails but don't clear
       } finally {
         setIsLoading(false);
       }

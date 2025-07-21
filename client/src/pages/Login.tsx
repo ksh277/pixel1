@@ -31,8 +31,10 @@ export default function Login() {
       const success = await login(formData.username, formData.password);
       
       if (success) {
-        // Force page refresh to ensure UI updates
-        window.location.href = redirectPath || '/';
+        // Navigate without full page refresh, let React handle the state update
+        setTimeout(() => {
+          setLocation(redirectPath || '/');
+        }, 100); // Small delay to ensure state is updated
       } else {
         setError(t({ 
           ko: "아이디 또는 비밀번호가 잘못되었습니다.", 
