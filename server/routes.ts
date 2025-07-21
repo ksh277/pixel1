@@ -217,7 +217,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { password: _, ...userWithoutPassword } = user;
       res.json({ 
         ...userWithoutPassword,
-        token 
+        token,
+        isAdmin: isAdminValue
       });
     } catch (error) {
       console.error('Login error:', error);
@@ -255,7 +256,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .eq('user_id', user.id)
         .single();
       
-      res.json({ ...user, seller });
+      // Add isAdmin from JWT token
+      res.json({ 
+        ...user, 
+        seller, 
+        isAdmin: req.user.isAdmin || false
+      });
     } catch (error) {
       console.error('Auth check error:', error);
       res.status(500).json({ message: "인증 확인에 실패했습니다." });

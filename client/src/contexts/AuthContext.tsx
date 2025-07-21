@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             coupons: 0,
             totalOrders: 0,
             totalSpent: 0,
-            isAdmin: userData.is_admin,
+            isAdmin: userData.isAdmin || false,
             firstName: userData.first_name,
             lastName: userData.last_name || ''
           };
@@ -93,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           coupons: 0,
           totalOrders: 0,
           totalSpent: 0,
-          isAdmin: userData.is_admin,
+          isAdmin: userData.isAdmin || false,
           firstName: userData.first_name,
           lastName: userData.last_name || ''
         };
