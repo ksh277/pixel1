@@ -260,31 +260,11 @@ export const Header = () => {
                 <SelectValue />
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-gray-200 dark:bg-gray-50 border border-gray-200">
-              <SelectItem
-                value="ko"
-                className="hover:bg-gray-100 text-gray-900"
-              >
-                한
-              </SelectItem>
-              <SelectItem
-                value="en"
-                className="hover:bg-gray-100 text-gray-900"
-              >
-                En
-              </SelectItem>
-              <SelectItem
-                value="ja"
-                className="hover:bg-gray-100 text-gray-900"
-              >
-                日
-              </SelectItem>
-              <SelectItem
-                value="zh"
-                className="hover:bg-gray-100 text-gray-900"
-              >
-                中
-              </SelectItem>
+            <SelectContent className="bg-gray-50 dark:bg-gray-50 border border-gray-200 p-1" style={{ display: 'flex', flexDirection: 'row', width: 'auto', minWidth: 'max-content' }}>
+              <SelectItem value="ko" className="hover:bg-gray-100 text-gray-900 px-3 py-1 mx-1">한국어</SelectItem>
+              <SelectItem value="en" className="hover:bg-gray-100 text-gray-900 px-3 py-1 mx-1">English</SelectItem>
+              <SelectItem value="ja" className="hover:bg-gray-100 text-gray-900 px-3 py-1 mx-1">日本語</SelectItem>
+              <SelectItem value="zh" className="hover:bg-gray-100 text-gray-900 px-3 py-1 mx-1">中文</SelectItem>
             </SelectContent>
           </Select>
 
