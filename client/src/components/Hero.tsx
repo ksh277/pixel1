@@ -77,7 +77,7 @@ export function Hero() {
           <img
             src={heroSlides[currentSlide].image}
             alt={t(heroSlides[currentSlide].title)}
-            className="w-full max-w-2xl mx-auto h-auto object-contain"
+            className="w-full max-w-5xl mx-auto h-auto object-contain"
           />
         </motion.div>
       </AnimatePresence>
