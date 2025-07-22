@@ -52,7 +52,7 @@ const heroSlides = [
 ];
 
 export function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(1); // Start with slide 1 (GIF image)
   const { t } = useLanguage();
 
   // Auto-advance slides
@@ -64,63 +64,26 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="w-full px-4 py-12 bg-gradient-to-br from-indigo-500 to-purple-500 text-white">
+    <section className="w-full relative">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row items-center gap-8 max-w-6xl mx-auto"
+          className="w-full"
         >
-          {/* Text Content */}
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-2xl md:text-4xl font-bold leading-snug mb-4 break-keep">
-              {t(heroSlides[currentSlide].title)}
-            </h1>
-            <p className="text-sm md:text-lg mt-2 mb-6 text-white/90 leading-relaxed">
-              {t(heroSlides[currentSlide].subtitle)}
-            </p>
-
-            <div className="mt-6 space-y-3 max-w-sm mx-auto md:mx-0">
-              <Link href="/editor">
-                <Button className="w-full py-3 bg-white text-indigo-600 font-semibold rounded shadow hover:bg-gray-100 transition-colors">
-                  <span className="text-indigo-600 font-semibold">
-                    {t({ ko: "디자인 시작하기", en: "Start Designing" })}
-                  </span>
-                </Button>
-              </Link>
-              <Link href="/additional-services">
-                <Button
-                  variant="outline"
-                  className="w-full py-3 border border-white rounded text-white hover:bg-white hover:text-indigo-600 transition-colors bg-transparent"
-                  style={{ borderColor: "white", color: "white" }}
-                >
-                  <span className="text-white font-semibold">
-                    {t({ ko: "도안작업 서비스", en: "Design Service" })}
-                  </span>
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Image Content */}
-          <div className="flex-1 flex justify-center">
-            <motion.img
-              src={heroSlides[currentSlide].image}
-              alt={t(heroSlides[currentSlide].title)}
-              className="max-w-full h-auto rounded-lg shadow-lg max-h-96 object-contain"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            />
-          </div>
+          <img
+            src={heroSlides[currentSlide].image}
+            alt={t(heroSlides[currentSlide].title)}
+            className="w-full h-auto object-cover"
+          />
         </motion.div>
       </AnimatePresence>
 
-      {/* Slide Indicators */}
-      <div className="flex justify-center mt-6 space-x-2">
+      {/* Slide Indicators - positioned over the image */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {heroSlides.map((_, index) => (
           <button
             key={index}
