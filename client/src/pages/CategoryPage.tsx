@@ -86,8 +86,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('acrylic')
         );
         
-        // Then filter by subcategory if specified
-        if (subcategory && activeTab) {
+        // Then filter by subcategory if specified and activeTab is not empty (not "전체")
+        if (subcategory && activeTab !== '') {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
@@ -147,8 +147,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('strap')
         );
         
-        // Then filter by subcategory if specified
-        if (subcategory && activeTab) {
+        // Then filter by subcategory if specified and activeTab is not empty (not "전체")
+        if (subcategory && activeTab !== '') {
           const subcategoryFilters = {
             'neck': (product: Product) => 
               product.nameKo.includes('목걸이') || 
@@ -172,8 +172,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('wood')
         );
         
-        // Then filter by subcategory if specified
-        if (subcategory && activeTab) {
+        // Then filter by subcategory if specified and activeTab is not empty (not "전체")
+        if (subcategory && activeTab !== '') {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
@@ -202,8 +202,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('box')
         );
         
-        // Then filter by subcategory if specified
-        if (subcategory && activeTab) {
+        // Then filter by subcategory if specified and activeTab is not empty (not "전체")
+        if (subcategory && activeTab !== '') {
           const subcategoryFilters = {
             'box': (product: Product) => 
               product.nameKo.includes('박스') || 
