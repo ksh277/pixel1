@@ -137,8 +137,9 @@ export default function CategoryPage() {
           }
         }
       } else if (category === 'lanyard') {
-        // Filter lanyard products
+        // Filter lanyard products (categoryId: 7 or by name)
         filteredProducts = data.filter((product: Product) => 
+          product.categoryId === 7 ||
           product.nameKo.includes('렌야드') || 
           product.nameKo.includes('랜야드') ||
           product.nameKo.includes('스트랩') ||
