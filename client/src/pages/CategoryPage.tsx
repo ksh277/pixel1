@@ -62,6 +62,7 @@ export default function CategoryPage() {
 
   // Update activeTab when URL changes
   useEffect(() => {
+    console.log('URL changed, subcategory:', subcategory, 'setting activeTab to:', subcategory || "");
     setActiveTab(subcategory || "");
   }, [subcategory]);
 
@@ -304,6 +305,7 @@ export default function CategoryPage() {
               {/* All Products Tab */}
               <button
                 onClick={() => {
+                  console.log('Clicking 전체 button, resetting activeTab to empty');
                   setActiveTab('');
                   setLocation(`/category/${category}`);
                   // Smooth scroll to top
