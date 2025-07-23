@@ -137,7 +137,7 @@ const CommunityPage = () => {
               <Link href="/login">
                 <Button
                   variant="outline"
-                  className="text-white border-gray-600 hover:bg-gray-700 w-full md:w-auto"
+                  className="text-gray-700 dark:text-white border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 w-full md:w-auto"
                 >
                   로그인하고 글쓰기
                 </Button>
@@ -150,7 +150,7 @@ const CommunityPage = () => {
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 dark:text-gray-400" />
                   <Input
                     placeholder="제목이나 내용으로 검색..."
                     value={searchTerm}
@@ -159,7 +159,7 @@ const CommunityPage = () => {
                   />
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Filter className="w-4 h-4 text-gray-400" />
+                  <Filter className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                   <Select
                     value={selectedCategory}
                     onValueChange={setSelectedCategory}
@@ -184,7 +184,7 @@ const CommunityPage = () => {
           {filteredPosts?.length === 0 ? (
             <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardContent className="p-8 text-center">
-                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-600 dark:text-gray-400" />
                 <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">
                   {searchTerm || selectedCategory !== "all"
                     ? "검색 결과가 없습니다"
