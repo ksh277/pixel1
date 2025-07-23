@@ -71,6 +71,7 @@ export const AdminProducts = () => {
   // Fetch products
   const { data: products = [], isLoading: productsLoading } = useQuery({
     queryKey: ["/api/products"],
+    select: (data: unknown) => (data as Product[]) || []
   });
 
   // Fetch categories
@@ -147,7 +148,7 @@ export const AdminProducts = () => {
   });
 
   // Filter products
-  const filteredProducts = products.filter((product: Product) => {
+  const filteredProducts = (products as Product[]).filter((product: Product) => {
     const matchesSearch = 
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.nameKo.toLowerCase().includes(searchTerm.toLowerCase());
@@ -433,16 +434,16 @@ export const AdminProducts = () => {
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2">
                       <span className="font-bold text-lg">
-                        ₩{product.price.toLocaleString()}
+                        ₩{(product.price || 0).toLocaleString()}
                       </span>
-                      {product.originalPrice > product.price && (
+                      {(product.originalPrice || 0) > (product.price || 0) && (
                         <span className="text-sm text-gray-500 line-through">
-                          ₩{product.originalPrice.toLocaleString()}
+                          ₩{(product.originalPrice || 0).toLocaleString()}
                         </span>
                       )}
                     </div>
                     <div className="text-xs text-gray-500">
-                      재고: {product.stockQuantity}개
+                      재고: {product.stockQuantity || 0}개
                     </div>
                   </div>
                 </div>
