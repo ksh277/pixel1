@@ -148,7 +148,7 @@ export default function CategoryPage() {
         }
       } else if (category === 'lanyard') {
         // Filter lanyard products (categoryId: 7 or by name)
-        filteredProducts = data.filter((product: Product) => 
+        filteredProducts = allProducts.filter((product: Product) => 
           product.categoryId === 7 ||
           product.nameKo.includes('렌야드') || 
           product.nameKo.includes('랜야드') ||
@@ -178,7 +178,7 @@ export default function CategoryPage() {
         }
       } else if (category === 'wood') {
         // Filter wood products
-        filteredProducts = data.filter((product: Product) => 
+        filteredProducts = allProducts.filter((product: Product) => 
           product.nameKo.includes('우드') || 
           product.nameKo.includes('나무') ||
           product.name.toLowerCase().includes('wood')
@@ -208,7 +208,7 @@ export default function CategoryPage() {
         }
       } else if (category === 'packaging') {
         // Filter packaging products
-        filteredProducts = data.filter((product: Product) => 
+        filteredProducts = allProducts.filter((product: Product) => 
           product.nameKo.includes('포장') || 
           product.nameKo.includes('박스') ||
           product.nameKo.includes('부자재') ||
