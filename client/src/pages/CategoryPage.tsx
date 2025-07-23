@@ -69,7 +69,7 @@ export default function CategoryPage() {
   
   // Query for products
   const { data: products, isLoading } = useQuery({
-    queryKey: ['/api/products', category, subcategory],
+    queryKey: ['/api/products', category, activeTab],
     queryFn: async () => {
       const response = await fetch('/api/products');
       if (!response.ok) throw new Error('Failed to fetch products');
