@@ -89,6 +89,8 @@ export default function CategoryPage() {
         );
         
         console.log('Acrylic products found:', filteredProducts.length, 'activeTab:', activeTab);
+      } else if (category === 'lanyard') {
+        // Filter lanyard products (categoryId: 7 or by name)
         
         // Then filter by subcategory if activeTab is not empty (not "전체")
         if (activeTab && activeTab !== '') {
@@ -151,6 +153,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('strap')
         );
         
+        console.log('Lanyard products found:', filteredProducts.length, 'activeTab:', activeTab);
+        
         // Then filter by subcategory if activeTab is not empty (not "전체")
         if (activeTab && activeTab !== '') {
           const subcategoryFilters = {
@@ -175,6 +179,8 @@ export default function CategoryPage() {
           product.nameKo.includes('나무') ||
           product.name.toLowerCase().includes('wood')
         );
+        
+        console.log('Wood products found:', filteredProducts.length, 'activeTab:', activeTab);
         
         // Then filter by subcategory if activeTab is not empty (not "전체")
         if (activeTab && activeTab !== '') {
@@ -205,6 +211,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('packaging') ||
           product.name.toLowerCase().includes('box')
         );
+        
+        console.log('Packaging products found:', filteredProducts.length, 'activeTab:', activeTab);
         
         // Then filter by subcategory if activeTab is not empty (not "전체")
         if (activeTab && activeTab !== '') {
