@@ -1,5 +1,5 @@
 import { useParams, useLocation, Link } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -59,6 +59,7 @@ export default function CategoryPage() {
   const [, setLocation] = useLocation();
   const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>(subcategory || "");
+  const queryClient = useQueryClient();
 
   // Update activeTab when URL changes
   useEffect(() => {
@@ -305,9 +306,13 @@ export default function CategoryPage() {
               {/* All Products Tab */}
               <button
                 onClick={() => {
-                  console.log('Clicking 전체 button, navigating to category page');
-                  // Use window.location.href for complete navigation reset
-                  window.location.href = `/category/${category}`;
+                  console.log('Clicking 전체 button, resetting activeTab and invalidating cache');
+                  setActiveTab('');
+                  // Invalidate the products cache to force refetch
+                  queryClient.invalidateQueries({ queryKey: ['/api/products'] });
+                  setLocation(`/category/${category}`);
+                  // Smooth scroll to top
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                   activeTab === ''
