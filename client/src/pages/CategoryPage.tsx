@@ -60,6 +60,11 @@ export default function CategoryPage() {
   const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>(subcategory || "");
 
+  // Update activeTab when URL changes
+  useEffect(() => {
+    setActiveTab(subcategory || "");
+  }, [subcategory]);
+
   const currentCategory = categoryData[category as keyof typeof categoryData];
   
   // Query for products
@@ -82,7 +87,7 @@ export default function CategoryPage() {
         );
         
         // Then filter by subcategory if specified
-        if (subcategory) {
+        if (subcategory && activeTab) {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
@@ -124,6 +129,89 @@ export default function CategoryPage() {
             'cutting': (product: Product) => 
               product.nameKo.includes('재단') || 
               product.name.toLowerCase().includes('cutting')
+          };
+          
+          const filterFn = subcategoryFilters[subcategory as keyof typeof subcategoryFilters];
+          if (filterFn) {
+            filteredProducts = filteredProducts.filter(filterFn);
+          }
+        }
+      } else if (category === 'lanyard') {
+        // Filter lanyard products
+        filteredProducts = data.filter((product: Product) => 
+          product.nameKo.includes('렌야드') || 
+          product.nameKo.includes('랜야드') ||
+          product.nameKo.includes('스트랩') ||
+          product.name.toLowerCase().includes('lanyard') ||
+          product.name.toLowerCase().includes('strap')
+        );
+        
+        // Then filter by subcategory if specified
+        if (subcategory && activeTab) {
+          const subcategoryFilters = {
+            'neck': (product: Product) => 
+              product.nameKo.includes('목걸이') || 
+              product.name.toLowerCase().includes('neck'),
+            'phone': (product: Product) => 
+              product.nameKo.includes('핸드폰') || 
+              product.nameKo.includes('폰') ||
+              product.name.toLowerCase().includes('phone')
+          };
+          
+          const filterFn = subcategoryFilters[subcategory as keyof typeof subcategoryFilters];
+          if (filterFn) {
+            filteredProducts = filteredProducts.filter(filterFn);
+          }
+        }
+      } else if (category === 'wood') {
+        // Filter wood products
+        filteredProducts = data.filter((product: Product) => 
+          product.nameKo.includes('우드') || 
+          product.nameKo.includes('나무') ||
+          product.name.toLowerCase().includes('wood')
+        );
+        
+        // Then filter by subcategory if specified
+        if (subcategory && activeTab) {
+          const subcategoryFilters = {
+            'keyring': (product: Product) => 
+              product.nameKo.includes('키링') || 
+              product.name.toLowerCase().includes('keyring'),
+            'coaster': (product: Product) => 
+              product.nameKo.includes('코스터') || 
+              product.name.toLowerCase().includes('coaster'),
+            'magnet': (product: Product) => 
+              product.nameKo.includes('마그넷') || 
+              product.nameKo.includes('자석') ||
+              product.name.toLowerCase().includes('magnet')
+          };
+          
+          const filterFn = subcategoryFilters[subcategory as keyof typeof subcategoryFilters];
+          if (filterFn) {
+            filteredProducts = filteredProducts.filter(filterFn);
+          }
+        }
+      } else if (category === 'packaging') {
+        // Filter packaging products
+        filteredProducts = data.filter((product: Product) => 
+          product.nameKo.includes('포장') || 
+          product.nameKo.includes('박스') ||
+          product.nameKo.includes('부자재') ||
+          product.name.toLowerCase().includes('packaging') ||
+          product.name.toLowerCase().includes('box')
+        );
+        
+        // Then filter by subcategory if specified
+        if (subcategory && activeTab) {
+          const subcategoryFilters = {
+            'box': (product: Product) => 
+              product.nameKo.includes('박스') || 
+              product.name.toLowerCase().includes('box'),
+            'bag': (product: Product) => 
+              product.nameKo.includes('포장지') || 
+              product.nameKo.includes('봉투') ||
+              product.name.toLowerCase().includes('bag') ||
+              product.name.toLowerCase().includes('wrapping')
           };
           
           const filterFn = subcategoryFilters[subcategory as keyof typeof subcategoryFilters];
@@ -215,9 +303,11 @@ export default function CategoryPage() {
                 onClick={() => {
                   setActiveTab('');
                   setLocation(`/category/${category}`);
+                  // Smooth scroll to top
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
-                  !subcategory 
+                  !subcategory && activeTab === ''
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
@@ -234,7 +324,7 @@ export default function CategoryPage() {
                   key={subcat.id}
                   onClick={() => handleTabClick(subcat)}
                   className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
-                    subcategory === subcat.slug
+                    subcategory === subcat.slug && activeTab === subcat.slug
                       ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
                       : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
