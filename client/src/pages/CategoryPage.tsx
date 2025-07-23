@@ -266,7 +266,7 @@ export default function CategoryPage() {
             <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">홈</Link>
             <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
             <span className="text-gray-900 dark:text-white font-medium">{t(currentCategory.name)}</span>
-            {subcategory && (
+            {subcategory && activeTab && (
               <>
                 <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                 <span className="text-gray-900 dark:text-white font-medium">
@@ -284,7 +284,7 @@ export default function CategoryPage() {
           <div className="py-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{t(currentCategory.name)}</h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              {subcategory 
+              {subcategory && activeTab
                 ? `${t(currentCategory.subcategories.find(sub => sub.slug === subcategory)?.name || { ko: '', en: '', ja: '', zh: '' })} 상품을 확인해보세요`
                 : '다양한 맞춤 굿즈를 만나보세요'
               }
@@ -307,7 +307,7 @@ export default function CategoryPage() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
-                  !subcategory && activeTab === ''
+                  activeTab === ''
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
@@ -324,7 +324,7 @@ export default function CategoryPage() {
                   key={subcat.id}
                   onClick={() => handleTabClick(subcat)}
                   className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
-                    subcategory === subcat.slug && activeTab === subcat.slug
+                    activeTab === subcat.slug
                       ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
                       : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
