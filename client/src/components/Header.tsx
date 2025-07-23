@@ -255,6 +255,18 @@ export const Header = () => {
                 <span className="text-sm font-medium text-foreground">
                   {getDisplayName()}님
                 </span>
+                {localUser?.isAdmin && (
+                  <Link href="/admin/products">
+                    <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                      {t({
+                        ko: "상품관리",
+                        en: "Products",
+                        ja: "商品管理",
+                        zh: "产品管理",
+                      })}
+                    </Button>
+                  </Link>
+                )}
                 <Link href="/mypage">
                   <Button variant="ghost" size="sm">
                     {t({

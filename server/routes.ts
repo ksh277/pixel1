@@ -29,6 +29,14 @@ const authenticateToken = (req: any, res: any, next: any) => {
   });
 };
 
+// Admin only middleware
+const requireAdmin = (req: any, res: any, next: any) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ message: '관리자 권한이 필요합니다.' });
+  }
+  next();
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Middleware
   app.use(cookieParser());
@@ -3783,6 +3791,80 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error fetching refund requests:', error);
       res.status(500).json({ message: '환불 요청 목록을 불러오는데 실패했습니다.' });
+    }
+  });
+
+  // Admin product management routes (using memory storage)
+  app.post("/api/products", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const productData = req.body;
+      const newProduct = await storage.createProduct({
+        name: productData.name,
+        nameKo: productData.nameKo,
+        description: productData.description,
+        descriptionKo: productData.descriptionKo,
+        price: productData.price,
+        originalPrice: productData.originalPrice,
+        categoryId: productData.categoryId,
+        imageUrl: productData.imageUrl,
+        isActive: productData.isActive ?? true,
+        isFeatured: productData.isFeatured ?? false,
+        stock: productData.stockQuantity,
+        tags: productData.tags || []
+      });
+      
+      res.status(201).json(newProduct);
+    } catch (error) {
+      console.error('Error creating product:', error);
+      res.status(500).json({ error: "Failed to create product" });
+    }
+  });
+
+  app.put("/api/products/:id", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const productData = req.body;
+      
+      const updatedProduct = await storage.updateProduct(id, {
+        name: productData.name,
+        nameKo: productData.nameKo,
+        description: productData.description,
+        descriptionKo: productData.descriptionKo,
+        price: productData.price,
+        originalPrice: productData.originalPrice,
+        categoryId: productData.categoryId,
+        imageUrl: productData.imageUrl,
+        isActive: productData.isActive,
+        isFeatured: productData.isFeatured,
+        stock: productData.stockQuantity,     
+        tags: productData.tags || []
+      });
+      
+      if (!updatedProduct) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      
+      res.json(updatedProduct);
+    } catch (error) {
+      console.error('Error updating product:', error);
+      res.status(500).json({ error: "Failed to update product" });
+    }
+  });
+
+  app.delete("/api/products/:id", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      const success = await storage.deleteProduct(id);
+      
+      if (!success) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      
+      res.json({ message: "Product deleted successfully" });
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      res.status(500).json({ error: "Failed to delete product" });
     }
   });
 

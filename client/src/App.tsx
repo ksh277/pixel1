@@ -42,6 +42,7 @@ import OrderDetail from "@/pages/OrderDetail";
 import Wishlist from "@/pages/Wishlist";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminLogin from "@/pages/admin/Login";
+import { AdminProducts } from "@/pages/AdminProducts";
 import AdditionalServices from "@/pages/AdditionalServices";
 import SearchResults from "@/pages/SearchResults";
 import ProductSearchPage from "@/pages/ProductSearchPage";
@@ -212,6 +213,13 @@ function Router() {
         <Route path="/admin/login" component={AdminLogin} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/dashboard" component={AdminDashboard} />
+        <Route path="/admin/products">
+          {() => (
+            <ProtectedRoute>
+              <AdminProducts />
+            </ProtectedRoute>
+          )}
+        </Route>
         
         {/* Supabase Demo */}
         <Route path="/supabase-demo" component={SupabaseExample} />
