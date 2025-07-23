@@ -126,7 +126,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/">
           <div className="flex items-center space-x-2">
@@ -551,7 +551,7 @@ export const Header = () => {
 
       {/* Category Navigation Bar */}
       <div className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a]">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center space-x-8 py-3 overflow-x-auto">
             <Link href="/category/keychains/all">
               <Button variant="ghost" size="sm" className="text-white whitespace-nowrap">
