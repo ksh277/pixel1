@@ -169,6 +169,7 @@ export class MemStorage implements IStorage {
       { id: 4, name: "Acrylic Keychains", nameKo: "아크릴 키링", description: "Custom acrylic keychains", descriptionKo: "커스텀 아크릴 키링", imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400", isActive: true },
       { id: 5, name: "Phone Cases", nameKo: "폰케이스", description: "Custom phone cases", descriptionKo: "커스텀 폰케이스", imageUrl: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400", isActive: true },
       { id: 6, name: "Tote Bags", nameKo: "에코백", description: "Custom tote bags", descriptionKo: "커스텀 에코백", imageUrl: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400", isActive: true },
+      { id: 7, name: "Lanyard Goods", nameKo: "렌야드굿즈", description: "Custom lanyards and straps", descriptionKo: "커스텀 렌야드와 스트랩", imageUrl: "https://images.unsplash.com/photo-1606402179428-a57976d71fa4?w=400", isActive: true },
     ];
 
     categoriesData.forEach(cat => {
@@ -212,6 +213,11 @@ export class MemStorage implements IStorage {
       { id: 18, name: "Custom Mug", nameKo: "커스텀 머그컵", description: "Ceramic mug with custom design", descriptionKo: "커스텀 디자인 세라믹 머그컵", basePrice: "9900", categoryId: 2, imageUrl: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400", isActive: true, isFeatured: true, customizationOptions: { sizes: ["11oz", "15oz"], colors: ["White", "Black"] }, createdAt: new Date(), stock: 30 },
       { id: 19, name: "Custom Stickers Pack", nameKo: "커스텀 스티커 팩", description: "Waterproof vinyl stickers", descriptionKo: "방수 비닐 스티커", basePrice: "4900", categoryId: 3, imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400", isActive: true, isFeatured: true, customizationOptions: { sizes: ["Small", "Medium", "Large"], colors: ["Any"] }, createdAt: new Date(), stock: 100 },
       { id: 20, name: "Clear Phone Case", nameKo: "투명 폰케이스", description: "Crystal clear phone protection", descriptionKo: "크리스탈 투명 폰 보호케이스", basePrice: "11900", categoryId: 5, imageUrl: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400", isActive: true, isFeatured: true, customizationOptions: { sizes: ["iPhone", "Samsung", "Universal"], colors: ["Clear", "Frosted"] }, createdAt: new Date(), stock: 25 },
+      
+      // Lanyard Goods - 렌야드굿즈
+      { id: 21, name: "Neck Strap Lanyard", nameKo: "목걸이형 렌야드", description: "Comfortable neck strap lanyard", descriptionKo: "편안한 목걸이형 스트랩", basePrice: "7900", categoryId: 7, imageUrl: "https://images.unsplash.com/photo-1606402179428-a57976d71fa4?w=400", isActive: true, isFeatured: true, customizationOptions: { sizes: ["Standard"], colors: ["Black", "Navy", "Gray", "Pink"] }, createdAt: new Date(), stock: 45 },
+      { id: 22, name: "Premium Neck Lanyard", nameKo: "프리미엄 목걸이형 렌야드", description: "Premium quality neck lanyard with custom charm", descriptionKo: "커스텀 참이 달린 프리미엄 목걸이형 렌야드", basePrice: "12900", categoryId: 7, imageUrl: "https://images.unsplash.com/photo-1606402179428-a57976d71fa4?w=400", isActive: true, isFeatured: true, customizationOptions: { sizes: ["Standard", "Long"], colors: ["Black", "Navy", "White", "Pink", "Purple"] }, createdAt: new Date(), stock: 30 },
+      { id: 23, name: "Phone Strap Lanyard", nameKo: "핸드폰용 렌야드", description: "Phone strap lanyard with secure attachment", descriptionKo: "안전한 부착부가 있는 핸드폰용 스트랩", basePrice: "5900", categoryId: 7, imageUrl: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400", isActive: true, isFeatured: false, customizationOptions: { sizes: ["Short", "Medium"], colors: ["Black", "Clear", "White", "Blue"] }, createdAt: new Date(), stock: 50 },
     ];
 
     productsData.forEach(prod => {
