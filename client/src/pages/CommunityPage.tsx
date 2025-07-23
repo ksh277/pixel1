@@ -115,14 +115,14 @@ const CommunityPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen bg-white dark:bg-[#1a1a1a] text-black dark:text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
             <div>
-              <h1 className="text-3xl font-bold text-white">커뮤니티</h1>
-              <p className="text-gray-400 mt-2">
+              <h1 className="text-3xl font-bold text-black dark:text-white">커뮤니티</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">
                 {posts.length}개의 게시글
               </p>
             </div>
@@ -146,7 +146,7 @@ const CommunityPage = () => {
           </div>
 
           {/* Search and Filter */}
-          <Card className="bg-[#1a1a1a] border-gray-700 mb-6">
+          <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700 mb-6">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                 <div className="flex-1 relative">
@@ -155,7 +155,7 @@ const CommunityPage = () => {
                     placeholder="제목이나 내용으로 검색..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400"
+                    className="pl-10 bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-gray-600 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                   />
                 </div>
                 <div className="flex items-center space-x-2">
@@ -164,10 +164,10 @@ const CommunityPage = () => {
                     value={selectedCategory}
                     onValueChange={setSelectedCategory}
                   >
-                    <SelectTrigger className="w-32 bg-[#1a1a1a] border-gray-600 text-white">
+                    <SelectTrigger className="w-32 bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-gray-600 text-black dark:text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-[#1a1a1a] border-gray-600">
+                    <SelectContent className="bg-white dark:bg-[#1a1a1a] border-gray-300 dark:border-gray-600">
                       {categories.map((category) => (
                         <SelectItem key={category.value} value={category.value}>
                           {category.label}
@@ -182,15 +182,15 @@ const CommunityPage = () => {
 
           {/* Posts List */}
           {filteredPosts?.length === 0 ? (
-            <Card className="bg-[#1a1a1a] border-gray-700">
+            <Card className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700">
               <CardContent className="p-8 text-center">
                 <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                <h2 className="text-2xl font-bold mb-4 text-white">
+                <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">
                   {searchTerm || selectedCategory !== "all"
                     ? "검색 결과가 없습니다"
                     : "첫 번째 게시글을 작성해보세요"}
                 </h2>
-                <p className="text-gray-400 mb-6">
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
                   {searchTerm || selectedCategory !== "all"
                     ? "다른 검색어나 카테고리를 시도해보세요."
                     : "아직 작성된 게시글이 없습니다. 커뮤니티에 첫 번째 게시글을 남겨보세요!"}
@@ -210,7 +210,7 @@ const CommunityPage = () => {
               {filteredPosts?.map((post) => (
                 <Card
                   key={post.id}
-                  className="bg-[#1a1a1a] border-gray-700 hover:bg-[#253041] transition-colors"
+                  className="bg-white dark:bg-[#1a1a1a] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#253041] transition-colors"
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
@@ -223,25 +223,25 @@ const CommunityPage = () => {
                               {getPostCategoryText(post.category)}
                             </Badge>
                           )}
-                          <span className="text-sm text-gray-400">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
                             {formatPostDate(post.created_at)}
                           </span>
                         </div>
 
                         <Link href={`/community/${post.id}`}>
-                          <h3 className="text-lg font-semibold text-white hover:text-blue-400 transition-colors mb-2 cursor-pointer">
+                          <h3 className="text-lg font-semibold text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors mb-2 cursor-pointer">
                             {post.title}
                           </h3>
                         </Link>
 
                         {post.content && (
-                          <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+                          <p className="text-gray-700 dark:text-gray-300 text-sm mb-3 line-clamp-2">
                             {post.content.substring(0, 150)}
                             {post.content.length > 150 && "..."}
                           </p>
                         )}
 
-                        <div className="flex items-center space-x-4 text-sm text-gray-400">
+                        <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
                           <div className="flex items-center space-x-1">
                             <User className="w-4 h-4" />
                             <span>{post.author?.username || "익명"}</span>
