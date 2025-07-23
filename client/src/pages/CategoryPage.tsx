@@ -33,8 +33,10 @@ const categoryData = {
     name: { ko: "우드굿즈", en: "Wood Goods", ja: "ウッドグッズ", zh: "木制商品" },
     subcategories: [
       { id: "keyring", name: { ko: "우드키링", en: "Wood Keyring", ja: "ウッドキーリング", zh: "木制钥匙扣" }, slug: "keyring", count: 45 },
+      { id: "stand", name: { ko: "우드스탠드", en: "Wood Stand", ja: "ウッドスタンド", zh: "木制支架" }, slug: "stand", count: 32 },
       { id: "coaster", name: { ko: "코스터", en: "Coaster", ja: "コースター", zh: "杯垫" }, slug: "coaster", count: 38 },
-      { id: "magnet", name: { ko: "마그넷", en: "Magnet", ja: "マグネット", zh: "磁铁" }, slug: "magnet", count: 29 }
+      { id: "magnet", name: { ko: "마그넷", en: "Magnet", ja: "マグネット", zh: "磁铁" }, slug: "magnet", count: 29 },
+      { id: "badge", name: { ko: "우드뱃지", en: "Wood Badge", ja: "ウッドバッジ", zh: "木制徽章" }, slug: "badge", count: 18 }
     ]
   },
   lanyard: {
@@ -175,11 +177,17 @@ export default function CategoryPage() {
           }
         }
       } else if (category === 'wood') {
-        // Filter wood products
+        // Filter wood products - expanded to include all wood-related products
         filteredProducts = allProducts.filter((product: Product) => 
           product.nameKo.includes('우드') || 
           product.nameKo.includes('나무') ||
-          product.name.toLowerCase().includes('wood')
+          product.nameKo.includes('대나무') ||
+          product.nameKo.includes('코스터') ||
+          product.nameKo.includes('뱃지') ||
+          product.name.toLowerCase().includes('wood') ||
+          product.name.toLowerCase().includes('bamboo') ||
+          product.name.toLowerCase().includes('coaster') ||
+          product.name.toLowerCase().includes('badge')
         );
         
         console.log('Wood products found:', filteredProducts.length, 'activeTab:', activeTab);
@@ -189,14 +197,21 @@ export default function CategoryPage() {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
-              product.name.toLowerCase().includes('keyring'),
+              product.name.toLowerCase().includes('keyring') ||
+              product.name.toLowerCase().includes('keychain'),
             'coaster': (product: Product) => 
               product.nameKo.includes('코스터') || 
               product.name.toLowerCase().includes('coaster'),
             'magnet': (product: Product) => 
               product.nameKo.includes('마그넷') || 
               product.nameKo.includes('자석') ||
-              product.name.toLowerCase().includes('magnet')
+              product.name.toLowerCase().includes('magnet'),
+            'stand': (product: Product) => 
+              product.nameKo.includes('스탠드') || 
+              product.name.toLowerCase().includes('stand'),
+            'badge': (product: Product) => 
+              product.nameKo.includes('뱃지') || 
+              product.name.toLowerCase().includes('badge')
           };
           
           const filterFn = subcategoryFilters[activeTab as keyof typeof subcategoryFilters];
