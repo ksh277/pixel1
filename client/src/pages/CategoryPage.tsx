@@ -305,11 +305,9 @@ export default function CategoryPage() {
               {/* All Products Tab */}
               <button
                 onClick={() => {
-                  console.log('Clicking 전체 button, resetting activeTab to empty');
-                  setActiveTab('');
-                  setLocation(`/category/${category}`);
-                  // Smooth scroll to top
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  console.log('Clicking 전체 button, navigating to category page');
+                  // Use window.location.href for complete navigation reset
+                  window.location.href = `/category/${category}`;
                 }}
                 className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                   activeTab === ''
