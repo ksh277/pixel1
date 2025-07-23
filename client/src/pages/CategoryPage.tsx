@@ -89,8 +89,6 @@ export default function CategoryPage() {
         );
         
         console.log('Acrylic products found:', filteredProducts.length, 'activeTab:', activeTab);
-      } else if (category === 'lanyard') {
-        // Filter lanyard products (categoryId: 7 or by name)
         
         // Then filter by subcategory if activeTab is not empty (not "전체")
         if (activeTab && activeTab !== '') {
@@ -311,30 +309,28 @@ export default function CategoryPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto scrollbar-hide">
             <div className="flex space-x-0 min-w-max">
-              {/* All Products Tab - Only show if we're not in a subcategory */}
-              {!subcategory && (
-                <button
-                  onClick={() => {
-                    console.log('Clicking 전체 button, resetting activeTab and invalidating cache');
-                    setActiveTab('');
-                    // Invalidate the products cache to force refetch
-                    queryClient.invalidateQueries({ queryKey: ['/api/products'] });
-                    setLocation(`/category/${category}`);
-                    // Smooth scroll to top
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
-                    activeTab === ''
-                      ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
-                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2">
-                    <Grid className="w-4 h-4" />
-                    <span>전체</span>
-                  </div>
-                </button>
-              )}
+              {/* All Products Tab */}
+              <button
+                onClick={() => {
+                  console.log('Clicking 전체 button, resetting activeTab and invalidating cache');
+                  setActiveTab('');
+                  // Invalidate the products cache to force refetch
+                  queryClient.invalidateQueries({ queryKey: ['/api/products'] });
+                  setLocation(`/category/${category}`);
+                  // Smooth scroll to top
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+                  activeTab === ''
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <Grid className="w-4 h-4" />
+                  <span>전체</span>
+                </div>
+              </button>
 
               {/* Subcategory Tabs */}
               {currentCategory.subcategories.map((subcat) => (
