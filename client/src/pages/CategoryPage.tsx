@@ -86,6 +86,8 @@ export default function CategoryPage() {
           product.name.toLowerCase().includes('acrylic')
         );
         
+        console.log('Acrylic products found:', filteredProducts.length, 'activeTab:', activeTab);
+        
         // Then filter by subcategory if activeTab is not empty (not "전체")
         if (activeTab && activeTab !== '') {
           const subcategoryFilters = {
