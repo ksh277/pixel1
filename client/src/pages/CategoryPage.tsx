@@ -1,6 +1,7 @@
 import { useParams, useLocation, Link } from "wouter";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import React from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Product } from "@/shared/schema";
@@ -69,29 +70,34 @@ export default function CategoryPage() {
 
   const currentCategory = categoryData[category as keyof typeof categoryData];
   
-  // Query for products
-  const { data: products, isLoading } = useQuery({
-    queryKey: ['/api/products', category, activeTab],
+  // Query for all products
+  const { data: allProducts, isLoading } = useQuery({
+    queryKey: ['/api/products'],
     queryFn: async () => {
       const response = await fetch('/api/products');
       if (!response.ok) throw new Error('Failed to fetch products');
-      const data = await response.json();
+      return await response.json();
+    }
+  });
+
+  // Filter products based on category and activeTab
+  const products = React.useMemo(() => {
+    if (!allProducts) return [];
+    
+    let filteredProducts = allProducts;
+    
+    // First filter by main category
+    if (category === 'acrylic') {
+      filteredProducts = allProducts.filter((product: Product) => 
+        product.categoryId === 4 || 
+        product.nameKo.includes('아크릴') ||
+        product.name.toLowerCase().includes('acrylic')
+      );
       
-      // Filter products based on category and subcategory
-      let filteredProducts = data;
+      console.log('Acrylic products found:', filteredProducts.length, 'activeTab:', activeTab);
       
-      if (category === 'acrylic') {
-        // First filter to only acrylic products (categoryId: 4)
-        filteredProducts = data.filter((product: Product) => 
-          product.categoryId === 4 || 
-          product.nameKo.includes('아크릴') ||
-          product.name.toLowerCase().includes('acrylic')
-        );
-        
-        console.log('Acrylic products found:', filteredProducts.length, 'activeTab:', activeTab);
-        
-        // Then filter by subcategory if activeTab is not empty (not "전체")
-        if (activeTab && activeTab !== '') {
+      // Then filter by subcategory if activeTab is not empty
+      if (activeTab && activeTab !== '') {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
@@ -232,14 +238,13 @@ export default function CategoryPage() {
         }
       } else if (category) {
         // Filter by other categories
-        filteredProducts = data.filter((product: Product) => 
+        filteredProducts = allProducts.filter((product: Product) => 
           product.name.toLowerCase().includes(category.toLowerCase())
         );
       }
       
       return filteredProducts;
-    }
-  });
+    }, [allProducts, category, activeTab]);
 
   const handleTabClick = (subcat: SubCategory) => {
     setActiveTab(subcat.slug);
@@ -312,10 +317,8 @@ export default function CategoryPage() {
               {/* All Products Tab */}
               <button
                 onClick={() => {
-                  console.log('Clicking 전체 button, resetting activeTab and invalidating cache');
+                  console.log('Clicking 전체 button, resetting activeTab to empty string');
                   setActiveTab('');
-                  // Invalidate the products cache to force refetch
-                  queryClient.invalidateQueries({ queryKey: ['/api/products'] });
                   setLocation(`/category/${category}`);
                   // Smooth scroll to top
                   window.scrollTo({ top: 0, behavior: 'smooth' });
