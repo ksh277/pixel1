@@ -136,7 +136,8 @@ export function ProductCard({
 
         <div className="allprint-card-content">
           <div className="allprint-card-title">
-            {language === "ko" ? product.nameKo : product.name}
+            {console.log('Product:', product.id, 'nameKo:', product.nameKo, 'name:', product.name, 'language:', language)}
+            {language === "ko" && product.nameKo ? product.nameKo : (product.name || `상품 ${product.id}`)}
           </div>
           <div className="allprint-card-price">₩ {formattedPrice}</div>
           
