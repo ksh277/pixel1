@@ -59,14 +59,12 @@ export default function CategoryPage() {
   const { category, subcategory } = useParams();
   const [, setLocation] = useLocation();
   const { language, t } = useLanguage();
-  const [activeTab, setActiveTab] = useState<string>(subcategory || "");
   const queryClient = useQueryClient();
 
-  // Update activeTab when URL changes
-  useEffect(() => {
-    console.log('URL changed, subcategory:', subcategory, 'setting activeTab to:', subcategory || "");
-    setActiveTab(subcategory || "");
-  }, [subcategory]);
+  // activeTab is now directly controlled by subcategory parameter
+  const activeTab = subcategory || "";
+
+  console.log('CategoryPage render - category:', category, 'subcategory:', subcategory, 'activeTab:', activeTab);
 
   const currentCategory = categoryData[category as keyof typeof categoryData];
   
@@ -96,8 +94,8 @@ export default function CategoryPage() {
       
       console.log('Acrylic products found:', filteredProducts.length, 'activeTab:', activeTab);
       
-      // Then filter by subcategory if activeTab is not empty
-      if (activeTab && activeTab !== '') {
+      // Then filter by subcategory if not "all"
+      if (activeTab && activeTab !== '' && activeTab !== 'all') {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
@@ -159,8 +157,8 @@ export default function CategoryPage() {
         
         console.log('Lanyard products found:', filteredProducts.length, 'activeTab:', activeTab);
         
-        // Then filter by subcategory if activeTab is not empty (not "전체")
-        if (activeTab && activeTab !== '') {
+        // Then filter by subcategory if not "all"
+        if (activeTab && activeTab !== '' && activeTab !== 'all') {
           const subcategoryFilters = {
             'neck': (product: Product) => 
               product.nameKo.includes('목걸이') || 
@@ -186,8 +184,8 @@ export default function CategoryPage() {
         
         console.log('Wood products found:', filteredProducts.length, 'activeTab:', activeTab);
         
-        // Then filter by subcategory if activeTab is not empty (not "전체")
-        if (activeTab && activeTab !== '') {
+        // Then filter by subcategory if not "all"
+        if (activeTab && activeTab !== '' && activeTab !== 'all') {
           const subcategoryFilters = {
             'keyring': (product: Product) => 
               product.nameKo.includes('키링') || 
@@ -218,8 +216,8 @@ export default function CategoryPage() {
         
         console.log('Packaging products found:', filteredProducts.length, 'activeTab:', activeTab);
         
-        // Then filter by subcategory if activeTab is not empty (not "전체")
-        if (activeTab && activeTab !== '') {
+        // Then filter by subcategory if not "all"
+        if (activeTab && activeTab !== '' && activeTab !== 'all') {
           const subcategoryFilters = {
             'box': (product: Product) => 
               product.nameKo.includes('박스') || 
@@ -244,10 +242,9 @@ export default function CategoryPage() {
       }
       
       return filteredProducts;
-    }, [allProducts, category, activeTab]);
+    }, [allProducts, category, subcategory]);
 
   const handleTabClick = (subcat: SubCategory) => {
-    setActiveTab(subcat.slug);
     setLocation(`/category/${category}/${subcat.slug}`);
     
     // Smooth scroll to top
@@ -282,7 +279,7 @@ export default function CategoryPage() {
             <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">홈</Link>
             <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
             <span className="text-gray-900 dark:text-white font-medium">{t(currentCategory.name)}</span>
-            {subcategory && activeTab && (
+            {subcategory && subcategory !== 'all' && (
               <>
                 <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                 <span className="text-gray-900 dark:text-white font-medium">
@@ -300,7 +297,7 @@ export default function CategoryPage() {
           <div className="py-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{t(currentCategory.name)}</h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              {subcategory && activeTab
+              {subcategory && subcategory !== 'all'
                 ? `${t(currentCategory.subcategories.find(sub => sub.slug === subcategory)?.name || { ko: '', en: '', ja: '', zh: '' })} 상품을 확인해보세요`
                 : '다양한 맞춤 굿즈를 만나보세요'
               }
@@ -317,14 +314,13 @@ export default function CategoryPage() {
               {/* All Products Tab */}
               <button
                 onClick={() => {
-                  console.log('Clicking 전체 button, resetting activeTab to empty string');
-                  setActiveTab('');
-                  setLocation(`/category/${category}`);
+                  console.log('Clicking 전체 button, navigating to /all route');
+                  setLocation(`/category/${category}/all`);
                   // Smooth scroll to top
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
-                  activeTab === ''
+                  activeTab === '' || activeTab === 'all'
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' 
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}

@@ -76,7 +76,7 @@ export function CategoryNav({ className }: CategoryNavProps) {
                 onMouseLeave={() => setHoveredTab(null)}
               >
                 <Link
-                  href={`/category/${category.id}`}
+                  href={`/category/${category.id}/all`}
                   className={cn(
                     "relative py-4 px-2 text-sm font-medium whitespace-nowrap transition-colors block",
                     "hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:text-gray-700",

@@ -612,31 +612,31 @@ export const Header = () => {
                 </div>
                 <div className="pl-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <Link
-                    href="/products?category=keyring"
+                    href="/category/acrylic/keyring"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">아크릴키링</div>
                   </Link>
                   <Link
-                    href="/products?category=corot"
+                    href="/category/acrylic/corot"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">코롯토</div>
                   </Link>
                   <Link
-                    href="/products?category=smart-tok"
+                    href="/category/acrylic/smart-tok"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">스마트톡</div>
                   </Link>
                   <Link
-                    href="/products?category=stand"
+                    href="/category/acrylic/stand"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">스탠드/디오라마</div>
                   </Link>
                   <Link
-                    href="/products?category=holder"
+                    href="/category/acrylic/holder"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">포카홀더/포토액자</div>
@@ -687,13 +687,13 @@ export const Header = () => {
                 </div>
                 <div className="pl-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <Link
-                    href="/products?category=wood-keyring"
+                    href="/category/wood/keyring"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">우드키링</div>
                   </Link>
                   <Link
-                    href="/products?category=wood-magnet"
+                    href="/category/wood/magnet"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-2">우드마그넷</div>
@@ -720,7 +720,7 @@ export const Header = () => {
                 </div>
                 <div className="pl-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                   <Link
-                    href="/products?category=packaging"
+                    href="/category/packaging/box"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <div className="py-1">스와치</div>
