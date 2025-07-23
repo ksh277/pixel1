@@ -1166,16 +1166,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {
-      const { data: categories, error } = await supabase
-        .from('categories')
-        .select('*')
-        .order('id', { ascending: true });
-      
-      if (error) {
-        console.error('Error fetching categories:', error);
-        return res.status(500).json({ message: "Failed to fetch categories" });
-      }
-      
+      // Use memory storage for categories since we have data there
+      const categories = await storage.getCategories();
       res.json(categories);
     } catch (error) {
       console.error('Error in categories endpoint:', error);
@@ -1208,33 +1200,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/products", async (req, res) => {
     try {
       const { category, featured, search } = req.query;
-      let query = supabase.from('products').select('*');
-
+      
+      // Use memory storage for products since we have data there
+      let products = await storage.getProducts();
+      
+      // Apply filters
       if (category) {
-        query = query.eq('category_id', parseInt(category as string));
+        const categoryId = parseInt(category as string);
+        products = products.filter(product => product.categoryId === categoryId);
       }
       
       if (featured === "true") {
-        query = query.eq('is_featured', true);
+        products = products.filter(product => product.isFeatured);
       }
       
       // Search filtering
       if (search) {
-        const searchTerm = search as string;
-        query = query.or(`name.ilike.%${searchTerm}%,name_ko.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
+        const searchTerm = (search as string).toLowerCase();
+        products = products.filter(product => 
+          product.name.toLowerCase().includes(searchTerm) ||
+          product.nameKo.toLowerCase().includes(searchTerm) ||
+          (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+          (product.descriptionKo && product.descriptionKo.toLowerCase().includes(searchTerm))
+        );
       }
       
-      // 활성화된 상품만 가져오기 (컬럼이 존재하는 경우에만)
-      // query = query.eq('is_active', true);
-      
-      const { data: products, error } = await query.order('created_at', { ascending: false });
-      
-      if (error) {
-        console.error('Error fetching products:', error);
-        return res.status(500).json({ message: "Failed to fetch products" });
-      }
-      
-      // 재고 정보와 품절 상태 추가
+      // Add stock and review information
       const productsWithStock = products.map(product => ({
         ...product,
         reviewCount: 0,
