@@ -84,7 +84,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/products" component={ProductList} />
-        <Route path="/product/:id" component={ProductDetailSupabase} />
+        <Route path="/product/:id" component={ProductDetail} />
         <Route path="/search" component={ProductSearchPage} />
 
         {/* Category routes */}

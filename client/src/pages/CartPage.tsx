@@ -1,28 +1,28 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { 
-  ShoppingCart, 
-  Plus, 
-  Minus, 
-  Trash2, 
-  ArrowLeft, 
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  ShoppingCart,
+  Plus,
+  Minus,
+  Trash2,
+  ArrowLeft,
   CreditCard,
-  Package
-} from 'lucide-react';
-import { useCart } from '@/hooks/useCart';
-import { useOrders } from '@/hooks/useOrders';
-import { Link, useLocation } from 'wouter';
-import { isSupabaseConfigured } from '@/lib/supabase';
+  Package,
+} from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { useOrders } from "@/hooks/useOrders";
+import { Link, useLocation } from "wouter";
+import { isSupabaseConfigured } from "@/lib/supabase";
 
 const CartPage = () => {
   const [, setLocation] = useLocation();
-  const { 
-    cartItems, 
-    cartTotal, 
-    itemCount, 
+  const {
+    cartItems,
+    cartTotal,
+    itemCount,
     isLoadingCart,
     currentUser,
     updateQuantity,
@@ -30,9 +30,9 @@ const CartPage = () => {
     clearCart,
     isUpdatingQuantity,
     isRemovingFromCart,
-    isClearingCart
+    isClearingCart,
   } = useCart();
-  
+
   const { placeOrder, isPlacingOrder } = useOrders();
 
   const handlePlaceOrder = async () => {
@@ -43,7 +43,7 @@ const CartPage = () => {
     const order = await placeOrder(cartItems);
     if (order) {
       // Redirect to orders page after successful order placement
-      setLocation('/orders');
+      setLocation("/orders");
     }
   };
 
@@ -58,7 +58,8 @@ const CartPage = () => {
                 <Package className="w-16 h-16 mx-auto mb-4 text-blue-400" />
                 <h2 className="text-2xl font-bold mb-2">장바구니</h2>
                 <p className="text-gray-400 mb-6">
-                  Supabase 설정이 필요합니다. 환경 변수를 설정한 후 다시 시도해주세요.
+                  Supabase 설정이 필요합니다. 환경 변수를 설정한 후 다시
+                  시도해주세요.
                 </p>
                 <Link href="/products">
                   <Button className="bg-blue-600 hover:bg-blue-700">
@@ -77,10 +78,10 @@ const CartPage = () => {
   // Show login prompt if not authenticated
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] text-white">
+      <div className="min-h-screen bg-white text-black">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <Card className="bg-[#1a1a1a] border-gray-700">
+            <Card className="bg-white border-gray-700">
               <CardContent className="p-8 text-center">
                 <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-blue-400" />
                 <h2 className="text-2xl font-bold mb-2">로그인이 필요합니다</h2>
@@ -136,7 +137,9 @@ const CartPage = () => {
             <Card className="bg-[#1a1a1a] border-gray-700">
               <CardContent className="p-8 text-center">
                 <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                <h2 className="text-2xl font-bold mb-2">장바구니가 비어있습니다</h2>
+                <h2 className="text-2xl font-bold mb-2">
+                  장바구니가 비어있습니다
+                </h2>
                 <p className="text-gray-400 mb-6">
                   원하는 상품을 장바구니에 추가해보세요.
                 </p>
@@ -155,9 +158,9 @@ const CartPage = () => {
   }
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: 'KRW',
+    return new Intl.NumberFormat("ko-KR", {
+      style: "currency",
+      currency: "KRW",
     }).format(price);
   };
 
@@ -175,7 +178,10 @@ const CartPage = () => {
             </div>
             <div className="flex items-center space-x-3">
               <Link href="/products">
-                <Button variant="outline" className="text-white border-gray-600 hover:bg-gray-700">
+                <Button
+                  variant="outline"
+                  className="text-white border-gray-600 hover:bg-gray-700"
+                >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   계속 쇼핑하기
                 </Button>
@@ -209,8 +215,8 @@ const CartPage = () => {
                         {/* Product Image */}
                         <div className="flex-shrink-0">
                           <img
-                            src={product?.image_url || '/api/placeholder/80/80'}
-                            alt={product?.name || 'Product'}
+                            src={product?.image_url || "/api/placeholder/80/80"}
+                            alt={product?.name || "Product"}
                             className="w-20 h-20 object-cover rounded-md"
                           />
                         </div>
@@ -218,7 +224,9 @@ const CartPage = () => {
                         {/* Product Info */}
                         <div className="flex-1 min-w-0">
                           <h3 className="text-lg font-semibold text-white truncate">
-                            {product?.name_ko || product?.name || 'Unknown Product'}
+                            {product?.name_ko ||
+                              product?.name ||
+                              "Unknown Product"}
                           </h3>
                           <p className="text-gray-400 text-sm mt-1">
                             {formatPrice(price)} × {item.quantity}
@@ -235,7 +243,12 @@ const CartPage = () => {
                           <Button
                             size="icon"
                             variant="outline"
-                            onClick={() => updateQuantity({ cartItemId: item.id, quantity: Math.max(1, item.quantity - 1) })}
+                            onClick={() =>
+                              updateQuantity({
+                                cartItemId: item.id,
+                                quantity: Math.max(1, item.quantity - 1),
+                              })
+                            }
                             disabled={isUpdatingQuantity || item.quantity <= 1}
                             className="w-8 h-8"
                           >
@@ -247,7 +260,12 @@ const CartPage = () => {
                           <Button
                             size="icon"
                             variant="outline"
-                            onClick={() => updateQuantity({ cartItemId: item.id, quantity: item.quantity + 1 })}
+                            onClick={() =>
+                              updateQuantity({
+                                cartItemId: item.id,
+                                quantity: item.quantity + 1,
+                              })
+                            }
                             disabled={isUpdatingQuantity}
                             className="w-8 h-8"
                           >
@@ -297,16 +315,21 @@ const CartPage = () => {
                     <span className="text-white">총 결제금액</span>
                     <span className="text-white">{formatPrice(cartTotal)}</span>
                   </div>
-                  <Button 
+                  <Button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                     onClick={handlePlaceOrder}
-                    disabled={isPlacingOrder || cartItems.length === 0 || !currentUser}
+                    disabled={
+                      isPlacingOrder || cartItems.length === 0 || !currentUser
+                    }
                   >
                     <CreditCard className="w-4 h-4 mr-2" />
-                    {isPlacingOrder ? '주문 처리 중...' : '주문하기'}
+                    {isPlacingOrder ? "주문 처리 중..." : "주문하기"}
                   </Button>
                   <Link href="/products">
-                    <Button variant="outline" className="w-full text-white border-gray-600 hover:bg-gray-700">
+                    <Button
+                      variant="outline"
+                      className="w-full text-white border-gray-600 hover:bg-gray-700"
+                    >
                       계속 쇼핑하기
                     </Button>
                   </Link>

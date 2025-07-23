@@ -1241,6 +1241,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Single product by ID
+  app.get("/api/product/:id", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.id);
+      const product = await storage.getProduct(productId);
+      
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      
+      // Add stock and review information
+      const productWithStock = {
+        ...product,
+        reviewCount: 0,
+        likeCount: 0,
+        isOutOfStock: product.stock <= 0,
+        isLowStock: product.stock > 0 && product.stock <= 5
+      };
+      
+      res.json(productWithStock);
+    } catch (error) {
+      console.error('Error in single product endpoint:', error);
+      res.status(500).json({ message: "Failed to fetch product" });
+    }
+  });
+
   // Seller products management
   app.get("/api/seller/products", authenticateToken, async (req: any, res) => {
     try {

@@ -78,21 +78,17 @@ export default function ProductDetail() {
   const [customText, setCustomText] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Mock product data for demonstration
-  const mockProduct = {
-    id: parseInt(id || "1"),
-    name: "Acrylic Stand",
-    nameKo: "아크릴 스탠드",
-    nameEn: "Acrylic Stand",
-    nameJa: "アクリルスタンド",
-    nameZh: "亚克力支架",
-    description: "Premium acrylic stand for displaying your custom designs",
-    descriptionKo: "맞춤형 디자인을 위한 프리미엄 아크릴 스탠드",
-    basePrice: "3500",
+  // Fetch product data
+  const { data: product, isLoading, error } = useQuery({
+    queryKey: [`/api/product/${id}`],
+    enabled: !!id,
+  });
+
+  // Default product structure for UI
+  const productDisplay = product ? {
+    ...product,
     images: [
-      "/api/placeholder/600/600",
-      "/api/placeholder/600/600",
-      "/api/placeholder/600/600",
+      product.imageUrl || "/api/placeholder/600/600",
       "/api/placeholder/600/600",
       "/api/placeholder/600/600",
     ],
@@ -118,9 +114,8 @@ export default function ProductDetail() {
       { name: "OPP 동봉", price: 200, description: "OPP 포장지 동봉" },
     ],
     rating: 4.8,
-    reviewCount: 1247,
-    isFeatured: true,
-  };
+    reviewCount: product.reviewCount || 0,
+  } : null;
 
   // Mock reviews data
   const mockReviews = [
@@ -152,8 +147,8 @@ export default function ProductDetail() {
 
   // Calculate total price
   const calculateTotalPrice = () => {
-    const basePrice = mockProduct.basePrice
-      ? parseInt(mockProduct.basePrice)
+    const basePrice = productDisplay?.basePrice
+      ? parseInt(productDisplay.basePrice)
       : 0;
     
     // Define all size options with prices
@@ -189,13 +184,13 @@ export default function ProductDetail() {
     
     const sizePrice = allSizes.find((s) => s.name === selectedSize)?.price || 0;
     const baseTypePrice =
-      mockProduct.bases.find((b) => b.name === selectedBase)?.price || 0;
+      productDisplay?.bases.find((b) => b.name === selectedBase)?.price || 0;
     const packagingPrice =
-      mockProduct.packaging.find((p) => p.name === selectedPackaging)?.price ||
+      productDisplay?.packaging.find((p) => p.name === selectedPackaging)?.price ||
       0;
 
     const subtotal = sizePrice + baseTypePrice + packagingPrice;
-    const quantityRange = mockProduct.quantityRanges.find((r) => {
+    const quantityRange = productDisplay?.quantityRanges.find((r) => {
       const [min, max] = r.range
         .split("~")
         .map((n) => parseInt(n.replace(/\D/g, "")));
@@ -267,12 +262,12 @@ export default function ProductDetail() {
     try {
       // Create cart item object
       const cartItem = {
-        id: mockProduct.id,
-        name: mockProduct.name,
-        nameKo: mockProduct.nameKo,
+        id: productDisplay?.id,
+        name: productDisplay?.name,
+        nameKo: productDisplay?.nameKo,
         price: calculateTotalPrice(),
         quantity: quantity,
-        image: mockProduct.images[0],
+        image: productDisplay?.images[0],
         options: {
           size: selectedSize,
           base: selectedBase,
@@ -310,8 +305,8 @@ export default function ProductDetail() {
       toast({
         title: t({ ko: "장바구니에 추가됨", en: "Added to cart" }),
         description: t({
-          ko: `${mockProduct.nameKo}이(가) 장바구니에 추가되었습니다.`,
-          en: `${mockProduct.nameKo} has been added to cart.`,
+          ko: `${productDisplay?.nameKo}이(가) 장바구니에 추가되었습니다.`,
+          en: `${productDisplay?.nameKo} has been added to cart.`,
         }),
       });
     } catch (error) {
@@ -335,12 +330,12 @@ export default function ProductDetail() {
         : t({ ko: "찜 목록에 추가됨", en: "Added to favorites" }),
       description: isFavorite
         ? t({
-            ko: `${mockProduct.nameKo}이(가) 찜 목록에서 제거되었습니다.`,
-            en: `${mockProduct.nameKo} has been removed from favorites.`,
+            ko: `${productDisplay?.nameKo}이(가) 찜 목록에서 제거되었습니다.`,
+            en: `${productDisplay?.nameKo} has been removed from favorites.`,
           })
         : t({
-            ko: `${mockProduct.nameKo}이(가) 찜 목록에 추가되었습니다.`,
-            en: `${mockProduct.nameKo} has been added to favorites.`,
+            ko: `${productDisplay?.nameKo}이(가) 찜 목록에 추가되었습니다.`,
+            en: `${productDisplay?.nameKo} has been added to favorites.`,
           }),
     });
   };
@@ -357,6 +352,49 @@ export default function ProductDetail() {
     ));
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">상품 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 dark:text-red-400">상품을 불러오는 중 오류가 발생했습니다.</p>
+          <Button 
+            onClick={() => window.location.reload()} 
+            className="mt-4"
+          >
+            다시 시도
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Product not found
+  if (!productDisplay) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 dark:text-gray-400">상품을 찾을 수 없습니다.</p>
+          <Link href="/products">
+            <Button className="mt-4">상품 목록으로 돌아가기</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a]">
       {/* Breadcrumb */}
@@ -371,7 +409,7 @@ export default function ProductDetail() {
               제품
             </Link>
             <ChevronRight className="w-4 h-4 mx-2" />
-            <span className="text-gray-900 dark:text-white">{mockProduct.nameKo}</span>
+            <span className="text-gray-900 dark:text-white">{productDisplay.nameKo}</span>
           </nav>
         </div>
       </div>
@@ -384,15 +422,15 @@ export default function ProductDetail() {
             {/* Main Image */}
             <div className="aspect-square bg-white dark:bg-[#1a1a1a] rounded-lg overflow-hidden shadow-sm border dark:border-gray-700">
               <img
-                src={mockProduct.images[currentImageIndex]}
-                alt={mockProduct.nameKo}
+                src={productDisplay.images[currentImageIndex]}
+                alt={productDisplay.nameKo}
                 className="w-full h-full object-cover"
               />
             </div>
 
             {/* Thumbnail Images */}
             <div className="flex space-x-2 overflow-x-auto">
-              {mockProduct.images.map((image, index) => (
+              {productDisplay.images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
@@ -404,7 +442,7 @@ export default function ProductDetail() {
                 >
                   <img
                     src={image}
-                    alt={`${mockProduct.nameKo} ${index + 1}`}
+                    alt={`${productDisplay.nameKo} ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -417,18 +455,18 @@ export default function ProductDetail() {
             {/* Product Title & Rating */}
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                {mockProduct.nameKo}
+                {productDisplay.nameKo}
               </h1>
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center">
                   <div className="flex mr-2">
-                    {generateStars(Math.round(mockProduct.rating))}
+                    {generateStars(Math.round(productDisplay.rating))}
                   </div>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {mockProduct.rating} ({mockProduct.reviewCount} 리뷰)
+                    {productDisplay.rating} ({productDisplay.reviewCount} 리뷰)
                   </span>
                 </div>
-                {mockProduct.isFeatured && (
+                {productDisplay.isFeatured && (
                   <Badge className="bg-red-500 text-white">인기상품</Badge>
                 )}
               </div>
@@ -556,7 +594,7 @@ export default function ProductDetail() {
                   ✅ 받침 선택
                 </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {mockProduct.bases.map((base) => (
+                  {productDisplay.bases.map((base) => (
                     <button
                       key={base.name}
                       onClick={() => setSelectedBase(base.name)}
@@ -609,7 +647,7 @@ export default function ProductDetail() {
                     <strong>수량별 할인 안내:</strong>
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 space-y-1">
-                    {mockProduct.quantityRanges.map((range) => (
+                    {productDisplay.quantityRanges.map((range) => (
                       <div key={range.range} className="flex justify-between">
                         <span>
                           {range.range} ({range.condition})
@@ -631,7 +669,7 @@ export default function ProductDetail() {
                   ✅ 포장 방식
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
-                  {mockProduct.packaging.map((pkg) => (
+                  {productDisplay.packaging.map((pkg) => (
                     <button
                       key={pkg.name}
                       onClick={() => setSelectedPackaging(pkg.name)}
@@ -869,7 +907,7 @@ export default function ProductDetail() {
             <TabsContent value="reviews" className="mt-8">
               <ProductReviews 
                 productId={id || "1"} 
-                productName={mockProduct.nameKo}
+                productName={productDisplay?.nameKo}
               />
             </TabsContent>
 
