@@ -1319,6 +1319,28 @@ export const createOrder = async (userId: string, cartItems: any[]) => {
       throw orderError;
     }
 
+    const orderItems = cartItems.map(item => ({
+      order_id: order.id,
+      product_id: item.product_id,
+      design_id: item.design_id,
+      quantity: item.quantity,
+      unit_price: item.price || item.products?.base_price || 0,
+      total_price: (item.price || item.products?.base_price || 0) * item.quantity,
+      options: item.options,
+      design_data: item.design_data
+    }));
+
+    if (orderItems.length > 0) {
+      const { error: orderItemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (orderItemsError) {
+        console.error('Error creating order items:', orderItemsError);
+        // Do not throw here to avoid failing the whole order creation
+      }
+    }
+
     // Create print jobs for each item
     const printJobs = cartItems.map(item => ({
       order_id: order.id,
