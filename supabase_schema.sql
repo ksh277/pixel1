@@ -76,6 +76,7 @@ CREATE TABLE order_items (
     unit_price DECIMAL(10,2) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
     options JSONB,
+    design_data JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 

@@ -85,10 +85,12 @@ export interface OrderItem {
   id: string
   order_id: string
   product_id: string
+  design_id?: string | null
   quantity: number
   unit_price: number
   total_price: number
   options?: any // JSON object
+  design_data?: any
   created_at: string
 }
 

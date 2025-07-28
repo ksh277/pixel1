@@ -657,8 +657,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         product_id: item.product_id,
         design_id: item.design_id,
         quantity: item.quantity,
-        price: item.price,
-        options: item.options
+        unit_price: item.price,
+        total_price: item.price * item.quantity,
+        options: item.options,
+        design_data: item.design_data,
       }));
       
       const { error: itemsError } = await supabase
