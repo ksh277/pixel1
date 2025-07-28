@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertCircle, Eye, EyeOff, Shield, MessageCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useLocation } from 'wouter';
 import { Link } from 'wouter';
@@ -19,33 +20,59 @@ export default function Login() {
   const [secureLogin, setSecureLogin] = useState(false);
   const [error, setError] = useState("");
   
-  const { login, isLoading, redirectPath } = useAuth();
+  const { setUser, redirectPath } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useLanguage();
   const [, setLocation] = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    
+    setIsLoading(true);
+
     try {
-      const success = await login(formData.username, formData.password);
-      
-      if (success) {
-        // Navigate without full page refresh, let React handle the state update
-        setTimeout(() => {
-          setLocation(redirectPath || '/');
-        }, 100); // Small delay to ensure state is updated
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.username,
+        password: formData.password,
+      });
+
+      if (error || !data.user) {
+        setError(
+          t({
+            ko: "아이디 또는 비밀번호가 잘못되었습니다.",
+            en: "Invalid username or password.",
+          })
+        );
       } else {
-        setError(t({ 
-          ko: "아이디 또는 비밀번호가 잘못되었습니다.", 
-          en: "Invalid username or password." 
-        }));
+        // Map supabase user to AuthContext user shape
+        const mappedUser = {
+          id: data.user.id,
+          name: data.user.user_metadata?.full_name || data.user.email!,
+          username: data.user.user_metadata?.username || data.user.email!,
+          email: data.user.email!,
+          points: 0,
+          coupons: 0,
+          totalOrders: 0,
+          totalSpent: 0,
+          isAdmin: data.user.user_metadata?.isAdmin || false,
+          firstName: data.user.user_metadata?.first_name || "",
+          lastName: data.user.user_metadata?.last_name || "",
+        };
+        setUser(mappedUser);
+        localStorage.setItem("user", JSON.stringify(mappedUser));
+        setTimeout(() => {
+          setLocation(redirectPath || "/");
+        }, 100);
       }
-    } catch (error) {
-      setError(t({ 
-        ko: "로그인 중 오류가 발생했습니다.", 
-        en: "An error occurred during login." 
-      }));
+    } catch (err) {
+      setError(
+        t({
+          ko: "로그인 중 오류가 발생했습니다.",
+          en: "An error occurred during login.",
+        })
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
