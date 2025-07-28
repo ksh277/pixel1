@@ -229,7 +229,9 @@ const OrdersPage = () => {
             </Card>
           ) : (
             <div className="space-y-6">
-              {orders.map((order) => (
+              {orders.map((order) => {
+                const items = order.order_items ?? order.items ?? [];
+                return (
                 <Card key={order.id} className="bg-[#1a1a1a] border-gray-700">
                   <CardHeader>
                     <div className="flex items-center justify-between">
@@ -248,7 +250,7 @@ const OrdersPage = () => {
                             </span>
                             <span className="flex items-center">
                               <ShoppingBag className="w-4 h-4 mr-1" />
-                              {order.items?.length || 0}개 상품
+                              {items.length}개 상품
                             </span>
                           </div>
                         </div>
@@ -264,27 +266,45 @@ const OrdersPage = () => {
                       <div>
                         <h4 className="text-white font-semibold mb-2">주문 상품</h4>
                         <div className="space-y-2">
-                          {order.items?.slice(0, 2).map((item, index) => (
+                          {items.slice(0, 2).map((item: any, index: number) => (
                             <div key={index} className="flex items-center justify-between py-2 border-b border-gray-600 last:border-b-0">
                               <div className="flex-1">
                                 <p className="text-white font-medium">
-                                  {item.product_name || 'Unknown Product'}
+                                  {item.product_name || item.products?.name_ko || item.products?.name || 'Unknown Product'}
                                 </p>
                                 <p className="text-gray-400 text-sm">
-                                  수량: {item.quantity}개 | 단가: {formatPrice(item.price)}
+                                  수량: {item.quantity}개 | 단가: {formatPrice(item.price || item.unit_price)}
                                 </p>
+                                {item.options && (
+                                  <div className="text-xs text-gray-400 mt-1">
+                                    {Array.isArray(item.options)
+                                      ? item.options.map((opt: any) => (
+                                          <span key={opt.name} className="mr-2">
+                                            {opt.name}: {opt.value}
+                                          </span>
+                                        ))
+                                      : null}
+                                  </div>
+                                )}
+                                {item.design_data?.imageUrl && (
+                                  <img
+                                    src={item.design_data.imageUrl}
+                                    alt="디자인 미리보기"
+                                    className="w-10 h-10 rounded mt-1"
+                                  />
+                                )}
                               </div>
                               <div className="text-right">
                                 <p className="text-white font-semibold">
-                                  {formatPrice(item.price * item.quantity)}
+                                  {formatPrice((item.price || item.unit_price) * item.quantity)}
                                 </p>
                               </div>
                             </div>
                           ))}
-                          {order.items && order.items.length > 2 && (
+                          {items.length > 2 && (
                             <div className="text-center py-2">
                               <span className="text-gray-400 text-sm">
-                                및 {order.items.length - 2}개 상품 더...
+                                및 {items.length - 2}개 상품 더...
                               </span>
                             </div>
                           )}
@@ -341,20 +361,20 @@ const OrdersPage = () => {
                                 <div>
                                   <h3 className="text-white font-semibold mb-4 flex items-center">
                                     <ShoppingBag className="w-4 h-4 mr-2" />
-                                    주문 상품 ({order.items?.length || 0}개)
+                                    주문 상품 ({items.length}개)
                                   </h3>
                                   <div className="space-y-3">
-                                    {order.items?.map((item, index) => (
+                                    {items.map((item: any, index: number) => (
                                       <Card key={index} className="bg-[#1a1a1a] border-gray-600">
                                         <CardContent className="p-4">
                                           <div className="flex items-center justify-between">
                                             <div className="flex-1">
                                               <h4 className="text-white font-medium mb-1">
-                                                {item.product_name || 'Unknown Product'}
+                                                {item.product_name || item.products?.name_ko || item.products?.name || 'Unknown Product'}
                                               </h4>
                                               <div className="flex items-center space-x-4 text-sm text-gray-400">
                                                 <span>수량: {item.quantity}개</span>
-                                                <span>단가: {formatPrice(item.price)}</span>
+                                                <span>단가: {formatPrice(item.price || item.unit_price)}</span>
                                               </div>
                                               {item.options && (
                                                 <div className="mt-2 p-2 bg-gray-700 rounded">
@@ -364,10 +384,19 @@ const OrdersPage = () => {
                                                   </pre>
                                                 </div>
                                               )}
+                                              {item.design_data?.imageUrl && (
+                                                <div className="mt-2">
+                                                  <img
+                                                    src={item.design_data.imageUrl}
+                                                    alt="디자인 미리보기"
+                                                    className="w-20 border rounded"
+                                                  />
+                                                </div>
+                                              )}
                                             </div>
                                             <div className="text-right">
                                               <p className="text-white font-semibold">
-                                                {formatPrice(item.price * item.quantity)}
+                                                {formatPrice((item.price || item.unit_price) * item.quantity)}
                                               </p>
                                             </div>
                                           </div>
@@ -417,8 +446,9 @@ const OrdersPage = () => {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
+              );
+            })}
+              </div>
           )}
         </div>
       </div>
