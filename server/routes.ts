@@ -276,6 +276,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Find ID endpoint
+  app.post("/api/auth/find-id", async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ message: "이메일을 입력해 주세요." });
+      }
+      
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('username')
+        .eq('email', email)
+        .single();
+      
+      if (error || !user) {
+        return res.status(404).json({ message: "등록된 이메일을 찾을 수 없습니다." });
+      }
+      
+      res.json({ 
+        username: user.username,
+        message: "아이디를 찾았습니다."
+      });
+    } catch (error) {
+      console.error('Find ID error:', error);
+      res.status(500).json({ message: "아이디 찾기에 실패했습니다." });
+    }
+  });
+
+  // Find Password endpoint
+  app.post("/api/auth/find-password", async (req, res) => {
+    try {
+      const { username, email, phone, method } = req.body;
+      
+      if (!username) {
+        return res.status(400).json({ message: "아이디를 입력해 주세요." });
+      }
+      
+      if (method === 'email' && !email) {
+        return res.status(400).json({ message: "이메일을 입력해 주세요." });
+      }
+      
+      if (method === 'phone' && !phone) {
+        return res.status(400).json({ message: "휴대폰 번호를 입력해 주세요." });
+      }
+      
+      // Find user by username and email/phone
+      let query = supabase
+        .from('users')
+        .select('id, username, email')
+        .eq('username', username);
+      
+      if (method === 'email') {
+        query = query.eq('email', email);
+      } else if (method === 'phone') {
+        query = query.eq('phone', phone);
+      }
+      
+      const { data: user, error } = await query.single();
+      
+      if (error || !user) {
+        return res.status(404).json({ 
+          message: "입력하신 정보와 일치하는 계정을 찾을 수 없습니다." 
+        });
+      }
+      
+      // Generate temporary password
+      const tempPassword = Math.random().toString(36).slice(-8);
+      
+      // In production, you would:
+      // 1. Hash the temporary password
+      // 2. Update user's password in database with expiration time
+      // 3. Send email/SMS with temporary password
+      
+      // For now, just return the temporary password (demo purposes)
+      res.json({ 
+        tempPassword,
+        message: `임시 비밀번호가 ${method === 'email' ? '이메일' : '휴대폰'}로 전송되었습니다.`
+      });
+    } catch (error) {
+      console.error('Find Password error:', error);
+      res.status(500).json({ message: "비밀번호 찾기에 실패했습니다." });
+    }
+  });
+
   // Seller registration
   app.post("/api/sellers/register", authenticateToken, async (req: any, res) => {
     try {

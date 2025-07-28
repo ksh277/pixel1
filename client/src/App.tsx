@@ -15,6 +15,8 @@ import ProductDetailSupabase from "@/pages/ProductDetailSupabase";
 import CategoryPage from "@/pages/CategoryPage";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import FindId from "@/pages/FindId";
+import FindPassword from "@/pages/FindPassword";
 import Cart from "@/pages/Cart";
 import CartPage from "@/pages/CartPage";
 import Checkout from "@/pages/Checkout";
@@ -97,6 +99,8 @@ function Router() {
 
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/find-id" component={FindId} />
+        <Route path="/find-password" component={FindPassword} />
         <Route path="/auth" component={Login} />
         <Route path="/cart" component={CartPage} />
         <Route path="/checkout">
