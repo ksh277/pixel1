@@ -361,26 +361,54 @@ export default function OrderDetail() {
                 {order.order_items && order.order_items.length > 0 ? (
                   <div className="space-y-4">
                     {order.order_items.map((item: any, index: number) => (
-                      <div key={index} className="flex items-center justify-between p-4 border rounded-lg dark:border-gray-700">
-                        <div className="flex items-center space-x-4">
+                      <div
+                        key={index}
+                        className="flex items-start justify-between p-4 border rounded-lg dark:border-gray-700"
+                      >
+                        <div className="flex items-start space-x-4">
                           <div className="w-16 h-16 bg-gray-200 dark:bg-[#1a1a1a] rounded-lg flex items-center justify-center">
                             <Package className="h-8 w-8 text-gray-400" />
                           </div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">
-                              {item.productName || `상품 ${index + 1}`}
+                              {item.productName || item.products?.name_ko || `상품 ${index + 1}`}
                             </h3>
                             <p className="text-sm text-gray-600 dark:text-gray-300">
                               수량: {item.quantity}개
                             </p>
+                            {Array.isArray(item.options) && item.options.length > 0 && (
+                              <ul className="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                                {item.options.map((opt: any) => (
+                                  <li key={opt.name}>
+                                    <strong>{opt.name}</strong>: {opt.value}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                            {item.design_data?.imageUrl && (
+                              <div className="mt-2">
+                                <img
+                                  src={item.design_data.imageUrl}
+                                  alt="디자인 미리보기"
+                                  className="w-60 border rounded"
+                                />
+                              </div>
+                            )}
+                            {item.design_data && !item.design_data.imageUrl && (
+                              <div className="mt-2 bg-gray-100 dark:bg-[#1a1a1a] p-2 rounded">
+                                <pre className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                                  {JSON.stringify(item.design_data, null, 2)}
+                                </pre>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="text-right">
                           <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                            {formatPrice(item.price * item.quantity)}
+                            {formatPrice((item.price || item.unit_price || 0) * item.quantity)}
                           </p>
                           <p className="text-sm text-gray-600 dark:text-gray-300">
-                            개당 {formatPrice(item.price)}
+                            개당 {formatPrice(item.price || item.unit_price || 0)}
                           </p>
                         </div>
                       </div>
