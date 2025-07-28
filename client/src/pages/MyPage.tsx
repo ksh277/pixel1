@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSupabaseAuth } from '@/components/SupabaseProvider';
+import { supabase } from '@/lib/supabase';
 import { Link } from 'wouter';
 
 export default function MyPage() {
@@ -28,30 +29,45 @@ export default function MyPage() {
     password: '••••••••'
   });
 
-  // Load user orders from database
+  // Load user orders from Supabase
   useEffect(() => {
     const loadUserOrders = async () => {
-      if (!localUser?.id) return;
-      
+      const currentUser = localUser || supabaseUser;
+      if (!currentUser?.id) return;
+
       try {
         setLoading(true);
-        const response = await fetch(`/api/orders/user/${localUser.id}`);
-        
-        if (response.ok) {
-          const ordersData = await response.json();
-          setOrders(ordersData);
-        } else {
-          console.error('Failed to load orders');
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*')
+          .eq('user_id', currentUser.id)
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Failed to load orders:', error);
+          toast({
+            title: '오류',
+            description: '주문 내역을 불러오지 못했습니다.',
+            variant: 'destructive',
+          });
+          return;
         }
+
+        setOrders(data || []);
       } catch (error) {
         console.error('Error loading orders:', error);
+        toast({
+          title: '오류',
+          description: '주문 내역을 불러오는 중 문제가 발생했습니다.',
+          variant: 'destructive',
+        });
       } finally {
         setLoading(false);
       }
     };
 
     loadUserOrders();
-  }, [localUser?.id]);
+  }, [localUser?.id, supabaseUser?.id]);
 
   const handleLogout = async () => {
     try {
