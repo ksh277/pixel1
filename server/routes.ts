@@ -3916,6 +3916,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: '주문을 찾을 수 없습니다.' });
       }
 
+      if (order.status === 'cancelled' || order.status === 'refund_requested') {
+        return res.status(400).json({ message: '환불 요청이 불가능한 주문 상태입니다.' });
+      }
+
       // Check if refund request already exists
       const { data: existingRequest, error: checkError } = await supabase
         .from('refund_requests')

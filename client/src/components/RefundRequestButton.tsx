@@ -25,6 +25,19 @@ export const RefundRequestButton: React.FC<RefundRequestButtonProps> = ({
     return null;
   }
 
+  if (orderStatus === 'refund_requested') {
+    return (
+      <Button
+        variant="outline"
+        size="sm"
+        disabled
+        className="text-gray-500 cursor-not-allowed"
+      >
+        환불 요청됨
+      </Button>
+    );
+  }
+
   // Show existing refund request status
   if (refundCheck?.exists) {
     const status = refundCheck.request?.status as 'pending' | 'approved' | 'rejected';
