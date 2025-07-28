@@ -3653,14 +3653,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/orders/:id", async (req, res) => {
     try {
       const orderId = parseInt(req.params.id);
-      
+
       if (isNaN(orderId)) {
         return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
       }
 
       const { data: order, error } = await supabase
         .from('orders')
-        .select('*')
+        .select(`
+          *,
+          order_items (
+            *,
+            products (
+              id, name, name_ko, image_url
+            ),
+            goods_editor_designs (
+              id, title, thumbnail_url, canvas_data
+            )
+          )
+        `)
         .eq('id', orderId)
         .single();
 
