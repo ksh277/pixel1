@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   Package, 
   CreditCard, 
@@ -76,6 +76,8 @@ interface PrintJob {
 export default function OrderDetail() {
   const { id } = useParams();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [refundReason, setRefundReason] = useState('');
   
   const orderId = id ? parseInt(id) : 0;
 
@@ -161,13 +163,60 @@ export default function OrderDetail() {
     }).format(price);
   };
 
+  // Refund request mutation
+  const refundMutation = useMutation({
+    mutationFn: async () => {
+      const token = localStorage.getItem('token') || document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      const response = await fetch(`/api/orders/${orderId}/refund`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          reason: refundReason || '환불 요청'
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '환불 요청에 실패했습니다.');
+      }
+
+      return response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "환불 요청 완료",
+        description: data.message || "환불 요청이 성공적으로 접수되었습니다.",
+      });
+      // Refresh order data and refund request check
+      queryClient.invalidateQueries({ queryKey: ['order', orderId] });
+      queryClient.invalidateQueries({ queryKey: ['refund-request-check', orderId] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "환불 요청 실패",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleRefundRequest = () => {
+    if (refundMutation.isPending) return;
+    refundMutation.mutate();
+  };
+
   const getStatusBadge = (status: string) => {
     const statusMap = {
       'pending': { label: '대기중', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' },
       'processing': { label: '처리중', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' },
       'shipped': { label: '배송중', color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' },
       'delivered': { label: '배송완료', color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' },
-      'cancelled': { label: '취소됨', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' }
+      'cancelled': { label: '취소됨', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' },
+      'refund_requested': { label: '환불요청됨', color: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' }
     };
     
     const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' };
@@ -251,12 +300,7 @@ export default function OrderDetail() {
                 orderAmount={order.total_amount}
                 orderDate={order.created_at}
                 orderStatus={order.status}
-                onRefundRequest={() => {
-                  toast({
-                    title: "환불 요청",
-                    description: "환불 요청 기능을 구현해주세요.",
-                  });
-                }}
+                onRefundRequest={handleRefundRequest}
               />
             </div>
           </div>

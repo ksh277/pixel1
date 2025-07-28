@@ -3809,6 +3809,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ message: '환불 요청 생성에 실패했습니다.' });
       }
 
+      // Update order status to refund_requested
+      const { error: orderUpdateError } = await supabase
+        .from('orders')
+        .update({ status: 'refund_requested' })
+        .eq('id', order_id);
+
+      if (orderUpdateError) {
+        console.error('Error updating order status:', orderUpdateError);
+        // Note: We don't return here since the refund request was created successfully
+      }
+
       res.json(refundRequest);
     } catch (error) {
       console.error('Error creating refund request:', error);
@@ -3876,6 +3887,86 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error fetching refund requests:', error);
       res.status(500).json({ message: '환불 요청 목록을 불러오는데 실패했습니다.' });
+    }
+  });
+
+  // Orders refund request route
+  app.post("/api/orders/:orderId/refund", authenticateToken, async (req: any, res) => {
+    try {
+      const orderId = parseInt(req.params.orderId);
+      const { reason } = req.body;
+      
+      if (isNaN(orderId)) {
+        return res.status(400).json({ message: '유효하지 않은 주문 ID입니다.' });
+      }
+
+      if (!reason) {
+        return res.status(400).json({ message: '환불 사유를 입력해주세요.' });
+      }
+
+      // Check if order exists and belongs to the user
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', orderId)
+        .eq('user_id', req.user.id)
+        .single();
+
+      if (orderError || !order) {
+        return res.status(404).json({ message: '주문을 찾을 수 없습니다.' });
+      }
+
+      // Check if refund request already exists
+      const { data: existingRequest, error: checkError } = await supabase
+        .from('refund_requests')
+        .select('*')
+        .eq('order_id', orderId)
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking existing refund request:', checkError);
+        return res.status(500).json({ message: '환불 요청 확인 중 오류가 발생했습니다.' });
+      }
+
+      if (existingRequest) {
+        return res.status(400).json({ message: '이미 환불 요청이 존재합니다.' });
+      }
+
+      // Create refund request
+      const { data: refundRequest, error } = await supabase
+        .from('refund_requests')
+        .insert([{
+          order_id: orderId,
+          user_id: req.user.id,
+          reason,
+          status: 'pending'
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating refund request:', error);
+        return res.status(500).json({ message: '환불 요청 생성에 실패했습니다.' });
+      }
+
+      // Update order status to refund_requested
+      const { error: orderUpdateError } = await supabase
+        .from('orders')
+        .update({ status: 'refund_requested' })
+        .eq('id', orderId);
+
+      if (orderUpdateError) {
+        console.error('Error updating order status:', orderUpdateError);
+        // Note: We don't return here since the refund request was created successfully
+      }
+
+      res.json({ 
+        message: '환불 요청이 성공적으로 접수되었습니다.',
+        refundRequest 
+      });
+    } catch (error) {
+      console.error('Error processing refund request:', error);
+      res.status(500).json({ message: '환불 요청 처리 중 오류가 발생했습니다.' });
     }
   });
 

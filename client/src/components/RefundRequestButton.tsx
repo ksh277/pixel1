@@ -27,7 +27,7 @@ export const RefundRequestButton: React.FC<RefundRequestButtonProps> = ({
 
   // Show existing refund request status
   if (refundCheck?.exists) {
-    const status = refundCheck.request?.status;
+    const status = refundCheck.request?.status as 'pending' | 'approved' | 'rejected';
     const statusText = {
       pending: '환불 검토중',
       approved: '환불 승인됨',
