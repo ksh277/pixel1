@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
 import { Product } from '@/lib/supabase';
 import { isSupabaseConfigured } from '@/lib/supabase';
+import { useSupabaseAuth } from '@/components/SupabaseProvider';
 
 interface AddToCartButtonProps {
   product: Product & { 
@@ -26,7 +27,8 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   variant = 'default',
   className = '',
 }) => {
-  const { addToCart, isAddingToCart, currentUser } = useCart();
+  const { addToCart, isAddingToCart } = useCart();
+  const { user: currentUser } = useSupabaseAuth();
   const { toast } = useToast();
 
   const handleAddToCart = () => {
@@ -87,8 +89,7 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     addToCart({
       productId: product.id,
       quantity,
-      price: product.base_price,
-      customizationOptions,
+      options: customizationOptions,
     });
   };
 

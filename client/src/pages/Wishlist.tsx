@@ -57,7 +57,6 @@ const Wishlist = () => {
     addToCart({
       productId: item.product_id,
       quantity: 1,
-      price: item.products?.base_price || 0,
     })
     toast({
       title: '장바구니에 추가됨',
