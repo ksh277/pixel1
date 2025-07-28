@@ -52,7 +52,7 @@ export const useCart = () => {
           .from('cart_items')
           .update({
             quantity: existing.quantity + quantity,
-            customization_options: options,
+            options,
             updated_at: new Date().toISOString(),
           })
           .eq('id', existing.id)
@@ -65,7 +65,7 @@ export const useCart = () => {
             user_id: user.id,
             product_id: productId,
             quantity,
-            customization_options: options,
+            options,
           })
 
         if (error) throw error

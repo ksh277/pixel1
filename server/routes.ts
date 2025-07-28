@@ -1425,7 +1425,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "판매자 승인이 필요합니다." });
       }
       
-      const { name, nameKo, description, descriptionKo, basePrice, categoryId, imageUrl, stock, customizationOptions } = req.body;
+      const { name, nameKo, description, descriptionKo, basePrice, categoryId, imageUrl, stock, options } = req.body;
       
       const { data: product, error } = await supabase
         .from('products')
@@ -1439,7 +1439,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           seller_id: seller.id,
           image_url: imageUrl,
           stock,
-          customization_options: customizationOptions,
+          options,
           is_active: true,
           is_approved: false // 관리자 승인 대기
         }])
@@ -1486,7 +1486,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
       }
       
-      const { name, nameKo, description, descriptionKo, basePrice, categoryId, imageUrl, stock, customizationOptions } = req.body;
+      const { name, nameKo, description, descriptionKo, basePrice, categoryId, imageUrl, stock, options } = req.body;
       
       const { data: product, error } = await supabase
         .from('products')
@@ -1499,7 +1499,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           category_id: categoryId,
           image_url: imageUrl,
           stock,
-          customization_options: customizationOptions,
+          options,
           is_approved: false // 수정 시 재승인 필요
         })
         .eq('id', productId)

@@ -74,7 +74,7 @@ interface Product {
   image_url: string;
   is_active: boolean;
   is_featured: boolean;
-  customization_options: any;
+  options: any;
   created_at: string;
 }
 
