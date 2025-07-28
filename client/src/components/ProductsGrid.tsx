@@ -55,6 +55,8 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ pageSize = 12 }) => {
       const { data, error: fetchError, count } = await supabase
         .from('products')
         .select('*', { count: 'exact' })
+        .eq('is_active', true)
+        .eq('is_approved', true)
         .range(startIndex, endIndex)
         .order('created_at', { ascending: false })
 
