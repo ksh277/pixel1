@@ -196,6 +196,7 @@ export const orderItems = mysqlTable("order_items", {
   id: serial("id").primaryKey(),
   orderId: int("order_id").references(() => orders.id).notNull(),
   productId: int("product_id").references(() => products.id).notNull(),
+  designId: int("design_id").references(() => goodsEditorDesigns.id),
   quantity: int("quantity").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

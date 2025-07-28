@@ -655,6 +655,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const orderItems = items.map((item: any) => ({
         order_id: order.id,
         product_id: item.product_id,
+        design_id: item.design_id,
         quantity: item.quantity,
         price: item.price,
         options: item.options
@@ -708,6 +709,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             *,
             products (
               id, name, name_ko, image_url, base_price
+            ),
+            goods_editor_designs (
+              id, title, thumbnail_url, canvas_data
             )
           )
         `)
@@ -771,6 +775,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             *,
             products (
               id, name, name_ko, image_url
+            ),
+            goods_editor_designs (
+              id, title, thumbnail_url, canvas_data
             )
           )
         `)
@@ -894,6 +901,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             *,
             products (
               id, name, name_ko, image_url
+            ),
+            goods_editor_designs (
+              id, title, thumbnail_url, canvas_data
             )
           )
         `)
