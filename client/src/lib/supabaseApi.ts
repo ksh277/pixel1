@@ -942,6 +942,34 @@ export const removeFromWishlist = async (userId: string, productId: string) => {
   return data
 }
 
+export const isInWishlist = async (userId: string, productId: string) => {
+  const { data, error } = await supabase
+    .from('wishlist')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('product_id', productId)
+    .single()
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error checking wishlist item:', error)
+    throw error
+  }
+
+  return !!data
+}
+
+export const toggleWishlistItem = async (userId: string, productId: string) => {
+  const exists = await isInWishlist(userId, productId)
+
+  if (exists) {
+    await removeFromWishlist(userId, productId)
+    return false
+  } else {
+    await addToWishlist(userId, productId)
+    return true
+  }
+}
+
 // Cart API (using cart_items table)
 export const fetchCart = async (userId: string) => {
   const { data, error } = await supabase

@@ -5,6 +5,7 @@ import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
 import { Product } from '@/lib/supabase';
+import { isSupabaseConfigured } from '@/lib/supabase';
 
 interface AddToCartButtonProps {
   product: Product & { 
@@ -43,6 +44,15 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         ),
       });
       return;
+    }
+
+    if (!isSupabaseConfigured) {
+      toast({
+        title: '서비스 준비 중',
+        description: '장바구니 기능을 사용할 수 없습니다.',
+        variant: 'destructive',
+      })
+      return
     }
 
     // 재고 확인
