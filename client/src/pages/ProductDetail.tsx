@@ -71,6 +71,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedBase, setSelectedBase] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
   const [selectedPackaging, setSelectedPackaging] = useState("기본 포장"); // Default packaging
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -92,11 +93,12 @@ export default function ProductDetail() {
       "/api/placeholder/600/600",
       "/api/placeholder/600/600",
     ],
-    sizes: [
+    sizes: product.options?.sizes || [
       { name: "일반 35x50", price: 3500, description: "기본 사이즈" },
       { name: "라미 70x140", price: 8500, description: "라미네이팅 처리" },
       { name: "대형 100x200", price: 12000, description: "대형 사이즈" },
     ],
+    colors: product.options?.colors || [],
     bases: [
       { name: "투명", price: 0, description: "투명 받침" },
       { name: "인쇄", price: 500, description: "인쇄 받침" },
@@ -151,45 +153,15 @@ export default function ProductDetail() {
       ? parseInt(productDisplay.basePrice)
       : 0;
     
-    // Define all size options with prices
-    const allSizes = [
-      // 일반 사이즈
-      { name: "일반 20x20", price: 3500 },
-      { name: "일반 30x15", price: 4000 },
-      { name: "일반 30x30", price: 4500 },
-      { name: "일반 40x40", price: 5500 },
-      { name: "일반 50x30", price: 6000 },
-      { name: "일반 50x50", price: 6500 },
-      { name: "일반 60x30", price: 7000 },
-      { name: "일반 60x60", price: 7500 },
-      { name: "일반 70x35", price: 8000 },
-      { name: "일반 70x50", price: 8500 },
-      { name: "일반 70x70", price: 9000 },
-      { name: "일반 80x20", price: 8500 },
-      // 라미 사이즈
-      { name: "라미 20x20", price: 4000 },
-      { name: "라미 30x30", price: 5000 },
-      { name: "라미 40x40", price: 6000 },
-      { name: "라미 50x50", price: 7000 },
-      { name: "라미 60x60", price: 8000 },
-      { name: "라미 70x70", price: 9000 },
-      { name: "라미 80x80", price: 10000 },
-      { name: "라미 100x100", price: 12000 },
-      // 대형 사이즈
-      { name: "대형 100x200", price: 15000 },
-      { name: "대형 120x200", price: 18000 },
-      { name: "대형 150x200", price: 22000 },
-      { name: "대형 200x200", price: 25000 },
-    ];
-    
-    const sizePrice = allSizes.find((s) => s.name === selectedSize)?.price || 0;
+    const sizePrice = productDisplay?.sizes.find((s: any) => s.name === selectedSize)?.price || 0;
+    const colorPrice = productDisplay?.colors?.find((c: any) => c.name === selectedColor)?.priceDelta || 0;
     const baseTypePrice =
       productDisplay?.bases.find((b) => b.name === selectedBase)?.price || 0;
     const packagingPrice =
       productDisplay?.packaging.find((p) => p.name === selectedPackaging)?.price ||
       0;
 
-    const subtotal = sizePrice + baseTypePrice + packagingPrice;
+    const subtotal = sizePrice + colorPrice + baseTypePrice + packagingPrice;
     const quantityRange = productDisplay?.quantityRanges.find((r) => {
       const [min, max] = r.range
         .split("~")
@@ -247,12 +219,12 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     // Validate required selections
-    if (!selectedSize || !selectedBase) {
+    if (!selectedSize || !selectedBase || (productDisplay.colors.length > 0 && !selectedColor)) {
       toast({
         title: t({ ko: "옵션을 선택해주세요", en: "Please select options" }),
         description: t({
-          ko: "사이즈와 받침을 선택해야 합니다.",
-          en: "Size and base must be selected.",
+          ko: "사이즈, 색상, 받침을 선택해야 합니다.",
+          en: "Size, color and base must be selected.",
         }),
         variant: "destructive",
       });
@@ -270,6 +242,7 @@ export default function ProductDetail() {
         image: productDisplay?.images[0],
         options: {
           size: selectedSize,
+          color: selectedColor,
           base: selectedBase,
           packaging: selectedPackaging,
           uploadedFile: uploadedFile?.name || null,
@@ -617,6 +590,32 @@ export default function ProductDetail() {
                   ))}
                 </div>
               </div>
+
+              {productDisplay.colors.length > 0 && (
+                <div>
+                  <Label className="text-base font-medium mb-3 block text-gray-900 dark:text-white">
+                    ✅ 색상 선택
+                  </Label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {productDisplay.colors.map((color: any) => (
+                      <button
+                        key={color.name}
+                        onClick={() => setSelectedColor(color.name)}
+                        className={`p-3 rounded-lg border text-center transition-all ${
+                          selectedColor === color.name
+                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50 text-gray-900 dark:text-gray-100'
+                        }`}
+                      >
+                        <div className="font-medium">{color.name}</div>
+                        {color.priceDelta ? (
+                          <div className="text-sm font-medium text-blue-600 dark:text-blue-400">+{color.priceDelta.toLocaleString()}원</div>
+                        ) : null}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Quantity Selection */}
               <div>

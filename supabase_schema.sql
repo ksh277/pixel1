@@ -28,6 +28,7 @@ CREATE TABLE products (
     is_featured BOOLEAN DEFAULT false,
     is_available BOOLEAN DEFAULT true,
     stock_quantity INTEGER DEFAULT 0,
+    options JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
@@ -74,7 +75,7 @@ CREATE TABLE order_items (
     quantity INTEGER NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
-    customization_options JSONB,
+    options JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
@@ -128,7 +129,7 @@ CREATE TABLE cart_items (
     user_id UUID REFERENCES users(id),
     product_id UUID REFERENCES products(id),
     quantity INTEGER NOT NULL,
-    customization_options JSONB,
+    options JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );

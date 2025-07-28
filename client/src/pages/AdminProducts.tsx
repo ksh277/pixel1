@@ -179,13 +179,24 @@ export const AdminProducts = () => {
       isFeatured: product?.isFeatured ?? false,
       stockQuantity: product?.stockQuantity || 0,
       tags: product?.tags?.join(", ") || "",
+      options: product?.options ? JSON.stringify(product.options, null, 2) : "",
     });
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
+      let parsedOptions: any = null;
+      if (formData.options) {
+        try {
+          parsedOptions = JSON.parse(formData.options);
+        } catch {
+          toast({ title: '옵션 형식 오류', description: '옵션 JSON을 확인해주세요.', variant: 'destructive' });
+          return;
+        }
+      }
       onSubmit({
         ...formData,
         tags: formData.tags.split(",").map(tag => tag.trim()).filter(Boolean),
+        options: parsedOptions,
       });
     };
 
@@ -284,17 +295,26 @@ export const AdminProducts = () => {
           </div>
           <div>
             <Label htmlFor="imageUrl">이미지 URL</Label>
-            <Input
-              id="imageUrl"
-              value={formData.imageUrl}
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-              placeholder="https://example.com/image.jpg"
-            />
-          </div>
+          <Input
+            id="imageUrl"
+            value={formData.imageUrl}
+            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+            placeholder="https://example.com/image.jpg"
+          />
         </div>
+        <div className="md:col-span-2">
+          <Label htmlFor="options">옵션 JSON</Label>
+          <Textarea
+            id="options"
+            value={formData.options}
+            onChange={(e) => setFormData({ ...formData, options: e.target.value })}
+            rows={3}
+          />
+        </div>
+      </div>
 
-        <div>
-          <Label htmlFor="tags">태그 (쉼표로 구분)</Label>
+      <div>
+        <Label htmlFor="tags">태그 (쉼표로 구분)</Label>
           <Input
             id="tags"
             value={formData.tags}

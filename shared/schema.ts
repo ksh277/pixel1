@@ -79,6 +79,7 @@ export const products = mysqlTable("products", {
   isApproved: boolean("is_approved").default(false).notNull(),
   approvalDate: timestamp("approval_date"),
   customizationOptions: json("customization_options"),
+  options: json("options"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -172,7 +173,7 @@ export const cartItems = mysqlTable("cart_items", {
     .references(() => products.id)
     .notNull(),
   quantity: int("quantity").notNull(),
-  customization: json("customization"),
+  options: json("options"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -198,6 +199,7 @@ export const orderItems = mysqlTable("order_items", {
   productId: int("product_id").references(() => products.id).notNull(),
   designId: int("design_id").references(() => goodsEditorDesigns.id),
   quantity: int("quantity").notNull(),
+  options: json("options"),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

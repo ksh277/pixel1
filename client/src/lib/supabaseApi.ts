@@ -1043,7 +1043,7 @@ export const addToCart = async (
         product_id: productId,
         quantity,
         price,
-        customization_options: customizationOptions
+        options: customizationOptions
       }])
       .select()
 
@@ -1065,7 +1065,7 @@ export const updateCartItem = async (
     .from('cart_items')
     .update({ 
       quantity, 
-      customization_options: customizationOptions,
+      options: customizationOptions,
       updated_at: new Date().toISOString()
     })
     .eq('id', cartItemId)
@@ -1308,7 +1308,7 @@ export const createOrder = async (userId: string, cartItems: any[]) => {
           quantity: item.quantity,
           price: item.price || item.products?.base_price || 0,
           product_name: item.products?.name_ko || item.products?.name,
-          customization_options: item.customization_options
+          options: item.options
         }))
       }])
       .select()
@@ -1325,7 +1325,7 @@ export const createOrder = async (userId: string, cartItems: any[]) => {
       product_id: item.product_id,
       quantity: item.quantity,
       status: 'pending',
-      customization_options: item.customization_options,
+      options: item.options,
       created_at: new Date().toISOString()
     }));
 

@@ -31,6 +31,7 @@ export interface Product {
   is_featured: boolean
   is_available: boolean
   stock_quantity?: number
+  options?: any
   created_at: string
   updated_at: string
 }
@@ -87,7 +88,7 @@ export interface OrderItem {
   quantity: number
   unit_price: number
   total_price: number
-  customization_options?: any // JSON object
+  options?: any // JSON object
   created_at: string
 }
 
@@ -179,7 +180,7 @@ export interface Cart {
   user_id: string
   product_id: string
   quantity: number
-  customization_options?: any // JSON object
+  options?: any // JSON object
   created_at: string
   updated_at: string
 }
@@ -190,7 +191,7 @@ export interface CartItem {
   product_id: string
   quantity: number
   price: number
-  customization_options?: any // JSON object
+  options?: any // JSON object
   created_at: string
   updated_at: string
   products?: Product // Relationship to product

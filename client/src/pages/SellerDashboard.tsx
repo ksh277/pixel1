@@ -100,15 +100,27 @@ function ProductForm({
     categoryId: product?.categoryId?.toString() || '',
     imageUrl: product?.imageUrl || '',
     stock: product?.stock?.toString() || '',
+    options: product?.options ? JSON.stringify(product.options, null, 2) : '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    let parsedOptions: any = null;
+    if (formData.options) {
+      try {
+        parsedOptions = JSON.parse(formData.options);
+      } catch {
+        toast({ title: '옵션 형식 오류', description: '옵션 JSON을 확인해주세요.', variant: 'destructive' });
+        return;
+      }
+    }
+
     onSubmit({
       ...formData,
       basePrice: parseFloat(formData.basePrice),
       categoryId: parseInt(formData.categoryId),
       stock: parseInt(formData.stock) || 0,
+      options: parsedOptions,
     });
   };
 
@@ -166,6 +178,15 @@ function ProductForm({
           />
         </div>
         <div className="md:col-span-2">
+          <Label htmlFor="editOptions">옵션 JSON</Label>
+          <Textarea
+            id="editOptions"
+            rows={3}
+            value={formData.options}
+            onChange={(e) => setFormData({ ...formData, options: e.target.value })}
+          />
+        </div>
+        <div className="md:col-span-2">
           <Label htmlFor="editDesc">설명 (영문)</Label>
           <Textarea
             id="editDesc"
@@ -207,7 +228,8 @@ export default function SellerDashboard() {
     basePrice: '',
     categoryId: '',
     imageUrl: '',
-    stock: ''
+    stock: '',
+    options: ''
   });
 
   // Fetch seller info
@@ -396,11 +418,22 @@ export default function SellerDashboard() {
       return;
     }
 
+    let parsedOptions: any = null;
+    if (newProduct.options) {
+      try {
+        parsedOptions = JSON.parse(newProduct.options);
+      } catch {
+        toast({ title: '옵션 형식 오류', description: '옵션 JSON을 확인해주세요.', variant: 'destructive' });
+        return;
+      }
+    }
+
     addProductMutation.mutate({
       ...newProduct,
       basePrice: parseFloat(newProduct.basePrice),
       categoryId: parseInt(newProduct.categoryId),
-      stock: parseInt(newProduct.stock) || 0
+      stock: parseInt(newProduct.stock) || 0,
+      options: parsedOptions,
     });
   };
 
@@ -841,7 +874,7 @@ export default function SellerDashboard() {
                     </div>
                     <div>
                       <Label htmlFor="imageUrl">이미지 URL</Label>
-                      <Input 
+                      <Input
                         id="imageUrl"
                         value={newProduct.imageUrl}
                         onChange={(e) => setNewProduct(prev => ({ ...prev, imageUrl: e.target.value }))}
@@ -849,8 +882,18 @@ export default function SellerDashboard() {
                       />
                     </div>
                     <div className="md:col-span-2">
+                      <Label htmlFor="options">옵션 JSON</Label>
+                      <Textarea
+                        id="options"
+                        value={newProduct.options}
+                        onChange={(e) => setNewProduct(prev => ({ ...prev, options: e.target.value }))}
+                        placeholder='{"sizes":[{"value":"S","priceDelta":0}]}'
+                        rows={3}
+                      />
+                    </div>
+                    <div className="md:col-span-2">
                       <Label htmlFor="description">설명 (영문)</Label>
-                      <Textarea 
+                      <Textarea
                         id="description"
                         value={newProduct.description}
                         onChange={(e) => setNewProduct(prev => ({ ...prev, description: e.target.value }))}

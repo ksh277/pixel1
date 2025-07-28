@@ -356,11 +356,11 @@ const OrdersPage = () => {
                                                 <span>수량: {item.quantity}개</span>
                                                 <span>단가: {formatPrice(item.price)}</span>
                                               </div>
-                                              {item.customization_options && (
+                                              {item.options && (
                                                 <div className="mt-2 p-2 bg-gray-700 rounded">
                                                   <p className="text-xs text-gray-300">맞춤 옵션</p>
                                                   <pre className="text-xs text-gray-400 mt-1">
-                                                    {JSON.stringify(item.customization_options, null, 2)}
+                                                    {JSON.stringify(item.options, null, 2)}
                                                   </pre>
                                                 </div>
                                               )}
