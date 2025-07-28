@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useLocation } from "wouter";
@@ -58,11 +82,123 @@ interface Product {
   createdAt: string;
 }
 
+function ProductForm({
+  product,
+  onSubmit,
+  isLoading,
+}: {
+  product?: Product | null;
+  onSubmit: (data: Partial<Product>) => void;
+  isLoading: boolean;
+}) {
+  const [formData, setFormData] = useState({
+    name: product?.name || '',
+    nameKo: product?.nameKo || '',
+    description: product?.description || '',
+    descriptionKo: product?.descriptionKo || '',
+    basePrice: product?.basePrice?.toString() || '',
+    categoryId: product?.categoryId?.toString() || '',
+    imageUrl: product?.imageUrl || '',
+    stock: product?.stock?.toString() || '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({
+      ...formData,
+      basePrice: parseFloat(formData.basePrice),
+      categoryId: parseInt(formData.categoryId),
+      stock: parseInt(formData.stock) || 0,
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="editName">상품명 (영문) *</Label>
+          <Input
+            id="editName"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="editNameKo">상품명 (한글) *</Label>
+          <Input
+            id="editNameKo"
+            value={formData.nameKo}
+            onChange={(e) => setFormData({ ...formData, nameKo: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="editPrice">가격 *</Label>
+          <Input
+            id="editPrice"
+            type="number"
+            value={formData.basePrice}
+            onChange={(e) => setFormData({ ...formData, basePrice: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="editStock">재고 수량 *</Label>
+          <Input
+            id="editStock"
+            type="number"
+            value={formData.stock}
+            onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="editCategory">카테고리 *</Label>
+          <Input
+            id="editCategory"
+            value={formData.categoryId}
+            onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="editImage">이미지 URL</Label>
+          <Input
+            id="editImage"
+            value={formData.imageUrl}
+            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+          />
+        </div>
+        <div className="md:col-span-2">
+          <Label htmlFor="editDesc">설명 (영문)</Label>
+          <Textarea
+            id="editDesc"
+            rows={3}
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          />
+        </div>
+        <div className="md:col-span-2">
+          <Label htmlFor="editDescKo">설명 (한글)</Label>
+          <Textarea
+            id="editDescKo"
+            rows={3}
+            value={formData.descriptionKo}
+            onChange={(e) => setFormData({ ...formData, descriptionKo: e.target.value })}
+          />
+        </div>
+      </div>
+      <div className="flex justify-end gap-2">
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? '저장 중...' : '저장'}
+        </Button>
+      </div>
+    </form>
+  );
+}
+
 export default function SellerDashboard() {
   const [location, navigate] = useLocation();
   const { user, isAuthenticated } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [newProduct, setNewProduct] = useState({
     name: '',
     nameKo: '',
@@ -87,17 +223,18 @@ export default function SellerDashboard() {
     enabled: isAuthenticated
   });
 
-  // Fetch seller products
+  // Fetch seller products (admin can view all)
   const { data: products = [], isLoading: productsLoading } = useQuery({
     queryKey: ['seller-products'],
     queryFn: async () => {
-      const response = await fetch('/api/seller/products', {
-        credentials: 'include'
-      });
+      const endpoint = user?.isAdmin
+        ? '/api/admin/products'
+        : '/api/seller/products';
+      const response = await fetch(endpoint, { credentials: 'include' });
       if (!response.ok) throw new Error('Failed to fetch products');
       return response.json();
     },
-    enabled: isAuthenticated && sellerInfo?.seller
+    enabled: isAuthenticated && (sellerInfo?.seller || user?.isAdmin)
   });
 
   // Fetch categories
@@ -113,13 +250,14 @@ export default function SellerDashboard() {
   // Add product mutation
   const addProductMutation = useMutation({
     mutationFn: async (productData: any) => {
-      const response = await fetch('/api/seller/products', {
+      const endpoint = user?.isAdmin ? '/api/products' : '/api/seller/products';
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(productData)
+        body: JSON.stringify(productData),
       });
       if (!response.ok) {
         const error = await response.json();
@@ -151,6 +289,68 @@ export default function SellerDashboard() {
         variant: "destructive",
       });
     }
+  });
+
+  // Update product mutation
+  const updateProductMutation = useMutation({
+    mutationFn: async ({ id, ...data }: Partial<Product> & { id: number }) => {
+      const endpoint = user?.isAdmin
+        ? `/api/products/${id}`
+        : `/api/seller/products/${id}`;
+      const method = user?.isAdmin ? 'PATCH' : 'PUT';
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['seller-products'] });
+      setEditingProduct(null);
+      toast({ title: '상품 수정 완료', description: '상품이 수정되었습니다.' });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: '상품 수정 실패',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  // Delete product mutation
+  const deleteProductMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const endpoint = user?.isAdmin
+        ? `/api/products/${id}`
+        : `/api/seller/products/${id}`;
+      const response = await fetch(endpoint, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['seller-products'] });
+      toast({ title: '상품 삭제 완료', description: '상품이 삭제되었습니다.' });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: '상품 삭제 실패',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
   });
 
   // Seller registration mutation
@@ -243,8 +443,8 @@ export default function SellerDashboard() {
     );
   }
 
-  // Show seller registration form if not registered
-  if (!sellerInfo?.seller) {
+  // Show seller registration form if not registered (admins skip)
+  if (!sellerInfo?.seller && !user?.isAdmin) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-[#1a1a1a] py-8">
         <div className="max-w-2xl mx-auto px-4">
@@ -347,13 +547,15 @@ export default function SellerDashboard() {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             판매자 대시보드
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
-            {seller.shopName} • {getStatusBadge(seller.status, seller.isApproved)}
-          </p>
+          {seller && (
+            <p className="text-gray-600 dark:text-gray-300 mt-2">
+              {seller.shopName} • {getStatusBadge(seller.status, seller.isApproved)}
+            </p>
+          )}
         </div>
 
         {/* Status Alert */}
-        {!seller.isApproved && (
+        {seller && !seller.isApproved && (
           <Card className="mb-6 border-orange-200 bg-orange-50 dark:bg-orange-900/10">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
@@ -493,15 +695,59 @@ export default function SellerDashboard() {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button variant="outline" size="sm">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button variant="destructive" size="sm">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                          <Dialog
+                            open={editingProduct?.id === product.id}
+                            onOpenChange={(open) => {
+                              if (!open) setEditingProduct(null);
+                            }}
+                          >
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setEditingProduct(product)}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-2xl">
+                              <DialogHeader>
+                                <DialogTitle>상품 수정</DialogTitle>
+                              </DialogHeader>
+                              <ProductForm
+                                product={editingProduct}
+                                onSubmit={(data) =>
+                                  updateProductMutation.mutate({ ...data, id: product.id })
+                                }
+                                isLoading={updateProductMutation.isPending}
+                              />
+                            </DialogContent>
+                          </Dialog>
+
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="destructive" size="sm">
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>상품 삭제</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  "{product.nameKo}" 상품을 삭제하시겠습니까?
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>취소</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => deleteProductMutation.mutate(product.id)}
+                                  className="bg-red-600 hover:bg-red-700"
+                                >
+                                  삭제
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </div>
                       </div>
                     ))}
@@ -521,7 +767,7 @@ export default function SellerDashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {!seller.isApproved ? (
+                {seller && !seller.isApproved ? (
                   <div className="bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
                     <div className="flex items-center gap-3">
                       <AlertCircle className="h-5 w-5 text-orange-500" />
@@ -647,6 +893,8 @@ export default function SellerDashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                {seller && (
+                <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label>상점명</Label>
@@ -702,6 +950,8 @@ export default function SellerDashboard() {
                     정보 수정
                   </Button>
                 </div>
+                </>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
