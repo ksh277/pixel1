@@ -1375,7 +1375,18 @@ export const createOrder = async (userId: string, cartItems: any[]) => {
 export const fetchUserOrders = async (userId: string) => {
   const { data, error } = await supabase
     .from('orders')
-    .select('*')
+    .select(
+      `
+      id,
+      status,
+      total_price,
+      created_at,
+      order_items (
+        *,
+        products (id, name, name_ko, image_url)
+      )
+    `,
+    )
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
