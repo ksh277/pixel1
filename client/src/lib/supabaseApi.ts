@@ -713,6 +713,7 @@ export const fetchReviews = async (options?: {
   userId?: string
   featured?: boolean
   minRating?: number
+  approved?: boolean
   limit?: number
   offset?: number
 }) => {
@@ -734,6 +735,10 @@ export const fetchReviews = async (options?: {
     query = query.eq('is_featured', options.featured)
   }
 
+  if (options?.approved !== undefined) {
+    query = query.eq('is_approved', options.approved)
+  }
+
   if (options?.minRating) {
     query = query.gte('rating', options.minRating)
   }
@@ -752,6 +757,22 @@ export const fetchReviews = async (options?: {
 
   if (error) {
     console.error('Error fetching reviews:', error)
+    throw error
+  }
+
+  return data
+}
+
+export const createReview = async (review: {
+  user_id: string
+  product_id: string
+  rating: number
+  content: string
+}) => {
+  const { data, error } = await supabase.from('reviews').insert([review])
+
+  if (error) {
+    console.error('Error creating review:', error)
     throw error
   }
 
