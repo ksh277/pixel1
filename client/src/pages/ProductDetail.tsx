@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -58,7 +58,9 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { motion } from "framer-motion";
-import ProductReviews from "@/components/ProductReviews";
+import ReviewForm from "@/components/ReviewForm";
+import { supabase } from "@/lib/supabase";
+import { useSupabaseAuth } from "@/components/SupabaseProvider";
 import type { Product, ProductReview } from "@shared/schema";
 
 export default function ProductDetail() {
@@ -78,6 +80,23 @@ export default function ProductDetail() {
   const [activeTab, setActiveTab] = useState("pdf");
   const [customText, setCustomText] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const { user } = useSupabaseAuth();
+
+  const refreshReviews = async () => {
+    if (!id) return;
+    const { data } = await supabase
+      .from('reviews')
+      .select('id,rating,content,created_at,user_id')
+      .eq('product_id', id)
+      .eq('is_approved', true)
+      .order('created_at', { ascending: false });
+    setReviews(data || []);
+  };
+
+  useEffect(() => {
+    refreshReviews();
+  }, [id]);
 
   // Fetch product data
   const { data: product, isLoading, error } = useQuery({
@@ -903,11 +922,19 @@ export default function ProductDetail() {
               </div>
             </TabsContent>
 
-            <TabsContent value="reviews" className="mt-8">
-              <ProductReviews 
-                productId={id || "1"} 
-                productName={productDisplay?.nameKo}
-              />
+            <TabsContent value="reviews" className="mt-8 space-y-4">
+              {user && (
+                <ReviewForm productId={id || ""} onSubmitted={refreshReviews} />
+              )}
+              {reviews.map((r) => (
+                <div key={r.id} className="border p-3 rounded mb-2">
+                  <p className="text-sm text-yellow-500">★ {r.rating} / 5</p>
+                  <p className="text-base">{r.content}</p>
+                  <p className="text-xs text-gray-400">
+                    {new Date(r.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
             </TabsContent>
 
             <TabsContent value="qna" className="mt-8">

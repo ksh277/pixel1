@@ -95,6 +95,17 @@ CREATE TABLE product_reviews (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
+-- Reviews table for simple product feedback with admin approval
+CREATE TABLE reviews (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id),
+    product_id UUID REFERENCES products(id),
+    rating INTEGER CHECK (rating BETWEEN 1 AND 5),
+    content TEXT,
+    is_approved BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
 -- 7. Community Posts 테이블
 CREATE TABLE community_posts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
