@@ -211,12 +211,12 @@ export default function OrderDetail() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'pending': { label: '대기중', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' },
-      'processing': { label: '처리중', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' },
-      'shipped': { label: '배송중', color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' },
-      'delivered': { label: '배송완료', color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' },
-      'cancelled': { label: '취소됨', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' },
-      'refund_requested': { label: '환불요청됨', color: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' }
+      payment_completed: { label: '결제완료', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' },
+      processing: { label: '처리중', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' },
+      shipping: { label: '배송중', color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' },
+      delivered: { label: '배송완료', color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' },
+      canceled: { label: '취소됨', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' },
+      refund_requested: { label: '환불요청됨', color: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' }
     };
     
     const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300' };

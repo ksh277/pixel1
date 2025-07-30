@@ -56,7 +56,7 @@ CREATE TABLE orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id),
     order_number VARCHAR(20) UNIQUE NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled')),
+    status VARCHAR(20) DEFAULT 'payment_completed' CHECK (status IN ('payment_completed', 'processing', 'shipping', 'delivered', 'canceled')),
     total_amount DECIMAL(10,2) NOT NULL,
     shipping_address JSONB,
     payment_method VARCHAR(20) CHECK (payment_method IN ('card', 'kakao_pay', 'naver_pay', 'bank_transfer')),

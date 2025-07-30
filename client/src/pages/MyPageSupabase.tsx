@@ -231,11 +231,11 @@ export default function MyPageSupabase() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'pending': { label: '대기중', color: 'bg-yellow-100 text-yellow-800' },
-      'processing': { label: '처리중', color: 'bg-blue-100 text-blue-800' },
-      'shipped': { label: '배송중', color: 'bg-green-100 text-green-800' },
-      'delivered': { label: '배송완료', color: 'bg-gray-100 text-gray-800' },
-      'cancelled': { label: '취소됨', color: 'bg-red-100 text-red-800' }
+      payment_completed: { label: '결제완료', color: 'bg-yellow-100 text-yellow-800' },
+      processing: { label: '처리중', color: 'bg-blue-100 text-blue-800' },
+      shipping: { label: '배송중', color: 'bg-green-100 text-green-800' },
+      delivered: { label: '배송완료', color: 'bg-gray-100 text-gray-800' },
+      canceled: { label: '취소됨', color: 'bg-red-100 text-red-800' }
     };
     
     const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800' };

@@ -630,7 +630,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           total_amount,
           shipping_address,
           payment_method,
-          status: 'preparing'  // 주문 상태를 preparing으로 설정
+          status: 'payment_completed'  // 결제 완료 상태로 설정
         }])
         .select()
         .single();
@@ -1637,7 +1637,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         updateData.shipping_company_id = shippingCompanyId;
       }
       
-      if (status === 'shipped') {
+      if (status === 'shipping') {
         updateData.shipped_at = new Date().toISOString();
       }
       
@@ -3605,7 +3605,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .insert([{
           user_id,
           total_amount,
-          status: status || 'pending',
+          status: status || 'payment_completed',
           shipping_address: {
             address: shipping_address,
             phone: shipping_phone,
@@ -3640,7 +3640,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           order_id,
           amount,
           method: method || 'toss',
-          status: status || 'pending'
+          status: status || 'payment_completed'
         }])
         .select()
         .single();
@@ -3947,7 +3947,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: '주문을 찾을 수 없습니다.' });
       }
 
-      if (order.status === 'cancelled' || order.status === 'refund_requested') {
+      if (order.status === 'canceled' || order.status === 'refund_requested') {
         return res.status(400).json({ message: '환불 요청이 불가능한 주문 상태입니다.' });
       }
 

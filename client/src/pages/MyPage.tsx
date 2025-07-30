@@ -149,14 +149,14 @@ export default function MyPage() {
   // 주문 상태 표시 함수
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      'pending': { label: '주문접수', variant: 'secondary' as const },
-      'processing': { label: '제작중', variant: 'default' as const },
-      'shipping': { label: '배송중', variant: 'outline' as const },
-      'delivered': { label: '배송완료', variant: 'default' as const },
-      'cancelled': { label: '취소됨', variant: 'destructive' as const },
+      payment_completed: { label: '결제완료', variant: 'secondary' as const },
+      processing: { label: '제작중', variant: 'default' as const },
+      shipping: { label: '배송중', variant: 'outline' as const },
+      delivered: { label: '배송완료', variant: 'default' as const },
+      canceled: { label: '취소됨', variant: 'destructive' as const },
     };
     
-    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
+    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.payment_completed;
     return <Badge variant={config.variant}>{config.label}</Badge>;
   };
 

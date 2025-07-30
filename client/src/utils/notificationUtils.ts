@@ -64,11 +64,11 @@ export const createOrderNotification = (
   orderId: number
 ) => {
   const statusMessages = {
-    pending: "주문이 접수되었습니다",
-    processing: "주문이 처리 중입니다",
-    shipped: "주문이 배송되었습니다",
+    payment_completed: "결제가 완료되었습니다",
+    processing: "주문이 제작 중입니다",
+    shipping: "주문이 배송 중입니다",
     delivered: "주문이 배송 완료되었습니다",
-    cancelled: "주문이 취소되었습니다",
+    canceled: "주문이 취소되었습니다",
   };
 
   return createNotification({

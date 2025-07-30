@@ -1323,7 +1323,7 @@ export const createOrder = async (userId: string, cartItems: any[]) => {
       .insert([{
         user_id: userId,
         total_price: totalPrice,
-        status: 'pending',
+        status: 'payment_completed',
         items: cartItems.map(item => ({
           product_id: item.product_id,
           quantity: item.quantity,
