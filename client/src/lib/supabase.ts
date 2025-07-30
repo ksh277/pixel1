@@ -71,7 +71,7 @@ export interface Order {
   id: string
   user_id: string
   order_number: string
-  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+  status: 'payment_completed' | 'processing' | 'shipping' | 'delivered' | 'canceled'
   total_amount: number
   shipping_address: any // JSON object
   payment_method: 'card' | 'kakao_pay' | 'naver_pay' | 'bank_transfer'

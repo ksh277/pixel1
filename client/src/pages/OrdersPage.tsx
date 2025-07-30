@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Package, Clock, CheckCircle, XCircle, Eye, Calendar, ShoppingBag } from 'lucide-react';
+import { Package, Clock, CheckCircle, XCircle, Eye, Calendar, ShoppingBag, Truck } from 'lucide-react';
 import { useOrders } from '@/hooks/useOrders';
 import { useAuth } from '@/contexts/AuthContext';
 import { formatCurrency } from '@/lib/utils';
@@ -42,13 +42,15 @@ const OrdersPage = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pending':
+      case 'payment_completed':
         return <Clock className="w-4 h-4" />;
       case 'processing':
         return <Package className="w-4 h-4" />;
-      case 'completed':
+      case 'shipping':
+        return <Truck className="w-4 h-4" />;
+      case 'delivered':
         return <CheckCircle className="w-4 h-4" />;
-      case 'cancelled':
+      case 'canceled':
         return <XCircle className="w-4 h-4" />;
       default:
         return <Clock className="w-4 h-4" />;
@@ -57,28 +59,32 @@ const OrdersPage = () => {
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'pending':
-        return '주문 접수';
+      case 'payment_completed':
+        return '결제 완료';
       case 'processing':
         return '제작 중';
-      case 'completed':
-        return '주문 완료';
-      case 'cancelled':
+      case 'shipping':
+        return '배송 중';
+      case 'delivered':
+        return '배송 완료';
+      case 'canceled':
         return '주문 취소';
       default:
-        return '주문 접수';
+        return '결제 완료';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending':
+      case 'payment_completed':
         return 'bg-yellow-600';
       case 'processing':
         return 'bg-blue-600';
-      case 'completed':
+      case 'shipping':
+        return 'bg-purple-600';
+      case 'delivered':
         return 'bg-green-600';
-      case 'cancelled':
+      case 'canceled':
         return 'bg-red-600';
       default:
         return 'bg-gray-600';
@@ -436,7 +442,7 @@ const OrdersPage = () => {
                               </div>
                             </DialogContent>
                           </Dialog>
-                          {order.status === 'pending' && (
+                          {order.status === 'payment_completed' && (
                             <Button variant="outline" size="sm" className="text-red-400 border-red-400 hover:bg-red-900/20 w-full sm:w-auto">
                               주문 취소
                             </Button>

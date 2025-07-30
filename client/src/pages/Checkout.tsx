@@ -83,7 +83,7 @@ export default function Checkout() {
       const orderData = {
         user_id: user?.id || 1,
         total_amount: total,
-        status: 'pending',
+        status: 'payment_completed',
         shipping_address: `${formData.address} ${formData.addressDetail}`,
         shipping_phone: formData.phone,
         shipping_name: formData.name,
