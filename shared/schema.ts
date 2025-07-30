@@ -77,6 +77,7 @@ export const products = mysqlTable("products", {
   isActive: boolean("is_active").default(true).notNull(),
   isFeatured: boolean("is_featured").default(false).notNull(),
   isApproved: boolean("is_approved").default(false).notNull(),
+  status: text("status").default("pending").notNull(),
   approvalDate: timestamp("approval_date"),
   customizationOptions: json("customization_options"),
   options: json("options"),

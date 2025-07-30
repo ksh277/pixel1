@@ -231,7 +231,15 @@ export class MemStorage implements IStorage {
     ];
 
     productsData.forEach(prod => {
-      this.products.set(prod.id, prod as Product);
+      this.products.set(
+        prod.id,
+        {
+          ...(prod as Product),
+          isApproved: true,
+          status: 'approved',
+          approvalDate: new Date(),
+        } as Product
+      );
     });
 
     // Initialize templates
@@ -305,19 +313,32 @@ export class MemStorage implements IStorage {
 
   // Product methods
   async getProducts(): Promise<Product[]> {
-    return Array.from(this.products.values()).filter(prod => prod.isActive);
+    return Array.from(this.products.values()).filter(
+      prod => prod.isActive && prod.status === 'approved'
+    );
   }
 
   async getProductsByCategory(categoryId: number): Promise<Product[]> {
-    return Array.from(this.products.values()).filter(prod => prod.categoryId === categoryId && prod.isActive);
+    return Array.from(this.products.values()).filter(
+      prod =>
+        prod.categoryId === categoryId &&
+        prod.isActive &&
+        prod.status === 'approved'
+    );
   }
 
   async getFeaturedProducts(): Promise<Product[]> {
-    return Array.from(this.products.values()).filter(prod => prod.isFeatured && prod.isActive);
+    return Array.from(this.products.values()).filter(
+      prod => prod.isFeatured && prod.isActive && prod.status === 'approved'
+    );
   }
 
   async getProduct(id: number): Promise<Product | undefined> {
-    return this.products.get(id);
+    const product = this.products.get(id);
+    if (!product || !product.isActive || product.status !== 'approved') {
+      return undefined;
+    }
+    return product;
   }
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
@@ -330,6 +351,9 @@ export class MemStorage implements IStorage {
       descriptionKo: insertProduct.descriptionKo || null,
       isActive: insertProduct.isActive ?? true,
       isFeatured: insertProduct.isFeatured ?? false,
+      isApproved: insertProduct.isApproved ?? true,
+      status: insertProduct.status ?? 'approved',
+      approvalDate: insertProduct.approvalDate ?? new Date(),
       customizationOptions: insertProduct.customizationOptions || null,
     };
     this.products.set(id, product);
@@ -341,10 +365,13 @@ export class MemStorage implements IStorage {
     if (!existingProduct) {
       return undefined;
     }
-    
+
     const updatedProduct: Product = {
       ...existingProduct,
       ...updates,
+      status: updates.status ?? existingProduct.status,
+      isApproved: updates.isApproved ?? existingProduct.isApproved,
+      approvalDate: updates.approvalDate ?? existingProduct.approvalDate,
     };
     
     this.products.set(id, updatedProduct);
@@ -625,19 +652,43 @@ export class DatabaseStorage implements IStorage {
 
   // Product methods
   async getProducts(): Promise<Product[]> {
-    return await db.select().from(products);
+    return await db
+      .select()
+      .from(products)
+      .where(
+        and(eq(products.isActive, true), eq(products.status, 'approved'))
+      );
   }
 
   async getProductsByCategory(categoryId: number): Promise<Product[]> {
-    return await db.select().from(products).where(eq(products.categoryId, categoryId));
+    return await db
+      .select()
+      .from(products)
+      .where(
+        and(
+          eq(products.categoryId, categoryId),
+          eq(products.isActive, true),
+          eq(products.status, 'approved')
+        )
+      );
   }
 
   async getFeaturedProducts(): Promise<Product[]> {
-    return await db.select().from(products).where(eq(products.isFeatured, true));
+    return await db
+      .select()
+      .from(products)
+      .where(
+        and(eq(products.isFeatured, true), eq(products.status, 'approved'))
+      );
   }
 
   async getProduct(id: number): Promise<Product | undefined> {
-    const [product] = await db.select().from(products).where(eq(products.id, id));
+    const [product] = await db
+      .select()
+      .from(products)
+      .where(
+        and(eq(products.id, id), eq(products.isActive, true), eq(products.status, 'approved'))
+      );
     return product;
   }
 
