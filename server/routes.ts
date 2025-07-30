@@ -1443,7 +1443,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           stock,
           options,
           is_active: true,
-          is_approved: false // 관리자 승인 대기
+          is_approved: false, // 관리자 승인 대기
+          status: 'pending'
         }])
         .select()
         .single();
@@ -1502,7 +1503,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           image_url: imageUrl,
           stock,
           options,
-          is_approved: false // 수정 시 재승인 필요
+          is_approved: false, // 수정 시 재승인 필요
+          status: 'pending'
         })
         .eq('id', productId)
         .select()
@@ -1771,7 +1773,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { productId } = req.params;
       const { approved } = req.body;
       
-      const updateData: any = { is_approved: approved };
+      const status = approved ? 'approved' : 'rejected';
+      const updateData: any = { is_approved: approved, status };
       if (approved) {
         updateData.approval_date = new Date().toISOString();
       } else {
@@ -1973,7 +1976,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         supabase.from('users').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
         supabase.from('orders').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
         supabase.from('sellers').select('*', { count: 'exact' }).then(({ count }) => ({ count: count || 0 })),
-        supabase.from('products').select('*', { count: 'exact' }).eq('is_approved', false).then(({ count }) => ({ count: count || 0 })),
+        supabase
+          .from('products')
+          .select('*', { count: 'exact' })
+          .eq('status', 'pending')
+          .then(({ count }) => ({ count: count || 0 })),
         supabase.from('sellers').select('*', { count: 'exact' }).eq('is_approved', false).then(({ count }) => ({ count: count || 0 }))
       ]);
       
@@ -2311,6 +2318,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .from('products')
         .select('*')
         .eq('id', id)
+        .eq('status', 'approved')
         .single();
       
       if (error || !product) {
@@ -4013,7 +4021,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isActive: productData.isActive ?? true,
         isFeatured: productData.isFeatured ?? false,
         stock: productData.stockQuantity,
-        tags: productData.tags || []
+        tags: productData.tags || [],
+        isApproved: true,
+        status: 'approved',
+        approvalDate: new Date().toISOString()
       });
       
       res.status(201).json(newProduct);
