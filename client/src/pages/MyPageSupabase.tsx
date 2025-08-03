@@ -1,5 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { User, Package, Heart, Star, Settings, LogOut, Edit2, Eye, EyeOff, MessageSquare, ShoppingBag, Calendar, RefreshCw } from 'lucide-react';
+import {
+  User,
+  Package,
+  Heart,
+  Star,
+  Settings,
+  LogOut,
+  Edit2,
+  Eye,
+  EyeOff,
+  MessageSquare,
+  ShoppingBag,
+  Calendar,
+  RefreshCw,
+  Clock,
+  Truck,
+  CheckCircle,
+  XCircle,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -231,19 +249,38 @@ export default function MyPageSupabase() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      payment_completed: { label: '결제완료', color: 'bg-yellow-100 text-yellow-800' },
-      processing: { label: '처리중', color: 'bg-blue-100 text-blue-800' },
-      shipping: { label: '배송중', color: 'bg-green-100 text-green-800' },
-      delivered: { label: '배송완료', color: 'bg-gray-100 text-gray-800' },
-      canceled: { label: '취소됨', color: 'bg-red-100 text-red-800' }
-    };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, color: 'bg-gray-100 text-gray-800' };
-    
+      payment_completed: {
+        label: '결제 완료',
+        icon: <Clock className="w-3 h-3 mr-1" />,
+        color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300',
+      },
+      processing: {
+        label: '제작 중',
+        icon: <Package className="w-3 h-3 mr-1" />,
+        color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+      },
+      shipping: {
+        label: '배송 중',
+        icon: <Truck className="w-3 h-3 mr-1" />,
+        color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+      },
+      delivered: {
+        label: '배송 완료',
+        icon: <CheckCircle className="w-3 h-3 mr-1" />,
+        color: 'bg-gray-100 text-gray-800 dark:bg-[#1a1a1a]/30 dark:text-gray-300',
+      },
+      canceled: {
+        label: '취소됨',
+        icon: <XCircle className="w-3 h-3 mr-1" />,
+        color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+      },
+    } as const;
+
+    const info =
+      statusMap[status as keyof typeof statusMap] || statusMap.payment_completed;
+
     return (
-      <Badge className={statusInfo.color}>
-        {statusInfo.label}
-      </Badge>
+      <Badge className={`flex items-center ${info.color}`}>{info.icon}{info.label}</Badge>
     );
   };
 
